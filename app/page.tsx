@@ -1,113 +1,126 @@
-import Image from 'next/image'
+import { Box, Divider, Typography } from "@mui/material";
+import ScoreCard from "./components/ScoreCard";
+import ArticleCard from "./components/ArticleCard";
+import DateSelector from "./components/DateSelector";
+import TeamSideCard from "./components/TeamSideCard";
 
 export default function Home() {
+  const newsData = {
+    meta: {
+      found: 7232,
+      returned: 3,
+      limit: 3,
+      page: 1,
+    },
+    data: [
+      {
+        uuid: "1f38886b-a36e-4874-92b5-8545007f08f8",
+        title: "New Orleans Saints 2023 NFL Draft Review",
+        description:
+          "The New Orleans Saints 2023 NFL Draft is in the books, which means it’s time to review the actual picks. While Saints general manager Mickey Loomis wasn’t q...",
+        keywords: "",
+        snippet:
+          "The New Orleans Saints 2023 NFL Draft is in the books, which means it’s time to review the actual picks. While Saints general manager Mickey Loomis wasn’t q...",
+        url: "https://www.yardbarker.com/nfl/articles/new_orleans_saints_2023_nfl_draft_review/s1_17198_38762865",
+        image_url:
+          "https://www.yardbarker.com/media/8/4/842fa0bfd1ae2d82e208cbbb38708bca82d19690/thumb_16x9/Saints-Draft-Review-1024x742.jpg?v=1",
+        language: "en",
+        published_at: "2023-04-30T20:45:11.000000Z",
+        source: "yardbarker.com",
+        categories: ["sports"],
+        relevance_score: 57.516827,
+      },
+      {
+        uuid: "17304fd8-2e43-49f3-94ac-44c6986e75a3",
+        title: "2023 New Orleans Saints schedule analysis",
+        description:
+          "Per NFL Research, Saints opponents had a 122-164-3 record in 2022, making their 2023 schedule the second-easiest in the league.",
+        keywords: "",
+        snippet:
+          "Circle the date: Week 2 at Panthers\n\nThe lone Monday night game on the Saints' 2023 schedule is an early battle for the NFC South crown. Two-time defending divi...",
+        url: "https://www.yardbarker.com/nfl/articles/2023_new_orleans_saints_schedule_analysis/s1_13132_38804811",
+        image_url:
+          "https://www.yardbarker.com/media/9/e/9e26c0f3f021592f97b9c279305f46ea3648109f/thumb_16x9/2023-new-orleans-saints-schedule-analysis.jpg?v=1",
+        language: "en",
+        published_at: "2023-05-12T03:17:02.000000Z",
+        source: "yardbarker.com",
+        categories: ["sports"],
+        relevance_score: 57.421936,
+      },
+      {
+        uuid: "63f0bf7f-8db3-4f13-ae5e-2474d1542ba3",
+        title: "2023 New Orleans Saints schedule analysis",
+        description:
+          "Per NFL Research, Saints opponents had a 122-164-3 record in 2022, making their 2023 schedule the second-easiest in the league.",
+        keywords: "",
+        snippet:
+          "Circle the date: Week 2 at Panthers\n\nThe lone Monday night game on the Saints’ 2023 schedule is an early battle for the NFC South crown. Two-time defending di...",
+        url: "https://footballorder.com/2023-new-orleans-saints-schedule-analysis/",
+        image_url:
+          "https://footballorder.com/wp-content/uploads/2023/05/2023-New-Orleans-Saints-schedule-analysis.jpg",
+        language: "en",
+        published_at: "2023-05-12T03:54:15.000000Z",
+        source: "10ztalk.com",
+        categories: ["sports"],
+        relevance_score: 57.421936,
+      },
+    ],
+  };
+
+  const fullName: String = "New Orleans Saints";
+  const parts = fullName.split(" ");
+  const teamName = parts.pop();
+  const location = parts.join(" ");
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <main>
+      <Box className="w-full h-full flex flex-row justify-center items-center">
+        <Box className="w-3/4 h-full flex gap-4 my-10">
+          {/* All Teams */}
+          <Box className="w-full h-full flex flex-col rounded-xl basis-1/4 bg-white">
+            <Box className="p-3">
+              <Typography className="text-base font-bold">
+                Southwest Divison
+              </Typography>
+              <TeamSideCard />
+              <Typography>Carolina Panthers</Typography>
+              <Typography>Atlanta Falcons</Typography>
+              <Typography>Tampa Bay Bucaneers</Typography>
+            </Box>
+          </Box>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+          {/* Game Scores */}
+          <Box className="w-full h-full grid basis-2/4 grid-cols-2 gap-2">
+            <Box className="w-full col-span-2 flex justify-start items-center gap-2 mb-3">
+              <img
+                className="w-10 h-10 object-contain"
+                src="nfl-logo.png"
+              ></img>
+              <Typography className="font-bold text-3xl">
+                NFL Scoreboard
+              </Typography>
+            </Box>
+            <ScoreCard />
+            <ScoreCard />
+            <ScoreCard />
+            <ScoreCard />
+            <ScoreCard />
+            <ScoreCard />
+            <ScoreCard />
+            <ScoreCard />
+          </Box>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+          {/* Related Articles*/}
+          <Box className="w-full h-full flex flex-col rounded-xl basis-1/4 bg-white">
+            <Box className="p-3 py-0">
+              <Typography className="my-3 font-bold"> NFL News</Typography>
+              {newsData.data.map((data) => (
+                <ArticleCard key={data.uuid} data={data} />
+              ))}
+            </Box>
+          </Box>
+        </Box>
+      </Box>
     </main>
-  )
+  );
 }

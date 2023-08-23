@@ -1,0 +1,44 @@
+<Box className="w-full h-5/6 md:h-full flex flex-col py-4 px-0 md:py-3 md:px-0 rounded-xl justify-center items-center bg-white">
+        <Typography className="text-sm md:text-base">Pre Week 2</Typography>
+        {/* Team Logos, Names, and Score */}
+        <Box className=" basis-2/3 w-full flex flex-row items-center">
+          {/* Home Team Logo and Name*/}
+          <Box className="basis-1/3 flex flex-col justify-center items-center">
+            <img
+              className="w-8 h-8 md:w-20 md:h-20 object-contain"
+              src="/raiders.png"
+              alt="none"
+            />
+            <Typography className="text-xs md:text-base whitespace-nowrap">
+              Las Vegas
+            </Typography>
+            <Typography
+              sx={{ opacity: "0.7" }}
+              className="font-bold text-xs md:text-base md:text-lg"
+            >
+              Raiders
+            </Typography>
+          </Box>
+          {/* Results */}
+          <Box className="basis-1/3 flex flex-col justify-center items-center">
+            <Typography className="text-sm md:text-lg">3 - 18</Typography>
+            <Typography className="text-sm md:text-lg">Final</Typography>
+          </Box>
+          {/* Away Team Logo and Name*/}
+          <Box className=" basis-1/3 flex flex-col justify-center items-center">
+            <img
+              className="w-8 h-8 md:w-20 md:h-20 object-contain"
+              src="/panthers.png"
+              alt="none"
+            />
+
+            <Typography className="text-xs md:text-base">Carolina</Typography>
+            <Typography
+              sx={{ opacity: "0.7" }}
+              className="font-bold text-xs md:text-lg"
+            >
+              Panthers
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
