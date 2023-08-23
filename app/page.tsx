@@ -67,6 +67,95 @@ export default function Home() {
     ],
   };
 
+  const allTeams: string[] = [
+    "Arizona Cardinals",
+    "Atlanta Falcons",
+    "Baltimore Ravens",
+    "Buffalo Bills",
+    "Carolina Panthers",
+    "Chicago Bears",
+    "Cincinnati Bengals",
+    "Cleveland Browns",
+    "Dallas Cowboys",
+    "Denver Broncos",
+    "Detroit Lions",
+    "Green Bay Packers",
+    "Houston Texans",
+    "Indianapolis Colts",
+    "Jacksonville Jaguars",
+    "Kansas City Chiefs",
+    "Las Vegas Raiders",
+    "Los Angeles Chargers",
+    "Los Angeles Rams",
+    "Miami Dolphins",
+    "Minnesota Vikings",
+    "New England Patriots",
+    "New Orleans Saints",
+    "New York Giants",
+    "New York Jets",
+    "Philadelphia Eagles",
+    "Pittsburgh Steelers",
+    "San Francisco 49ers",
+    "Seattle Seahawks",
+    "Tampa Bay Buccaneers",
+    "Tennessee Titans",
+    "Washington Commanders",
+  ];
+
+  const divisonTeams = {
+    "AFC East": [
+      "Miami Dolphins",
+      "Buffalo Bills",
+      "New England Patriots",
+      "New York Jets",
+    ],
+    "AFC North": [
+      "Pittsburgh Steelers",
+      "Cleveland Browns",
+      "Baltimore Ravens",
+      "Cincinnati Bengals",
+    ],
+    "AFC South": [
+      "Jacksonville Jaguars",
+      "Indianapolis Colts",
+      "Houston Texans",
+      "Tennessee Titans",
+    ],
+    "AFC West": [
+      "Las Vegas Raiders",
+      "Kansas City Chiefs",
+      "Los Angeles Chargers",
+      "Denver Broncos",
+    ],
+    "NFC East": [
+      "Washington Commanders",
+      "New York Giants",
+      "Philadelphia Eagles",
+      "Dallas Cowboys",
+    ],
+    "NFC North": [
+      "Detroit Lions",
+      "Chicago Bears",
+      "Green Bay Packers",
+      "Minnesota Vikings",
+    ],
+    "NFC South": [
+      "New Orleans Saints",
+      "Atlanta Falcons",
+      "Tampa Bay Buccaneers",
+      "Carolina Panthers",
+    ],
+    "NFC West": [
+      "Seattle Seahawks",
+      "San Francisco 49ers",
+      "Arizona Cardinals",
+      "Los Angeles Rams",
+    ],
+  };
+
+  const teamEntries = Object.entries(divisonTeams);
+  teamEntries.map(([conference, team]) => console.log(conference));
+
   const fullName: String = "New Orleans Saints";
   const parts = fullName.split(" ");
   const teamName = parts.pop();
@@ -74,32 +163,36 @@ export default function Home() {
 
   return (
     <main>
-      <Box className="w-full h-full flex flex-row justify-center items-center">
-        <Box className="w-3/4 h-full flex gap-4 my-10">
+      {/* Header */}
+      <Box className="w-full flex justify-center items-center gap-3 mt-8">
+        <img className="w-10 h-10 object-contain" src="nfl-logo.png"></img>
+        <Typography className="font-bold text-3xl">NFL Scoreboard</Typography>
+      </Box>
+
+      <Box className="w-full h-full flex flex-row justify-center items-center mt-8 mb-8">
+        <Box className="w-full h-full flex justify-center gap-8">
           {/* All Teams */}
-          <Box className="w-full h-full flex flex-col rounded-xl basis-1/4 bg-white">
-            <Box className="p-3">
-              <Typography className="text-base font-bold">
-                Southwest Divison
-              </Typography>
-              <TeamSideCard />
-              <Typography>Carolina Panthers</Typography>
-              <Typography>Atlanta Falcons</Typography>
-              <Typography>Tampa Bay Bucaneers</Typography>
-            </Box>
+          <Box className="w-auto h-full flex flex-col gap-3">
+            {Object.entries(divisonTeams).map(([conference, teams]) => (
+              <>
+                <Box className="bg-white rounded p-3 drop-shadow-md">
+                  <h1 className="font-semibold">{conference}</h1>
+                  {teams.map((team) => (
+                    <TeamSideCard name={team} />
+                  ))}
+                </Box>
+              </>
+            ))}
           </Box>
 
           {/* Game Scores */}
-          <Box className="w-full h-full grid basis-2/4 grid-cols-2 gap-2">
-            <Box className="w-full col-span-2 flex justify-start items-center gap-2 mb-3">
-              <img
-                className="w-10 h-10 object-contain"
-                src="nfl-logo.png"
-              ></img>
-              <Typography className="font-bold text-3xl">
-                NFL Scoreboard
-              </Typography>
-            </Box>
+          <Box className="w-full h-full grid basis-2/4 grid-cols-2 gap-5">
+            <ScoreCard />
+            <ScoreCard />
+            <ScoreCard />
+            <ScoreCard />
+            <ScoreCard />
+            <ScoreCard />
             <ScoreCard />
             <ScoreCard />
             <ScoreCard />
@@ -111,7 +204,7 @@ export default function Home() {
           </Box>
 
           {/* Related Articles*/}
-          <Box className="w-full h-full flex flex-col rounded-xl basis-1/4 bg-white">
+          <Box className="w-full h-full flex flex-col rounded-xl basis-1/6 bg-white">
             <Box className="p-3 py-0">
               <Typography className="my-3 font-bold"> NFL News</Typography>
               {newsData.data.map((data) => (

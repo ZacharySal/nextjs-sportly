@@ -11,9 +11,19 @@ export default function DateSelector() {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         sx={{
-          "& input": { color: "white", fontStyle: "bold" },
+          "& input": {
+            fontStyle: "bold",
+            borderColor: "white",
+          },
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "white",
+            },
+            "&:hover fieldset": {},
+            "&.Mui-focused fieldset": {},
+          },
         }}
-        label=""
+        label="Select Date"
         defaultValue={dayjs("2022-04-17")}
         slotProps={{ textField: { size: "small" } }}
       />
