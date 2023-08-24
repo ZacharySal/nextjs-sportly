@@ -165,7 +165,7 @@ export default function Home() {
     <main>
       {/* Header */}
       <Box className="w-full flex justify-center items-center gap-3 mt-8">
-        <img className="w-10 h-10 object-contain" src="nfl-logo.png"></img>
+        <img className="w-10 h-10 object-contain" src="nfl/nfl-logo.png"></img>
         <Typography className="font-bold text-3xl">NFL Scoreboard</Typography>
       </Box>
 

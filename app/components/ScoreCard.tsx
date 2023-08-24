@@ -13,7 +13,10 @@ export default function ScoreCard() {
           <Box className="w-full flex justify-between items-center">
             {/* Home Team Name and Logo*/}
             <Box className="flex items-center gap-3">
-              <img src="/panthers.png" className="w-10 h-10 object-cover"></img>
+              <img
+                src="nfl/panthers.png"
+                className="w-10 h-10 object-cover"
+              ></img>
               <Typography className="font-bold">Panthers</Typography>
             </Box>
             {/* Home Team Score*/}
@@ -23,7 +26,10 @@ export default function ScoreCard() {
           <Box className="w-full flex justify-between items-center">
             {/* Away Team Name and Logo*/}
             <Box className="flex items-center gap-3">
-              <img src="/raiders.png" className="w-10 h-10 object-cover"></img>
+              <img
+                src="nfl/raiders.png"
+                className="w-10 h-10 object-cover"
+              ></img>
               <Typography className="font-bold">Raiders</Typography>
             </Box>
             {/* Away Team Score*/}

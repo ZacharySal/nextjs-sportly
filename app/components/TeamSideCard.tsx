@@ -10,7 +10,7 @@ export default function TeamSideCard({ name }: { name: string }) {
       sx={{ cursor: "pointer" }}
       className="flex justify-start flex-row items-center gap-2 my-2"
     >
-      <img className="w-7 object-contain" src={`${teamName}.png`} />
+      <img className="w-7 object-contain" src={`nfl/${teamName}.png`} />
       <Typography>{name}</Typography>
     </Box>
   );
