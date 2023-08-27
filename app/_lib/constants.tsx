@@ -59,7 +59,7 @@ export const mlbDivisonTeams: Record<string, string[]> = {
   ],
   "AL Central": [
     "Chicago White Sox",
-    "Cleveland Indians",
+    "Cleveland Guardians",
     "Detroit Tigers",
     "Kansas City Royals",
     "Minnesota Twins",
@@ -93,3 +93,9 @@ export const mlbDivisonTeams: Record<string, string[]> = {
     "San Francisco Giants",
   ],
 };
+
+export const nameExceptions: string[] = [
+  "Boston Red Sox",
+  "Toronto Blue Jays",
+  "Chicago White Sox",
+];

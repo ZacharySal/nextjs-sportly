@@ -18,8 +18,6 @@ export default function ScoreCard({
   const homeTeam = game.competitors[0];
   const awayTeam = game.competitors[1];
 
-  console.log(game);
-
   let gameDate: string = version === 2 ? game.date : gameInfo.date;
   let gameDescription: string = game.status.type.description;
   let homeTeamId: string = homeTeam.id;
@@ -51,9 +49,6 @@ export default function ScoreCard({
       awayTeamScore = awayTeam.score;
     }
   }
-
-  console.log(homeTeamName + homeTeamScore);
-  console.log(awayTeamName + awayTeamScore);
 
   if (gameDescription === "In Progress" || gameDescription === "Scheduled") {
     gameDescription = game.status.type.shortDetail;
