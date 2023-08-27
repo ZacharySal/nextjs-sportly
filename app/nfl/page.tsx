@@ -41,7 +41,7 @@ export default async function Home() {
       {/* HEADER */}
       <Box
         sx={{ backgroundColor: "#013369" }}
-        className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-60"
+        className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-60 drop-shadow-md"
       >
         <Box className="flex flex-row justify-center items-center gap-3">
           <img className="w-32 object-cover" src={`/nfl/nfl-logo.png`} />
@@ -62,11 +62,11 @@ export default async function Home() {
               content: `""`,
               borderLeft: `60px solid #013369`,
               borderRight: `60px solid #D50A0A`,
-              width: "10rem",
+              width: "13rem",
               height: "100vh",
               position: "fixed",
               zIndex: "-20",
-              bottom: "-15rem",
+              bottom: "-20rem",
               left: "10rem",
               rotate: "130deg",
             },
@@ -83,7 +83,7 @@ export default async function Home() {
                   </h1>
                   <Divider flexItem />
                   {teams.map((team) => (
-                    <TeamSideCard name={team} />
+                    <TeamSideCard name={team} league="nfl" />
                   ))}
                 </Box>
               </>
@@ -93,7 +93,7 @@ export default async function Home() {
           {/* Game Scores */}
           <Box className="w-full h-full grid grid-cols-2 gap-5">
             {scores.content.sbData.events.map((game: any) => (
-              <ScoreCard gameInfo={game} version={1} />
+              <ScoreCard gameInfo={game} version={1} league={"nfl"} />
             ))}
           </Box>
 

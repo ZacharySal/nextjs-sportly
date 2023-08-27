@@ -96,11 +96,11 @@ export default async function TeamPage({
       {/* HEADER */}
       <Box
         sx={{ backgroundColor: `#${teamData.team.color}` }}
-        className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-60 border-b-4"
+        className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-60 drop-shadow-md"
       >
         <Box className="flex flex-row justify-center items-center gap-3">
           <img
-            className="w-36 object-cover"
+            className="w-32 object-cover"
             src={`/nfl/${teamData.team.name}.png`}
           />
           <Box className="flex flex-col text-white opacity-80 pr-6 border-r-4">
@@ -131,11 +131,11 @@ export default async function TeamPage({
               content: `""`,
               borderLeft: `60px solid #${teamData.team.alternateColor}`,
               borderRight: `60px solid #${teamData.team.color}`,
-              width: "10rem",
+              width: "13rem",
               height: "100vh",
               position: "fixed",
               zIndex: "-20",
-              bottom: "-15rem",
+              bottom: "-20rem",
               left: "10rem",
               rotate: "130deg",
             },
@@ -175,7 +175,12 @@ export default async function TeamPage({
           {/* TEAM SCHEDULE */}
           <Box className="w-full h-full grid grid-cols-2 gap-5">
             {teamSchedule.events.map((game: any) => (
-              <ScoreCard key={game.uuid} gameInfo={game} version={2} />
+              <ScoreCard
+                key={game.uuid}
+                gameInfo={game}
+                version={2}
+                league="nfl"
+              />
             ))}
           </Box>
 

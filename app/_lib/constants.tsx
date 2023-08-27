@@ -48,3 +48,48 @@ export const divisonTeams: Record<string, string[]> = {
     "Los Angeles Rams",
   ],
 };
+
+export const mlbDivisonTeams: Record<string, string[]> = {
+  "AL East": [
+    "Baltimore Orioles",
+    "Tampa Bay Rays",
+    "Boston Red Sox",
+    "New York Yankees",
+    "Toronto Blue Jays",
+  ],
+  "AL Central": [
+    "Chicago White Sox",
+    "Cleveland Indians",
+    "Detroit Tigers",
+    "Kansas City Royals",
+    "Minnesota Twins",
+  ],
+  "AL West": [
+    "Houston Astros",
+    "Los Angeles Angels",
+    "Oakland Athletics",
+    "Seattle Mariners",
+    "Texas Rangers",
+  ],
+  "NL East": [
+    "Atlanta Braves",
+    "Miami Marlins",
+    "New York Mets",
+    "Philadelphia Phillies",
+    "Washington Nationals",
+  ],
+  "NL Central": [
+    "Chicago Cubs",
+    "Cincinnati Reds",
+    "Milwaukee Brewers",
+    "Pittsburgh Pirates",
+    "St. Louis Cardinals",
+  ],
+  "NL West": [
+    "Arizona Diamondbacks",
+    "Colorado Rockies",
+    "Los Angeles Dodgers",
+    "San Diego Padres",
+    "San Francisco Giants",
+  ],
+};

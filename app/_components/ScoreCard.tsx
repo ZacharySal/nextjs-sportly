@@ -8,9 +8,11 @@ import { GameInfoType } from "../../types";
 export default function ScoreCard({
   gameInfo,
   version,
+  league,
 }: {
   gameInfo: any;
   version: number;
+  league: string;
 }) {
   const game = gameInfo.competitions[0];
   const homeTeam = game.competitors[0];
@@ -80,17 +82,17 @@ export default function ScoreCard({
             {/* Home Team Name and Logo*/}
             <Box
               sx={{ cursor: "pointer" }}
-              onClick={() => router.push(`/nfl/team/${homeTeamId}`)}
+              onClick={() => router.push(`/${league}/team/${homeTeamId}`)}
               className="flex items-center gap-2"
             >
               <img
-                src={`/nfl/${homeTeamName}.png`}
+                src={`/${league}/${homeTeamName.replace(" ", "")}.png`}
                 className="w-10 h-10 object-cover"
               ></img>
-              <Typography className="font-bold">{homeTeamName}</Typography>
+              <Typography className="font-semibold">{homeTeamName}</Typography>
             </Box>
             {/* Home Team Score*/}
-            <Typography>{homeTeamScore}</Typography>
+            <Typography className="font-bold">{homeTeamScore}</Typography>
           </Box>
 
           <Box className="w-full flex justify-between items-center">
@@ -98,16 +100,16 @@ export default function ScoreCard({
             <Box
               sx={{ cursor: "pointer" }}
               className="flex items-center gap-2"
-              onClick={() => router.push(`/nfl/team/${awayTeamId}`)}
+              onClick={() => router.push(`/${league}/team/${awayTeamId}`)}
             >
               <img
-                src={`/nfl/${awayTeamName}.png`}
+                src={`/${league}/${awayTeamName}.png`}
                 className="w-10 h-10 object-cover"
               ></img>
-              <Typography className="font-bold">{awayTeamName}</Typography>
+              <Typography className="font-semibold">{awayTeamName}</Typography>
             </Box>
             {/* Away Team Score*/}
-            <Typography>{awayTeamScore}</Typography>
+            <Typography className="font-bold">{awayTeamScore}</Typography>
           </Box>
         </Box>
         <ArrowForwardIosIcon className="m-auto text-sm" />
