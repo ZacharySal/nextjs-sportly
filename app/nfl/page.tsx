@@ -1,14 +1,18 @@
-import { Box, Divider, Typography } from "@mui/material";
+"use client";
+
+import { Box, ButtonGroup, Button, Divider, Typography } from "@mui/material";
+import { useState } from "react";
 import ArticleCard from "../_components/ArticleCard";
 import TeamSideCard from "../_components/TeamSideCard";
 import ScoreCard from "../_components/ScoreCard";
 import { divisonTeams } from "../_lib/constants";
+import { getNflWeeks } from "../_lib/weeks";
 
 // we first need to fetch all NFL scores from espn api (current date)
 
-async function getScoresOnWeek() {
+async function getScoresOnWeek(selectedWeek: string) {
   const response = await fetch(
-    "https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50&week=4",
+    `https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50&week=${selectedWeek}`,
     { next: { revalidate: 30 } }
   );
 
@@ -32,9 +36,34 @@ async function getNewsArticles() {
 }
 
 export default async function Home() {
-  const scores = await getScoresOnWeek();
+  const [selectedWeek, setSelectedWeek] = useState("4");
+  const scores = await getScoresOnWeek(selectedWeek);
   const news = await getNewsArticles();
   const teamEntries = Object.entries(divisonTeams);
+
+  const seasonWeeks = await getNflWeeks("2023");
+
+  function dateButtons() {
+    const buttons = Object.entries(seasonWeeks).map(([index, season]) =>
+      season.weeks.map((week: any) => {
+        return (
+          <Button
+            sx={{
+              backgroundColor: "black",
+              color: "black",
+              width: "auto",
+              fontWeight: "semibold",
+            }}
+            onClick={() => setSelectedWeek(week.weekNumber)}
+          >
+            {week.text}
+          </Button>
+        );
+      })
+    );
+
+    return buttons;
+  }
 
   return (
     <main>
@@ -50,7 +79,22 @@ export default async function Home() {
               National Football League
             </Typography>
             <Typography className="text-3xl font-bold">NFL</Typography>
+            <Typography className="text-3xl font-bold">
+              Selected Week: {selectedWeek}
+            </Typography>
           </Box>
+        </Box>
+      </Box>
+
+      <Box className="w-full h-full flex justify-center items-center my-5">
+        <Box className="w-3/4 flex overflow-x-scroll">
+          <ButtonGroup
+            sx={{ backgroundColor: "white" }}
+            variant="outlined"
+            aria-label="text button group"
+          >
+            {dateButtons()}
+          </ButtonGroup>
         </Box>
       </Box>
 
@@ -73,6 +117,12 @@ export default async function Home() {
           }}
           className="w-3/4 h-full flex flex-row justify-center items-start gap-8 my-8"
         >
+          {/* <Box className="w-full h-full flex-row justify-center items-center bg-red-500 text-black gap-2">
+            {Object.entries(seasonWeeks).map(([index, season]) => (
+              <h1>{season.name}</h1>
+            ))}
+          </Box> */}
+
           {/* ALL TEAMS */}
           <Box className="w-3/12 h-full flex flex-col gap-3">
             {Object.entries(divisonTeams).map(([conference, teams]) => (

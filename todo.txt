@@ -1,3 +1,8 @@
 1) Fix NFL Home Page Articles
 2) Implement Game Overview Page
 3) Implement Player Page
+
+
+We can get Calendar from scoreboard api call
+We can get events between two dates with https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=20230801-20230904
+We need to make our own buttons and use react carousel
