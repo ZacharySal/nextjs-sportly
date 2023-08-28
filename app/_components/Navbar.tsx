@@ -11,8 +11,12 @@ export default function Navbar() {
       <h1 className="cursor-pointer" onClick={() => router.push("/nfl")}>
         NFL
       </h1>
-      <h1>MLB</h1>
-      <h1>NBA</h1>
+      <h1 className="cursor-pointer" onClick={() => router.push("/mlb")}>
+        MLB
+      </h1>
+      <h1 className="cursor-pointer" onClick={() => router.push("/nba")}>
+        NBA
+      </h1>
     </nav>
   );
 }

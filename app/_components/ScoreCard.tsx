@@ -18,6 +18,7 @@ export default function ScoreCard({
   const homeTeam = game.competitors[0];
   const awayTeam = game.competitors[1];
 
+  let gameId: string;
   let gameDate: string = version === 2 ? game.date : gameInfo.date;
   let gameDescription: string = game.status.type.description;
   let homeTeamId: string = homeTeam.id;
@@ -30,10 +31,13 @@ export default function ScoreCard({
 
   gameDate = new Date(gameInfo.date).toLocaleDateString();
 
+  let index = gameInfo.uid.indexOf("e");
+  gameId = gameInfo.uid.substring(index + 2);
+
   if (version == 2) {
     if (gameDescription !== "Final") {
-      homeTeamScore = homeTeam.score;
-      awayTeamScore = awayTeam.score;
+      homeTeamScore = "";
+      awayTeamScore = "";
     } else {
       homeTeamScore = homeTeam.score.value;
       awayTeamScore = awayTeam.score.value;
@@ -73,7 +77,7 @@ export default function ScoreCard({
       {/* Team Names and Score */}
       <Box className="w-full flex flex-row justify-between gap-5">
         <Box className="w-full ">
-          <Box className="w-full flex justify-between items-center">
+          <Box className="w-full flex justify-between items-center mb-2">
             {/* Home Team Name and Logo*/}
             <Box
               sx={{ cursor: "pointer" }}
@@ -98,7 +102,7 @@ export default function ScoreCard({
               onClick={() => router.push(`/${league}/team/${awayTeamId}`)}
             >
               <img
-                src={`/${league}/${awayTeamName}.png`}
+                src={`/${league}/${awayTeamName.replace(" ", "")}.png`}
                 className="w-10 h-10 object-cover"
               ></img>
               <Typography className="font-semibold">{awayTeamName}</Typography>
@@ -107,7 +111,10 @@ export default function ScoreCard({
             <Typography className="font-bold">{awayTeamScore}</Typography>
           </Box>
         </Box>
-        <ArrowForwardIosIcon className="m-auto text-sm" />
+        <ArrowForwardIosIcon
+          onClick={() => router.push(`/${league}/game/${gameId}`)}
+          className="m-auto text-sm cursor-pointer"
+        />
       </Box>
       <Divider />
       {/* CTA Buttons */}

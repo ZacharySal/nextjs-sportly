@@ -39,10 +39,10 @@ export default async function Home() {
     <main>
       {/* HEADER */}
       <Box
-        sx={{ backgroundColor: "#013369" }}
+        sx={{ backgroundColor: "#002D72" }}
         className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-60 drop-shadow-md"
       >
-        <Box className="flex flex-row justify-center items-center gap-3">
+        <Box className="flex flex-row justify-center items-center gap-5">
           <img className="w-32 object-cover" src={`/mlb/mlb-logo.png`} />
           <Box className="flex flex-col text-white opacity-80">
             <Typography className="text-3xl opacity-70">
@@ -59,7 +59,7 @@ export default async function Home() {
           sx={{
             "&::before": {
               content: `""`,
-              borderLeft: `60px solid #013369`,
+              borderLeft: `60px solid #002D72`,
               borderRight: `60px solid #D50A0A`,
               width: "13rem",
               height: "100vh",
