@@ -1,40 +1,38 @@
-export async function getNflWeeks(year: string) {
+export async function getNflWeeks() {
   const response = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/${year}`
+    "https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50"
   );
 
-  const seasonInfo = await response.json();
-
-  const seasons = seasonInfo.types.items.map(
-    (seasonType: { name: string; $ref: string }) => {
-      return {
-        name: seasonType.name,
-        linkToWeeks: seasonType.$ref,
-        weeks: [],
-      };
-    }
-  );
-
-  for (let season of seasons) {
-    const response = await fetch(season.linkToWeeks);
-    const data = await response.json();
-
-    const newResponse = await fetch(data.weeks["$ref"]);
-    const newData = await newResponse.json();
-    const allWeekLinks = newData.items;
-
-    for (let link of allWeekLinks) {
-      const response = await fetch(link["$ref"]);
-      const data = await response.json();
-
-      season.weeks.push({
-        startDate: data.startDate,
-        endDate: data.endDate,
-        text: data.text,
-        weekNumber: data.number,
-      });
-    }
+  if (!response.ok) {
+    throw new Error("Failed to get NFL weeks data");
   }
 
-  return seasons;
+  const data = await response.json();
+
+  let seasonInfo: any = [];
+  let weeks: any;
+  let finalWeeks: any = [];
+
+  data.content.sbData.leagues[0].calendar.map(
+    (week: any) => (
+      (weeks = week.entries.map((weekEntry: any) => ({
+        weekEndDate: weekEntry.endDate,
+        weekStartDate: weekEntry.startDate,
+        weekLabel: weekEntry.alternateLabel,
+        weekDisplayDateRange: weekEntry.detail,
+        weekValue: weekEntry.value,
+        seasonValue: week.value,
+      }))),
+      seasonInfo.push({
+        seasonStartDate: week.startDate,
+        seasonEndDate: week.endDate,
+        seasonLabel: week.label,
+        seasonWeeks: weeks,
+      }),
+      (weeks = []),
+      finalWeeks.push(seasonInfo)
+    )
+  );
+
+  return finalWeeks[0];
 }

@@ -31,8 +31,8 @@ export default function ScoreCard({
 
   gameDate = new Date(gameInfo.date).toLocaleDateString();
 
-  let index = gameInfo.uid.indexOf("e");
-  gameId = gameInfo.uid.substring(index + 2);
+  let index = gameInfo?.uid?.indexOf("e");
+  gameId = gameInfo?.uid?.substring(index + 2);
 
   if (version == 2) {
     if (gameDescription !== "Final") {
