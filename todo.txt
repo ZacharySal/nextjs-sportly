@@ -1,6 +1,14 @@
-1) Fix NFL Home Page Articles
-2) Implement Game Overview Page
-3) Implement Player Page
+1) Implement Game Overview Page
+2) Add key for scoreboard 
 
-
-Move ScoreBoard into its own client component
+news.articles.slice(0, 10).map((article: any, index: number) => (
+            <>
+              <ArticleCard
+                key={article.dataSourceIdentifier}
+                article={article}
+              />
+              {index + 1 != 10 && (
+                <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
+              )}
+            </>
+          ))}

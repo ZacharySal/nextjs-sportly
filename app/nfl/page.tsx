@@ -1,18 +1,11 @@
-import {
-  Box,
-  ButtonGroup,
-  Button,
-  Divider,
-  Typography,
-  selectClasses,
-} from "@mui/material";
-import Carousel from "react-material-ui-carousel";
-import { useEffect, useState } from "react";
-import ArticleCard from "../_components/ArticleCard";
+import { Box, Divider, Typography } from "@mui/material";
+import Articles from "../_components/Articles";
 import TeamSideCard from "../_components/TeamSideCard";
-import ScoreCard from "../_components/ScoreCard";
+import ContainerBox from "../_components/ContainerBox";
 import Scoreboard from "../_components/Scoreboard";
-import { divisonTeams } from "../_lib/constants";
+import LeagueHeader from "../_components/LeagueHeader";
+import AllTeams from "../_components/AllTeams";
+import { nflDivisonTeams } from "../_lib/constants";
 
 async function getNewsArticles() {
   const response = await fetch(
@@ -71,89 +64,12 @@ export default async function Home() {
 
   return (
     <main>
-      {/* HEADER */}
-      <Box
-        sx={{ backgroundColor: "#013369" }}
-        className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-60 drop-shadow-md"
-      >
-        <Box className="flex flex-row justify-center items-center gap-3">
-          <img className="w-32 object-cover" src={`/nfl/nfl-logo.png`} />
-          <Box className="flex flex-col text-white opacity-80">
-            <Typography className="text-3xl opacity-70">
-              National Football League
-            </Typography>
-            <Typography className="text-3xl font-bold">NFL</Typography>
-          </Box>
-        </Box>
-      </Box>
-
-      {/* CONTAINER BOXES */}
-      <Box className="w-full h-full flex flex-row justify-center relative items-center">
-        <Box
-          sx={{
-            "&::before": {
-              content: `""`,
-              borderLeft: `60px solid #013369`,
-              borderRight: `60px solid #D50A0A`,
-              width: "13rem",
-              height: "100vh",
-              position: "fixed",
-              zIndex: "-20",
-              bottom: "-20rem",
-              left: "10rem",
-              rotate: "130deg",
-            },
-          }}
-          className="w-3/4 h-full flex flex-row justify-center items-start gap-8 my-8"
-        >
-          {/* ALL TEAMS */}
-          <Box className="w-3/12 h-full flex flex-col gap-3">
-            {Object.entries(divisonTeams).map(([conference, teams]) => (
-              <>
-                <Box className="bg-white rounded-xl p-4 drop-shadow-md">
-                  <h1 className="font-semibold text-sm opacity-80 mb-1">
-                    {conference}
-                  </h1>
-                  <Divider flexItem />
-                  {teams.map((team) => (
-                    <TeamSideCard name={team} league="nfl" />
-                  ))}
-                </Box>
-              </>
-            ))}
-          </Box>
-
-          {/* GAME SCORES */}
-          <Box className="w-7/12">
-            <Scoreboard seasonWeeks={seasonWeeks} />
-          </Box>
-
-          {/* RELATED ARTICLES */}
-          <Box className="w-1/4 h-full p-3 flex flex-col rounded-xl bg-white drop-shadow-md">
-            <Typography className="mb-2 font-semibold text-sm opacity-80">
-              {`NFL News`}
-            </Typography>
-            {news.articles.slice(0, 8).map((article: any, index: number) => (
-              <>
-                <ArticleCard
-                  key={article.dataSourceIdentifier}
-                  article={article}
-                />
-                {index + 1 != 8 && (
-                  <Divider
-                    style={{
-                      width: "100%",
-                      color: "#edeef0",
-                      backgroundColor: "#edeef0",
-                      margin: "0.4rem 0rem 0.5rem 0 ",
-                    }}
-                  />
-                )}
-              </>
-            ))}
-          </Box>
-        </Box>
-      </Box>
+      <LeagueHeader backgroundColor="013369" league="nfl" />
+      <ContainerBox altColor="013369" mainColor="D50A0A">
+        <AllTeams allTeams={nflDivisonTeams} league="nfl" />
+        <Scoreboard seasonWeeks={seasonWeeks} league={"nfl"} />
+        <Articles title={`NFL News`} teamNews={news} articleLimit={10} />
+      </ContainerBox>
     </main>
   );
 }

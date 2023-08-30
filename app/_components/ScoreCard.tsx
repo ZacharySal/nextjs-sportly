@@ -9,10 +9,12 @@ export default function ScoreCard({
   gameInfo,
   version,
   league,
+  teamView,
 }: {
   gameInfo: any;
   version: number;
   league: string;
+  teamView: boolean;
 }) {
   const game = gameInfo.competitions[0];
   const homeTeam = game.competitors[0];
@@ -31,8 +33,12 @@ export default function ScoreCard({
 
   gameDate = new Date(gameInfo.date).toLocaleDateString();
 
-  let index = gameInfo?.uid?.indexOf("e");
-  gameId = gameInfo?.uid?.substring(index + 2);
+  if (!teamView) {
+    let index = gameInfo?.uid?.indexOf("e");
+    gameId = gameInfo?.uid?.substring(index + 2);
+  } else {
+    gameId = gameInfo.id;
+  }
 
   if (version == 2) {
     if (gameDescription !== "Final") {
@@ -72,7 +78,7 @@ export default function ScoreCard({
   const router = useRouter();
 
   return (
-    <Box className="w-full h-full flex justfy-between flex-col gap-4 p-3 rounded-xl text-black drop-shadow-md bg-white">
+    <Box className="w-full flex justfy-between flex-col gap-4 p-3 rounded-xl text-black drop-shadow-md bg-white">
       <Typography className="text-sm font-bold">{gameDescription}</Typography>
       {/* Team Names and Score */}
       <Box className="w-full flex flex-row justify-between gap-5">
