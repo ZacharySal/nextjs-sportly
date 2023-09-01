@@ -46,6 +46,8 @@ export default async function TeamPage({
 
   const winningTeam = homeTeam.winner ? homeTeam : awayTeam;
 
+  console.log(gameData.leaders[0].leaders[0]);
+
   const allScoringPlays = gameData.scoringPlays;
   let firstQuarterScoringPlays: any[] = [];
   let secondQuarterScoringPlays: any[] = [];
@@ -98,17 +100,115 @@ export default async function TeamPage({
             </Box>
           </Box>
           <Box className="flex flex-row gap-6 pr-2">
-            <Typography className="font-semibold w-3 text-center">
-              {play.awayScore}
-            </Typography>
-            <Typography className="font-semibold w-4 text-center">
+            <Typography
+              sx={{
+                fontWeight:
+                  play.team.displayName === homeTeam.team.displayName
+                    ? "700"
+                    : "400",
+              }}
+              className="w-4 text-center"
+            >
               {play.homeScore}
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight:
+                  play.team.displayName === awayTeam.team.displayName
+                    ? "700"
+                    : "400",
+              }}
+              className="w-4 text-center"
+            >
+              {play.awayScore}
             </Typography>
           </Box>
         </Box>
       );
     });
     return plays;
+  }
+
+  function boxScore() {
+    return (
+      <Box className="w-full bg-white p-3 rounded-xl drop-shadow-md grid items-center text-center grid-cols-8 grid-rows-[0.25rem, 0.5rem, 0.5rem] gap-y-2 gap-x-0">
+        <Typography className="text-base opacity-60 col-start-1 col-span-2 text-start">
+          Box Score
+        </Typography>
+        <Typography className="text-sm opacity-60 col-start-4">1</Typography>
+        <Typography className="text-sm opacity-60 col-start-5">2</Typography>
+        <Typography className="text-sm opacity-60 col-start-6">3</Typography>
+        <Typography className="text-sm opacity-60 col-start-7">4</Typography>
+        <Typography className="text-sm opacity-60 col-start-8">T</Typography>
+
+        <Box className="col-span-3 row-start-2 flex flex-row justify-start items-center gap-2">
+          <img
+            className="w-10 obejct-cotain"
+            src={`/nfl/${gameData.header.competitions[0].competitors[0].team.name}.png`}
+          />
+          <Typography className="font-semibold">
+            {gameData.header.competitions[0].competitors[0].team.name}
+          </Typography>
+          <Typography className="text-sm opacity-60">
+            {
+              gameData.header.competitions[0].competitors[0].record[0]
+                .displayValue
+            }
+          </Typography>
+        </Box>
+
+        <Box className="col-span-3 row-start-3 flex flex-row justify-start items-center gap-2">
+          <img
+            className="w-10 obejct-cotain"
+            src={`/nfl/${gameData.header.competitions[0].competitors[1].team.name}.png`}
+          />
+          <Typography className="font-semibold">
+            {gameData.header.competitions[0].competitors[1].team.name}
+          </Typography>
+          <Typography className="text-sm opacity-60">
+            {
+              gameData.header.competitions[0].competitors[1].record[0]
+                .displayValue
+            }
+          </Typography>
+        </Box>
+
+        <Typography className="opacity-70 col-start-4 row-start-2">
+          {
+            gameData.header.competitions[0].competitors[0].linescores[0]
+              .displayValue
+          }
+        </Typography>
+        <Typography className="opacity-70 col-start-5 row-start-2">
+          {homeTeamLinescore[1].displayValue}
+        </Typography>
+        <Typography className="opacity-70 col-start-6 row-start-2">
+          {homeTeamLinescore[2].displayValue}
+        </Typography>
+        <Typography className="opacity-70 col-start-7 row-start-2">
+          {homeTeamLinescore[3].displayValue}
+        </Typography>
+        <Typography className="font-bold col-start-8 row-start-2">
+          {gameData.header.competitions[0].competitors[0].score}
+        </Typography>
+
+        <Typography className="opacity-70 col-start-4 row-start-3">
+          {awayTeamLinescore[0].displayValue}
+        </Typography>
+        <Typography className="opacity-70 col-start-5 row-start-3">
+          {awayTeamLinescore[1].displayValue}
+        </Typography>
+        <Typography className="opacity-70 col-start-6 row-start-3">
+          {awayTeamLinescore[2].displayValue}
+        </Typography>
+        <Typography className="opacity-70 col-start-7 row-start-3">
+          {awayTeamLinescore[3].displayValue}
+        </Typography>
+        <Typography className="font-bold col-start-8 row-start-3">
+          {gameData.header.competitions[0].competitors[1].score}
+        </Typography>
+      </Box>
+    );
   }
 
   return (
@@ -165,115 +265,210 @@ export default async function TeamPage({
         altColor={winningTeam.altColor}
         mainColor={winningTeam.color}
       >
-        <Box className="w-1/4 flex flex-col justify-center items-center">
+        <Box className="w-1/3 flex flex-col justify-center items-center gap-3">
           <Box className="w-full flex flex-col bg-white rounded-xl drop-shadow-md gap-2 p-3">
             <Typography className="text-sm opacity-70 font-semibold text-start">
-              Game Information
+              Stadium Information
             </Typography>
             <img
               className="rounded"
               src={gameData.gameInfo.venue.images[0].href}
             />
-            <Typography>{gameData.gameInfo.venue.fullName}</Typography>
-            <Typography>
-              {gameData.gameInfo.venue.address.city} ,
+            <Typography className="opacity-80 font-bold">
+              {gameData.gameInfo.venue.fullName}
+            </Typography>
+            <Typography className="opacity-80 text-sm mt-[-0.5rem]">
+              {gameData.gameInfo.venue.address.city},{" "}
               {gameData.gameInfo.venue.address.state}
             </Typography>
           </Box>
+          <Box className="w-full bg-white rounded-xl drop-shadow-md p-3">
+            <Typography className="text-sm opacity-70 font-semibold text-start">
+              Game Leaders
+            </Typography>
+
+            <Box className="grid grid-cols-2 grid-rows-[0.25rem, 1rem, 0.25rem, 1rem, 0.25rem, 1rem] gap-x-2 gap-y-0">
+              <Typography className="text-sm col-span-2 text-center opacity-70">
+                Passing Yards
+              </Typography>
+
+              {/* HOME TEAM PASSING LEADER */}
+              <Box className="flex flex-row justify-between items-center">
+                <Box className="flex flex-col justify-center items-center gap-1">
+                  <img
+                    className="w-14 object-cover"
+                    src={
+                      gameData.leaders[0].leaders[0].leaders[0].athlete.headshot
+                        .href
+                    }
+                  />
+                  <Typography className="text-xs opacity-80">
+                    {gameData.leaders[0].team.abbreviation}
+                  </Typography>
+                </Box>
+                <Box className="flex flex-col items-end">
+                  <Typography className="text-sm opacity-80 font-bold">
+                    {
+                      gameData.leaders[0].leaders[0].leaders[0].athlete
+                        .shortName
+                    }
+                  </Typography>
+                  <Typography className="text-[11px] opacity-80">
+                    {gameData.leaders[0].leaders[0].leaders[0].displayValue}
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* AWAY TEAM PASSING LEADER */}
+              <Box className="flex flex-row justify-between items-center">
+                <Box className="flex flex-col items-start">
+                  <Typography className="text-sm opacity-80 font-bold">
+                    {
+                      gameData.leaders[1].leaders[0].leaders[0].athlete
+                        .shortName
+                    }
+                  </Typography>
+                  <Typography className="text-[11px] opacity-80">
+                    {gameData.leaders[1].leaders[0].leaders[0].displayValue}
+                  </Typography>
+                </Box>
+                <Box className="flex flex-col justify-center items-center gap-1">
+                  <img
+                    className="w-14 object-cover"
+                    src={
+                      gameData.leaders[1].leaders[0].leaders[0].athlete.headshot
+                        .href
+                    }
+                  />
+                  <Typography className="text-xs opacity-80">
+                    {gameData.leaders[1].team.abbreviation}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Typography className="text-sm col-span-2 text-center opacity-70">
+                Rushing Yards
+              </Typography>
+
+              {/* HOME TEAM RUSHING LEADER */}
+              <Box className="flex flex-row justify-between items-center">
+                <Box className="flex flex-col justify-center items-center gap-1">
+                  <img
+                    className="w-14 object-cover"
+                    src={
+                      gameData.leaders[0].leaders[1].leaders[0].athlete.headshot
+                        .href
+                    }
+                  />
+                  <Typography className="text-xs opacity-80">
+                    {gameData.leaders[0].team.abbreviation}
+                  </Typography>
+                </Box>
+                <Box className="flex flex-col items-end">
+                  <Typography className="text-sm opacity-80 font-bold">
+                    {
+                      gameData.leaders[0].leaders[1].leaders[0].athlete
+                        .shortName
+                    }
+                  </Typography>
+                  <Typography className="text-[11px] opacity-80">
+                    {gameData.leaders[0].leaders[1].leaders[0].displayValue}
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* AWAY TEAM RUSHING LEADER */}
+              <Box className="flex flex-row justify-between items-center">
+                <Box className="flex flex-col items-start">
+                  <Typography className="text-sm opacity-80 font-bold">
+                    {
+                      gameData.leaders[1].leaders[1].leaders[0].athlete
+                        .shortName
+                    }
+                  </Typography>
+                  <Typography className="text-[11px] opacity-80">
+                    {gameData.leaders[1].leaders[1].leaders[0].displayValue}
+                  </Typography>
+                </Box>
+                <Box className="flex flex-col justify-center items-center gap-1">
+                  <img
+                    className="w-14 object-cover"
+                    src={
+                      gameData.leaders[1].leaders[1].leaders[0].athlete.headshot
+                        .href
+                    }
+                  />
+                  <Typography className="text-xs opacity-80">
+                    {gameData.leaders[1].team.abbreviation}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Typography className="text-sm col-span-2 text-center opacity-70">
+                Recieving Yards
+              </Typography>
+
+              {/* HOME TEAM RECIEVING */}
+              <Box className="flex flex-row justify-between items-center">
+                <Box className="flex flex-col justify-center items-center gap-1">
+                  <img
+                    className="w-14 object-cover"
+                    src={
+                      gameData.leaders[0].leaders[2].leaders[0].athlete.headshot
+                        .href
+                    }
+                  />
+                  <Typography className="text-xs opacity-80">
+                    {gameData.leaders[0].team.abbreviation}
+                  </Typography>
+                </Box>
+                <Box className="flex flex-col items-end">
+                  <Typography className="text-sm opacity-80 font-bold">
+                    {
+                      gameData.leaders[0].leaders[2].leaders[0].athlete
+                        .shortName
+                    }
+                  </Typography>
+                  <Typography className="text-[11px] opacity-80">
+                    {gameData.leaders[0].leaders[2].leaders[0].displayValue}
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* AWAY TEAM RECIEVING LEADER */}
+              <Box className="flex flex-row justify-between items-center">
+                <Box className="flex flex-col items-start">
+                  <Typography className="text-sm opacity-80 font-bold">
+                    {
+                      gameData.leaders[1].leaders[2].leaders[0].athlete
+                        .shortName
+                    }
+                  </Typography>
+                  <Typography className="text-[11px] opacity-80">
+                    {gameData.leaders[1].leaders[2].leaders[0].displayValue}
+                  </Typography>
+                </Box>
+                <Box className="flex flex-col justify-center items-center gap-1">
+                  <img
+                    className="w-14 object-cover"
+                    src={
+                      gameData.leaders[1].leaders[2].leaders[0].athlete.headshot
+                        .href
+                    }
+                  />
+                  <Typography className="text-xs opacity-80">
+                    {gameData.leaders[1].team.abbreviation}
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
         </Box>
+
         {/* Box Score */}
         <Box className="w-7/12 flex flex-col gap-5">
-          <Box className="w-full bg-white p-3 rounded-xl drop-shadow-md grid items-center text-center grid-cols-8 grid-rows-[0.25rem, 0.5rem, 0.5rem] gap-y-2 gap-x-0">
-            <Typography className="text-base opacity-60 col-start-1 col-span-2 text-start">
-              Box Score
-            </Typography>
-            <Typography className="text-sm opacity-60 col-start-4">
-              1
-            </Typography>
-            <Typography className="text-sm opacity-60 col-start-5">
-              2
-            </Typography>
-            <Typography className="text-sm opacity-60 col-start-6">
-              3
-            </Typography>
-            <Typography className="text-sm opacity-60 col-start-7">
-              4
-            </Typography>
-            <Typography className="text-sm opacity-60 col-start-8">
-              T
-            </Typography>
-
-            <Box className="col-span-3 row-start-2 flex flex-row justify-start items-center gap-2">
-              <img
-                className="w-10 obejct-cotain"
-                src={`/nfl/${gameData.header.competitions[0].competitors[0].team.name}.png`}
-              />
-              <Typography className="font-semibold">
-                {gameData.header.competitions[0].competitors[0].team.name}
-              </Typography>
-              <Typography className="text-sm opacity-60">
-                {
-                  gameData.header.competitions[0].competitors[0].record[0]
-                    .displayValue
-                }
-              </Typography>
-            </Box>
-
-            <Box className="col-span-3 row-start-3 flex flex-row justify-start items-center gap-2">
-              <img
-                className="w-10 obejct-cotain"
-                src={`/nfl/${gameData.header.competitions[0].competitors[1].team.name}.png`}
-              />
-              <Typography className="font-semibold">
-                {gameData.header.competitions[0].competitors[1].team.name}
-              </Typography>
-              <Typography className="text-sm opacity-60">
-                {
-                  gameData.header.competitions[0].competitors[1].record[0]
-                    .displayValue
-                }
-              </Typography>
-            </Box>
-
-            <Typography className="opacity-70 col-start-4 row-start-2">
-              {
-                gameData.header.competitions[0].competitors[0].linescores[0]
-                  .displayValue
-              }
-            </Typography>
-            <Typography className="opacity-70 col-start-5 row-start-2">
-              {homeTeamLinescore[1].displayValue}
-            </Typography>
-            <Typography className="opacity-70 col-start-6 row-start-2">
-              {homeTeamLinescore[2].displayValue}
-            </Typography>
-            <Typography className="opacity-70 col-start-7 row-start-2">
-              {homeTeamLinescore[3].displayValue}
-            </Typography>
-            <Typography className="font-bold col-start-8 row-start-2">
-              {gameData.header.competitions[0].competitors[0].score}
-            </Typography>
-
-            <Typography className="opacity-70 col-start-4 row-start-3">
-              {awayTeamLinescore[0].displayValue}
-            </Typography>
-            <Typography className="opacity-70 col-start-5 row-start-3">
-              {awayTeamLinescore[1].displayValue}
-            </Typography>
-            <Typography className="opacity-70 col-start-6 row-start-3">
-              {awayTeamLinescore[2].displayValue}
-            </Typography>
-            <Typography className="opacity-70 col-start-7 row-start-3">
-              {awayTeamLinescore[3].displayValue}
-            </Typography>
-            <Typography className="font-bold col-start-8 row-start-3">
-              {gameData.header.competitions[0].competitors[1].score}
-            </Typography>
-          </Box>
-
+          {boxScore()}
           <Box className="w-full bg-white rounded-xl drop-shadow-md flex flex-col justify-center items-center p-3">
-            {/* Scoring Play*/}
-
             {quarterHeader("1ST QUARTER")}
             {scoringPlays(firstQuarterScoringPlays)}
             <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
@@ -287,7 +482,7 @@ export default async function TeamPage({
             {scoringPlays(fourthQuarterScoringPlays)}
           </Box>
         </Box>
-        <Articles title="NFL News" teamNews={gameData.news} articleLimit={6} />
+        <Articles title="NFL News" teamNews={gameData.news} articleLimit={4} />
       </ContainerBox>
     </>
   );
