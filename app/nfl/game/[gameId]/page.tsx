@@ -1,6 +1,9 @@
-import { Box, Typography, Divider } from "@mui/material";
+import { Box, Typography, Divider, Container } from "@mui/material";
 import ArticleCard from "@/app/_components/ArticleCard";
 import ScoreCard from "@/app/_components/ScoreCard";
+import ContainerBox from "@/app/_components/ContainerBox";
+import { Play } from "next/font/google";
+import Articles from "@/app/_components/Articles";
 
 async function getGameData(gameId: string) {
   const response = await fetch(
@@ -36,8 +39,77 @@ export default async function TeamPage({
 
   const awayTeam = scoreData.__gamepackage__.awayTeam;
   const homeTeam = scoreData.__gamepackage__.homeTeam;
+  const homeTeamLinescore =
+    gameData.header.competitions[0].competitors[0].linescores;
+  const awayTeamLinescore =
+    gameData.header.competitions[0].competitors[1].linescores;
 
   const winningTeam = homeTeam.winner ? homeTeam : awayTeam;
+
+  const allScoringPlays = gameData.scoringPlays;
+  let firstQuarterScoringPlays: any[] = [];
+  let secondQuarterScoringPlays: any[] = [];
+  let thirdQuarterScoringPlays: any[] = [];
+  let fourthQuarterScoringPlays: any[] = [];
+
+  allScoringPlays.map((play: any) => {
+    if (play.period.number === 1) {
+      firstQuarterScoringPlays.push(play);
+    } else if (play.period.number === 2) {
+      secondQuarterScoringPlays.push(play);
+    } else if (play.period.number === 3) {
+      thirdQuarterScoringPlays.push(play);
+    } else if (play.period.number === 4) {
+      fourthQuarterScoringPlays.push(play);
+    }
+  });
+
+  function quarterHeader(text: string) {
+    return (
+      <Box className="w-full flex flex-row justify-between items-center">
+        <Typography className="opacity-70 text-sm">{text}</Typography>
+        <Box className="flex flex-row items-center gap-2">
+          <img
+            className="w-8 obejct-cotain"
+            src={`/nfl/${gameData.header.competitions[0].competitors[0].team.name}.png`}
+          />
+          <img
+            className="w-8 obejct-cotain"
+            src={`/nfl/${gameData.header.competitions[0].competitors[1].team.name}.png`}
+          />
+        </Box>
+      </Box>
+    );
+  }
+  function scoringPlays(allScoringPlays: any) {
+    const plays = allScoringPlays.map((play: any) => {
+      return (
+        <Box className="w-full flex flex-row justify-between items-center mb-1">
+          <Box className="flex flex-row items-center gap-2">
+            <img className="w-10 object-contain" src={play.team.logo} />
+            <Box className="flex flex-col">
+              <Box className="text-sm font-bold">
+                {play.type.text}
+                <span className="pl-1 text-xs opacity-70">
+                  {play.clock.displayValue}
+                </span>
+              </Box>
+              <Box className="text-sm opacity-70">{play.text}</Box>
+            </Box>
+          </Box>
+          <Box className="flex flex-row gap-6 pr-2">
+            <Typography className="font-semibold w-3 text-center">
+              {play.awayScore}
+            </Typography>
+            <Typography className="font-semibold w-4 text-center">
+              {play.homeScore}
+            </Typography>
+          </Box>
+        </Box>
+      );
+    });
+    return plays;
+  }
 
   return (
     <>
@@ -61,19 +133,13 @@ export default async function TeamPage({
           </Box>
         </Box>
         <Box className="flex flex-row justify-center items-center gap-3">
-          <Typography
-            sx={{ fontWeight: homeTeam.winner ? "bold" : "normal" }}
-            className="text-white text-7xl opacity-80"
-          >
+          <Typography className="text-white text-6xl opacity-80">
             {homeTeam.score}
           </Typography>
           <Typography className="text-white text-7xl opacity-80 pb-3">
             -
           </Typography>
-          <Typography
-            sx={{ fontWeight: awayTeam.winner ? "bold" : "normal" }}
-            className="text-white text-7xl opacity-80"
-          >
+          <Typography className="text-white text-6xl opacity-80">
             {awayTeam.score}
           </Typography>
         </Box>
@@ -95,25 +161,134 @@ export default async function TeamPage({
       </Box>
 
       {/* CONTAINER BOXES */}
-      <Box className="w-full h-full flex justify-center relative items-center">
-        <Box
-          sx={{
-            "&::before": {
-              content: `""`,
-              borderLeft: `60px solid #${winningTeam.team.alternateColor}`,
-              borderRight: `60px solid #${winningTeam.team.color}`,
-              width: "13rem",
-              height: "100vh",
-              position: "fixed",
-              zIndex: "-20",
-              bottom: "-20rem",
-              left: "10rem",
-              rotate: "130deg",
-            },
-          }}
-          className="w-3/4 h-full flex flex-row justify-center items-start gap-8 my-8"
-        ></Box>
-      </Box>
+      <ContainerBox
+        altColor={winningTeam.altColor}
+        mainColor={winningTeam.color}
+      >
+        <Box className="w-1/4 flex flex-col justify-center items-center">
+          <Box className="w-full flex flex-col bg-white rounded-xl drop-shadow-md gap-2 p-3">
+            <Typography className="text-sm opacity-70 font-semibold text-start">
+              Game Information
+            </Typography>
+            <img
+              className="rounded"
+              src={gameData.gameInfo.venue.images[0].href}
+            />
+            <Typography>{gameData.gameInfo.venue.fullName}</Typography>
+            <Typography>
+              {gameData.gameInfo.venue.address.city} ,
+              {gameData.gameInfo.venue.address.state}
+            </Typography>
+          </Box>
+        </Box>
+        {/* Box Score */}
+        <Box className="w-7/12 flex flex-col gap-5">
+          <Box className="w-full bg-white p-3 rounded-xl drop-shadow-md grid items-center text-center grid-cols-8 grid-rows-[0.25rem, 0.5rem, 0.5rem] gap-y-2 gap-x-0">
+            <Typography className="text-base opacity-60 col-start-1 col-span-2 text-start">
+              Box Score
+            </Typography>
+            <Typography className="text-sm opacity-60 col-start-4">
+              1
+            </Typography>
+            <Typography className="text-sm opacity-60 col-start-5">
+              2
+            </Typography>
+            <Typography className="text-sm opacity-60 col-start-6">
+              3
+            </Typography>
+            <Typography className="text-sm opacity-60 col-start-7">
+              4
+            </Typography>
+            <Typography className="text-sm opacity-60 col-start-8">
+              T
+            </Typography>
+
+            <Box className="col-span-3 row-start-2 flex flex-row justify-start items-center gap-2">
+              <img
+                className="w-10 obejct-cotain"
+                src={`/nfl/${gameData.header.competitions[0].competitors[0].team.name}.png`}
+              />
+              <Typography className="font-semibold">
+                {gameData.header.competitions[0].competitors[0].team.name}
+              </Typography>
+              <Typography className="text-sm opacity-60">
+                {
+                  gameData.header.competitions[0].competitors[0].record[0]
+                    .displayValue
+                }
+              </Typography>
+            </Box>
+
+            <Box className="col-span-3 row-start-3 flex flex-row justify-start items-center gap-2">
+              <img
+                className="w-10 obejct-cotain"
+                src={`/nfl/${gameData.header.competitions[0].competitors[1].team.name}.png`}
+              />
+              <Typography className="font-semibold">
+                {gameData.header.competitions[0].competitors[1].team.name}
+              </Typography>
+              <Typography className="text-sm opacity-60">
+                {
+                  gameData.header.competitions[0].competitors[1].record[0]
+                    .displayValue
+                }
+              </Typography>
+            </Box>
+
+            <Typography className="opacity-70 col-start-4 row-start-2">
+              {
+                gameData.header.competitions[0].competitors[0].linescores[0]
+                  .displayValue
+              }
+            </Typography>
+            <Typography className="opacity-70 col-start-5 row-start-2">
+              {homeTeamLinescore[1].displayValue}
+            </Typography>
+            <Typography className="opacity-70 col-start-6 row-start-2">
+              {homeTeamLinescore[2].displayValue}
+            </Typography>
+            <Typography className="opacity-70 col-start-7 row-start-2">
+              {homeTeamLinescore[3].displayValue}
+            </Typography>
+            <Typography className="font-bold col-start-8 row-start-2">
+              {gameData.header.competitions[0].competitors[0].score}
+            </Typography>
+
+            <Typography className="opacity-70 col-start-4 row-start-3">
+              {awayTeamLinescore[0].displayValue}
+            </Typography>
+            <Typography className="opacity-70 col-start-5 row-start-3">
+              {awayTeamLinescore[1].displayValue}
+            </Typography>
+            <Typography className="opacity-70 col-start-6 row-start-3">
+              {awayTeamLinescore[2].displayValue}
+            </Typography>
+            <Typography className="opacity-70 col-start-7 row-start-3">
+              {awayTeamLinescore[3].displayValue}
+            </Typography>
+            <Typography className="font-bold col-start-8 row-start-3">
+              {gameData.header.competitions[0].competitors[1].score}
+            </Typography>
+          </Box>
+
+          <Box className="w-full bg-white rounded-xl drop-shadow-md flex flex-col justify-center items-center p-3">
+            {/* Scoring Play*/}
+
+            {quarterHeader("1ST QUARTER")}
+            {scoringPlays(firstQuarterScoringPlays)}
+            <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
+            {quarterHeader("2ND QUARTER")}
+            {scoringPlays(secondQuarterScoringPlays)}
+            <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
+            {quarterHeader("3RD QUARTER")}
+            {scoringPlays(thirdQuarterScoringPlays)}
+            <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
+            {quarterHeader("4TH QUARTER")}
+            {scoringPlays(fourthQuarterScoringPlays)}
+          </Box>
+        </Box>
+        <Articles title="NFL News" teamNews={gameData.news} articleLimit={6} />
+      </ContainerBox>
     </>
   );
 }

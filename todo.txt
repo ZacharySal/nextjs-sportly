@@ -1,14 +1,16 @@
 1) Implement Game Overview Page
-2) Add key for scoreboard 
 
-news.articles.slice(0, 10).map((article: any, index: number) => (
-            <>
-              <ArticleCard
-                key={article.dataSourceIdentifier}
-                article={article}
-              />
-              {index + 1 != 10 && (
-                <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
-              )}
-            </>
-          ))}
+
+Game Overview Page:
+
+Left Side: 
+    - Arena Information
+    - Game projection make one bar home team color and overlow away team color on top with witdth set to percent chance of winning
+
+Middle: 
+    - Start with home team and show team leaders, then overall stats
+    - Away team leaders and overall stats
+    - Maybe show scoring plays?
+
+Right: 
+    - Game news articles
