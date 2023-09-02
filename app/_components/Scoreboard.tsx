@@ -71,7 +71,6 @@ function Scoreboard({
 
   function getMlbCalendarDate(date: string) {
     const newDate = new Date(date).toLocaleDateString("en-CA");
-    console.log(newDate.replaceAll("-", ""));
     return newDate.replaceAll("-", "");
   }
 

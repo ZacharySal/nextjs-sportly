@@ -19,6 +19,16 @@ main {
   height: 100%;
 }
 
+tr {
+  height: 10px;
+}
+
+thead,
+th,
+.MuiTableHead-root {
+  height: 2px !important;
+}
+
 #style-1::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 5px;
