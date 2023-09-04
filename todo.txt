@@ -1,16 +1,5 @@
-1) Implement Game Overview Page
-
-
-Game Overview Page:
-
-Left Side: 
-    - Arena Information
-    - Game projection make one bar home team color and overlow away team color on top with witdth set to percent chance of winning
-
-Middle: 
-    - Start with home team and show team leaders, then overall stats
-    - Away team leaders and overall stats
-    - Maybe show scoring plays?
-
-Right: 
-    - Game news articles
+Fix NFL Game Drives
+Add Click Functionality to All Teams
+Add One More Stat to NFL Game Page
+Add Four More Stats to NBA Game Page
+Make Mobile Responsive

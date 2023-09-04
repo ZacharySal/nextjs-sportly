@@ -94,6 +94,51 @@ export const mlbDivisonTeams: any = {
   ],
 };
 
+export const nbaDivisionTeams = {
+  Atlantic: [
+    ["Boston Celtics", 2],
+    ["Philadelphia 76ers", 20],
+    ["New York Knicks", 18],
+    ["Brooklyn Nets", 17],
+    ["Toronto Raptors", 28],
+  ],
+  Central: [
+    ["Milwaukee Bucks", 15],
+    ["Cleveland Cavaliers", 5],
+    ["Detroit Pistons", 8],
+    ["Chicago Bulls", 4],
+    ["Indiana Pacers", 11],
+  ],
+  Southeast: [
+    ["Atlanta Hawks", 1],
+    ["Charlotte Hornets", 30],
+    ["Miami Heat", 14],
+    ["Orlando Magic", 19],
+    ["Washington Wizards", 27],
+  ],
+  Northwest: [
+    ["Denver Nuggets", 7],
+    ["Minnesota Timberwolves", 16],
+    ["Oklahoma City Thunder", 25],
+    ["Portland Trailblazers", 22],
+    ["Utah Jazz", 26],
+  ],
+  Pacific: [
+    ["Golden State Warriors", 9],
+    ["Los Angeles Clippers", 12],
+    ["Los Angeles Lakers", 13],
+    ["Phoenix Suns", 21],
+    ["Sacramento Kings", 23],
+  ],
+  Southwest: [
+    ["Dallas Mavericks", 6],
+    ["Houston Rockets", 10],
+    ["Memphis Grizzlies", 29],
+    ["New Orleans Pelicans", 3],
+    ["San Antonio Spurs", 24],
+  ],
+};
+
 export const nameExceptions: string[] = [
   "Boston Red Sox",
   "Toronto Blue Jays",

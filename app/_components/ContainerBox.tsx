@@ -22,11 +22,11 @@ function ContainerBox({
             position: "fixed",
             zIndex: "-20",
             bottom: "-20rem",
-            left: "10rem",
+            left: "5rem",
             rotate: "130deg",
           },
         }}
-        className="w-3/4 h-full flex flex-row justify-center items-start gap-8 my-8"
+        className="w-4/5 h-full flex  flex-col md:flex-row justify-center items-start gap-8 my-8"
       >
         {children}
       </Box>

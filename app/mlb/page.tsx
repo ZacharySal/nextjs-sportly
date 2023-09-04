@@ -44,7 +44,6 @@ export default async function Home() {
   return (
     <main>
       <LeagueHeader backgroundColor="002D72" league="mlb" />
-
       <ContainerBox altColor="002D72" mainColor="D50A0A">
         <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
         <Scoreboard seasonWeeks={schedule} league={"mlb"} />

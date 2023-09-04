@@ -1,14 +1,13 @@
-import { Box } from "@mui/material";
 import TeamStats from "@/app/_components/TeamStats";
 import Articles from "@/app/_components/Articles";
-import ScoreCard from "@/app/_components/ScoreCard";
-import Header from "@/app/_components/TeamHeader";
 import ContainerBox from "@/app/_components/ContainerBox";
 import TeamSchedule from "@/app/_components/TeamSchedule";
+import Header from "@/app/_components/TeamHeader";
 
 async function getTeamData(teamId: string) {
   const response = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${teamId}`
+    `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${teamId}`,
+    { cache: "no-store" }
   );
 
   if (!response.ok) {
@@ -20,8 +19,8 @@ async function getTeamData(teamId: string) {
 
 async function getTeamSchedule(teamId: string) {
   const response = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${teamId}/schedule`,
-    { next: { revalidate: 30 } }
+    `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${teamId}/schedule`,
+    { cache: "no-store" }
   );
 
   if (!response.ok) {
@@ -33,7 +32,7 @@ async function getTeamSchedule(teamId: string) {
 
 async function getTeamRoster(teamId: string) {
   const response = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${teamId}/roster`
+    `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${teamId}/roster`
   );
 
   if (!response.ok) {
@@ -45,7 +44,8 @@ async function getTeamRoster(teamId: string) {
 
 async function getTeamStats(teamId: string) {
   const response = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/1/teams/${teamId}/statistics`
+    `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2023/types/2/teams/${teamId}/statistics`,
+    { cache: "no-store" }
   );
 
   if (!response.ok) {
@@ -57,11 +57,11 @@ async function getTeamStats(teamId: string) {
 
 async function getTeamNews(teamId: string) {
   const response = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${teamId}`
+    `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?team=${teamId}`
   );
 
   if (!response.ok) {
-    throw new Error("Failed to fetch team stats");
+    throw new Error("Failed to fetch team news");
   }
 
   return response.json();
@@ -74,27 +74,26 @@ export default async function TeamPage({
 }) {
   const teamData = await getTeamData(params.teamId);
   const teamSchedule = await getTeamSchedule(params.teamId);
-  const teamRoster = await getTeamRoster(params.teamId);
   const teamStats = await getTeamStats(params.teamId);
   const teamNews = await getTeamNews(params.teamId);
 
   const altColor = teamData.team.alternateColor;
   const mainColor = teamData.team.color;
 
-  const displayStats = {
-    "Passing YPG": teamStats.splits.categories[1].stats[9],
-    "Rushing YPG": teamStats.splits.categories[2].stats[13],
-    "Total PPG": teamStats.splits.categories[1].stats[30],
-    "3rd Down %": teamStats.splits.categories[10].stats[14],
-    "Turnover Diff": teamStats.splits.categories[10].stats[21],
+  const displayStats: Record<string, any> = {
+    "Points Per Game": teamStats.splits.categories[2].stats[32],
+    "Assists Per Game": teamStats.splits.categories[2].stats[34],
+    "Rebounds Per Game": teamStats.splits.categories[1].stats[12],
+    "Field Goal %": teamStats.splits.categories[2].stats[5],
+    "3 Point %": teamStats.splits.categories[1].stats[13],
   };
 
   return (
     <>
-      <Header teamData={teamData} league="nfl" />
+      <Header teamData={teamData} league="nba" />
       <ContainerBox altColor={altColor} mainColor={mainColor}>
         <TeamStats stats={displayStats} />
-        <TeamSchedule teamSchedule={teamSchedule} league="nfl" />
+        <TeamSchedule teamSchedule={teamSchedule} league="nba" />
         <Articles
           title={`${teamData.team.name} News`}
           teamNews={teamNews}

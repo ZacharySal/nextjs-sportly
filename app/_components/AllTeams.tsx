@@ -3,10 +3,10 @@ import TeamSideCard from "./TeamSideCard";
 
 function AllTeams({ allTeams, league }: { allTeams: any; league: string }) {
   return (
-    <Box className="w-3/12 h-full flex flex-col gap-3">
+    <Box className=" w-full md:w-1/3 h-full flex flex-col gap-3">
       {Object.entries(allTeams).map(([conference, teams]: [string, any]) => (
         <>
-          <Box className="bg-white rounded-xl p-4 drop-shadow-md">
+          <Box className="bg-white rounded-xl p-3 drop-shadow-md">
             <h1 className="font-semibold text-sm opacity-80 mb-1">
               {conference}
             </h1>

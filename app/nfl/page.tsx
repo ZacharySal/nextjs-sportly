@@ -67,7 +67,7 @@ export default async function Home() {
       <LeagueHeader backgroundColor="013369" league="nfl" />
       <ContainerBox altColor="013369" mainColor="D50A0A">
         <AllTeams allTeams={nflDivisonTeams} league="nfl" />
-        <Scoreboard seasonWeeks={seasonWeeks} league={"nfl"} />
+        <Scoreboard seasonWeeks={seasonWeeks} league="nfl" />
         <Articles title={`NFL News`} teamNews={news} articleLimit={10} />
       </ContainerBox>
     </main>

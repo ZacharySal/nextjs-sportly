@@ -1,8 +1,16 @@
 import { Box, Typography } from "@mui/material";
-import { mlbDivisonTeams, nflDivisonTeams } from "@/app/_lib/constants";
+import {
+  mlbDivisonTeams,
+  nbaDivisionTeams,
+  nflDivisonTeams,
+} from "@/app/_lib/constants";
 
 function findTeamDivison(teamName: string, league: string) {
-  let allTeams = league === "nfl" ? nflDivisonTeams : mlbDivisonTeams;
+  let allTeams;
+  if (league === "nfl") allTeams = nflDivisonTeams;
+  if (league === "nba") allTeams = nbaDivisionTeams;
+  if (league === "mlb") allTeams = mlbDivisonTeams;
+
   for (const conference in allTeams) {
     for (const team of allTeams[conference]) {
       if (team[0] == teamName) return conference;
@@ -17,6 +25,14 @@ export default function TeamHeader({
   teamData: any;
   league: string;
 }) {
+  let record;
+
+  try {
+    record = teamData.team.record.items[0].summary;
+  } catch {
+    record = "0-0";
+  }
+
   return (
     <Box
       sx={{ backgroundColor: `#${teamData.team.color}` }}
@@ -42,7 +58,7 @@ export default function TeamHeader({
           {findTeamDivison(teamData.team.displayName, league)}
         </Typography>
         <Typography className="text-2xl opacity-70 tracking-widest">
-          {teamData.team.record.items[0].summary}
+          {record}
         </Typography>
       </Box>
     </Box>

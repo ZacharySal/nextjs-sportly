@@ -3,7 +3,7 @@
 import { Divider, Box, Typography } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useRouter } from "next/navigation";
-import { GameInfoType } from "../../types";
+import Link from "next/link";
 
 export default function ScoreCard({
   gameInfo,
@@ -68,13 +68,6 @@ export default function ScoreCard({
     gameDescription = gameDescription;
   }
 
-  // gameDate = new Date(gameInfo.date).toLocaleString([], {
-  //   year: "numeric",
-  //   month: "numeric",
-  //   day: "numeric",
-  //   hour: "numeric",
-  //   minute: "2-digit",
-  // });
   const router = useRouter();
 
   return (
@@ -85,53 +78,55 @@ export default function ScoreCard({
         <Box className="w-full ">
           <Box className="w-full flex justify-between items-center mb-2">
             {/* Home Team Name and Logo*/}
-            <Box
-              sx={{ cursor: "pointer" }}
-              onClick={() => router.push(`/${league}/team/${homeTeamId}`)}
-              className="flex items-center gap-2"
-            >
-              <img
-                src={`/${league}/${homeTeamName.replace(" ", "")}.png`}
-                className="w-10 h-10 object-cover"
-              ></img>
-              <Typography className="font-semibold">{homeTeamName}</Typography>
-            </Box>
+            <Link href={`/${league}/team/${homeTeamId}`}>
+              <Box
+                sx={{ cursor: "pointer" }}
+                className="flex items-center gap-2"
+              >
+                <img
+                  src={`/${league}/${homeTeamName.replace(" ", "")}.png`}
+                  className="w-10 h-10 object-cover"
+                ></img>
+                <Typography className="font-semibold">
+                  {homeTeamName}
+                </Typography>
+              </Box>
+            </Link>
             {/* Home Team Score*/}
             <Typography className="font-bold">{homeTeamScore}</Typography>
           </Box>
 
           <Box className="w-full flex justify-between items-center">
             {/* Away Team Name and Logo*/}
-            <Box
-              sx={{ cursor: "pointer" }}
-              className="flex items-center gap-2"
-              onClick={() => router.push(`/${league}/team/${awayTeamId}`)}
-            >
-              <img
-                src={`/${league}/${awayTeamName.replace(" ", "")}.png`}
-                className="w-10 h-10 object-cover"
-              ></img>
-              <Typography className="font-semibold">{awayTeamName}</Typography>
-            </Box>
+            <Link href={`/${league}/team/${awayTeamId}`}>
+              <Box
+                sx={{ cursor: "pointer" }}
+                className="flex items-center gap-2"
+              >
+                <img
+                  src={`/${league}/${awayTeamName.replace(" ", "")}.png`}
+                  className="w-10 h-10 object-cover"
+                ></img>
+                <Typography className="font-semibold">
+                  {awayTeamName}
+                </Typography>
+              </Box>
+            </Link>
             {/* Away Team Score*/}
             <Typography className="font-bold">{awayTeamScore}</Typography>
           </Box>
         </Box>
-        <ArrowForwardIosIcon
-          onClick={() => router.push(`/${league}/game/${gameId}`)}
-          className="m-auto text-sm cursor-pointer"
-        />
+        <Link href={`/${league}/game/${gameId}`}>
+          <ArrowForwardIosIcon className="mt-9 text-sm cursor-pointer" />
+        </Link>
       </Box>
       <Divider />
       {/* CTA Buttons */}
       <Box className="w-full flex justify-evenly items-center">
-        <div className="border border-[#1b48e0]  rounded p-2 px-3 text-sm bg-white text-[#1b48e0] truncate">
-          Full Replay
-        </div>
-        <div className="border border-[#1b48e0] rounded p-2 px-3 text-sm bg-white text-[#1b48e0] truncate">
+        <div className="bg-[#1b48e0] border border-[#1b48e0] rounded p-2 px-3 text-sm text-white truncate cursor-pointer">
           Game Details
         </div>
-        <div className="border border-[#1b48e0] rounded p-2 px-3 text-sm bg-white font-bold text-[#1b48e0] truncate">
+        <div className="border border-[#1b48e0] rounded p-2 px-3 text-sm bg-white font-bold text-[#1b48e0] truncate cursor-pointer">
           Highlights
         </div>
       </Box>
