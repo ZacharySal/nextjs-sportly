@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import ScoreCard from "./ScoreCard";
 import useSwr from "swr";
+import { v4 as uuidv4 } from "uuid";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -15,23 +16,6 @@ function Scoreboard({
   seasonWeeks: any;
   league: string;
 }) {
-  // const [storageLoading, setStorageLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const newWeek = JSON.parse(
-  //     window.localStorage.getItem("nflWeek") ||
-  //       `{weekValue: "", seasonValue: ""}`
-  //   );
-  //   if (newWeek.weekValue) {
-  //     setNflSelectedWeek(newWeek);
-  //   }
-  //   setStorageLoading(false);
-  // }, []);
-
-  // useEffect(() => {
-  //   window.localStorage.setItem("nflWeek", JSON.stringify(nflSelectedWeek));
-  // }, [nflSelectedWeek]);
-
   const [mlbSelectedDate, setMlbSelctedDate] = useState("");
   const [nbaSelectedDate, setNbaSelectedDate] = useState("");
   const [nflSelectedWeek, setNflSelectedWeek] = useState<any>({
@@ -58,18 +42,6 @@ function Scoreboard({
   }
 
   const { data, isLoading } = useSwr(key, fetcher);
-
-  // function isWeekSelectedWeek(week: any) {
-  //   if (selectedWeek) {
-  //     if (
-  //       selectedWeek.seasonValue === week.seasonValue &&
-  //       selectedWeek.weekValue === week.weekValue
-  //     ) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
 
   function convertNflDate(date: string) {
     return new Date(date).toLocaleDateString(undefined, {
@@ -106,7 +78,7 @@ function Scoreboard({
           season.seasonWeeks.map((week: any) => {
             return (
               <Box
-                key={week.weekValue + week.seasonValue}
+                key={uuidv4()}
                 onClick={() => setNflSelectedWeek(week)}
                 className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer gap-1 width-40 p-2"
               >
@@ -140,7 +112,7 @@ function Scoreboard({
           >
             {seasonWeeks.map((date: string, i: string) => (
               <div
-                key={date + i}
+                key={uuidv4()}
                 onClick={() => setMlbSelctedDate(getMlbCalendarDate(date))}
                 className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer gap-1 width-40 p-2"
               >
@@ -170,7 +142,7 @@ function Scoreboard({
           >
             {seasonWeeks.map((date: string, i: string) => (
               <div
-                key={date + i}
+                key={uuidv4()}
                 onClick={() => setNbaSelectedDate(getMlbCalendarDate(date))}
                 className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer gap-1 width-40 p-2"
               >
@@ -209,7 +181,7 @@ function Scoreboard({
       <Box className="w-full h-full grid grid-cols-2 md:grid-cols-2 gap-3">
         {data.content.sbData.events.map((game: any, i: string) => (
           <ScoreCard
-            key={game + i}
+            key={uuidv4()}
             gameInfo={game}
             version={1}
             league={league}

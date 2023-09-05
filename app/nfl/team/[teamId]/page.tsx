@@ -56,26 +56,24 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
     <>
       {isDesktopScreen ? (
         <>
-          {finishedLoading &&
-            (console.log(teamDataLoading),
-            (
-              <>
-                <TeamHeader teamData={teamData} league="nfl" />
-                <ContainerBox
-                  altColor={teamData.team.alternateColor}
-                  mainColor={teamData.team.color}
-                  isDesktopScreen={isDesktopScreen}
-                >
-                  <TeamStats stats={displayStats} />
-                  <TeamSchedule teamSchedule={teamSchedule} league="nfl" />
-                  <Articles
-                    title={`${teamData.team.name} News`}
-                    teamNews={teamNews}
-                    articleLimit={8}
-                  />
-                </ContainerBox>
-              </>
-            ))}
+          {finishedLoading && (
+            <>
+              <TeamHeader teamData={teamData} league="nfl" />
+              <ContainerBox
+                altColor={teamData.team.alternateColor}
+                mainColor={teamData.team.color}
+                isDesktopScreen={isDesktopScreen}
+              >
+                <TeamStats stats={displayStats} />
+                <TeamSchedule teamSchedule={teamSchedule} league="nfl" />
+                <Articles
+                  title={`${teamData.team.name} News`}
+                  teamNews={teamNews}
+                  articleLimit={8}
+                />
+              </ContainerBox>
+            </>
+          )}
         </>
       ) : (
         <>

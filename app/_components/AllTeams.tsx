@@ -1,5 +1,6 @@
 import { Box, Divider } from "@mui/material";
 import TeamSideCard from "./TeamSideCard";
+import { v4 as uuidv4 } from "uuid";
 
 function AllTeams({ allTeams, league }: { allTeams: any; league: string }) {
   return (
@@ -12,11 +13,7 @@ function AllTeams({ allTeams, league }: { allTeams: any; league: string }) {
             </h1>
             <Divider flexItem />
             {teams.map((team: any) => (
-              <TeamSideCard
-                key={team + " sidecard"}
-                name={team}
-                league={league}
-              />
+              <TeamSideCard key={uuidv4()} name={team} league={league} />
             ))}
           </Box>
         </>

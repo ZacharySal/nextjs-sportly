@@ -1,6 +1,7 @@
 import GameHeader from "@/app/_components/GameHeader";
 import ContainerBox from "@/app/_components/ContainerBox";
 import Articles from "@/app/_components/Articles";
+import { v4 as uuidv4 } from "uuid";
 import {
   Box,
   Typography,
@@ -128,7 +129,7 @@ export default async function page({ params }: { params: { gameId: string } }) {
               <TableBody>
                 {group.standings.entries.map((team: any) => (
                   <TableRow
-                    key={team.team}
+                    key={uuidv4()}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                       "&:nth-of-type(odd) td, &:nth-of-type(odd) th": {

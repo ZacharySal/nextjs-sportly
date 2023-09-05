@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import ScoreCard from "./ScoreCard";
+import { v4 as uuidv4 } from "uuid";
 
 export default function TeamSchedule({
   teamSchedule,
@@ -12,7 +13,7 @@ export default function TeamSchedule({
     <Box className="w-full h-auto grid grid-cols-2 gap-2 md:gap-5">
       {teamSchedule.events.map((game: any) => (
         <ScoreCard
-          key={game.id}
+          key={uuidv4()}
           gameInfo={game}
           version={2}
           league={league}

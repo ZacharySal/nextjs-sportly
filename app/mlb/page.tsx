@@ -1,54 +1,40 @@
-import { Box, Container, Divider, Typography } from "@mui/material";
+"use client";
+
+import { useMediaQuery } from "@mui/material";
 import ContainerBox from "../_components/ContainerBox";
 import Articles from "../_components/Articles";
 import AllTeams from "../_components/AllTeams";
 import Scoreboard from "../_components/Scoreboard";
 import LeagueHeader from "../_components/LeagueHeader";
 import { mlbDivisonTeams } from "../_lib/constants";
+import useSwr from "swr";
 
-// we first need to fetch all NFL scores from espn api (current date)
-async function getNewsArticles() {
-  const response = await fetch(
-    "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news?limit=50"
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default function Home() {
+  const { data, isLoading } = useSwr(
+    "http://localhost:3000/mlb/api/mlbData",
+    fetcher
   );
+  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch news");
+  if (!isLoading) {
+    console.log(data.days);
   }
-
-  return response.json();
-}
-
-async function getMLBWeeks() {
-  const response = await fetch(
-    "http://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/calendar/ondays?lang=en&region=us"
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch MLB schedule");
+  if (!isLoading) {
+    return (
+      <main>
+        <LeagueHeader backgroundColor="002D72" league="mlb" />
+        <ContainerBox
+          altColor="002D72"
+          mainColor="D50A0A"
+          isDesktopScreen={isDesktopScreen}
+        >
+          <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
+          <Scoreboard seasonWeeks={data.days} league={"mlb"} />
+          <Articles title={`MLB News`} teamNews={data.news} articleLimit={10} />
+        </ContainerBox>
+      </main>
+    );
   }
-
-  const data = await response.json();
-
-  let mlbWeeks: any[] = [];
-
-  data.eventDate.dates.map((date: string) => mlbWeeks.push(date));
-
-  return mlbWeeks;
-}
-
-export default async function Home() {
-  const news = await getNewsArticles();
-  const schedule = await getMLBWeeks();
-
-  return (
-    <main>
-      <LeagueHeader backgroundColor="002D72" league="mlb" />
-      <ContainerBox altColor="002D72" mainColor="D50A0A">
-        <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
-        <Scoreboard seasonWeeks={schedule} league={"mlb"} />
-        <Articles title={`MLB News`} teamNews={news} articleLimit={10} />
-      </ContainerBox>
-    </main>
-  );
 }

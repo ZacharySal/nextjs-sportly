@@ -1,5 +1,6 @@
 import { Box, Typography, Divider } from "@mui/material";
 import ArticleCard from "./ArticleCard";
+import { v4 as uuidv4 } from "uuid";
 
 function Articles({
   title,
@@ -19,7 +20,7 @@ function Articles({
         .slice(0, articleLimit)
         .map((article: any, index: number) => (
           <>
-            <ArticleCard key={article.dataSourceIdentifier} article={article} />
+            <ArticleCard key={uuidv4()} article={article} />
             {index + 1 != articleLimit && (
               <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
             )}

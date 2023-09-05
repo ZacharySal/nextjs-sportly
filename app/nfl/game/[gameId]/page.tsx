@@ -22,6 +22,7 @@ import Articles from "@/app/_components/Articles";
 import { nflDivisonTeams } from "@/app/_lib/constants";
 import useSwr from "swr";
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -31,7 +32,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
     fetcher
   );
 
-  const [userSelection, setUserSelection] = useState("schedule");
+  const [userSelection, setUserSelection] = useState("gameInfo");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
   const isSelected = (selection: string) => selection === userSelection;
 
@@ -188,7 +189,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
 
   function boxScore() {
     return (
-      <Box className="w-full bg-white p-3 rounded-xl drop-shadow-md grid items-center text-center grid-cols-8 grid-rows-[0.25rem, 0.5rem, 0.5rem] gap-y-2 gap-x-0">
+      <Box className="w-full bg-white p-3 rounded-xl drop-shadow-md grid items-center text-center grid-cols-8 grid-rows-[0.25rem, 0.5rem, 0.5rem] gap-y-2">
         <Typography className="text-sm font-semibold opacity-70 col-start-1 col-span-2 text-start">
           Box Score
         </Typography>
@@ -198,18 +199,18 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
         <Typography className="text-sm opacity-60 col-start-7">4</Typography>
         <Typography className="text-sm opacity-60 col-start-8">T</Typography>
 
-        <Box className="col-span-3 row-start-2 flex flex-row justify-start items-center gap-2">
+        <Box className="col-span-3 row-start-2 flex flex-row justify-start items-center gap-1 md:gap-2">
           <img
-            className="w-10 obejct-cotain"
+            className="w-8 obejct-cotain"
             src={`/nfl/${allGameData.gameData.header.competitions[0].competitors[0].team.name}.png`}
           />
-          <Typography className="font-semibold">
+          <Typography className=" text-sm md:text-base font-semibold opacity-80">
             {
               allGameData.gameData.header.competitions[0].competitors[0].team
                 .name
             }
           </Typography>
-          <Typography className="text-sm opacity-60">
+          <Typography className="hidden md:block text-sm opacity-60">
             {
               allGameData.gameData.header.competitions[0].competitors[0]
                 .record[0].displayValue
@@ -217,18 +218,18 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           </Typography>
         </Box>
 
-        <Box className="col-span-3 row-start-3 flex flex-row justify-start items-center gap-2">
+        <Box className="col-span-3 row-start-3 flex flex-row justify-start items-center gap-1 md:gap-2">
           <img
-            className="w-10 obejct-cotain"
+            className="w-8 obejct-cotain"
             src={`/nfl/${allGameData.gameData.header.competitions[0].competitors[1].team.name}.png`}
           />
-          <Typography className="font-semibold">
+          <Typography className="text-sm md:text-base font-semibold opacity-80">
             {
               allGameData.gameData.header.competitions[0].competitors[1].team
                 .name
             }
           </Typography>
-          <Typography className="text-sm opacity-60">
+          <Typography className="hidden md:block text-sm opacity-60">
             {
               allGameData.gameData.header.competitions[0].competitors[1]
                 .record[0].displayValue
@@ -236,38 +237,38 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           </Typography>
         </Box>
 
-        <Typography className="opacity-70 col-start-4 row-start-2">
+        <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-2">
           {
             allGameData.gameData.header.competitions[0].competitors[0]
               .linescores[0].displayValue
           }
         </Typography>
-        <Typography className="opacity-70 col-start-5 row-start-2">
+        <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-2">
           {homeTeam.linescores[1].displayValue}
         </Typography>
-        <Typography className="opacity-70 col-start-6 row-start-2">
+        <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-2">
           {homeTeam.linescores[2].displayValue}
         </Typography>
-        <Typography className="opacity-70 col-start-7 row-start-2">
+        <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-2">
           {homeTeam.linescores[3].displayValue}
         </Typography>
-        <Typography className="font-bold col-start-8 row-start-2">
+        <Typography className="text-sm md:text-base font-bold col-start-8 row-start-2">
           {allGameData.gameData.header.competitions[0].competitors[0].score}
         </Typography>
 
-        <Typography className="opacity-70 col-start-4 row-start-3">
+        <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-3">
           {awayTeam.linescores[0].displayValue}
         </Typography>
-        <Typography className="opacity-70 col-start-5 row-start-3">
+        <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-3">
           {awayTeam.linescores[1].displayValue}
         </Typography>
-        <Typography className="opacity-70 col-start-6 row-start-3">
+        <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-3">
           {awayTeam.linescores[2].displayValue}
         </Typography>
-        <Typography className="opacity-70 col-start-7 row-start-3">
+        <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-3">
           {awayTeam.linescores[3].displayValue}
         </Typography>
-        <Typography className="font-bold col-start-8 row-start-3">
+        <Typography className="text-sm md:text-base  font-bold col-start-8 row-start-3">
           {allGameData.gameData.header.competitions[0].competitors[1].score}
         </Typography>
       </Box>
@@ -311,7 +312,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           <Box className="flex flex-row justify-between items-center">
             <Box className="flex flex-col justify-center items-center gap-1">
               <img
-                className="w-[30px] h-[30px] border rounded-full object-cover"
+                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
                 src={
                   allGameData.gameData.leaders[0].leaders[0].leaders[0].athlete
                     .headshot.href
@@ -355,7 +356,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
             </Box>
             <Box className="flex flex-col justify-center items-center gap-1">
               <img
-                className="w-[30px] h-[30px] border rounded-full object-cover"
+                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
                 src={
                   allGameData.gameData.leaders[1].leaders[0].leaders[0].athlete
                     .headshot.href
@@ -375,7 +376,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           <Box className="flex flex-row justify-between items-center">
             <Box className="flex flex-col justify-center items-center gap-1">
               <img
-                className="w-[30px] h-[30px] border rounded-full object-cover"
+                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
                 src={
                   allGameData.gameData.leaders[0].leaders[1].leaders[0].athlete
                     .headshot.href
@@ -419,7 +420,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
             </Box>
             <Box className="flex flex-col justify-center items-center gap-1">
               <img
-                className="w-[30px] h-[30px] border rounded-full object-cover"
+                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
                 src={
                   allGameData.gameData.leaders[1].leaders[1].leaders[0].athlete
                     .headshot.href
@@ -437,7 +438,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           <Box className="flex flex-row justify-between items-center">
             <Box className="flex flex-col justify-center items-center gap-1">
               <img
-                className="w-[30px] h-[30px] border rounded-full object-cover"
+                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
                 src={
                   allGameData.gameData.leaders[0].leaders[2].leaders[0].athlete
                     .headshot.href
@@ -481,7 +482,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
             </Box>
             <Box className="flex flex-col justify-center items-center gap-1">
               <img
-                className="w-[30px] h-[30px] border rounded-full object-cover"
+                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
                 src={
                   allGameData.gameData.leaders[1].leaders[2].leaders[0].athlete
                     .headshot.href
@@ -512,13 +513,13 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Box className="w-full flex flex-row justify-between items-center gap-5">
+                <Box className="w-full grid grid-cols-[1fr_1fr] text-center">
                   <Box className="flex flex-row items-center gap-2">
                     <img
-                      className="w-10 object-contain"
+                      className="w-8 md:w-10 object-contain"
                       src={drive.team.logos[0].href}
                     />
-                    <Typography className="text-lg font-bold">
+                    <Typography className="text-sm md:text-lg font-bold">
                       {drive.displayResult}
                     </Typography>
                   </Box>
@@ -531,7 +532,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                         Plays
                       </Typography>
                     </Box>
-                    <Box className="flex flex-col justify-center items-center">
+                    <Box className="hidden md:block flex flex-col justify-center items-center">
                       <Typography className=" text-sm font-semibold">
                         {drive.start.text}
                       </Typography>
@@ -547,7 +548,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                         Yards
                       </Typography>
                     </Box>
-                    <Box className="flex flex-col justify-center items-center">
+                    <Box className="hidden md:block flex flex-col justify-center items-center">
                       <Typography className="text-sm font-semibold">
                         {drive.timeElapsed.displayValue}
                       </Typography>
@@ -643,7 +644,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               <TableBody>
                 {group.standings.entries.map((team: any) => (
                   <TableRow
-                    key={team.team}
+                    key={uuidv4()}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                       "&:nth-child(odd) td, &:nth-child(odd) th": {
@@ -724,7 +725,15 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
     return (
       <>
         <Box className="w-full flex flex-col gap-1">
-          <Typography className="">{homeTeam.team.name} Stats</Typography>
+          <Box className="flex flex-row gap-1 justify-start items-center">
+            <img
+              className="w-8 object-contain"
+              src={`/nfl/${allGameData.gameData.header.competitions[0].competitors[0].team.name}.png`}
+            />
+            <Typography className="opacity-70 font-semibold">
+              {homeTeam.team.name} Stats
+            </Typography>
+          </Box>
           <Box className="grid grid-cols-3 gap-1">
             {Object.entries(awayTeamDisplayStats).map(
               ([statName, value]: [string, any]) => (
@@ -746,7 +755,15 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           </Box>
         </Box>
         <Box className="w-full flex flex-col gap-1">
-          <Typography className="">{awayTeam.team.name} Stats</Typography>
+          <Box className="flex flex-row gap-1 justify-start items-center">
+            <img
+              className="w-8 object-contain"
+              src={`/nfl/${allGameData.gameData.header.competitions[0].competitors[1].team.name}.png`}
+            />
+            <Typography className="opacity-70 font-semibold">
+              {awayTeam.team.name} Stats
+            </Typography>
+          </Box>
           <Box className="grid grid-cols-3 gap-1">
             {Object.entries(homeTeamDisplayStats).map(
               ([statName, value]: [string, any]) => (
@@ -832,32 +849,37 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
 
             <Box className="block w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
               <Typography
-                onClick={() => setUserSelection("schedule")}
-                sx={{ fontWeight: isSelected("schedule") ? "700" : "400" }}
+                onClick={() => setUserSelection("gameInfo")}
+                sx={{ fontWeight: isSelected("gameInfo") ? "700" : "400" }}
                 className="opacity-70 text-sm"
               >
-                Schedule
+                Game Info
               </Typography>
               <Typography
                 onClick={() => setUserSelection("stats")}
                 sx={{ fontWeight: isSelected("stats") ? "700" : "400" }}
                 className="opacity-70 text-sm"
               >
-                Stats
+                Team Stats
               </Typography>
+              {isGameStarted && (
+                <>
+                  <Typography
+                    onClick={() => setUserSelection("scoreInfo")}
+                    sx={{ fontWeight: isSelected("scoreInfo") ? "700" : "400" }}
+                    className="opacity-70 text-sm"
+                  >
+                    Score Info
+                  </Typography>
+                </>
+              )}
+
               <Typography
                 onClick={() => setUserSelection("news")}
                 sx={{ fontWeight: isSelected("news") ? "700" : "400" }}
                 className="opacity-70 text-sm"
               >
                 News
-              </Typography>
-              <Typography
-                onClick={() => setUserSelection("standings")}
-                sx={{ fontWeight: isSelected("standings") ? "700" : "400" }}
-                className="opacity-70 text-sm"
-              >
-                Standings
               </Typography>
             </Box>
             <ContainerBox
@@ -867,28 +889,41 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               mainColor={isGameStarted ? winningTeam.team.color : "gray"}
               isDesktopScreen={isDesktopScreen}
             >
-              <Box className="w-1/3 flex flex-col justify-center items-center gap-3">
-                {stadiumInfo()}
-                {isGameStarted && gameLeaders()}
-                {divisionStandings()}
-              </Box>
+              {userSelection === "gameInfo" && (
+                <>
+                  <Box className="w-full flex flex-col justify-center items-center gap-3">
+                    {stadiumInfo()}
+                    {isGameStarted && gameLeaders()}
+                    {divisionStandings()}
+                  </Box>
+                </>
+              )}
 
-              <Box className="w-7/12 flex flex-col gap-5">
-                {isGameStarted && (
-                  <>
-                    {boxScore()}
-                    {scoringPlaysComponent()}
-                    {gameDrives()}
-                  </>
-                )}
-                {!isGameStarted && teamStats()}
-              </Box>
+              {userSelection === "stats" && teamStats()}
 
-              <Articles
-                title="NFL News"
-                teamNews={allGameData.gameData.news}
-                articleLimit={6}
-              />
+              {userSelection === "scoreInfo" && (
+                <>
+                  <Box className="w-full flex flex-col gap-5">
+                    {isGameStarted && (
+                      <>
+                        {boxScore()}
+                        {scoringPlaysComponent()}
+                        {gameDrives()}
+                      </>
+                    )}
+                  </Box>
+                </>
+              )}
+
+              {userSelection === "news" && (
+                <>
+                  <Articles
+                    title="NFL News"
+                    teamNews={allGameData.gameData.news}
+                    articleLimit={6}
+                  />
+                </>
+              )}
             </ContainerBox>
           </>
         )}
