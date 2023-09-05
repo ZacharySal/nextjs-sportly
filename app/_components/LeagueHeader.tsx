@@ -15,7 +15,7 @@ export default function LeagueHeader({
   return (
     <Box
       sx={{ backgroundColor: `#${backgroundColor}` }}
-      className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-30 md:pl-60 drop-shadow-md"
+      className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-5 md:pl-60 drop-shadow-md"
     >
       <Box className="flex flex-row justify-center items-center gap-3">
         <img

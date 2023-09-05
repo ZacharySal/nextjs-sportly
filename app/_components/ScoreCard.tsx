@@ -68,65 +68,43 @@ export default function ScoreCard({
     gameDescription = gameDescription;
   }
 
-  const router = useRouter();
-
   return (
-    <Box className="w-full flex justfy-between flex-col gap-4 p-3 rounded-xl text-black drop-shadow-md bg-white">
-      <Typography className="text-sm font-bold">{gameDescription}</Typography>
-      {/* Team Names and Score */}
-      <Box className="w-full flex flex-row justify-between gap-5">
-        <Box className="w-full ">
-          <Box className="w-full flex justify-between items-center mb-2">
-            {/* Home Team Name and Logo*/}
-            <Link href={`/${league}/team/${homeTeamId}`}>
-              <Box
-                sx={{ cursor: "pointer" }}
-                className="flex items-center gap-2"
-              >
-                <img
-                  src={`/${league}/${homeTeamName.replace(" ", "")}.png`}
-                  className="w-10 h-10 object-cover"
-                ></img>
-                <Typography className="font-semibold">
-                  {homeTeamName}
-                </Typography>
-              </Box>
-            </Link>
-            {/* Home Team Score*/}
-            <Typography className="font-bold">{homeTeamScore}</Typography>
-          </Box>
+    <Box className="w-full h-full grid grid-cols-[1fr_4fr_1fr] grid-rows-[1fr_2fr_2fr_3fr] rounded-xl text-start text-black p-2 gap-1 gap-y-2 drop-shadow-md bg-white">
+      <Typography className="text-xs row-start-1 col-start-1 col-span-3 md:text-sm font-semibold text-start">
+        {gameDescription}
+      </Typography>
+      {/* Home Team Name and Logo*/}
+      <img
+        src={`/${league}/${homeTeamName.replace(" ", "")}.png`}
+        className="w-10 md:w-10  my-auto object-contain"
+      ></img>
+      <Typography className="text-sm  my-auto md:text-base">
+        {homeTeamName}
+      </Typography>
+      <Typography className="text-center text-sm my-auto font-semibold md:text-base md:font-bold">
+        {homeTeamScore || 0}
+      </Typography>
 
-          <Box className="w-full flex justify-between items-center">
-            {/* Away Team Name and Logo*/}
-            <Link href={`/${league}/team/${awayTeamId}`}>
-              <Box
-                sx={{ cursor: "pointer" }}
-                className="flex items-center gap-2"
-              >
-                <img
-                  src={`/${league}/${awayTeamName.replace(" ", "")}.png`}
-                  className="w-10 h-10 object-cover"
-                ></img>
-                <Typography className="font-semibold">
-                  {awayTeamName}
-                </Typography>
-              </Box>
-            </Link>
-            {/* Away Team Score*/}
-            <Typography className="font-bold">{awayTeamScore}</Typography>
-          </Box>
-        </Box>
-        <Link href={`/${league}/game/${gameId}`}>
-          <ArrowForwardIosIcon className="mt-9 text-sm cursor-pointer" />
-        </Link>
-      </Box>
-      <Divider />
+      {/* Away Team Name and Logo*/}
+      <img
+        src={`/${league}/${awayTeamName.replace(" ", "")}.png`}
+        className="w-10 md:w-10 my-auto object-contain"
+      ></img>
+      <Typography className="text-sm md:text-base my-auto">
+        {awayTeamName}
+      </Typography>
+      <Typography className="text-center text-sm font-semibold md:font-bold my-auto">
+        {awayTeamScore || 0}
+      </Typography>
+      {/* <Divider /> */}
+
       {/* CTA Buttons */}
-      <Box className="w-full flex justify-evenly items-center">
-        <div className="bg-[#1b48e0] border border-[#1b48e0] rounded p-2 px-3 text-sm text-white truncate cursor-pointer">
+      <Box className="w-full flex flex-col justify-center gap-2 col-span-3 items-center">
+        <Divider flexItem className="w-full " />
+        <div className="w-full md:w-auto text-center bg-[#1b48e0] border border-[#1b48e0] rounded p-2 px-3 text-sm text-white truncate cursor-pointer">
           Game Details
         </div>
-        <div className="border border-[#1b48e0] rounded p-2 px-3 text-sm bg-white font-bold text-[#1b48e0] truncate cursor-pointer">
+        <div className="hidden md:block border border-[#1b48e0] rounded p-2 px-3 text-sm bg-white font-bold text-[#1b48e0] truncate cursor-pointer">
           Highlights
         </div>
       </Box>

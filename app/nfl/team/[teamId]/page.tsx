@@ -1,106 +1,140 @@
-import { Box } from "@mui/material";
+"use client";
+
+import { Box, Typography, useMediaQuery } from "@mui/material";
+import { useState } from "react";
+import useSwr from "swr";
 import TeamStats from "@/app/_components/TeamStats";
 import Articles from "@/app/_components/Articles";
-import ScoreCard from "@/app/_components/ScoreCard";
-import Header from "@/app/_components/TeamHeader";
+import TeamHeader from "@/app/_components/TeamHeader";
 import ContainerBox from "@/app/_components/ContainerBox";
 import TeamSchedule from "@/app/_components/TeamSchedule";
 
-async function getTeamData(teamId: string) {
-  const response = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${teamId}`
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default function TeamPage({ params }: { params: { teamId: string } }) {
+  const [userSelection, setUserSelection] = useState("schedule");
+
+  const { data: teamData, isLoading: teamDataLoading } = useSwr(
+    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}`,
+    fetcher
+  );
+  const { data: teamSchedule, isLoading: teamScheduleLoading } = useSwr(
+    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}/schedule`,
+    fetcher
+  );
+  const { data: teamStats, isLoading: teamStatsLoading } = useSwr(
+    `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/1/teams/${params.teamId}/statistics`,
+    fetcher
+  );
+  const { data: teamNews, isLoading: teamNewsLoading } = useSwr(
+    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${params.teamId}`,
+    fetcher
   );
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch team data");
+  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isSelected = (selection: string) => selection === userSelection;
+
+  const finishedLoading =
+    teamDataLoading === false &&
+    teamNewsLoading === false &&
+    teamScheduleLoading === false &&
+    teamStatsLoading === false;
+
+  let displayStats;
+
+  if (!teamStatsLoading) {
+    displayStats = {
+      "Passing YPG": teamStats.splits.categories[1].stats[9],
+      "Rushing YPG": teamStats.splits.categories[2].stats[13],
+      "Total PPG": teamStats.splits.categories[1].stats[30],
+      "3rd Down %": teamStats.splits.categories[10].stats[14],
+      "Turnover Diff": teamStats.splits.categories[10].stats[21],
+    };
   }
-
-  return response.json();
-}
-
-async function getTeamSchedule(teamId: string) {
-  const response = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${teamId}/schedule`,
-    { next: { revalidate: 30 } }
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch team schedule");
-  }
-
-  return response.json();
-}
-
-async function getTeamRoster(teamId: string) {
-  const response = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${teamId}/roster`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch team roser");
-  }
-
-  return response.json();
-}
-
-async function getTeamStats(teamId: string) {
-  const response = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/1/teams/${teamId}/statistics`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch team stats");
-  }
-
-  return response.json();
-}
-
-async function getTeamNews(teamId: string) {
-  const response = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${teamId}`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch team stats");
-  }
-
-  return response.json();
-}
-
-export default async function TeamPage({
-  params,
-}: {
-  params: { teamId: string };
-}) {
-  const teamData = await getTeamData(params.teamId);
-  const teamSchedule = await getTeamSchedule(params.teamId);
-  const teamRoster = await getTeamRoster(params.teamId);
-  const teamStats = await getTeamStats(params.teamId);
-  const teamNews = await getTeamNews(params.teamId);
-
-  const altColor = teamData.team.alternateColor;
-  const mainColor = teamData.team.color;
-
-  const displayStats = {
-    "Passing YPG": teamStats.splits.categories[1].stats[9],
-    "Rushing YPG": teamStats.splits.categories[2].stats[13],
-    "Total PPG": teamStats.splits.categories[1].stats[30],
-    "3rd Down %": teamStats.splits.categories[10].stats[14],
-    "Turnover Diff": teamStats.splits.categories[10].stats[21],
-  };
 
   return (
     <>
-      <Header teamData={teamData} league="nfl" />
-      <ContainerBox altColor={altColor} mainColor={mainColor}>
-        <TeamStats stats={displayStats} />
-        <TeamSchedule teamSchedule={teamSchedule} league="nfl" />
-        <Articles
-          title={`${teamData.team.name} News`}
-          teamNews={teamNews}
-          articleLimit={8}
-        />
-      </ContainerBox>
+      {isDesktopScreen ? (
+        <>
+          {finishedLoading &&
+            (console.log(teamDataLoading),
+            (
+              <>
+                <TeamHeader teamData={teamData} league="nfl" />
+                <ContainerBox
+                  altColor={teamData.team.alternateColor}
+                  mainColor={teamData.team.color}
+                  isDesktopScreen={isDesktopScreen}
+                >
+                  <TeamStats stats={displayStats} />
+                  <TeamSchedule teamSchedule={teamSchedule} league="nfl" />
+                  <Articles
+                    title={`${teamData.team.name} News`}
+                    teamNews={teamNews}
+                    articleLimit={8}
+                  />
+                </ContainerBox>
+              </>
+            ))}
+        </>
+      ) : (
+        <>
+          {finishedLoading && (
+            <>
+              <TeamHeader teamData={teamData} league="nfl" />
+              <Box className="block w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
+                <Typography
+                  onClick={() => setUserSelection("schedule")}
+                  sx={{ fontWeight: isSelected("schedule") ? "700" : "400" }}
+                  className="opacity-70 text-sm"
+                >
+                  Schedule
+                </Typography>
+                <Typography
+                  onClick={() => setUserSelection("stats")}
+                  sx={{ fontWeight: isSelected("stats") ? "700" : "400" }}
+                  className="opacity-70 text-sm"
+                >
+                  Stats
+                </Typography>
+                <Typography
+                  onClick={() => setUserSelection("news")}
+                  sx={{ fontWeight: isSelected("news") ? "700" : "400" }}
+                  className="opacity-70 text-sm"
+                >
+                  News
+                </Typography>
+                <Typography
+                  onClick={() => setUserSelection("standings")}
+                  sx={{ fontWeight: isSelected("standings") ? "700" : "400" }}
+                  className="opacity-70 text-sm"
+                >
+                  Standings
+                </Typography>
+              </Box>
+              <ContainerBox
+                altColor={teamData.team.alternateColor}
+                mainColor={teamData.team.color}
+                isDesktopScreen={isDesktopScreen}
+              >
+                {userSelection === "stats" && (
+                  <TeamStats stats={displayStats} />
+                )}
+                {userSelection === "schedule" && (
+                  <TeamSchedule teamSchedule={teamSchedule} league="nfl" />
+                )}
+                {userSelection === "news" && (
+                  <Articles
+                    title={`${teamData.team.name} News`}
+                    teamNews={teamNews}
+                    articleLimit={8}
+                  />
+                )}
+              </ContainerBox>
+            </>
+          )}
+        </>
+      )}
     </>
   );
 }

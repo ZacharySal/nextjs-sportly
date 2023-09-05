@@ -11,7 +11,7 @@ function Articles({
   articleLimit: number | undefined;
 }) {
   return (
-    <Box className="w-1/3 p-3 flex flex-col rounded-xl bg-white drop-shadow-md">
+    <Box className="w-full md:w-1/3 p-3 flex flex-col rounded-xl bg-white drop-shadow-md">
       <Typography className="mb-2 font-semibold text-sm opacity-70">
         {title}
       </Typography>

@@ -27,6 +27,7 @@ export default function TeamHeader({
 }) {
   let record;
 
+  let isDesktop = true;
   try {
     record = teamData.team.record.items[0].summary;
   } catch {
@@ -36,28 +37,28 @@ export default function TeamHeader({
   return (
     <Box
       sx={{ backgroundColor: `#${teamData.team.color}` }}
-      className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-60 drop-shadow-md"
+      className="w-full h-40 flex-row flex justify-start items-center gap-3 md:pl-36 drop-shadow-md"
     >
       <Box className="flex flex-row justify-center items-center gap-3">
         <img
-          className="w-32 object-cover"
+          className="w-28 md:w-32 object-contain"
           src={`/${league}/${teamData.team.name.replace(" ", "")}.png`}
         />
-        <Box className="flex flex-col text-white opacity-80 pr-6 border-r-4">
-          <Typography className="text-3xl opacity-70">
+        <Box className="flex flex-col text-white opacity-80 pr-3 border-r-2 md:pr-6 md:border-r-4">
+          <Typography className="text-xl md:text-3xl opacity-70">
             {teamData.team.location}
           </Typography>
-          <Typography className="text-3xl font-bold">
+          <Typography className="text-xl md:text-3xl font-bold">
             {teamData.team.name}
           </Typography>
         </Box>
       </Box>
 
       <Box className="flex flex-col justify-center items-center text-white">
-        <Typography className="text-2xl font-semibold opacity-80">
+        <Typography className="text-base md:text-2xl font-semibold opacity-80">
           {findTeamDivison(teamData.team.displayName, league)}
         </Typography>
-        <Typography className="text-2xl opacity-70 tracking-widest">
+        <Typography className="text-base md:text-2xl opacity-70 tracking-widest">
           {record}
         </Typography>
       </Box>

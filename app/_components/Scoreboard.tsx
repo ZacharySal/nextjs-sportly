@@ -100,7 +100,7 @@ function Scoreboard({
     return (
       <Box
         id="style-1"
-        className="w-full flex flex-row overflow-x-auto bg-white drop-shadow-md mb-5"
+        className="w-full flex flex-row overflow-x-auto bg-white mb-5"
       >
         {Object.entries(seasonWeeks).map(([index, season]: any) =>
           season.seasonWeeks.map((week: any) => {
@@ -206,7 +206,7 @@ function Scoreboard({
       {isNfl && nflWeekSelector()}
       {isMlb && mlbDateSelector()}
       {isNba && nbaDateSelector()}
-      <Box className="w-full h-full grid grid-cols-1 md:grid-cols-2 gap-5">
+      <Box className="w-full h-full grid grid-cols-2 md:grid-cols-2 gap-3">
         {data.content.sbData.events.map((game: any, i: string) => (
           <ScoreCard
             key={game + i}
