@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   Typography,
@@ -11,144 +13,91 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  useMediaQuery,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ContainerBox from "@/app/_components/ContainerBox";
 import GameHeader from "@/app/_components/GameHeader";
 import Articles from "@/app/_components/Articles";
 import { nflDivisonTeams } from "@/app/_lib/constants";
+import useSwr from "swr";
+import { useState } from "react";
 
-async function getGameData(gameId: string) {
-  const response = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${gameId}`
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default function TeamPage({ params }: { params: { gameId: string } }) {
+  const { data: allGameData, isLoading } = useSwr(
+    `http://localhost:3000/nfl/game/401547353/api/gameData?gameId=${params.gameId}`,
+    fetcher
   );
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch game data");
-  }
+  const [userSelection, setUserSelection] = useState("schedule");
+  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isSelected = (selection: string) => selection === userSelection;
 
-  return response.json();
-}
+  let homeTeam: any,
+    awayTeam: any,
+    winningTeam: any,
+    isGameStarted: boolean,
+    backgroundColor: string,
+    gameInfo: any,
+    homeTeamDisplayStats: any,
+    awayTeamDisplayStats: any,
+    allScoringPlays: any;
 
-async function getNflWeeks() {
-  const response = await fetch(
-    "https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50"
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to get NFL weeks data");
-  }
-
-  const data = await response.json();
-
-  let seasonInfo: any = [];
-  let weeks: any;
-  let finalWeeks: any = [];
-
-  data.content.sbData.leagues[0].calendar.map(
-    (week: any) => (
-      (weeks = week.entries.map((weekEntry: any) => ({
-        weekEndDate: weekEntry.endDate,
-        weekStartDate: weekEntry.startDate,
-        weekLabel: weekEntry.alternateLabel,
-        weekDisplayDateRange: weekEntry.detail,
-        weekValue: weekEntry.value,
-        seasonValue: week.value,
-      }))),
-      seasonInfo.push({
-        seasonStartDate: week.startDate,
-        seasonEndDate: week.endDate,
-        seasonLabel: week.label,
-        seasonWeeks: weeks,
-      }),
-      (weeks = []),
-      finalWeeks.push(seasonInfo)
-    )
-  );
-
-  return finalWeeks[0];
-}
-
-async function getTeamStats(teamId: string) {
-  {
-    /* TODO: Change type to 2 for current season, or add use context to always get current year and season*/
-  }
-  const response = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/1/teams/${teamId}/statistics`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch team stats");
-  }
-
-  return response.json();
-}
-
-export default async function TeamPage({
-  params,
-}: {
-  params: { gameId: string };
-}) {
-  const gameData = await getGameData(params.gameId);
-  const seasonWeeks = await getNflWeeks();
-
-  const homeTeam = gameData.header.competitions[0].competitors[0];
-  const awayTeam = gameData.header.competitions[0].competitors[1];
-
-  const homeTeamStats = await getTeamStats(homeTeam.id);
-  const awayTeamStats = await getTeamStats(awayTeam.id);
-
-  const homeTeamLinescore = homeTeam.linescores;
-  const awayTeamLinescore = awayTeam.linescores;
-
-  const winningTeam = homeTeam.winner ? homeTeam : awayTeam;
-
-  const isGameStarted = gameData.lastFiveGames ? false : true;
-
-  const homeTeamDisplayStats = {
-    "Passing YPG": homeTeamStats.splits.categories[1].stats[9],
-    "Rushing YPG": homeTeamStats.splits.categories[2].stats[13],
-    "Total YPG": homeTeamStats.splits.categories[1].stats[10],
-    "Total PPG": homeTeamStats.splits.categories[1].stats[30],
-    YAC: homeTeamStats.splits.categories[3].stats[13],
-    "3rd Down %": homeTeamStats.splits.categories[10].stats[14],
-    "Turnover Diff": homeTeamStats.splits.categories[10].stats[21],
-    Sacks: homeTeamStats.splits.categories[4].stats[14],
-  };
-
-  const awayTeamDisplayStats = {
-    "Passing YPG": awayTeamStats.splits.categories[1].stats[9],
-    "Rushing YPG": awayTeamStats.splits.categories[2].stats[13],
-    "Total YPG": awayTeamStats.splits.categories[1].stats[10],
-    "Total PPG": awayTeamStats.splits.categories[1].stats[30],
-    YAC: awayTeamStats.splits.categories[3].stats[13],
-    "3rd Down %": awayTeamStats.splits.categories[10].stats[14],
-    "Turnover Diff": awayTeamStats.splits.categories[10].stats[21],
-    Sacks: awayTeamStats.splits.categories[4].stats[14],
-  };
-
-  let allScoringPlays;
   let firstQuarterScoringPlays: any[] = [];
   let secondQuarterScoringPlays: any[] = [];
   let thirdQuarterScoringPlays: any[] = [];
   let fourthQuarterScoringPlays: any[] = [];
 
-  const backgroundColor = isGameStarted ? `#${winningTeam.team.color}` : "gray";
-  const gameStatus = gameData.header.competitions[0].status.type.detail;
+  if (!isLoading) {
+    homeTeam = allGameData.gameData.header.competitions[0].competitors[0];
+    awayTeam = allGameData.gameData.header.competitions[0].competitors[1];
 
-  if (isGameStarted) {
-    allScoringPlays = gameData.scoringPlays;
-    allScoringPlays.map((play: any) => {
-      if (play.period.number === 1) {
-        firstQuarterScoringPlays.push(play);
-      } else if (play.period.number === 2) {
-        secondQuarterScoringPlays.push(play);
-      } else if (play.period.number === 3) {
-        thirdQuarterScoringPlays.push(play);
-      } else if (play.period.number === 4) {
-        fourthQuarterScoringPlays.push(play);
-      }
-    });
+    winningTeam = homeTeam.winner ? homeTeam : awayTeam;
+    isGameStarted = allGameData.gameData.lastFiveGames ? false : true;
+    // backgroundColor = isGameStarted ? `#${winningTeam.team.color}` : "#013369";
+    backgroundColor = "#013369";
+    gameInfo = allGameData.gameData.header.competitions[0];
+
+    homeTeamDisplayStats = {
+      "Passing YPG": allGameData.homeTeamStats.splits.categories[1].stats[9],
+      "Rushing YPG": allGameData.homeTeamStats.splits.categories[2].stats[13],
+      "Total YPG": allGameData.homeTeamStats.splits.categories[1].stats[10],
+      "Total PPG": allGameData.homeTeamStats.splits.categories[1].stats[30],
+      YAC: allGameData.homeTeamStats.splits.categories[3].stats[13],
+      "3rd Down %": allGameData.homeTeamStats.splits.categories[10].stats[14],
+      "Turnover Diff":
+        allGameData.homeTeamStats.splits.categories[10].stats[21],
+      Sacks: allGameData.homeTeamStats.splits.categories[4].stats[14],
+    };
+
+    awayTeamDisplayStats = {
+      "Passing YPG": allGameData.awayTeamStats.splits.categories[1].stats[9],
+      "Rushing YPG": allGameData.awayTeamStats.splits.categories[2].stats[13],
+      "Total YPG": allGameData.awayTeamStats.splits.categories[1].stats[10],
+      "Total PPG": allGameData.awayTeamStats.splits.categories[1].stats[30],
+      YAC: allGameData.awayTeamStats.splits.categories[3].stats[13],
+      "3rd Down %": allGameData.awayTeamStats.splits.categories[10].stats[14],
+      "Turnover Diff":
+        allGameData.awayTeamStats.splits.categories[10].stats[21],
+      Sacks: allGameData.awayTeamStats.splits.categories[4].stats[14],
+    };
+
+    if (isGameStarted) {
+      allScoringPlays = allGameData.gameData.scoringPlays;
+      allScoringPlays.map((play: any) => {
+        if (play.period.number === 1) {
+          firstQuarterScoringPlays.push(play);
+        } else if (play.period.number === 2) {
+          secondQuarterScoringPlays.push(play);
+        } else if (play.period.number === 3) {
+          thirdQuarterScoringPlays.push(play);
+        } else if (play.period.number === 4) {
+          fourthQuarterScoringPlays.push(play);
+        }
+      });
+    }
   }
 
   function quarterHeader(text: string) {
@@ -252,15 +201,18 @@ export default async function TeamPage({
         <Box className="col-span-3 row-start-2 flex flex-row justify-start items-center gap-2">
           <img
             className="w-10 obejct-cotain"
-            src={`/nfl/${gameData.header.competitions[0].competitors[0].team.name}.png`}
+            src={`/nfl/${allGameData.gameData.header.competitions[0].competitors[0].team.name}.png`}
           />
           <Typography className="font-semibold">
-            {gameData.header.competitions[0].competitors[0].team.name}
+            {
+              allGameData.gameData.header.competitions[0].competitors[0].team
+                .name
+            }
           </Typography>
           <Typography className="text-sm opacity-60">
             {
-              gameData.header.competitions[0].competitors[0].record[0]
-                .displayValue
+              allGameData.gameData.header.competitions[0].competitors[0]
+                .record[0].displayValue
             }
           </Typography>
         </Box>
@@ -268,52 +220,55 @@ export default async function TeamPage({
         <Box className="col-span-3 row-start-3 flex flex-row justify-start items-center gap-2">
           <img
             className="w-10 obejct-cotain"
-            src={`/nfl/${gameData.header.competitions[0].competitors[1].team.name}.png`}
+            src={`/nfl/${allGameData.gameData.header.competitions[0].competitors[1].team.name}.png`}
           />
           <Typography className="font-semibold">
-            {gameData.header.competitions[0].competitors[1].team.name}
+            {
+              allGameData.gameData.header.competitions[0].competitors[1].team
+                .name
+            }
           </Typography>
           <Typography className="text-sm opacity-60">
             {
-              gameData.header.competitions[0].competitors[1].record[0]
-                .displayValue
+              allGameData.gameData.header.competitions[0].competitors[1]
+                .record[0].displayValue
             }
           </Typography>
         </Box>
 
         <Typography className="opacity-70 col-start-4 row-start-2">
           {
-            gameData.header.competitions[0].competitors[0].linescores[0]
-              .displayValue
+            allGameData.gameData.header.competitions[0].competitors[0]
+              .linescores[0].displayValue
           }
         </Typography>
         <Typography className="opacity-70 col-start-5 row-start-2">
-          {homeTeamLinescore[1].displayValue}
+          {homeTeam.linescores[1].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-6 row-start-2">
-          {homeTeamLinescore[2].displayValue}
+          {homeTeam.linescores[2].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-7 row-start-2">
-          {homeTeamLinescore[3].displayValue}
+          {homeTeam.linescores[3].displayValue}
         </Typography>
         <Typography className="font-bold col-start-8 row-start-2">
-          {gameData.header.competitions[0].competitors[0].score}
+          {allGameData.gameData.header.competitions[0].competitors[0].score}
         </Typography>
 
         <Typography className="opacity-70 col-start-4 row-start-3">
-          {awayTeamLinescore[0].displayValue}
+          {awayTeam.linescores[0].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-5 row-start-3">
-          {awayTeamLinescore[1].displayValue}
+          {awayTeam.linescores[1].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-6 row-start-3">
-          {awayTeamLinescore[2].displayValue}
+          {awayTeam.linescores[2].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-7 row-start-3">
-          {awayTeamLinescore[3].displayValue}
+          {awayTeam.linescores[3].displayValue}
         </Typography>
         <Typography className="font-bold col-start-8 row-start-3">
-          {gameData.header.competitions[0].competitors[1].score}
+          {allGameData.gameData.header.competitions[0].competitors[1].score}
         </Typography>
       </Box>
     );
@@ -325,13 +280,16 @@ export default async function TeamPage({
         <Typography className="text-sm opacity-70 font-semibold text-start">
           Stadium Information
         </Typography>
-        <img className="rounded" src={gameData.gameInfo.venue.images[0].href} />
+        <img
+          className="rounded"
+          src={allGameData.gameData.gameInfo.venue.images[0].href}
+        />
         <Typography className="opacity-80 font-bold">
-          {gameData.gameInfo.venue.fullName}
+          {allGameData.gameData.gameInfo.venue.fullName}
         </Typography>
         <Typography className="opacity-80 text-sm mt-[-0.5rem]">
-          {gameData.gameInfo.venue.address.city},{" "}
-          {gameData.gameInfo.venue.address.state}
+          {allGameData.gameData.gameInfo.venue.address.city},{" "}
+          {allGameData.gameData.gameInfo.venue.address.state}
         </Typography>
       </Box>
     );
@@ -355,20 +313,26 @@ export default async function TeamPage({
               <img
                 className="w-[30px] h-[30px] border rounded-full object-cover"
                 src={
-                  gameData.leaders[0].leaders[0].leaders[0].athlete.headshot
-                    .href
+                  allGameData.gameData.leaders[0].leaders[0].leaders[0].athlete
+                    .headshot.href
                 }
               />
               <Typography className="text-xs opacity-80">
-                {gameData.leaders[0].team.abbreviation}
+                {allGameData.gameData.leaders[0].team.abbreviation}
               </Typography>
             </Box>
             <Box className="flex flex-col items-end">
               <Typography className="max-w-[6rem] truncate text-sm opacity-80 font-bold">
-                {gameData.leaders[0].leaders[0].leaders[0].athlete.shortName}
+                {
+                  allGameData.gameData.leaders[0].leaders[0].leaders[0].athlete
+                    .shortName
+                }
               </Typography>
               <Typography className="max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {gameData.leaders[0].leaders[0].leaders[0].displayValue}
+                {
+                  allGameData.gameData.leaders[0].leaders[0].leaders[0]
+                    .displayValue
+                }
               </Typography>
             </Box>
           </Box>
@@ -377,22 +341,28 @@ export default async function TeamPage({
           <Box className="flex flex-row justify-between items-center">
             <Box className="flex flex-col items-start">
               <Typography className=" max-w-[6rem] truncate text-sm opacity-80 font-bold">
-                {gameData.leaders[1].leaders[0].leaders[0].athlete.shortName}
+                {
+                  allGameData.gameData.leaders[1].leaders[0].leaders[0].athlete
+                    .shortName
+                }
               </Typography>
               <Typography className=" max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {gameData.leaders[1].leaders[0].leaders[0].displayValue}
+                {
+                  allGameData.gameData.leaders[1].leaders[0].leaders[0]
+                    .displayValue
+                }
               </Typography>
             </Box>
             <Box className="flex flex-col justify-center items-center gap-1">
               <img
                 className="w-[30px] h-[30px] border rounded-full object-cover"
                 src={
-                  gameData.leaders[1].leaders[0].leaders[0].athlete.headshot
-                    .href
+                  allGameData.gameData.leaders[1].leaders[0].leaders[0].athlete
+                    .headshot.href
                 }
               />
               <Typography className="text-xs opacity-80">
-                {gameData.leaders[1].team.abbreviation}
+                {allGameData.gameData.leaders[1].team.abbreviation}
               </Typography>
             </Box>
           </Box>
@@ -407,20 +377,26 @@ export default async function TeamPage({
               <img
                 className="w-[30px] h-[30px] border rounded-full object-cover"
                 src={
-                  gameData.leaders[0].leaders[1].leaders[0].athlete.headshot
-                    .href
+                  allGameData.gameData.leaders[0].leaders[1].leaders[0].athlete
+                    .headshot.href
                 }
               />
               <Typography className="text-xs opacity-80">
-                {gameData.leaders[0].team.abbreviation}
+                {allGameData.gameData.leaders[0].team.abbreviation}
               </Typography>
             </Box>
             <Box className="flex flex-col items-end">
               <Typography className="max-w-[6rem] truncate text-sm opacity-80 font-bold">
-                {gameData.leaders[0].leaders[1].leaders[0].athlete.shortName}
+                {
+                  allGameData.gameData.leaders[0].leaders[1].leaders[0].athlete
+                    .shortName
+                }
               </Typography>
               <Typography className=" max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {gameData.leaders[0].leaders[1].leaders[0].displayValue}
+                {
+                  allGameData.gameData.leaders[0].leaders[1].leaders[0]
+                    .displayValue
+                }
               </Typography>
             </Box>
           </Box>
@@ -429,22 +405,28 @@ export default async function TeamPage({
           <Box className="flex flex-row justify-between items-center">
             <Box className="flex flex-col items-start">
               <Typography className="max-w-[6rem] truncate text-sm opacity-80 font-bold">
-                {gameData.leaders[1].leaders[1].leaders[0].athlete.shortName}
+                {
+                  allGameData.gameData.leaders[1].leaders[1].leaders[0].athlete
+                    .shortName
+                }
               </Typography>
               <Typography className=" max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {gameData.leaders[1].leaders[1].leaders[0].displayValue}
+                {
+                  allGameData.gameData.leaders[1].leaders[1].leaders[0]
+                    .displayValue
+                }
               </Typography>
             </Box>
             <Box className="flex flex-col justify-center items-center gap-1">
               <img
                 className="w-[30px] h-[30px] border rounded-full object-cover"
                 src={
-                  gameData.leaders[1].leaders[1].leaders[0].athlete.headshot
-                    .href
+                  allGameData.gameData.leaders[1].leaders[1].leaders[0].athlete
+                    .headshot.href
                 }
               />
               <Typography className="text-xs opacity-80">
-                {gameData.leaders[1].team.abbreviation}
+                {allGameData.gameData.leaders[1].team.abbreviation}
               </Typography>
             </Box>
           </Box>
@@ -457,20 +439,26 @@ export default async function TeamPage({
               <img
                 className="w-[30px] h-[30px] border rounded-full object-cover"
                 src={
-                  gameData.leaders[0].leaders[2].leaders[0].athlete.headshot
-                    .href
+                  allGameData.gameData.leaders[0].leaders[2].leaders[0].athlete
+                    .headshot.href
                 }
               />
               <Typography className="text-xs opacity-80">
-                {gameData.leaders[0].team.abbreviation}
+                {allGameData.gameData.leaders[0].team.abbreviation}
               </Typography>
             </Box>
             <Box className="flex flex-col items-end">
               <Typography className="max-w-[6rem] truncate text-sm opacity-80 font-bold">
-                {gameData.leaders[0].leaders[2].leaders[0].athlete.shortName}
+                {
+                  allGameData.gameData.leaders[0].leaders[2].leaders[0].athlete
+                    .shortName
+                }
               </Typography>
               <Typography className=" max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {gameData.leaders[0].leaders[2].leaders[0].displayValue}
+                {
+                  allGameData.gameData.leaders[0].leaders[2].leaders[0]
+                    .displayValue
+                }
               </Typography>
             </Box>
           </Box>
@@ -479,22 +467,28 @@ export default async function TeamPage({
           <Box className="flex flex-row justify-between items-center">
             <Box className="flex flex-col items-start">
               <Typography className="text-sm opacity-80 font-bold">
-                {gameData.leaders[1].leaders[2].leaders[0].athlete.shortName}
+                {
+                  allGameData.gameData.leaders[1].leaders[2].leaders[0].athlete
+                    .shortName
+                }
               </Typography>
               <Typography className=" max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {gameData.leaders[1].leaders[2].leaders[0].displayValue}
+                {
+                  allGameData.gameData.leaders[1].leaders[2].leaders[0]
+                    .displayValue
+                }
               </Typography>
             </Box>
             <Box className="flex flex-col justify-center items-center gap-1">
               <img
                 className="w-[30px] h-[30px] border rounded-full object-cover"
                 src={
-                  gameData.leaders[1].leaders[2].leaders[0].athlete.headshot
-                    .href
+                  allGameData.gameData.leaders[1].leaders[2].leaders[0].athlete
+                    .headshot.href
                 }
               />
               <Typography className="text-xs opacity-80">
-                {gameData.leaders[1].team.abbreviation}
+                {allGameData.gameData.leaders[1].team.abbreviation}
               </Typography>
             </Box>
           </Box>
@@ -511,7 +505,7 @@ export default async function TeamPage({
         </Typography>
         <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
         <Box id="style-1" className="w-full max-h-[40rem] overflow-y-auto ">
-          {gameData.drives.previous.map((drive: any) => (
+          {allGameData.gameData.drives.previous.map((drive: any) => (
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -598,7 +592,7 @@ export default async function TeamPage({
   }
 
   function divisionStandings() {
-    return gameData.standings.groups.map((group: any) => {
+    return allGameData.gameData.standings.groups.map((group: any) => {
       return (
         <Box className="w-full bg-white rounded-xl drop-shadow-md p-3">
           <Typography className="font-semibold opacity-70 text-sm">
@@ -777,40 +771,128 @@ export default async function TeamPage({
     );
   }
 
-  return (
-    <>
-      <GameHeader
-        backgroundColor={backgroundColor}
-        homeTeam={homeTeam}
-        awayTeam={awayTeam}
-        gameStatus={gameStatus}
-        league="nfl"
-        isGameStarted={isGameStarted}
-      />
+  if (!isLoading) {
+    return (
+      <>
+        {isDesktopScreen ? (
+          <>
+            <GameHeader
+              backgroundColor={backgroundColor}
+              homeTeam={homeTeam}
+              awayTeam={awayTeam}
+              winningTeam={winningTeam}
+              gameInfo={gameInfo}
+              league="nfl"
+              isGameStarted={isGameStarted}
+              isDesktopScreen={isDesktopScreen}
+            />
 
-      <ContainerBox
-        altColor={isGameStarted ? winningTeam.team.alternateColor : "gray"}
-        mainColor={isGameStarted ? winningTeam.team.color : "gray"}
-      >
-        <Box className="w-1/3 flex flex-col justify-center items-center gap-3">
-          {stadiumInfo()}
-          {isGameStarted && gameLeaders()}
-          {divisionStandings()}
-        </Box>
+            <ContainerBox
+              altColor={
+                isGameStarted ? winningTeam.team.alternateColor : "gray"
+              }
+              mainColor={isGameStarted ? winningTeam.team.color : "gray"}
+              isDesktopScreen={isDesktopScreen}
+            >
+              <Box className="w-1/3 flex flex-col justify-center items-center gap-3">
+                {stadiumInfo()}
+                {isGameStarted && gameLeaders()}
+                {divisionStandings()}
+              </Box>
 
-        <Box className="w-7/12 flex flex-col gap-5">
-          {isGameStarted && (
-            <>
-              {boxScore()}
-              {scoringPlaysComponent()}
-              {gameDrives()}
-            </>
-          )}
-          {!isGameStarted && teamStats()}
-        </Box>
+              <Box className="w-7/12 flex flex-col gap-5">
+                {isGameStarted && (
+                  <>
+                    {boxScore()}
+                    {scoringPlaysComponent()}
+                    {gameDrives()}
+                  </>
+                )}
+                {!isGameStarted && teamStats()}
+              </Box>
 
-        <Articles title="NFL News" teamNews={gameData.news} articleLimit={6} />
-      </ContainerBox>
-    </>
-  );
+              <Articles
+                title="NFL News"
+                teamNews={allGameData.gameData.news}
+                articleLimit={6}
+              />
+            </ContainerBox>
+          </>
+        ) : (
+          <>
+            <GameHeader
+              backgroundColor={backgroundColor}
+              homeTeam={homeTeam}
+              awayTeam={awayTeam}
+              gameInfo={gameInfo}
+              league="nfl"
+              isGameStarted={isGameStarted}
+              isDesktopScreen={isDesktopScreen}
+            />
+
+            <Box className="block w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
+              <Typography
+                onClick={() => setUserSelection("schedule")}
+                sx={{ fontWeight: isSelected("schedule") ? "700" : "400" }}
+                className="opacity-70 text-sm"
+              >
+                Schedule
+              </Typography>
+              <Typography
+                onClick={() => setUserSelection("stats")}
+                sx={{ fontWeight: isSelected("stats") ? "700" : "400" }}
+                className="opacity-70 text-sm"
+              >
+                Stats
+              </Typography>
+              <Typography
+                onClick={() => setUserSelection("news")}
+                sx={{ fontWeight: isSelected("news") ? "700" : "400" }}
+                className="opacity-70 text-sm"
+              >
+                News
+              </Typography>
+              <Typography
+                onClick={() => setUserSelection("standings")}
+                sx={{ fontWeight: isSelected("standings") ? "700" : "400" }}
+                className="opacity-70 text-sm"
+              >
+                Standings
+              </Typography>
+            </Box>
+            <ContainerBox
+              altColor={
+                isGameStarted ? winningTeam.team.alternateColor : "gray"
+              }
+              mainColor={isGameStarted ? winningTeam.team.color : "gray"}
+              isDesktopScreen={isDesktopScreen}
+            >
+              <Box className="w-1/3 flex flex-col justify-center items-center gap-3">
+                {stadiumInfo()}
+                {isGameStarted && gameLeaders()}
+                {divisionStandings()}
+              </Box>
+
+              <Box className="w-7/12 flex flex-col gap-5">
+                {isGameStarted && (
+                  <>
+                    {boxScore()}
+                    {scoringPlaysComponent()}
+                    {gameDrives()}
+                  </>
+                )}
+                {!isGameStarted && teamStats()}
+              </Box>
+
+              <Articles
+                title="NFL News"
+                teamNews={allGameData.gameData.news}
+                articleLimit={6}
+              />
+            </ContainerBox>
+          </>
+        )}
+      </>
+    );
+  }
 }

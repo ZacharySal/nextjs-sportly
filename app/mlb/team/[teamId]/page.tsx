@@ -79,7 +79,7 @@ export default async function TeamPage({
   const teamNews = await getTeamNews(params.teamId);
 
   const altColor = teamData.team.alternateColor;
-  const mainColor = teamData.team.mainColor;
+  const mainColor = teamData.team.color;
 
   const displayStats: Record<string, any> = {
     Runs: teamStats.splits.categories[0].stats[11],

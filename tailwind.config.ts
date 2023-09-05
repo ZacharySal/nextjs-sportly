@@ -15,6 +15,9 @@ const config: Config = {
       },
       colors: {
         "CAROLINA_BLUE": "#0085CA"
+      },
+      screens: {
+        "md": "1000px",
       }
     },
   },

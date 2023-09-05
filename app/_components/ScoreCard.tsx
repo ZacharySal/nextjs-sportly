@@ -101,12 +101,16 @@ export default function ScoreCard({
       {/* CTA Buttons */}
       <Box className="w-full flex flex-col justify-center gap-2 col-span-3 items-center">
         <Divider flexItem className="w-full " />
-        <div className="w-full md:w-auto text-center bg-[#1b48e0] border border-[#1b48e0] rounded p-2 px-3 text-sm text-white truncate cursor-pointer">
-          Game Details
-        </div>
-        <div className="hidden md:block border border-[#1b48e0] rounded p-2 px-3 text-sm bg-white font-bold text-[#1b48e0] truncate cursor-pointer">
-          Highlights
-        </div>
+        <Box className="flex flex-row gap-8">
+          <Link href={`/nfl/game/${gameId}`}>
+            <div className="w-full md:w-auto text-center bg-[#1b48e0] border border-[#1b48e0] rounded p-2 px-3 text-sm text-white truncate cursor-pointer">
+              Game Details
+            </div>
+          </Link>
+          <div className="hidden md:block border border-[#1b48e0] rounded p-2 px-3 text-sm bg-white font-bold text-[#1b48e0] truncate cursor-pointer">
+            Highlights
+          </div>
+        </Box>
       </Box>
     </Box>
   );
