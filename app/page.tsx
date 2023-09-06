@@ -1,7 +1,7 @@
 import Home from "./nfl/page";
 
-function page() {
+function Page() {
   return <Home />;
 }
 
-export default page;
+export default Page;

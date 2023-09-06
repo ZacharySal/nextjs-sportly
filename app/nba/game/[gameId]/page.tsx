@@ -1,63 +1,41 @@
+"use client";
+
+import useSwr from "swr";
+import { useState } from "react";
 import GameHeader from "@/app/_components/GameHeader";
 import ContainerBox from "@/app/_components/ContainerBox";
 import Articles from "@/app/_components/Articles";
 import { v4 as uuidv4 } from "uuid";
-
+import Image from "next/image";
 import {
   Box,
   Typography,
-  Divider,
   TableRow,
   TableCell,
   TableHead,
   TableContainer,
   TableBody,
   Table,
+  useMediaQuery,
 } from "@mui/material";
 
-async function getGameData(gameId: string) {
-  const response = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${gameId}`
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default function Page({ params }: { params: { gameId: string } }) {
+  const [userSelection, setUserSelection] = useState("gameInfo");
+
+  const { data, isLoading } = useSwr(
+    `http://localhost:3000/nba/game/${params.gameId}/api/gameData?gameId=${params.gameId}`,
+    fetcher
   );
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch game data");
-  }
-
-  return response.json();
-}
-
-async function getTeamStats(teamId: string) {
-  const response = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2023/types/2/teams/${teamId}/statistics`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch team stats");
-  }
-
-  return response.json();
-}
-
-export default async function page({ params }: { params: { gameId: string } }) {
-  const gameData = await getGameData(params.gameId);
-
-  const homeTeam = gameData.header.competitions[0].competitors[0];
-  const awayTeam = gameData.header.competitions[0].competitors[1];
-
-  const homeTeamStats = await getTeamStats(homeTeam.id);
-  const awayTeamStats = await getTeamStats(awayTeam.id);
-
-  const winningTeam = homeTeam.winner ? homeTeam : awayTeam;
-
-  const isGameStarted = gameData.lastFiveGames ? false : true;
-
-  const backgroundColor = isGameStarted ? `#${winningTeam.team.color}` : "gray";
-
-  const gameStatus = gameData.header.competitions[0].status.type.shortDetail;
+  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isSelected = (selection: string) => selection === userSelection;
 
   function getTeamName(id: string) {
-    return id === homeTeam.id ? homeTeam.team.name : awayTeam.team.name;
+    return id === data.homeTeam.id
+      ? data.homeTeam.team.name
+      : data.awayTeam.team.name;
   }
 
   function stadiumInfo() {
@@ -66,25 +44,31 @@ export default async function page({ params }: { params: { gameId: string } }) {
         <Typography className="text-sm opacity-70 font-semibold text-start">
           Stadium Information
         </Typography>
-        <img
+        <Image
+          src={data.gameData.gameInfo.venue.images[0]?.href}
+          width={1000}
+          height={1000}
           className="rounded"
-          src={gameData.gameInfo.venue.images[0]?.href}
+          alt="stadium"
         />
         <Typography className="opacity-80 font-bold">
-          {gameData.gameInfo.venue.fullName}
+          {data.gameData.gameInfo.venue.fullName}
         </Typography>
         <Typography className="opacity-80 text-sm mt-[-0.5rem]">
-          {gameData.gameInfo.venue.address.city},{" "}
-          {gameData.gameInfo.venue.address.state}
+          {data.gameData.gameInfo.venue.address.city},{" "}
+          {data.gameData.gameInfo.venue.address.state}
         </Typography>
       </Box>
     );
   }
 
   function divisionStandings() {
-    return gameData.standings.groups.map((group: any) => {
+    return data.gameData.standings.groups.map((group: any) => {
       return (
-        <Box className="w-full bg-white rounded-xl drop-shadow-md p-3">
+        <Box
+          key={uuidv4()}
+          className="w-full bg-white rounded-xl drop-shadow-md p-3"
+        >
           <Typography className="font-semibold opacity-70 text-sm">
             {group.header}
           </Typography>
@@ -147,8 +131,8 @@ export default async function page({ params }: { params: { gameId: string } }) {
                       scope="row"
                       sx={{
                         fontWeight:
-                          homeTeam.team.location.includes(team.team) ||
-                          awayTeam.team.location.includes(team.team)
+                          data.homeTeam.team.location.includes(team.team) ||
+                          data.awayTeam.team.location.includes(team.team)
                             ? "700"
                             : "400",
                       }}
@@ -159,8 +143,8 @@ export default async function page({ params }: { params: { gameId: string } }) {
                     <TableCell
                       sx={{
                         fontWeight:
-                          homeTeam.team.location.includes(team.team) ||
-                          awayTeam.team.location.includes(team.team)
+                          data.homeTeam.team.location.includes(team.team) ||
+                          data.awayTeam.team.location.includes(team.team)
                             ? "700"
                             : "400",
                       }}
@@ -171,8 +155,8 @@ export default async function page({ params }: { params: { gameId: string } }) {
                     <TableCell
                       sx={{
                         fontWeight:
-                          homeTeam.team.location.includes(team.team) ||
-                          awayTeam.team.location.includes(team.team)
+                          data.homeTeam.team.location.includes(team.team) ||
+                          data.awayTeam.team.location.includes(team.team)
                             ? "700"
                             : "400",
                       }}
@@ -183,8 +167,8 @@ export default async function page({ params }: { params: { gameId: string } }) {
                     <TableCell
                       sx={{
                         fontWeight:
-                          homeTeam.team.location.includes(team.team) ||
-                          awayTeam.team.location.includes(team.team)
+                          data.homeTeam.team.location.includes(team.team) ||
+                          data.awayTeam.team.location.includes(team.team)
                             ? "700"
                             : "400",
                       }}
@@ -215,61 +199,71 @@ export default async function page({ params }: { params: { gameId: string } }) {
         <Typography className="text-sm opacity-60 col-start-8">T</Typography>
 
         <Box className="col-span-3 row-start-2 flex flex-row justify-start items-center gap-2">
-          <img
-            className="w-10 obejct-cotain"
-            src={`/mlb/${homeTeam.team.name.replace(" ", "")}.png`}
+          <Image
+            src={`/nba/${data.homeTeam.team.name
+              .replace(" ", "")
+              .toLowerCase()}.png`}
+            width={100}
+            height={100}
+            className="w-10 object-contain"
+            alt="home team logo"
           />
           <Typography className="font-semibold">
-            {homeTeam.team.name}
+            {data.homeTeam.team.name}
           </Typography>
           <Typography className="text-sm opacity-60">
-            {homeTeam.record[0].displayValue}
+            {data.homeTeam.record[0].displayValue}
           </Typography>
         </Box>
 
         <Box className="col-span-3 row-start-3 flex flex-row justify-start items-center gap-2">
-          <img
-            className="w-10 obejct-cotain"
-            src={`/mlb/${awayTeam.team.name.replace(" ", "")}.png`}
+          <Image
+            src={`/nba/${data.awayTeam.team.name
+              .replace(" ", "")
+              .toLowerCase()}.png`}
+            width={100}
+            height={100}
+            className="w-10 object-contain"
+            alt="away team logo"
           />
           <Typography className="font-semibold">
-            {awayTeam.team.name}
+            {data.awayTeam.team.name}
           </Typography>
           <Typography className="text-sm opacity-60">
-            {awayTeam.record[0].displayValue}
+            {data.awayTeam.record[0].displayValue}
           </Typography>
         </Box>
 
         <Typography className="opacity-70 col-start-4 row-start-2">
-          {homeTeam.linescores[0].displayValue}
+          {data.homeTeam.linescores[0].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-5 row-start-2">
-          {homeTeam.linescores[1].displayValue}
+          {data.homeTeam.linescores[1].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-6 row-start-2">
-          {homeTeam.linescores[2].displayValue}
+          {data.homeTeam.linescores[2].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-7 row-start-2">
-          {homeTeam.linescores[3].displayValue}
+          {data.homeTeam.linescores[3].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-8 row-start-2">
-          {homeTeam.score}
+          {data.homeTeam.score}
         </Typography>
 
         <Typography className="opacity-70 col-start-4 row-start-3">
-          {awayTeam.linescores[0].displayValue}
+          {data.awayTeam.linescores[0].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-5 row-start-3">
-          {awayTeam.linescores[1].displayValue}
+          {data.awayTeam.linescores[1].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-6 row-start-3">
-          {awayTeam.linescores[2].displayValue}
+          {data.awayTeam.linescores[2].displayValue}
         </Typography>
         <Typography className="opacity-70 col-start-7 row-start-3">
-          {awayTeam.linescores[3].displayValue}
+          {data.awayTeam.linescores[3].displayValue}
         </Typography>
         <Typography className="font-bold col-start-8 row-start-3">
-          {awayTeam.score}
+          {data.awayTeam.score}
         </Typography>
       </Box>
     );
@@ -278,46 +272,74 @@ export default async function page({ params }: { params: { gameId: string } }) {
   function teamStats() {
     return (
       <>
-        <Box className="w-full flex flex-col gap-1">
-          <Typography className="">{homeTeam.team.name} Stats</Typography>
+        <Box className="w-full flex flex-col gap-2 mb-5">
+          <Box className="flex flex-row gap-1 justify-start items-center">
+            <Image
+              src={`/nba/${data.homeTeam.team.name
+                .replace(" ", "")
+                .toLowerCase()}.png`}
+              width={100}
+              height={100}
+              className="w-8 object-contain"
+              alt="home team logo"
+            />
+            <Typography className="opacity-70 font-semibold">
+              {data.homeTeam.team.name} Stats
+            </Typography>
+          </Box>
           <Box className="grid grid-cols-3 gap-1">
-            {Object.entries(awayTeamDisplayStats).map(
+            {Object.entries(data.awayTeamStats).map(
               ([statName, value]: [string, any]) => (
-                <>
-                  <Box className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md">
-                    <Box className="flex flex-col justify-center gap-2 items-center">
-                      <Typography className="text-sm">{statName}</Typography>
-                      <Typography className="font-semibold text-3xl">
-                        {value.displayValue}
-                      </Typography>
-                      <Typography className="text-base opacity-70">
-                        {value.rankDisplayValue}
-                      </Typography>
-                    </Box>
+                <Box
+                  key={uuidv4()}
+                  className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md"
+                >
+                  <Box className="flex flex-col justify-center gap-2 items-center">
+                    <Typography className="text-sm">{statName}</Typography>
+                    <Typography className="font-semibold text-3xl">
+                      {value.displayValue}
+                    </Typography>
+                    <Typography className="text-base opacity-70">
+                      {value.rankDisplayValue}
+                    </Typography>
                   </Box>
-                </>
+                </Box>
               )
             )}
           </Box>
         </Box>
         <Box className="w-full flex flex-col gap-1">
-          <Typography className="">{awayTeam.team.name} Stats</Typography>
+          <Box className="flex flex-row gap-1 justify-start items-center">
+            <Image
+              src={`/nba/${data.awayTeam.team.name
+                .replace(" ", "")
+                .toLowerCase()}.png`}
+              width={100}
+              height={100}
+              className="w-8 object-contain"
+              alt="away team logo"
+            />
+            <Typography className="opacity-70 font-semibold">
+              {data.awayTeam.team.name} Stats
+            </Typography>
+          </Box>
           <Box className="grid grid-cols-3 gap-1">
-            {Object.entries(homeTeamDisplayStats).map(
+            {Object.entries(data.homeTeamStats).map(
               ([statName, value]: [string, any]) => (
-                <>
-                  <Box className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md">
-                    <Box className="flex flex-col justify-center gap-2 items-center">
-                      <Typography className="text-sm">{statName}</Typography>
-                      <Typography className="font-semibold text-3xl">
-                        {value.displayValue}
-                      </Typography>
-                      <Typography className="text-base opacity-70">
-                        {value.rankDisplayValue}
-                      </Typography>
-                    </Box>
+                <Box
+                  key={uuidv4()}
+                  className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md"
+                >
+                  <Box className="flex flex-col justify-center gap-2 items-center">
+                    <Typography className="text-sm">{statName}</Typography>
+                    <Typography className="font-semibold text-3xl">
+                      {value.displayValue}
+                    </Typography>
+                    <Typography className="text-base opacity-70">
+                      {value.rankDisplayValue}
+                    </Typography>
                   </Box>
-                </>
+                </Box>
               )
             )}
           </Box>
@@ -326,49 +348,122 @@ export default async function page({ params }: { params: { gameId: string } }) {
     );
   }
 
-  const homeTeamDisplayStats: Record<string, any> = {
-    "Points Per Game": homeTeamStats.splits.categories[2].stats[32],
-    "Assists Per Game": homeTeamStats.splits.categories[2].stats[34],
-    "Rebounds Per Game": homeTeamStats.splits.categories[1].stats[12],
-    "Field Goal %": homeTeamStats.splits.categories[2].stats[5],
-    "3 Point %": homeTeamStats.splits.categories[1].stats[13],
-  };
+  if (!isLoading) {
+    return isDesktopScreen ? (
+      <>
+        <GameHeader
+          backgroundColor={data.backgroundColor}
+          homeTeam={data.homeTeam}
+          awayTeam={data.awayTeam}
+          winningTeam={data.winningTeam}
+          isGameStarted={data.isGameStarted}
+          league="nba"
+          gameInfo={data.gameInfo}
+          isDesktopScreen={isDesktopScreen}
+        />
 
-  const awayTeamDisplayStats: Record<string, any> = {
-    "Points Per Game": awayTeamStats.splits.categories[2].stats[32],
-    "Assists Per Game": awayTeamStats.splits.categories[2].stats[34],
-    "Rebounds Per Game": awayTeamStats.splits.categories[1].stats[12],
-    "Field Goal %": awayTeamStats.splits.categories[2].stats[5],
-    "3 Point %": awayTeamStats.splits.categories[1].stats[13],
-  };
+        <ContainerBox
+          altColor={
+            data.isGameStarted ? data.winningTeam.team.alternateColor : "gray"
+          }
+          mainColor={data.isGameStarted ? data.winningTeam.team.color : "gray"}
+          isDesktopScreen={isDesktopScreen}
+        >
+          <Box className="w-1/3 flex flex-col justify-center items-center gap-3">
+            {stadiumInfo()}
+            {divisionStandings()}
+          </Box>
 
-  return (
-    <>
-      <GameHeader
-        backgroundColor={backgroundColor}
-        homeTeam={homeTeam}
-        awayTeam={awayTeam}
-        isGameStarted={isGameStarted}
-        league="nba"
-        gameStatus={gameStatus}
-      />
+          <Box className="w-7/12 flex flex-col gap-5">
+            {data.isGameStarted && boxScore()}
+            {teamStats()}
+          </Box>
 
-      <ContainerBox
-        altColor={isGameStarted ? winningTeam.team.alternateColor : "gray"}
-        mainColor={isGameStarted ? winningTeam.team.color : "gray"}
-      >
-        <Box className="w-1/3 flex flex-col justify-center items-center gap-3">
-          {stadiumInfo()}
-          {divisionStandings()}
+          <Articles
+            title="NBA News"
+            teamNews={data.gameData.news}
+            articleLimit={6}
+          />
+        </ContainerBox>
+      </>
+    ) : (
+      <>
+        <GameHeader
+          backgroundColor={"#013369"}
+          homeTeam={data.homeTeam}
+          awayTeam={data.awayTeam}
+          winningTeam={data.winningTeam}
+          isGameStarted={data.isGameStarted}
+          league="nba"
+          gameInfo={data.gameInfo}
+          isDesktopScreen={isDesktopScreen}
+        />
+        <Box className="block md:hidden w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
+          <Typography
+            onClick={() => setUserSelection("gameInfo")}
+            sx={{ fontWeight: isSelected("gameInfo") ? "700" : "400" }}
+            className="opacity-70 text-sm"
+          >
+            Game Info
+          </Typography>
+          <Typography
+            onClick={() => setUserSelection("stats")}
+            sx={{ fontWeight: isSelected("stats") ? "700" : "400" }}
+            className="opacity-70 text-sm"
+          >
+            Stats
+          </Typography>
+          {data.isGameStarted && (
+            <>
+              <Typography
+                onClick={() => setUserSelection("scoreInfo")}
+                sx={{ fontWeight: isSelected("scoreInfo") ? "700" : "400" }}
+                className="opacity-70 text-sm"
+              >
+                Score Info
+              </Typography>
+            </>
+          )}
+          <Typography
+            onClick={() => setUserSelection("standings")}
+            sx={{ fontWeight: isSelected("standings") ? "700" : "400" }}
+            className="opacity-70 text-sm"
+          >
+            Standings
+          </Typography>
         </Box>
 
-        <Box className="w-7/12 flex flex-col gap-5">
-          {isGameStarted && boxScore()}
-          {teamStats()}
-        </Box>
+        <ContainerBox
+          altColor={
+            data.isGameStarted ? data.winningTeam.team.alternateColor : "gray"
+          }
+          mainColor={data.isGameStarted ? data.winningTeam.team.color : "gray"}
+          isDesktopScreen={isDesktopScreen}
+        >
+          {userSelection === "gameInfo" && (
+            <Box className="w-full flex flex-col justify-center items-center gap-3">
+              {stadiumInfo()}
+              {divisionStandings()}
+            </Box>
+          )}
 
-        <Articles title="NBA News" teamNews={gameData.news} articleLimit={6} />
-      </ContainerBox>
-    </>
-  );
+          {userSelection === "scoreInfo" && (
+            <Box className="w-full flex flex-col gap-5">
+              <>{data.isGameStarted && boxScore()}</>
+            </Box>
+          )}
+
+          {userSelection === "stats" && teamStats()}
+
+          {userSelection === "news" && (
+            <Articles
+              title="NBA News"
+              teamNews={data.gameData.news}
+              articleLimit={6}
+            />
+          )}
+        </ContainerBox>
+      </>
+    );
+  }
 }

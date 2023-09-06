@@ -1,8 +1,7 @@
 "use client";
 
 import { Divider, Box, Typography } from "@mui/material";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function ScoreCard({
@@ -69,15 +68,22 @@ export default function ScoreCard({
   }
 
   return (
-    <Box className="w-full h-full grid grid-cols-[1fr_4fr_1fr] grid-rows-[1fr_2fr_2fr_3fr] rounded-xl text-start text-black p-2 gap-1 gap-y-2 drop-shadow-md bg-white">
+    <Box className="w-full h-auto grid grid-cols-[1fr_4fr_1fr] grid-rows-[1fr_2fr_2fr_3fr] rounded-xl text-start text-black p-2 gap-1 gap-y-2 drop-shadow-md bg-white">
       <Typography className="text-xs row-start-1 col-start-1 col-span-3 md:text-sm font-semibold text-start">
         {gameDescription}
       </Typography>
       {/* Home Team Name and Logo*/}
-      <img
+      {/* <img
         src={`/${league}/${homeTeamName.replace(" ", "")}.png`}
         className="w-10 md:w-10  my-auto object-contain"
-      ></img>
+      ></img> */}
+      <Image
+        src={`/${league}/${homeTeamName.replace(" ", "").toLowerCase()}.png`}
+        width={100}
+        height={100}
+        alt="home team logo"
+        className="w-10 my-auto object-contain"
+      />
       <Typography className="text-sm  my-auto md:text-base">
         {homeTeamName}
       </Typography>
@@ -86,10 +92,17 @@ export default function ScoreCard({
       </Typography>
 
       {/* Away Team Name and Logo*/}
-      <img
+      {/* <img
         src={`/${league}/${awayTeamName.replace(" ", "")}.png`}
         className="w-10 md:w-10 my-auto object-contain"
-      ></img>
+      ></img> */}
+      <Image
+        src={`/${league}/${awayTeamName.replace(" ", "").toLowerCase()}.png`}
+        width={100}
+        height={100}
+        alt="away team logo"
+        className="w-10 my-auto object-contain"
+      />
       <Typography className="text-sm md:text-base my-auto">
         {awayTeamName}
       </Typography>
@@ -102,7 +115,7 @@ export default function ScoreCard({
       <Box className="w-full flex flex-col justify-center gap-2 col-span-3 items-center">
         <Divider flexItem className="w-full " />
         <Box className="w-full flex flex-row justify-around">
-          <Link href={`/nfl/game/${gameId}`}>
+          <Link href={`/${league}/game/${gameId}`}>
             <div className="text-center bg-[#1b48e0] border border-[#1b48e0] rounded p-2 px-3 text-sm text-white truncate cursor-pointer">
               Game Details
             </div>

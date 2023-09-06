@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import Image from "next/image";
 
 export default function LeagueHeader({
   backgroundColor,
@@ -18,9 +19,12 @@ export default function LeagueHeader({
       className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-5 md:pl-60 drop-shadow-md"
     >
       <Box className="flex flex-row justify-center items-center gap-3">
-        <img
-          className=" w-20 md:w-32 object-cover"
+        <Image
           src={`/${league}/${league}-logo.png`}
+          width={500}
+          height={500}
+          alt="league logo"
+          className=" w-20 md:w-32 object-cover"
         />
         <Box className="flex flex-col text-white opacity-80">
           <Typography className=" text-xl md:text-3xl opacity-70">

@@ -29,7 +29,7 @@ function ContainerBox({
               rotate: "130deg",
             },
           }}
-          className="w-4/5 lg:w-3/5 h-full flex flex-row justify-center items-start px-0 gap-8 my-8"
+          className="w-4/5 h-full flex flex-row justify-center gap-8 items-start px-0 my-8"
         >
           {children}
         </Box>
@@ -38,7 +38,7 @@ function ContainerBox({
   ) : (
     <>
       <Box className="w-full flex justify-center items-center">
-        <Box className="w-full h-full flex flex-col justify-center items-start px-2 gap-8 my-4">
+        <Box className="w-full h-full flex flex-col justify-center items-start px-2 md:gap-8 my-4">
           {children}
         </Box>
       </Box>

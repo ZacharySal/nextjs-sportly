@@ -10,7 +10,7 @@ export default function TeamSchedule({
   league: string;
 }) {
   return (
-    <Box className="w-full h-auto grid grid-cols-2 gap-2 md:gap-5">
+    <Box className="w-full h-full place-items-center grid grid-cols-2 gap-2 md:gap-5">
       {teamSchedule.events.map((game: any) => (
         <ScoreCard
           key={uuidv4()}

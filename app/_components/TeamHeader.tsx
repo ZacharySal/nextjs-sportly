@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import Image from "next/image";
 import {
   mlbDivisonTeams,
   nbaDivisionTeams,
@@ -37,12 +38,17 @@ export default function TeamHeader({
   return (
     <Box
       sx={{ backgroundColor: `#${teamData.team.color}` }}
-      className="w-full h-40 flex-row flex justify-start items-center gap-3 md:pl-36 drop-shadow-md"
+      className="w-full h-36 md:h-40 flex-row flex justify-start items-center gap-3 pl-5 md:pl-36 drop-shadow-md"
     >
       <Box className="flex flex-row justify-center items-center gap-3">
-        <img
-          className="w-28 md:w-32 object-contain"
-          src={`/${league}/${teamData.team.name.replace(" ", "")}.png`}
+        <Image
+          src={`/${league}/${teamData.team.name
+            .replace(" ", "")
+            .toLowerCase()}.png`}
+          width={100}
+          height={100}
+          alt="team logo"
+          className="w-24 md:w-32 object-contain"
         />
         <Box className="flex flex-col text-white opacity-80 pr-3 border-r-2 md:pr-6 md:border-r-4">
           <Typography className="text-xl md:text-3xl opacity-70">

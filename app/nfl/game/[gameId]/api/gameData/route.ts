@@ -33,5 +33,58 @@ export async function GET(request: Request) {
 
     const awayTeamStats = await awayTeamStatsResponse.json();
 
-    return NextResponse.json({"gameData": gameData, "homeTeamStats": homeTeamStats, "awayTeamStats": awayTeamStats});
+
+  let firstQuarterScoringPlays: any[] = [];
+  let secondQuarterScoringPlays: any[] = [];
+  let thirdQuarterScoringPlays: any[] = [];
+  let fourthQuarterScoringPlays: any[] = [];
+
+  const homeTeam = gameData.header.competitions[0].competitors[0];
+  const awayTeam = gameData.header.competitions[0].competitors[1];
+
+  const winningTeam = homeTeam.winner ? homeTeam : awayTeam;
+  const isGameStarted = gameData.lastFiveGames ? false : true;
+  // backgroundColor = isGameStarted ? `#${winningTeam.team.color}` : "#013369";
+  const backgroundColor = "#013369";
+  const gameInfo = gameData.header.competitions[0];
+
+  const homeTeamDisplayStats = {
+    "Passing YPG": homeTeamStats.splits.categories[1].stats[9],
+    "Rushing YPG": homeTeamStats.splits.categories[2].stats[13],
+    "Total YPG": homeTeamStats.splits.categories[1].stats[10],
+    "Total PPG": homeTeamStats.splits.categories[1].stats[30],
+    YAC: homeTeamStats.splits.categories[3].stats[13],
+    "3rd Down %": homeTeamStats.splits.categories[10].stats[14],
+    "Turnover Diff":
+      homeTeamStats.splits.categories[10].stats[21],
+    Sacks: homeTeamStats.splits.categories[4].stats[14],
+  };
+
+  const awayTeamDisplayStats = {
+    "Passing YPG": awayTeamStats.splits.categories[1].stats[9],
+    "Rushing YPG": awayTeamStats.splits.categories[2].stats[13],
+    "Total YPG": awayTeamStats.splits.categories[1].stats[10],
+    "Total PPG": awayTeamStats.splits.categories[1].stats[30],
+    YAC: awayTeamStats.splits.categories[3].stats[13],
+    "3rd Down %": awayTeamStats.splits.categories[10].stats[14],
+    "Turnover Diff":
+      awayTeamStats.splits.categories[10].stats[21],
+    Sacks: awayTeamStats.splits.categories[4].stats[14],
+  };
+
+  if (isGameStarted) {
+    gameData.scoringPlays.map((play: any) => {
+      if (play.period.number === 1) {
+        firstQuarterScoringPlays.push(play);
+      } else if (play.period.number === 2) {
+        secondQuarterScoringPlays.push(play);
+      } else if (play.period.number === 3) {
+        thirdQuarterScoringPlays.push(play);
+      } else if (play.period.number === 4) {
+        fourthQuarterScoringPlays.push(play);
+      }
+    });
+  }
+
+    return NextResponse.json({"gameData": gameData, "homeTeam":homeTeam, "awayTeam":awayTeam, "homeTeamStats": homeTeamDisplayStats, "awayTeamStats": awayTeamDisplayStats, "gameInfo": gameInfo, "isGameStarted":isGameStarted, "winningTeam": winningTeam, "backgroundColor":backgroundColor, "firstQuarterScoringPlays": firstQuarterScoringPlays, "secondQuarterScoringPlays": secondQuarterScoringPlays, "thirdQuarterScoringPlays": thirdQuarterScoringPlays, "fourthQuarterScoringPlays": fourthQuarterScoringPlays});
 }

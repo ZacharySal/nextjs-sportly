@@ -4,6 +4,7 @@ import { Box, Typography, Divider } from "@mui/material";
 import { nameExceptions } from "../_lib/constants";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function TeamSideCard({
   name,
@@ -29,9 +30,12 @@ export default function TeamSideCard({
         sx={{ cursor: "pointer" }}
         className="flex justify-start flex-row items-center gap-1 mt-2"
       >
-        <img
+        <Image
+          src={`/${league}/${teamName?.replace(" ", "").toLowerCase()}.png`}
+          width={100}
+          height={100}
+          alt="team logo"
           className="w-7 object-contain"
-          src={`/${league}/${teamName?.replace(" ", "")}.png`}
         />
         <Typography className="text-sm">{name[0]}</Typography>
       </Box>

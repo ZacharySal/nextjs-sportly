@@ -1,6 +1,7 @@
 import { Box, Typography, Divider } from "@mui/material";
 import ArticleCard from "./ArticleCard";
 import { v4 as uuidv4 } from "uuid";
+import React from "react";
 
 function Articles({
   title,
@@ -19,12 +20,12 @@ function Articles({
       {teamNews.articles
         .slice(0, articleLimit)
         .map((article: any, index: number) => (
-          <>
+          <React.Fragment key={uuidv4()}>
             <ArticleCard key={uuidv4()} article={article} />
             {index + 1 != articleLimit && (
               <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
             )}
-          </>
+          </React.Fragment>
         ))}
     </Box>
   );
