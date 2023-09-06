@@ -86,5 +86,5 @@ export async function GET(request: Request) {
     });
   }
 
-    return NextResponse.json({"gameData": gameData, "homeTeam":homeTeam, "awayTeam":awayTeam, "homeTeamStats": homeTeamDisplayStats, "awayTeamStats": awayTeamDisplayStats, "gameInfo": gameInfo, "isGameStarted":isGameStarted, "winningTeam": winningTeam, "backgroundColor":backgroundColor, "firstQuarterScoringPlays": firstQuarterScoringPlays, "secondQuarterScoringPlays": secondQuarterScoringPlays, "thirdQuarterScoringPlays": thirdQuarterScoringPlays, "fourthQuarterScoringPlays": fourthQuarterScoringPlays});
+    return NextResponse.json({"gameData": gameData, "homeTeam":homeTeam, "awayTeam":awayTeam, "homeTeamStats": homeTeamDisplayStats, "awayTeamStats": awayTeamDisplayStats, "gameInfo": gameInfo, "isGameStarted":isGameStarted, "winningTeam": winningTeam, "backgroundColor": backgroundColor, "firstQuarterScoringPlays": firstQuarterScoringPlays, "secondQuarterScoringPlays": secondQuarterScoringPlays, "thirdQuarterScoringPlays": thirdQuarterScoringPlays, "fourthQuarterScoringPlays": fourthQuarterScoringPlays});
 }

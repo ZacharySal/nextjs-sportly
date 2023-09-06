@@ -30,9 +30,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function TeamPage({ params }: { params: { gameId: string } }) {
   const { data, isLoading } = useSwr(
-    `http://` +
-      process.env.VERCEL_URL +
-      `/nfl/game/401547353/api/gameData?gameId=${params.gameId}`,
+    `http://localhost:3000/nfl/game/401547353/api/gameData?gameId=${params.gameId}`,
     fetcher
   );
 
