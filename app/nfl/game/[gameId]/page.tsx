@@ -25,22 +25,23 @@ import useSwr from "swr";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
+import { useSearchParams } from "next/navigation";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default function TeamPage({ params }: { params: { gameId: string } }) {
+export default function TeamPage() {
+  const searchParams = useSearchParams();
+
+  const gameId = searchParams.get("gameId");
+
   const { data, isLoading } = useSwr(
-    `http://localhost:3000/nfl/game/401547353/api/gameData?gameId=${params.gameId}`,
+    `http://localhost:3000/nfl/game/401547353/api/gameData?gameId=${gameId}`,
     fetcher
   );
 
   const [userSelection, setUserSelection] = useState("gameInfo");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
   const isSelected = (selection: string) => selection === userSelection;
-
-  if (!isLoading) {
-    console.log(data);
-  }
 
   function quarterHeader(text: string) {
     return (
