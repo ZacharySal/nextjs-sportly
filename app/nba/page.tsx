@@ -18,7 +18,7 @@ export default function Home() {
   const [userSelection, setUserSelection] = useState("scoreboard");
 
   const { data, isLoading } = useSwr(
-    "http://localhost:3000/nba/api/mlbData",
+    "http://" + process.env.VERCEL_URL + "/nba/api/mlbData",
     fetcher
   );
 

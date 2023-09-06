@@ -15,7 +15,9 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   const [userSelection, setUserSelection] = useState("games");
 
   const { data, isLoading } = useSwr(
-    `http://localhost:3000/mlb/team/${params.teamId}/api/teamData?teamId=${params.teamId}`,
+    `http://` +
+      process.env.VERCEL_URL +
+      `/mlb/team/${params.teamId}/api/teamData?teamId=${params.teamId}`,
     fetcher
   );
 
