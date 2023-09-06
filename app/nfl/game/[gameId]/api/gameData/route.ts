@@ -4,6 +4,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const gameId = searchParams.get('gameId');
 
+    console.log(`Game ID in api route: ${gameId}`);
     const gameDataResponse = await fetch(
         `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${gameId}`
       );

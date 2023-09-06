@@ -3,8 +3,6 @@
 import { Divider, Box, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useCallback } from "react";
 
 export default function ScoreCard({
   gameInfo,
@@ -20,7 +18,6 @@ export default function ScoreCard({
   const game = gameInfo.competitions[0];
   const homeTeam = game.competitors[0];
   const awayTeam = game.competitors[1];
-  const searchParams = useSearchParams()!;
 
   let gameId: string;
   let gameDate: string = version === 2 ? game.date : gameInfo.date;
@@ -30,16 +27,6 @@ export default function ScoreCard({
   let homeTeamScore;
   let awayTeamId: string = awayTeam.id;
   let awayTeamName: string = awayTeam.team.shortDisplayName;
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams);
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams]
-  );
 
   let awayTeamScore;
 
@@ -128,13 +115,7 @@ export default function ScoreCard({
       <Box className="w-full flex flex-col justify-center gap-2 col-span-3 items-center">
         <Divider flexItem className="w-full " />
         <Box className="w-full flex flex-row justify-around">
-          <Link
-            href={
-              `/${league}/game/${gameId}` +
-              "?" +
-              createQueryString("gameId", gameId)
-            }
-          >
+          <Link href={`/${league}/game/${gameId}`}>
             <div className="text-center bg-[#1b48e0] border border-[#1b48e0] rounded p-2 px-3 text-sm text-white truncate cursor-pointer">
               Game Details
             </div>
