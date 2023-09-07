@@ -29,10 +29,15 @@ import React from "react";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function TeamPage({ params }: { params: { gameId: string } }) {
+  console.log(params.gameId);
   const { data, isLoading } = useSwr(
-    `http://localhost:3000/nfl/game/401547353/api/gameData?gameId=${params.gameId}`,
+    `http://localhost:3000/api/nfl/gameData/${params.gameId}`,
     fetcher
   );
+
+  if (!isLoading) {
+    console.log(data);
+  }
 
   const [userSelection, setUserSelection] = useState("gameInfo");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");

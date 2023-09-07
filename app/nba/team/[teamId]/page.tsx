@@ -15,7 +15,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   const [userSelection, setUserSelection] = useState("schedule");
 
   const { data, isLoading } = useSwr(
-    `http://localhost:3000/nba/team/${params.teamId}/api/teamData?teamId=${params.teamId}`,
+    `http://localhost:3000/api/nba/teamData/${params.teamId}`,
     fetcher
   );
 

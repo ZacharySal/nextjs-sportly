@@ -1,12 +1,8 @@
 import { NextResponse } from "next/server"
 
-export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url);
-    const gameId = searchParams.get('gameId');
-
-    console.log(`Game ID in api route: ${gameId}`);
+export async function GET(request: Request,{ params }: { params: { gameId: string } }){
     const gameDataResponse = await fetch(
-        `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${gameId}`
+        `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${params.gameId}`
       );
     
       if (!gameDataResponse.ok) {

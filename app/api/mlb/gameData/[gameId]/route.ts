@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server"
 
-export async function GET(request: Request) {
-    const { searchParams} = new URL(request.url);
-    const gameId = searchParams.get("gameId");
-
-    const gameDataResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${gameId}`);
+export async function GET(request: Request, { params }: { params: { gameId: string }}) {
+    const gameDataResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${params.gameId}`);
 
     if(!gameDataResponse.ok) {
         throw new Error("Failed to fetch game data")

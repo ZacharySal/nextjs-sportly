@@ -26,7 +26,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
   const [userSelection, setUserSelection] = useState("gameInfo");
 
   const { data, isLoading } = useSwr(
-    `http://localhost:3000/mlb/game/${params.gameId}/api/gameData?gameId=${params.gameId}`,
+    `http://localhost:3000/api/mlb/gameData/${params.gameId}`,
     fetcher
   );
 

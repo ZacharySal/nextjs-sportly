@@ -16,7 +16,7 @@ export default function Home() {
   const [userSelection, setUserSelection] = useState("scoreboard");
 
   const { data, isLoading } = useSwr(
-    "http://localhost:3000/mlb/api/mlbData",
+    "http://localhost:3000/api/mlb/leagueData",
     fetcher
   );
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
