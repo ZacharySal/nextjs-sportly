@@ -683,7 +683,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
         <Box className="w-full flex flex-col gap-2 mb-5">
           <Box className="flex flex-row gap-1 justify-start items-center">
             <Image
-              src={`/nfl/${data.gameData.header.competitions[0].competitors[0].team.name}.png`}
+              src={`/nfl/${data.gameData.header.competitions[0].competitors[0].team.name.toLowerCase()}.png`}
               width={100}
               height={100}
               alt="team logo"

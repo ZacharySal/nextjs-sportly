@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 function TeamStats({ stats }: { stats: any }) {
   return (
-    <Box className="w-full h-full grid grid-cols-[1fr_1fr_1fr] md:flex md:flex-col md:justify-start md:items-center gap-2 md:gap-4">
+    <Box className="w-full grid grid-cols-[1fr_1fr_1fr] md:flex md:flex-col md:justify-start md:items-center gap-2 md:gap-4">
       {Object.entries(stats).map(([statName, value]: [string, any]) => (
         <React.Fragment key={uuidv4()}>
           <Box className=" w-full md:w-40 flex justify-center items-center flex-row p-2 md:p-3 bg-white gap-1 md:rounded-xl drop-shadow-md">
@@ -14,7 +14,7 @@ function TeamStats({ stats }: { stats: any }) {
                 {value.displayValue}
               </Typography>
               <Typography className="text-sm md:text-base opacity-70">
-                {value.rankDisplayValue}
+                {value.rankDisplayValue || "TBD"}
               </Typography>
             </Box>
           </Box>
