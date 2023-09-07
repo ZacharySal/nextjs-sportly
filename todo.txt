@@ -1,7 +1,9 @@
-Fix NFL Game Drives (Grid)
+Fix Game Leaders in NFL Game Page
+Rework Game Header
+Add Game Status to Game Page Header
+Refactor Mobile User Selection for Game, Team, and League
 Add Click Functionality to All Teams
 Add One More Stat to NFL Game Page
 Add Four More Stats to NBA Game Page
-Make Mobile Responsive
-Find All Duplicate Keys and Fix
 Add Stadings to Mobile View
+Sort Team Page Games by Newest First

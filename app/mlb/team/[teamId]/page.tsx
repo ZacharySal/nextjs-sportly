@@ -4,7 +4,8 @@ import TeamStats from "@/app/_components/TeamStats";
 import Articles from "@/app/_components/Articles";
 import ContainerBox from "@/app/_components/ContainerBox";
 import TeamSchedule from "@/app/_components/TeamSchedule";
-import Header from "@/app/_components/TeamHeader";
+import TeamUserSelection from "@/app/_components/TeamUserSelection";
+import TeamHeader from "@/app/_components/TeamHeader";
 import useSwr from "swr";
 import { useMediaQuery, Typography, Box } from "@mui/material";
 import { useState } from "react";
@@ -20,12 +21,11 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   );
 
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
-  const isSelected = (selection: string) => selection === userSelection;
 
   if (!isLoading) {
     return isDesktopScreen ? (
       <>
-        <Header teamData={data.teamData} league="mlb" />
+        <TeamHeader teamData={data.teamData} league="mlb" />
         <ContainerBox
           altColor={data.teamData.team.alternateColor}
           mainColor={data.teamData.team.color}
@@ -40,38 +40,17 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
           <Articles
             title={`${data.teamData.team.name} News`}
             teamNews={data.teamNews}
-            articleLimit={8}
+            limit={8}
           />
         </ContainerBox>
       </>
     ) : (
       <>
-        <Header teamData={data.teamData} league="mlb" />
-
-        <Box className="block md:hidden w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
-          <Typography
-            onClick={() => setUserSelection("games")}
-            sx={{ fontWeight: isSelected("games") ? "700" : "400" }}
-            className="opacity-70 text-sm"
-          >
-            Games
-          </Typography>
-          <Typography
-            onClick={() => setUserSelection("stats")}
-            sx={{ fontWeight: isSelected("stats") ? "700" : "400" }}
-            className="opacity-70 text-sm"
-          >
-            Stats
-          </Typography>
-
-          <Typography
-            onClick={() => setUserSelection("news")}
-            sx={{ fontWeight: isSelected("news") ? "700" : "400" }}
-            className="opacity-70 text-sm"
-          >
-            News
-          </Typography>
-        </Box>
+        <TeamHeader teamData={data.teamData} league="mlb" />
+        <TeamUserSelection
+          userSelection={userSelection}
+          setUserSelection={setUserSelection}
+        />
         <ContainerBox
           altColor={data.teamData.team.alternateColor}
           mainColor={data.teamData.team.color}
@@ -85,7 +64,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
             <Articles
               title={`${data.teamData.team.name} News`}
               teamNews={data.teamNews}
-              articleLimit={8}
+              limit={8}
             />
           )}
         </ContainerBox>

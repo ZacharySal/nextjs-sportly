@@ -8,20 +8,10 @@ import Articles from "@/app/_components/Articles";
 import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import StadiumInfo from "@/app/_components/StadiumInfo";
-
-import {
-  Box,
-  Typography,
-  TableRow,
-  TableCell,
-  TableHead,
-  TableContainer,
-  TableBody,
-  Table,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import NBABoxscore from "@/app/_components/NBABoxscore";
 import DivisionStandings from "@/app/_components/DivisionStandings";
+import GameUserSelection from "@/app/_components/GameUserSelection";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -152,11 +142,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
             {teamStats()}
           </Box>
 
-          <Articles
-            title="NBA News"
-            teamNews={data.gameData.news}
-            articleLimit={6}
-          />
+          <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
         </ContainerBox>
       </>
     ) : (
@@ -171,40 +157,11 @@ export default function Page({ params }: { params: { gameId: string } }) {
           gameInfo={data.gameInfo}
           isDesktopScreen={isDesktopScreen}
         />
-        <Box className="block md:hidden w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
-          <Typography
-            onClick={() => setUserSelection("gameInfo")}
-            sx={{ fontWeight: isSelected("gameInfo") ? "700" : "400" }}
-            className="opacity-70 text-sm"
-          >
-            Game Info
-          </Typography>
-          <Typography
-            onClick={() => setUserSelection("stats")}
-            sx={{ fontWeight: isSelected("stats") ? "700" : "400" }}
-            className="opacity-70 text-sm"
-          >
-            Stats
-          </Typography>
-          {data.isGameStarted && (
-            <>
-              <Typography
-                onClick={() => setUserSelection("scoreInfo")}
-                sx={{ fontWeight: isSelected("scoreInfo") ? "700" : "400" }}
-                className="opacity-70 text-sm"
-              >
-                Score Info
-              </Typography>
-            </>
-          )}
-          <Typography
-            onClick={() => setUserSelection("standings")}
-            sx={{ fontWeight: isSelected("standings") ? "700" : "400" }}
-            className="opacity-70 text-sm"
-          >
-            Standings
-          </Typography>
-        </Box>
+        <GameUserSelection
+          userSelection={userSelection}
+          setUserSelection={setUserSelection}
+          data={data}
+        />
 
         <ContainerBox
           altColor={
@@ -232,7 +189,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
             <Articles
               title="NBA News"
               teamNews={data.gameData.news}
-              articleLimit={6}
+              limit={6}
             />
           )}
         </ContainerBox>

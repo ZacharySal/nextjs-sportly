@@ -11,7 +11,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 
 export default function DivisionStandings({ data }: { data: any }) {
-  return data.gameData.standings.groups.map((group: any) => {
+  return data.gameData.standings.groups.map((group: any) => (
     <Box
       key={uuidv4()}
       className="w-full bg-white rounded-xl drop-shadow-md p-3"
@@ -128,6 +128,6 @@ export default function DivisionStandings({ data }: { data: any }) {
           </TableBody>
         </Table>
       </TableContainer>
-    </Box>;
-  });
+    </Box>
+  ));
 }

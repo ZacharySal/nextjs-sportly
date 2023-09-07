@@ -10,11 +10,11 @@ export default function StadiumInfo({ data }: { data: any }) {
         </Typography>
 
         <Image
-          src={data.gameData.gameInfo.venue.images[0].href}
+          src={data.gameData.gameInfo.venue.images[0]?.href}
           width={1000}
           height={1000}
-          className="rounded"
-          alt="stadium"
+          className="w-full object-contain rounded"
+          alt="Stadium"
         />
         <Typography className="opacity-80 font-bold">
           {data.gameData.gameInfo.venue.fullName}

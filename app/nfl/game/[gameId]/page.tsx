@@ -1,32 +1,20 @@
 "use client";
 
-import {
-  Box,
-  Typography,
-  Divider,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import Image from "next/image";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ContainerBox from "@/app/_components/ContainerBox";
 import GameHeader from "@/app/_components/GameHeader";
 import Articles from "@/app/_components/Articles";
-import { nflDivisonTeams } from "@/app/_lib/constants";
 import useSwr from "swr";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
 import StadiumInfo from "@/app/_components/StadiumInfo";
 import NFLBoxscore from "@/app/_components/NFLBoxscore";
+import DivisionStandings from "@/app/_components/DivisionStandings";
+import NFLGameDrives from "@/app/_components/NFLGameDrives";
+import NFLScoringPlays from "@/app/_components/NFLScoringPlays";
+import GameUserSelection from "@/app/_components/GameUserSelection";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -37,107 +25,9 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
     fetcher
   );
 
-  if (!isLoading) {
-    console.log(data);
-  }
-
   const [userSelection, setUserSelection] = useState("gameInfo");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
   const isSelected = (selection: string) => selection === userSelection;
-
-  function quarterHeader(text: string) {
-    return (
-      <Box className="w-full flex flex-row justify-between items-center mb-2">
-        <Typography className="opacity-70 text-xs">{text}</Typography>
-        {/* <Box className="flex flex-row items-center gap-2">
-          <img
-            className="w-8 object-contain"
-            src={`/nfl/${gameData.header.competitions[0].competitors[0].team.name}.png`}
-          />
-          <img
-            className="w-8 object-contain"
-            src={`/nfl/${gameData.header.competitions[0].competitors[1].team.name}.png`}
-          />
-        </Box> */}
-      </Box>
-    );
-  }
-
-  function scoringPlays(allScoringPlays: any) {
-    const plays = allScoringPlays.map((play: any) => {
-      return (
-        <React.Fragment key={uuidv4()}>
-          <Box className="w-full flex flex-row justify-between items-center mb-1">
-            <Box className="flex flex-row items-center gap-2">
-              <Image
-                src={play.team.logo}
-                width={100}
-                height={100}
-                alt="team logo"
-                className="w-8 object-contain"
-              />
-              <Box className="flex flex-col">
-                <Box className="text-sm font-bold">
-                  {play.type.text}
-                  <span className="pl-1 text-xs opacity-70">
-                    {play.clock.displayValue}
-                  </span>
-                </Box>
-                <Box className="text-sm opacity-70">{play.text}</Box>
-              </Box>
-            </Box>
-            <Box className="flex flex-row gap-6 pr-2">
-              <Typography
-                sx={{
-                  fontWeight:
-                    play.team.displayName === data.homeTeam.team.displayName
-                      ? "700"
-                      : "400",
-                }}
-                className="w-4 text-center"
-              >
-                {play.homeScore}
-              </Typography>
-              <Typography
-                sx={{
-                  fontWeight:
-                    play.team.displayName === data.awayTeam.team.displayName
-                      ? "700"
-                      : "400",
-                }}
-                className="w-4 text-center"
-              >
-                {play.awayScore}
-              </Typography>
-            </Box>
-          </Box>
-        </React.Fragment>
-      );
-    });
-    return plays;
-  }
-
-  function scoringPlaysComponent() {
-    return (
-      <Box className="w-full bg-white rounded-xl drop-shadow-md flex flex-col justify-center items-center p-3">
-        <Typography className=" w-full text-left text-sm opacity-70 font-semibold">
-          Scoring Plays
-        </Typography>
-        <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
-        {quarterHeader("1ST QUARTER")}
-        {scoringPlays(data.firstQuarterScoringPlays)}
-        <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
-        {quarterHeader("2ND QUARTER")}
-        {scoringPlays(data.secondQuarterScoringPlays)}
-        <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
-        {quarterHeader("3RD QUARTER")}
-        {scoringPlays(data.thirdQuarterScoringPlays)}
-        <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
-        {quarterHeader("4TH QUARTER")}
-        {scoringPlays(data.fourthQuarterScoringPlays)}
-      </Box>
-    );
-  }
 
   function gameLeaders() {
     return (
@@ -341,229 +231,6 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
     );
   }
 
-  function gameDrives() {
-    return (
-      <Box className="w-full bg-white rounded-xl p-3">
-        <Typography className="text-sm opacity-70 font-semibold mb-4">
-          Game Drives
-        </Typography>
-        <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
-        <Box id="style-1" className="w-full max-h-[40rem] overflow-y-auto ">
-          {data.gameData.drives.previous.map((drive: any) => (
-            <Accordion key={uuidv4()}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Box className="w-full grid grid-cols-[1fr_1fr] text-center mr-2">
-                  <Box className="flex flex-row items-center gap-2">
-                    <Image
-                      src={drive.team.logos[0].href}
-                      width={100}
-                      height={100}
-                      alt="team logo"
-                      className="w-8 md:w-10 object-contain"
-                    />
-                    <Typography className="text-sm md:text-lg font-bold">
-                      {drive.displayResult}
-                    </Typography>
-                  </Box>
-                  <Box className="grid grid-cols-3 items-center gap-5">
-                    <Box className="flex flex-col justify-center items-center">
-                      <Typography className="text-sm font-semibold">
-                        {drive.plays.length}
-                      </Typography>
-                      <Typography className="text-xs opacity-70">
-                        Plays
-                      </Typography>
-                    </Box>
-                    <Box className="hidden md:block flex flex-col justify-center items-center">
-                      <Typography className=" text-sm font-semibold">
-                        {drive.start.text}
-                      </Typography>
-                      <Typography className="text-xs opacity-70">
-                        Start
-                      </Typography>
-                    </Box>
-                    <Box className="flex flex-col justify-center items-center">
-                      <Typography className="text-sm font-semibold">
-                        {drive.yards}
-                      </Typography>
-                      <Typography className="text-xs opacity-70">
-                        Yards
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-              </AccordionSummary>
-              <AccordionDetails sx={{ backgroundColor: "#edeef0;" }}>
-                <Box className="flex flex-col gap-3">
-                  {drive.plays.map((play: any) => (
-                    <React.Fragment key={uuidv4()}>
-                      <Box
-                        sx={{
-                          borderColor: drive.team?.name
-                            ? drive.team.name === data.homeTeam.team.name
-                              ? `#${data.homeTeam.team.color}`
-                              : `#${data.awayTeam.team.color}`
-                            : "gray",
-                        }}
-                        className="flex flex-col justify-start items-start bg-white rounded p-3 border-l-8"
-                      >
-                        <Typography className="opacity-100 text-base font-semibold">
-                          {play.type.text}
-                        </Typography>
-                        <Typography className="text-sm opacity-80">
-                          {play.text}
-                        </Typography>
-                        <Typography className="text-xs opacity-80 mt-5">
-                          {play.start.downDistanceText}
-                        </Typography>
-                      </Box>
-                    </React.Fragment>
-                  ))}
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-          ))}
-        </Box>
-      </Box>
-    );
-  }
-
-  function divisionStandings() {
-    return data.gameData.standings.groups.map((group: any) => {
-      return (
-        <Box
-          key={uuidv4()}
-          className="w-full bg-white rounded-xl drop-shadow-md p-3"
-        >
-          <Typography className="font-semibold opacity-70 text-sm">
-            {group.header}
-          </Typography>
-
-          <TableContainer
-            style={{ maxWidth: "100%", marginTop: "0.5rem" }}
-            component={Box}
-          >
-            <Table aria-label="simple table" size="small">
-              <TableHead
-                sx={{
-                  borderTop: "1px solid rgba(224, 224, 224, 1)",
-                }}
-              >
-                <TableRow>
-                  <TableCell
-                    className=" text-sm font-semibold"
-                    align="left"
-                    style={{ width: "6rem" }}
-                  >
-                    Team
-                  </TableCell>
-                  <TableCell
-                    className=" text-sm font-semibold"
-                    style={{ width: "4rem" }}
-                    align="center"
-                  >
-                    W
-                  </TableCell>
-                  <TableCell
-                    className=" text-sm font-semibold"
-                    style={{ width: "4rem" }}
-                    align="center"
-                  >
-                    L
-                  </TableCell>
-                  <TableCell
-                    style={{ fontStyle: "bold", width: "4rem" }}
-                    className=" text-sm font-semibold"
-                    align="center"
-                  >
-                    WP
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {group.standings.entries.map((team: any) => (
-                  <TableRow
-                    key={uuidv4()}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                      "&:nth-child(odd) td, &:nth-child(odd) th": {
-                        backgroundColor: "#edeef0;",
-                      },
-                    }}
-                  >
-                    <TableCell
-                      className="text-xs"
-                      component="th"
-                      scope="row"
-                      sx={{
-                        fontWeight:
-                          data.homeTeam.team.location.includes(team.team) ||
-                          data.awayTeam.team.location.includes(team.team)
-                            ? "700"
-                            : "400",
-                      }}
-                    >
-                      {team.team}
-                    </TableCell>
-
-                    <TableCell
-                      sx={{
-                        fontWeight:
-                          data.homeTeam.team.location.includes(team.team) ||
-                          data.awayTeam.team.location.includes(team.team)
-                            ? "700"
-                            : "400",
-                      }}
-                      align="center"
-                    >
-                      {team.stats[5].displayValue}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        fontWeight:
-                          data.homeTeam.team.location.includes(team.team) ||
-                          data.awayTeam.team.location.includes(team.team)
-                            ? "700"
-                            : "400",
-                      }}
-                      align="center"
-                    >
-                      {team.stats[0].displayValue}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        fontWeight:
-                          data.homeTeam.team.location.includes(team.team) ||
-                          data.awayTeam.team.location.includes(team.team)
-                            ? "700"
-                            : "400",
-                      }}
-                      align="center"
-                    >
-                      {team.stats[4].displayValue}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-      );
-    });
-  }
-
-  function findTeamDivison(teamName: string) {
-    for (const conference in nflDivisonTeams) {
-      for (const team of nflDivisonTeams[conference]) {
-        if (team[0] == teamName) return conference;
-      }
-    }
-  }
-
   function teamStats() {
     return (
       <>
@@ -669,15 +336,15 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               <Box className="w-1/3 flex flex-col justify-center items-center gap-3">
                 <StadiumInfo data={data} />
                 {data.isGameStarted && gameLeaders()}
-                {divisionStandings()}
+                <DivisionStandings data={data} />
               </Box>
 
               <Box className="w-7/12 flex flex-col gap-5">
                 {data.isGameStarted && (
                   <>
                     <NFLBoxscore data={data} />
-                    {scoringPlaysComponent()}
-                    {gameDrives()}
+                    <NFLScoringPlays data={data} />
+                    <NFLGameDrives data={data} />
                   </>
                 )}
                 {!data.isGameStarted && teamStats()}
@@ -686,7 +353,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               <Articles
                 title="NFL News"
                 teamNews={data.gameData.news}
-                articleLimit={6}
+                limit={6}
               />
             </ContainerBox>
           </>
@@ -703,41 +370,11 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               isDesktopScreen={isDesktopScreen}
             />
 
-            <Box className="block w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
-              <Typography
-                onClick={() => setUserSelection("gameInfo")}
-                sx={{ fontWeight: isSelected("gameInfo") ? "700" : "400" }}
-                className="opacity-70 text-sm"
-              >
-                Game Info
-              </Typography>
-              <Typography
-                onClick={() => setUserSelection("stats")}
-                sx={{ fontWeight: isSelected("stats") ? "700" : "400" }}
-                className="opacity-70 text-sm"
-              >
-                Team Stats
-              </Typography>
-              {data.isGameStarted && (
-                <>
-                  <Typography
-                    onClick={() => setUserSelection("scoreInfo")}
-                    sx={{ fontWeight: isSelected("scoreInfo") ? "700" : "400" }}
-                    className="opacity-70 text-sm"
-                  >
-                    Score Info
-                  </Typography>
-                </>
-              )}
-
-              <Typography
-                onClick={() => setUserSelection("news")}
-                sx={{ fontWeight: isSelected("news") ? "700" : "400" }}
-                className="opacity-70 text-sm"
-              >
-                News
-              </Typography>
-            </Box>
+            <GameUserSelection
+              userSelection={userSelection}
+              setUserSelection={setUserSelection}
+              data={data}
+            />
             <ContainerBox
               altColor={
                 data.isGameStarted
@@ -754,7 +391,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                   <Box className="w-full flex flex-col justify-center items-center gap-3">
                     <StadiumInfo data={data} />
                     {data.isGameStarted && gameLeaders()}
-                    {divisionStandings()}
+                    <DivisionStandings data={data} />
                   </Box>
                 </>
               )}
@@ -767,8 +404,8 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                     {data.isGameStarted && (
                       <>
                         <NFLBoxscore data={data} />
-                        {scoringPlaysComponent()}
-                        {gameDrives()}
+                        <NFLScoringPlays data={data} />
+                        <NFLGameDrives data={data} />
                       </>
                     )}
                   </Box>
@@ -780,7 +417,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                   <Articles
                     title="NFL News"
                     teamNews={data.gameData.news}
-                    articleLimit={6}
+                    limit={6}
                   />
                 </>
               )}
