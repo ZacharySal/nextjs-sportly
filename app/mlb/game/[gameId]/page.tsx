@@ -26,7 +26,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
   const [userSelection, setUserSelection] = useState("gameInfo");
 
   const { data, isLoading } = useSwr(
-    `http://localhost:3000/api/mlb/gameData/${params.gameId}`,
+    `https://nextjs-sportly.vercel.app/api/mlb/gameData/${params.gameId}`,
     fetcher
   );
 

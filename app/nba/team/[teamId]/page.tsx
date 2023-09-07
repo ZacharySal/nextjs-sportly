@@ -15,7 +15,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   const [userSelection, setUserSelection] = useState("schedule");
 
   const { data, isLoading } = useSwr(
-    `http://localhost:3000/api/nba/teamData/${params.teamId}`,
+    `https://nextjs-sportly.vercel.app/api/nba/teamData/${params.teamId}`,
     fetcher
   );
 
