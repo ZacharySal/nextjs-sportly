@@ -19,6 +19,9 @@ import Image from "next/image";
 import useSwr from "swr";
 import { useState } from "react";
 import React from "react";
+import StadiumInfo from "@/app/_components/StadiumInfo";
+import MLBBoxscore from "@/app/_components/MLBBoxscore";
+import DivisionStandings from "@/app/_components/DivisionStandings";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -37,30 +40,6 @@ export default function Page({ params }: { params: { gameId: string } }) {
     return id === data.homeTeam.id
       ? data.homeTeam.team.name
       : data.awayTeam.team.name;
-  }
-
-  function stadiumInfo() {
-    return (
-      <Box className="w-full flex flex-col bg-white rounded-xl drop-shadow-md gap-2 p-3">
-        <Typography className="text-sm opacity-70 font-semibold text-start">
-          Stadium Information
-        </Typography>
-        <Image
-          src={data.gameData.gameInfo.venue.images[0].href}
-          width={1000}
-          height={1000}
-          alt="team logo"
-          className="rounded"
-        />
-        <Typography className="opacity-80 font-bold">
-          {data.gameData.gameInfo.venue.fullName}
-        </Typography>
-        <Typography className="opacity-80 text-sm mt-[-0.5rem]">
-          {data.gameData.gameInfo.venue.address.city},{" "}
-          {data.gameData.gameInfo.venue.address.state}
-        </Typography>
-      </Box>
-    );
   }
 
   function divisionStandings() {
@@ -184,124 +163,6 @@ export default function Page({ params }: { params: { gameId: string } }) {
         </React.Fragment>
       );
     });
-  }
-
-  function boxScore() {
-    return (
-      <Box className="w-full bg-white p-3 rounded-xl drop-shadow-md grid items-center text-center grid-cols-13 grid-rows-[0.25rem, 0.5rem, 0.5rem] gap-y-2 gap-x-0">
-        <Typography className="text-sm font-semibold opacity-70 col-start-1 col-span-2 text-start">
-          Box Score
-        </Typography>
-        <Typography className="text-sm opacity-60 col-start-4">1</Typography>
-        <Typography className="text-sm opacity-60 col-start-5">2</Typography>
-        <Typography className="text-sm opacity-60 col-start-6">3</Typography>
-        <Typography className="text-sm opacity-60 col-start-7">4</Typography>
-        <Typography className="text-sm opacity-60 col-start-8">5</Typography>
-        <Typography className="text-sm opacity-60 col-start-9">6</Typography>
-        <Typography className="text-sm opacity-60 col-start-10">7</Typography>
-        <Typography className="text-sm opacity-60 col-start-11">8</Typography>
-        <Typography className="text-sm opacity-60 col-start-12">9</Typography>
-        <Typography className="text-sm opacity-60 col-start-13">T</Typography>
-
-        <Box className="col-span-3 row-start-2 flex flex-row justify-start items-center gap-2">
-          <Image
-            src={`/mlb/${data.homeTeam.team.name
-              .replace(" ", "")
-              .toLowerCase()}.png`}
-            width={100}
-            height={100}
-            alt="home team logo"
-            className="w-8 object-contain"
-          />
-          <Typography className="text-sm md:text-base font-semibold">
-            {data.homeTeam.team.name}
-          </Typography>
-          <Typography className="hidden md:block text-sm opacity-60">
-            {data.homeTeam.record[0].displayValue}
-          </Typography>
-        </Box>
-
-        <Box className="col-span-3 row-start-3 flex flex-row justify-start items-center gap-2">
-          <Image
-            src={`/mlb/${data.awayTeam.team.name
-              .replace(" ", "")
-              .toLowerCase()}.png`}
-            width={100}
-            height={100}
-            alt="home team logo"
-            className="w-8 object-contain"
-          />
-          <Typography className="text-sm md:text-base font-semibold">
-            {data.awayTeam.team.name}
-          </Typography>
-          <Typography className="hidden md:block text-sm opacity-60">
-            {data.awayTeam.record[0].displayValue}
-          </Typography>
-        </Box>
-
-        <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-2">
-          {data.homeTeam.linescores[0]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-2">
-          {data.homeTeam.linescores[1]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-2">
-          {data.homeTeam.linescores[2]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-2">
-          {data.homeTeam.linescores[3]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-8 row-start-2">
-          {data.homeTeam.linescores[4]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-9 row-start-2">
-          {data.homeTeam.linescores[5]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-10 row-start-2">
-          {data.homeTeam.linescores[6]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-11 row-start-2">
-          {data.homeTeam.linescores[7]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-12 row-start-2">
-          {data.homeTeam.linescores[8]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base font-bold col-start-13 row-start-2">
-          {data.homeTeam.score}
-        </Typography>
-
-        <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-3">
-          {data.awayTeam.linescores[0]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-3">
-          {data.awayTeam.linescores[1]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-3">
-          {data.awayTeam.linescores[2]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-3">
-          {data.awayTeam.linescores[3]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-8 row-start-3">
-          {data.awayTeam.linescores[4]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-9 row-start-3">
-          {data.awayTeam.linescores[5]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-10 row-start-3">
-          {data.awayTeam.linescores[6]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-11 row-start-3">
-          {data.awayTeam.linescores[7]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base opacity-70 col-start-12 row-start-3">
-          {data.awayTeam.linescores[8]?.displayValue}
-        </Typography>
-        <Typography className="text-sm md:text-base font-bold col-start-13 row-start-3">
-          {data.awayTeam.score}
-        </Typography>
-      </Box>
-    );
   }
 
   function scoringPlays() {
@@ -482,12 +343,12 @@ export default function Page({ params }: { params: { gameId: string } }) {
               isDesktopScreen={isDesktopScreen}
             >
               <Box className="w-1/3 flex flex-col justify-center items-center gap-3">
-                {stadiumInfo()}
-                {divisionStandings()}
+                <StadiumInfo data={data} />
+                <DivisionStandings data={data} />
               </Box>
 
               <Box className="w-7/12 flex flex-col gap-5">
-                {data.isGameStarted && boxScore()}
+                {data.isGameStarted && <MLBBoxscore data={data} />}
                 {data.isGameStarted && scoringPlays()}
                 {teamStats()}
               </Box>
@@ -558,14 +419,14 @@ export default function Page({ params }: { params: { gameId: string } }) {
             >
               {userSelection === "gameInfo" && (
                 <Box className="w-full flex flex-col justify-center items-center gap-3">
-                  {stadiumInfo()}
-                  {divisionStandings()}
+                  <StadiumInfo data={data} />
+                  <DivisionStandings data={data} />
                 </Box>
               )}
 
               {userSelection === "scoreInfo" && (
                 <Box className="w-full flex flex-col gap-5">
-                  {data.isGameStarted && boxScore()}
+                  {data.isGameStarted && <MLBBoxscore data={data} />}
                   {data.isGameStarted && scoringPlays()}
                 </Box>
               )}
