@@ -4,7 +4,9 @@ export async function GET(request: Request, { params }: { params: { teamId: stri
     const { searchParams } = new URL(request.url);
     const teamId = searchParams.get('teamId');
 
-    const teamDataResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${params.teamId}`);
+    const teamDataResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${params.teamId}`,  {
+        next: { revalidate: 10 },
+  });
 
     if(!teamDataResponse.ok) {
         throw new Error("Failed to fetch team data")

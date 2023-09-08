@@ -21,7 +21,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function TeamPage({ params }: { params: { gameId: string } }) {
   const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nfl/gameData/${params.gameId}`, fetcher);
 
-  const [userSelection, setUserSelection] = useState("gameInfo");
+  const [userSelection, setUserSelection] = useState("scoreInfo");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   function gameLeaders() {
@@ -253,7 +253,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               <Box className="flex self-start flex-col justify-center items-center gap-3">
                 <StadiumInfo data={data} />
                 {data.isGameStarted && gameLeaders()}
-                <DivisionStandings data={data} />
+                <DivisionStandings data={data} isNFL={true} />
               </Box>
 
               <Box className="flex flex-col gap-5">
@@ -294,7 +294,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                   <Box className="w-full flex flex-col justify-center items-center gap-3">
                     <StadiumInfo data={data} />
                     {data.isGameStarted && gameLeaders()}
-                    <DivisionStandings data={data} />
+                    <DivisionStandings data={data} isNFL={true} />
                   </Box>
                 </>
               )}

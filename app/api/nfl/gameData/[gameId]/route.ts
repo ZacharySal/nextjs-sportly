@@ -2,13 +2,14 @@ import { NextResponse } from "next/server"
 
 export async function GET(request: Request,{ params }: { params: { gameId: string } }){
     const gameDataResponse = await fetch(
-        `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${params.gameId}`
-      );
-    
-      if (!gameDataResponse.ok) {
-        throw new Error("Failed to fetch game data");
-      }
-    
+        `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${params.gameId}`, {
+          next: { revalidate: 10 },
+    })
+  
+    if (!gameDataResponse.ok) {
+      throw new Error("Failed to fetch game data");
+    }
+  
     const gameData = await gameDataResponse.json();
 
     const homeTeamId = gameData.header.competitions[0].competitors[0].id;
@@ -40,7 +41,7 @@ export async function GET(request: Request,{ params }: { params: { gameId: strin
   const awayTeam = gameData.header.competitions[0].competitors[1];
 
   const winningTeam = homeTeam.winner ? homeTeam : awayTeam;
-  const isGameStarted = gameData.lastFiveGames ? false : true;
+  const isGameStarted = gameData.drives ? true : false;
   const backgroundColor = isGameStarted ? `#${winningTeam.team.color}` : "#013369";
   const gameInfo = gameData.header.competitions[0];
 

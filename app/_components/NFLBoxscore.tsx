@@ -28,10 +28,7 @@ export default function NFLBoxscore({ data }: { data: any }) {
             {data.gameData.header.competitions[0].competitors[0].team.name}
           </Typography>
           <Typography className="hidden md:block text-sm opacity-60">
-            {
-              data.gameData.header.competitions[0].competitors[0].record[0]
-                .displayValue
-            }
+            {data.gameData.header.competitions[0].competitors[0].record[0].displayValue}
           </Typography>
         </Box>
 
@@ -47,43 +44,37 @@ export default function NFLBoxscore({ data }: { data: any }) {
             {data.gameData.header.competitions[0].competitors[1].team.name}
           </Typography>
           <Typography className="hidden md:block text-sm opacity-60">
-            {
-              data.gameData.header.competitions[0].competitors[1].record[0]
-                .displayValue
-            }
+            {data.gameData.header.competitions[0].competitors[1].record[0].displayValue}
           </Typography>
         </Box>
 
         <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-2">
-          {
-            data.gameData.header.competitions[0].competitors[0].linescores[0]
-              .displayValue
-          }
+          {data.homeTeam.linescores[0]?.displayValue || "0"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-2">
-          {data.homeTeam.linescores[1].displayValue}
+          {data.homeTeam.linescores[1]?.displayValue || "0"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-2">
-          {data.homeTeam.linescores[2].displayValue}
+          {data.homeTeam.linescores[2]?.displayValue || "0"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-2">
-          {data.homeTeam.linescores[3].displayValue}
+          {data.homeTeam.linescores[3]?.displayValue || "0"}
         </Typography>
         <Typography className="text-sm md:text-base font-bold col-start-8 row-start-2">
           {data.gameData.header.competitions[0].competitors[0].score}
         </Typography>
 
         <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-3">
-          {data.awayTeam.linescores[0].displayValue}
+          {data.awayTeam.linescores[0]?.displayValue || "0"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-3">
-          {data.awayTeam.linescores[1].displayValue}
+          {data.awayTeam.linescores[1]?.displayValue || "0"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-3">
-          {data.awayTeam.linescores[2].displayValue}
+          {data.awayTeam.linescores[2]?.displayValue || "0"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-3">
-          {data.awayTeam.linescores[3].displayValue}
+          {data.awayTeam.linescores[3]?.displayValue || "0"}
         </Typography>
         <Typography className="text-sm md:text-base  font-bold col-start-8 row-start-3">
           {data.gameData.header.competitions[0].competitors[1].score}

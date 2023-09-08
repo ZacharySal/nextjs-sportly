@@ -18,7 +18,7 @@ import GameUserSelection from "@/app/_components/GameUserSelection";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Page({ params }: { params: { gameId: string } }) {
-  const [userSelection, setUserSelection] = useState("gameInfo");
+  const [userSelection, setUserSelection] = useState("scoreInfo");
 
   const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/mlb/gameData/${params.gameId}`, fetcher);
 
@@ -105,7 +105,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
             >
               <Box className="flex self-start flex-col justify-center items-center gap-3">
                 <StadiumInfo data={data} />
-                <DivisionStandings data={data} />
+                <DivisionStandings data={data} isNFL={false} />
               </Box>
 
               <Box className="flex flex-col gap-5">
@@ -138,7 +138,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
               {userSelection === "gameInfo" && (
                 <Box className="w-full flex flex-col justify-center items-center gap-3">
                   <StadiumInfo data={data} />
-                  <DivisionStandings data={data} />
+                  <DivisionStandings data={data} isNFL={false} />
                 </Box>
               )}
 

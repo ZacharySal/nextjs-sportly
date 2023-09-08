@@ -13,6 +13,17 @@ export default function GameUserSelection({
 
   return (
     <Box className="block w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
+      {data.isGameStarted && (
+        <>
+          <Typography
+            onClick={() => setUserSelection("scoreInfo")}
+            sx={{ fontWeight: isSelected("scoreInfo") ? "700" : "400" }}
+            className="opacity-70 text-sm"
+          >
+            Score Info
+          </Typography>
+        </>
+      )}
       <Typography
         onClick={() => setUserSelection("gameInfo")}
         sx={{ fontWeight: isSelected("gameInfo") ? "700" : "400" }}
@@ -27,17 +38,6 @@ export default function GameUserSelection({
       >
         Team Stats
       </Typography>
-      {data.isGameStarted && (
-        <>
-          <Typography
-            onClick={() => setUserSelection("scoreInfo")}
-            sx={{ fontWeight: isSelected("scoreInfo") ? "700" : "400" }}
-            className="opacity-70 text-sm"
-          >
-            Score Info
-          </Typography>
-        </>
-      )}
 
       <Typography
         onClick={() => setUserSelection("news")}
