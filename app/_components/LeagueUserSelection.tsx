@@ -32,13 +32,6 @@ export default function LeagueUserSelection({
       >
         News
       </Typography>
-      <Typography
-        onClick={() => setUserSelection("standings")}
-        sx={{ fontWeight: isSelected("standings") ? "700" : "400" }}
-        className="opacity-70 text-sm"
-      >
-        Standings
-      </Typography>
     </Box>
   );
 }
