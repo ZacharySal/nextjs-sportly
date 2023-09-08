@@ -21,8 +21,6 @@ export default function Page({ params }: { params: { gameId: string } }) {
 
   const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nba/gameData/${params.gameId}`, fetcher);
 
-  console.log(data.backgroundColor);
-
   function getTeamName(id: string) {
     return id === data.homeTeam.id ? data.homeTeam.team.name : data.awayTeam.team.name;
   }
