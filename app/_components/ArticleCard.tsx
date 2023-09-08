@@ -5,7 +5,7 @@ export default function ArticleCard({ article }: { article: any }) {
   return (
     <>
       <a href={`${article.links.web.href}`} target="_blank">
-        <Box className="w-full h-full flex flex-col justify-center items-start gap-2">
+        <Box className="w-full flex flex-col justify-center items-start gap-2">
           <Image
             src={article.images[0].url}
             width={1000}

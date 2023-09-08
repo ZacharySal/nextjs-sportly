@@ -5,6 +5,7 @@ import Articles from "@/app/_components/Articles";
 import ContainerBox from "@/app/_components/ContainerBox";
 import TeamSchedule from "@/app/_components/TeamSchedule";
 import TeamUserSelection from "@/app/_components/TeamUserSelection";
+import StadiumInfo from "@/app/_components/StadiumInfo";
 import TeamHeader from "@/app/_components/TeamHeader";
 import useSwr from "swr";
 import { useMediaQuery, Typography, Box } from "@mui/material";
@@ -15,10 +16,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function TeamPage({ params }: { params: { teamId: string } }) {
   const [userSelection, setUserSelection] = useState("games");
 
-  const { data, isLoading } = useSwr(
-    `https://nextjs-sportly.vercel.app/api/mlb/teamData/${params.teamId}`,
-    fetcher
-  );
+  const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/mlb/teamData/${params.teamId}`, fetcher);
 
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
@@ -31,41 +29,25 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
           mainColor={data.teamData.team.color}
           isDesktopScreen={isDesktopScreen}
         >
-          <Box className="flex-basis-1/5">
-            <TeamStats stats={data.teamStats} />
-          </Box>
-          <Box className="flex-basis-1/2">
-            <TeamSchedule teamSchedule={data.teamSchedule} league="mlb" />
-          </Box>
-          <Articles
-            title={`${data.teamData.team.name} News`}
-            teamNews={data.teamNews}
-            limit={8}
-          />
+          <TeamStats stats={data.teamStats} />
+
+          <TeamSchedule teamSchedule={data.teamSchedule} league="mlb" />
+          <Articles title={`${data.teamData.team.name} News`} teamNews={data.teamNews} limit={8} />
         </ContainerBox>
       </>
     ) : (
       <>
         <TeamHeader teamData={data.teamData} league="mlb" />
-        <TeamUserSelection
-          userSelection={userSelection}
-          setUserSelection={setUserSelection}
-        />
+        <TeamUserSelection userSelection={userSelection} setUserSelection={setUserSelection} />
         <ContainerBox
           altColor={data.teamData.team.alternateColor}
           mainColor={data.teamData.team.color}
           isDesktopScreen={isDesktopScreen}
         >
           {userSelection === "stats" && <TeamStats stats={data.teamStats} />}
-          {userSelection === "games" && (
-            <TeamSchedule teamSchedule={data.teamSchedule} league="mlb" />
-          )}
+          {userSelection === "games" && <TeamSchedule teamSchedule={data.teamSchedule} league="mlb" />}
           {userSelection === "news" && (
-            <Articles
-              title={`${data.teamData.team.name} News`}
-              teamNews={data.teamNews}
-              limit={8}
-            />
+            <Articles title={`${data.teamData.team.name} News`} teamNews={data.teamNews} limit={8} />
           )}
         </ContainerBox>
       </>

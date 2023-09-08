@@ -41,8 +41,7 @@ export async function GET(request: Request,{ params }: { params: { gameId: strin
 
   const winningTeam = homeTeam.winner ? homeTeam : awayTeam;
   const isGameStarted = gameData.lastFiveGames ? false : true;
-  // backgroundColor = isGameStarted ? `#${winningTeam.team.color}` : "#013369";
-  const backgroundColor = "#013369";
+  const backgroundColor = isGameStarted ? `#${winningTeam.team.color}` : "#013369";
   const gameInfo = gameData.header.competitions[0];
 
   const homeTeamDisplayStats = {

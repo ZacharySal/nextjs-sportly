@@ -38,7 +38,7 @@ export async function GET(request: Request, { params }: { params: { gameId: stri
 
   const isGameStarted = gameData.lastFiveGames ? false : true;
 
-  const backgroundColor = isGameStarted ? `#${winningTeam.team.color}` : "gray";
+  const backgroundColor = isGameStarted ? `#${winningTeam.team.color}` : "#D50A0A";
 
   const gameInfo = gameData.header.competitions[0];
 

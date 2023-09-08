@@ -73,10 +73,6 @@ export default function ScoreCard({
         {gameDescription}
       </Typography>
       {/* Home Team Name and Logo*/}
-      {/* <img
-        src={`/${league}/${homeTeamName.replace(" ", "")}.png`}
-        className="w-10 md:w-10  my-auto object-contain"
-      ></img> */}
       <Image
         src={`/${league}/${homeTeamName.replace(" ", "").toLowerCase()}.png`}
         width={100}
@@ -84,18 +80,12 @@ export default function ScoreCard({
         alt="home team logo"
         className="w-10 my-auto object-contain"
       />
-      <Typography className="text-sm  my-auto md:text-base">
-        {homeTeamName}
-      </Typography>
+      <Typography className="text-sm  my-auto md:text-base">{homeTeamName}</Typography>
       <Typography className="text-center text-sm my-auto font-semibold md:text-base md:font-bold">
         {homeTeamScore || 0}
       </Typography>
 
       {/* Away Team Name and Logo*/}
-      {/* <img
-        src={`/${league}/${awayTeamName.replace(" ", "")}.png`}
-        className="w-10 md:w-10 my-auto object-contain"
-      ></img> */}
       <Image
         src={`/${league}/${awayTeamName.replace(" ", "").toLowerCase()}.png`}
         width={100}
@@ -103,13 +93,8 @@ export default function ScoreCard({
         alt="away team logo"
         className="w-10 my-auto object-contain"
       />
-      <Typography className="text-sm md:text-base my-auto">
-        {awayTeamName}
-      </Typography>
-      <Typography className="text-center text-sm font-semibold md:font-bold my-auto">
-        {awayTeamScore || 0}
-      </Typography>
-      {/* <Divider /> */}
+      <Typography className="text-sm md:text-base my-auto">{awayTeamName}</Typography>
+      <Typography className="text-center text-sm font-semibold md:font-bold my-auto">{awayTeamScore || 0}</Typography>
 
       {/* CTA Buttons */}
       <Box className="w-full flex flex-col justify-center gap-2 col-span-3 items-center">

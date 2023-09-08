@@ -1,10 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
-import {
-  mlbDivisonTeams,
-  nbaDivisionTeams,
-  nflDivisonTeams,
-} from "@/app/_lib/constants";
+import { mlbDivisonTeams, nbaDivisionTeams, nflDivisonTeams } from "@/app/_lib/constants";
 
 function findTeamDivison(teamName: string, league: string) {
   let allTeams;
@@ -19,13 +15,7 @@ function findTeamDivison(teamName: string, league: string) {
   }
 }
 
-export default function TeamHeader({
-  teamData = null,
-  league,
-}: {
-  teamData: any;
-  league: string;
-}) {
+export default function TeamHeader({ teamData = null, league }: { teamData: any; league: string }) {
   let record;
 
   let isDesktop = true;
@@ -42,21 +32,15 @@ export default function TeamHeader({
     >
       <Box className="flex flex-row justify-center items-center gap-3">
         <Image
-          src={`/${league}/${teamData.team.name
-            .replace(" ", "")
-            .toLowerCase()}.png`}
+          src={`/${league}/${teamData.team.name.replace(" ", "").toLowerCase()}.png`}
           width={100}
           height={100}
           alt="team logo"
           className="w-24 md:w-32 object-contain"
         />
         <Box className="flex flex-col text-white opacity-80 pr-3 border-r-2 md:pr-6 md:border-r-4">
-          <Typography className="text-xl md:text-3xl opacity-70">
-            {teamData.team.location}
-          </Typography>
-          <Typography className="text-xl md:text-3xl font-bold">
-            {teamData.team.name}
-          </Typography>
+          <Typography className="text-xl md:text-3xl opacity-70">{teamData.team.location}</Typography>
+          <Typography className="text-xl md:text-3xl font-bold">{teamData.team.name}</Typography>
         </Box>
       </Box>
 
@@ -64,9 +48,7 @@ export default function TeamHeader({
         <Typography className="text-base md:text-2xl font-semibold opacity-80">
           {findTeamDivison(teamData.team.displayName, league)}
         </Typography>
-        <Typography className="text-base md:text-2xl opacity-70 tracking-widest">
-          {record}
-        </Typography>
+        <Typography className="text-base md:text-2xl opacity-70 tracking-widest">{record}</Typography>
       </Box>
     </Box>
   );

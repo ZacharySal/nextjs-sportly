@@ -135,21 +135,21 @@ function Scoreboard({ seasonWeeks, league }: { seasonWeeks: any; league: string 
 
   if (isLoading)
     return (
-      <Box className="w-full md:w-1/2">
+      <Box className="overflow-x-hidden">
         {isNfl && nflWeekSelector()}
         {isMlb && mlbDateSelector()}
         {isNba && nbaDateSelector()}
-        <Box className="w-full h-full flex justify-center items-center mt-20">
+        <Box className="w-full flex justify-center items-center mt-20">
           <CircularProgress />
         </Box>
       </Box>
     );
   return (
-    <Box className="w-full md:w-1/2">
+    <Box className="max-w-full overflow-x-hidden">
       {isNfl && nflWeekSelector()}
       {isMlb && mlbDateSelector()}
       {isNba && nbaDateSelector()}
-      <Box className="w-full h-full grid grid-cols-2 gap-3">
+      <Box className="w-full grid grid-cols-2 gap-3">
         {data.content.sbData.events.map((game: any, i: string) => (
           <ScoreCard key={uuidv4()} gameInfo={game} version={1} league={league} teamView={false} />
         ))}
