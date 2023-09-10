@@ -198,13 +198,24 @@ export default function GameHeader({
                   sx={{
                     fontWeight: "700",
                     opacity: Number(awayTeam.score) > Number(homeTeam.score) ? "1" : "0.5",
+
+                    "&::after": {
+                      content: `""`,
+                      position: "absolute",
+                      borderTop: "7px solid transparent",
+                      borderRight: "7px solid white",
+                      borderBottom: "7px solid transparent",
+                      marginTop: "10px",
+                      marginLeft: "10px",
+                      opacity: Number(awayTeam.score) > Number(homeTeam.score) ? "1" : "0",
+                    },
                   }}
                   className="text-3xl col-start-2"
                 >
                   {awayTeam.score}
                 </Typography>
 
-                <Typography className="text-sm text-white opacity-80 font-bold col-start-3">
+                <Typography className="text-xl text-white opacity-90 font-bold col-start-3">
                   {gameInfo.status.type.shortDetail}
                 </Typography>
 
@@ -212,6 +223,17 @@ export default function GameHeader({
                   sx={{
                     fontWeight: "700",
                     opacity: Number(homeTeam.score) > Number(awayTeam.score) ? "1" : "0.5",
+
+                    "&::after": {
+                      content: `""`,
+                      position: "absolute",
+                      borderTop: "7px solid transparent",
+                      borderRight: "7px solid white",
+                      borderBottom: "7px solid transparent",
+                      marginTop: "10px",
+                      marginLeft: "10px",
+                      opacity: Number(homeTeam.score) > Number(awayTeam.score) ? "1" : "0",
+                    },
                   }}
                   className="text-3xl col-start-4"
                 >

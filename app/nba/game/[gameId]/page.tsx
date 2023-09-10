@@ -16,7 +16,7 @@ import GameUserSelection from "@/app/_components/GameUserSelection";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Page({ params }: { params: { gameId: string } }) {
-  const [userSelection, setUserSelection] = useState("scoreInfo");
+  const [userSelection, setUserSelection] = useState("gameInfo");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nba/gameData/${params.gameId}`, fetcher);

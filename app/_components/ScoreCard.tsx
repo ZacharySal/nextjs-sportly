@@ -72,6 +72,17 @@ export default function ScoreCard({
       <Typography className="text-xs row-start-1 col-start-1 col-span-3 md:text-sm font-semibold text-start">
         {gameDescription}
       </Typography>
+
+      {/* Away Team Name and Logo*/}
+      <Image
+        src={`/${league}/${awayTeamName.replace(" ", "").toLowerCase()}.png`}
+        width={100}
+        height={100}
+        alt="away team logo"
+        className="w-10 my-auto object-contain"
+      />
+      <Typography className="text-sm md:text-base my-auto">{awayTeamName}</Typography>
+      <Typography className="text-center text-sm font-semibold md:font-bold my-auto">{awayTeamScore || 0}</Typography>
       {/* Home Team Name and Logo*/}
       <Image
         src={`/${league}/${homeTeamName.replace(" ", "").toLowerCase()}.png`}
@@ -84,17 +95,6 @@ export default function ScoreCard({
       <Typography className="text-center text-sm my-auto font-semibold md:text-base md:font-bold">
         {homeTeamScore || 0}
       </Typography>
-
-      {/* Away Team Name and Logo*/}
-      <Image
-        src={`/${league}/${awayTeamName.replace(" ", "").toLowerCase()}.png`}
-        width={100}
-        height={100}
-        alt="away team logo"
-        className="w-10 my-auto object-contain"
-      />
-      <Typography className="text-sm md:text-base my-auto">{awayTeamName}</Typography>
-      <Typography className="text-center text-sm font-semibold md:font-bold my-auto">{awayTeamScore || 0}</Typography>
 
       {/* CTA Buttons */}
       <Box className="w-full flex flex-col justify-center gap-2 col-span-3 items-center">

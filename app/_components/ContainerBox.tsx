@@ -13,7 +13,6 @@ function ContainerBox({
 }) {
   return isDesktopScreen ? (
     <>
-      {/* <Box className="w-full flex justify-center items-center"> */}
       <Box
         sx={{
           "&::before": {
@@ -29,16 +28,15 @@ function ContainerBox({
             rotate: "130deg",
           },
         }}
-        className="w-full grid grid-cols-[1fr_3fr_1fr] px-14 gap-8 my-8"
+        className="w-full 2xl:w-4/5 grid grid-cols-[1fr_3fr_1fr] px-14 mx-auto gap-8 my-8"
       >
         {children}
       </Box>
-      {/* </Box> */}
     </>
   ) : (
     <>
       <Box className="w-full flex justify-center items-center">
-        <Box className="w-full h-full flex flex-col justify-center items-start px-2 md:gap-8 my-4">{children}</Box>
+        <Box className="w-full h-full flex flex-col justify-center items-start px-3 md:gap-8 my-4">{children}</Box>
       </Box>
     </>
   );

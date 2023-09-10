@@ -2,5 +2,3 @@ Fix Game Leaders in NFL Game Page
 Add Click Functionality to All Teams
 Add One More Stat to NFL Game Page
 Add Four More Stats to NBA Game Page
-Add Stadings to Mobile View
-Sort Team Page Games by Newest First
