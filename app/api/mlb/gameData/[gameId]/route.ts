@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server"
 
 export async function GET(request: Request, { params }: { params: { gameId: string }}) {
-    const gameDataResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${params.gameId}`,  {
-        next: { revalidate: 10 },
+    const gameDataResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${params.gameId}`,  
+    {
+        cache: "no-cache",
   });
 
     if(!gameDataResponse.ok) {

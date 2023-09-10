@@ -19,7 +19,8 @@ import GameUserSelection from "@/app/_components/GameUserSelection";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function TeamPage({ params }: { params: { gameId: string } }) {
-  const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nfl/gameData/${params.gameId}`, fetcher);
+  console.log(params.gameId);
+  const { data, isLoading } = useSwr(`http://localhost:3000/api/nfl/gameData/${params.gameId}`, fetcher);
 
   const [userSelection, setUserSelection] = useState("gameInfo");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
@@ -227,6 +228,10 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
         </Box>
       </>
     );
+  }
+
+  if (!isLoading) {
+    console.log(data);
   }
 
   if (!isLoading) {

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 export async function GET(request: Request, { params }: { params: { gameId: string }}) {
     const gameDataResponse = await fetch(
         `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${params.gameId}`,  {
-          next: { revalidate: 10 },
+          cache: "no-cache",
     }
     );
     

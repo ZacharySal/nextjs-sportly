@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 export async function GET(request: Request,{ params }: { params: { gameId: string } }){
     const gameDataResponse = await fetch(
         `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${params.gameId}`, {
-          next: { revalidate: 10 },
+          cache: "no-cache",
     })
   
     if (!gameDataResponse.ok) {
@@ -38,6 +38,8 @@ export async function GET(request: Request,{ params }: { params: { gameId: strin
   let fourthQuarterScoringPlays: any[] = [];
 
   const homeTeam = gameData.header.competitions[0].competitors[0];
+
+  console.log("home team" + JSON.stringify(homeTeam))
   const awayTeam = gameData.header.competitions[0].competitors[1];
 
   const winningTeam = homeTeam.winner ? homeTeam : awayTeam;
@@ -69,7 +71,7 @@ export async function GET(request: Request,{ params }: { params: { gameId: strin
     Sacks: awayTeamStats.splits.categories[4].stats[14],
   };
 
-  if (isGameStarted) {
+  if (isGameStarted && gameData.scoringPlays?.length > 0) {
     gameData.scoringPlays.map((play: any) => {
       if (play.period.number === 1) {
         firstQuarterScoringPlays.push(play);

@@ -107,7 +107,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
               </Box>
 
               <Box className="flex flex-col gap-5">
-                {data.isGameStarted && <MLBBoxscore data={data} />}
+                {data.isGameStarted && data.homeTeam.linescores && <MLBBoxscore data={data} />}
                 {data.isGameStarted && <MLBScoringPlays data={data} />}
                 {teamStats()}
               </Box>
@@ -142,7 +142,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
 
               {userSelection === "scoreInfo" && (
                 <Box className="w-full flex flex-col gap-5">
-                  {data.isGameStarted && <MLBBoxscore data={data} />}
+                  {data.isGameStarted && data.homeTeam.linescores && <MLBBoxscore data={data} />}
                   {data.isGameStarted && <MLBScoringPlays data={data} />}
                 </Box>
               )}
