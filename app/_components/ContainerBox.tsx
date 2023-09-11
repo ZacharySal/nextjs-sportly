@@ -36,7 +36,7 @@ function ContainerBox({
   ) : (
     <>
       <Box className="w-full flex justify-center items-center">
-        <Box className="w-full h-full flex flex-col justify-center items-start px-3 md:gap-8 my-4">{children}</Box>
+        <Box className="w-full h-full flex flex-col justify-center items-start px-3 my-4">{children}</Box>
       </Box>
     </>
   );

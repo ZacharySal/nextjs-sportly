@@ -145,7 +145,7 @@ function Scoreboard({ seasonWeeks, league }: { seasonWeeks: any; league: string 
       </Box>
     );
   return (
-    <Box className="max-w-full overflow-x-hidden">
+    <Box className="max-w-full overflow-x-hidden py-2">
       {isNfl && nflWeekSelector()}
       {isMlb && mlbDateSelector()}
       {isNba && nbaDateSelector()}
