@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const weeksDataResponse = await fetch("https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50",{
-    next: { revalidate: 10 },
-});
+      cache: "no-cache",
+  });
 
   if (!weeksDataResponse.ok) {
     throw new Error("Failed to fetch NFL weeks data");

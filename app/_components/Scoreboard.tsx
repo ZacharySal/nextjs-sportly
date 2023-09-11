@@ -35,7 +35,7 @@ function Scoreboard({ seasonWeeks, league }: { seasonWeeks: any; league: string 
     key = `https://cdn.espn.com/core/mlb/scoreboard?xhr=1&limit=50&date=${mlbSelectedDate}`;
   }
 
-  const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 10000 });
+  const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 5000 });
 
   function convertNflDate(date: string) {
     return new Date(date).toLocaleDateString(undefined, {

@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request, { params }: { params: { teamId: string }} ){
   const teamDataResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/${params.teamId}`
+    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/${params.teamId}`, {
+      cache: "no-cache",
+}
   );
 
   if (!teamDataResponse.ok) {
@@ -12,7 +14,9 @@ export async function GET(request: Request, { params }: { params: { teamId: stri
   const teamData = await teamDataResponse.json();
 
   const teamScheduleResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/${params.teamId}/schedule`
+    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/${params.teamId}/schedule`,  {
+      cache: "no-cache",
+}
   );
 
   if (!teamScheduleResponse.ok) {

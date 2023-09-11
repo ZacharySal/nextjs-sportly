@@ -39,7 +39,6 @@ export async function GET(request: Request,{ params }: { params: { gameId: strin
 
   const homeTeam = gameData.header.competitions[0].competitors[0];
 
-  console.log("home team" + JSON.stringify(homeTeam))
   const awayTeam = gameData.header.competitions[0].competitors[1];
 
   const winningTeam = homeTeam.winner ? homeTeam : awayTeam;

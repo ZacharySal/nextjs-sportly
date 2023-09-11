@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server"
 
 export async function GET(request: Request,{ params }: { params: { teamId: string } }) {
-    const teamDataResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}`);
+    const teamDataResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}`, {
+        cache: "no-cache",
+  });
 
     if(!teamDataResponse.ok) {
         throw new Error("Failed to fetch team data")
@@ -9,7 +11,9 @@ export async function GET(request: Request,{ params }: { params: { teamId: strin
 
     const teamData = await teamDataResponse.json();
 
-    const teamScheduleResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}/schedule`);
+    const teamScheduleResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}/schedule`, {
+        cache: "no-cache",
+  });
 
     if(!teamScheduleResponse.ok) {
         throw new Error("Failed to fetch team data")

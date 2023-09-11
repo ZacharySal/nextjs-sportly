@@ -5,7 +5,7 @@ export async function GET(request: Request, { params }: { params: { teamId: stri
     const teamId = searchParams.get('teamId');
 
     const teamDataResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${params.teamId}`,  {
-        next: { revalidate: 10 },
+        cache: "no-cache",
   });
 
     if(!teamDataResponse.ok) {
@@ -14,7 +14,9 @@ export async function GET(request: Request, { params }: { params: { teamId: stri
 
     const teamData = await teamDataResponse.json();
 
-    const teamScheduleResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${params.teamId}/schedule`);
+    const teamScheduleResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${params.teamId}/schedule`,  {
+        cache: "no-cache",
+  });
 
     if(!teamScheduleResponse.ok) {
         throw new Error("Failed to fetch team data")
