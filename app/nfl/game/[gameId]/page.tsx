@@ -15,7 +15,7 @@ import DivisionStandings from "@/app/_components/DivisionStandings";
 import NFLGameDrives from "@/app/_components/NFLGameDrives";
 import NFLScoringPlays from "@/app/_components/NFLScoringPlays";
 import GameUserSelection from "@/app/_components/GameUserSelection";
-import NFLGameStats from "@/app/_components/NFLGameStats";
+//import NFLGameStats from "@/app/_components/NFLGameStats";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
