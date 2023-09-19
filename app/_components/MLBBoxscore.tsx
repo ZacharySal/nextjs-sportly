@@ -18,18 +18,6 @@ export default function MLBBoxscore({ data }: { data: any }) {
 
       <Box className="col-span-3 row-start-2 flex flex-row justify-start items-center gap-2">
         <Image
-          src={`/mlb/${data.homeTeam.team.name.replace(" ", "").toLowerCase()}.png`}
-          width={100}
-          height={100}
-          alt="home team logo"
-          className="w-8 object-contain"
-        />
-        <Typography className="text-sm md:text-base font-semibold">{data.homeTeam.team.name}</Typography>
-        <Typography className="hidden md:block text-sm opacity-60">{data.homeTeam.record[0].displayValue}</Typography>
-      </Box>
-
-      <Box className="col-span-3 row-start-3 flex flex-row justify-start items-center gap-2">
-        <Image
           src={`/mlb/${data.awayTeam.team.name.replace(" ", "").toLowerCase()}.png`}
           width={100}
           height={100}
@@ -40,65 +28,77 @@ export default function MLBBoxscore({ data }: { data: any }) {
         <Typography className="hidden md:block text-sm opacity-60">{data.awayTeam.record[0].displayValue}</Typography>
       </Box>
 
-      <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-2">
-        {data.homeTeam?.linescores[0]?.displayValue || ""}
+      <Box className="col-span-3 row-start-3 flex flex-row justify-start items-center gap-2">
+        <Image
+          src={`/mlb/${data.homeTeam.team.name.replace(" ", "").toLowerCase()}.png`}
+          width={100}
+          height={100}
+          alt="home team logo"
+          className="w-8 object-contain"
+        />
+        <Typography className="text-sm md:text-base font-semibold">{data.homeTeam.team.name}</Typography>
+        <Typography className="hidden md:block text-sm opacity-60">{data.homeTeam.record[0].displayValue}</Typography>
+      </Box>
+
+      <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-3">
+        {data.homeTeam?.linescores[0]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-2">
-        {data.homeTeam.linescores[1]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-3">
+        {data.homeTeam.linescores[1]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-2">
-        {data.homeTeam.linescores[2]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-3">
+        {data.homeTeam.linescores[2]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-2">
-        {data.homeTeam.linescores[3]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-3">
+        {data.homeTeam.linescores[3]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-8 row-start-2">
-        {data.homeTeam.linescores[4]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-8 row-start-3">
+        {data.homeTeam.linescores[4]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-9 row-start-2">
-        {data.homeTeam.linescores[5]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-9 row-start-3">
+        {data.homeTeam.linescores[5]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-10 row-start-2">
-        {data.homeTeam.linescores[6]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-10 row-start-3">
+        {data.homeTeam.linescores[6]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-11 row-start-2">
-        {data.homeTeam.linescores[7]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-11 row-start-3">
+        {data.homeTeam.linescores[7]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-12 row-start-2">
-        {data.homeTeam.linescores[8]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-12 row-start-3">
+        {data.homeTeam.linescores[8]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base font-bold col-start-13 row-start-2">
+      <Typography className="text-sm md:text-base font-bold col-start-13 row-start-3">
         {data.homeTeam.score || ""}
       </Typography>
 
-      <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-3">
-        {data.awayTeam.linescores[0]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-2">
+        {data.awayTeam.linescores[0]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-3">
-        {data.awayTeam.linescores[1]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-2">
+        {data.awayTeam.linescores[1]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-3">
-        {data.awayTeam.linescores[2]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-2">
+        {data.awayTeam.linescores[2]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-3">
-        {data.awayTeam.linescores[3]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-2">
+        {data.awayTeam.linescores[3]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-8 row-start-3">
-        {data.awayTeam.linescores[4]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-8 row-start-2">
+        {data.awayTeam.linescores[4]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-9 row-start-3">
-        {data.awayTeam.linescores[5]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-9 row-start-2">
+        {data.awayTeam.linescores[5]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-10 row-start-3">
-        {data.awayTeam.linescores[6]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-10 row-start-2">
+        {data.awayTeam.linescores[6]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-11 row-start-3">
-        {data.awayTeam.linescores[7]?.displayValue || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-11 row-start-2">
+        {data.awayTeam.linescores[7]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base opacity-70 col-start-12 row-start-3">
-        {data.awayTeam.linescores[8]?.displayValu || ""}
+      <Typography className="text-sm md:text-base opacity-70 col-start-12 row-start-2">
+        {data.awayTeam.linescores[8]?.displayValue || "-"}
       </Typography>
-      <Typography className="text-sm md:text-base font-bold col-start-13 row-start-3">{data.awayTeam.score}</Typography>
+      <Typography className="text-sm md:text-base font-bold col-start-13 row-start-2">{data.awayTeam.score}</Typography>
     </Box>
   );
 }
