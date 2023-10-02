@@ -15,7 +15,7 @@ import Loading from "@/app/_components/Loading";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function TeamPage({ params }: { params: { teamId: string } }) {
-  const [userSelection, setUserSelection] = useState("games");
+  const [userSelection, setUserSelection] = useState("schedule");
 
   const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/mlb/teamData/${params.teamId}`, fetcher);
 

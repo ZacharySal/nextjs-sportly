@@ -88,7 +88,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
         {isDesktopScreen ? (
           <>
             <GameHeader
-              backgroundColor={"#002D72"}
+              backgroundColor={data.backgroundColor}
               homeTeam={data.homeTeam}
               awayTeam={data.awayTeam}
               winningTeam={data.winningTeam}

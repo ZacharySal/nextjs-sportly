@@ -135,11 +135,11 @@ function Scoreboard({ seasonWeeks, league }: { seasonWeeks: any; league: string 
 
   if (isLoading)
     return (
-      <Box className="w-full overflow-x-hidden">
+      <Box className="max-w-full overflow-x-hidden py-2">
         {isNfl && nflWeekSelector()}
         {isMlb && mlbDateSelector()}
         {isNba && nbaDateSelector()}
-        <Box className="w-full h-full flex justify-center items-start mt-10 md:mt-20">
+        <Box className="w-full flex justify-center items-center">
           <CircularProgress />
         </Box>
       </Box>
