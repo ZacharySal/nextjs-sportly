@@ -10,29 +10,23 @@ import AllTeams from "../_components/AllTeams";
 import Scoreboard from "../_components/Scoreboard";
 import LeagueHeader from "../_components/LeagueHeader";
 import LeagueUserSelection from "../_components/LeagueUserSelection";
+import Loading from "../_components/Loading";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home() {
   const [userSelection, setUserSelection] = useState("scoreboard");
 
-  const { data, isLoading } = useSwr(
-    "https://nextjs-sportly.vercel.app/api/mlb/leagueData",
-    fetcher
-  );
+  const { data, isLoading } = useSwr("https://nextjs-sportly.vercel.app/api/mlb/leagueData", fetcher);
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
-  const isSelected = (selection: string) => selection === userSelection;
 
-  if (!isLoading) {
+  if (isLoading) return <Loading />;
+  else {
     return isDesktopScreen ? (
       <>
         <main>
           <LeagueHeader backgroundColor="002D72" league="mlb" />
-          <ContainerBox
-            altColor="002D72"
-            mainColor="D50A0A"
-            isDesktopScreen={isDesktopScreen}
-          >
+          <ContainerBox altColor="002D72" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
             <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
             <Scoreboard seasonWeeks={data.days} league={"mlb"} />
             <Articles title={`MLB News`} teamNews={data.news} limit={10} />
@@ -43,24 +37,11 @@ export default function Home() {
       <>
         <main>
           <LeagueHeader backgroundColor="002D72" league="mlb" />
-          <LeagueUserSelection
-            userSelection={userSelection}
-            setUserSelection={setUserSelection}
-          />
-          <ContainerBox
-            altColor="002D72"
-            mainColor="D50A0A"
-            isDesktopScreen={isDesktopScreen}
-          >
-            {userSelection === "teams" && (
-              <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
-            )}
-            {userSelection === "scoreboard" && (
-              <Scoreboard seasonWeeks={data.days} league={"mlb"} />
-            )}
-            {userSelection === "news" && (
-              <Articles title={`MLB News`} teamNews={data.news} limit={10} />
-            )}
+          <LeagueUserSelection userSelection={userSelection} setUserSelection={setUserSelection} />
+          <ContainerBox altColor="002D72" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
+            {userSelection === "teams" && <AllTeams allTeams={mlbDivisonTeams} league="mlb" />}
+            {userSelection === "scoreboard" && <Scoreboard seasonWeeks={data.days} league={"mlb"} />}
+            {userSelection === "news" && <Articles title={`MLB News`} teamNews={data.news} limit={10} />}
           </ContainerBox>
         </main>
       </>

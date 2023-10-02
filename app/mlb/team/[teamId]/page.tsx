@@ -10,6 +10,7 @@ import TeamHeader from "@/app/_components/TeamHeader";
 import useSwr from "swr";
 import { useMediaQuery, Typography, Box } from "@mui/material";
 import { useState } from "react";
+import Loading from "@/app/_components/Loading";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -20,7 +21,8 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
 
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  if (!isLoading) {
+  if (isLoading) return <Loading />;
+  else {
     return isDesktopScreen ? (
       <>
         <TeamHeader teamData={data.teamData} league="mlb" />
@@ -45,7 +47,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
           isDesktopScreen={isDesktopScreen}
         >
           {userSelection === "stats" && <TeamStats stats={data.teamStats} />}
-          {userSelection === "games" && <TeamSchedule teamSchedule={data.teamSchedule} league="mlb" />}
+          {userSelection === "schedule" && <TeamSchedule teamSchedule={data.teamSchedule} league="mlb" />}
           {userSelection === "news" && (
             <Articles title={`${data.teamData.team.name} News`} teamNews={data.teamNews} limit={8} />
           )}

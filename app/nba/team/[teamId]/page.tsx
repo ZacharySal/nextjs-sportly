@@ -9,20 +9,19 @@ import TeamUserSelection from "@/app/_components/TeamUserSelection";
 import useSwr from "swr";
 import { useMediaQuery, Box, Typography } from "@mui/material";
 import { useState } from "react";
+import Loading from "@/app/_components/Loading";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function TeamPage({ params }: { params: { teamId: string } }) {
   const [userSelection, setUserSelection] = useState("schedule");
 
-  const { data, isLoading } = useSwr(
-    `https://nextjs-sportly.vercel.app/api/nba/teamData/${params.teamId}`,
-    fetcher
-  );
+  const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nba/teamData/${params.teamId}`, fetcher);
 
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  if (!isLoading) {
+  if (isLoading) return <Loading />;
+  else {
     return isDesktopScreen ? (
       <>
         <TeamHeader teamData={data.teamData} league="nba" />
@@ -39,35 +38,22 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
             <TeamSchedule teamSchedule={data.teamSchedule} league="nba" />
           </Box>
 
-          <Articles
-            title={`${data.teamData.team.name} News`}
-            teamNews={data.teamNews}
-            limit={8}
-          />
+          <Articles title={`${data.teamData.team.name} News`} teamNews={data.teamNews} limit={8} />
         </ContainerBox>
       </>
     ) : (
       <>
         <TeamHeader teamData={data.teamData} league="nba" />
-        <TeamUserSelection
-          userSelection={userSelection}
-          setUserSelection={setUserSelection}
-        />
+        <TeamUserSelection userSelection={userSelection} setUserSelection={setUserSelection} />
         <ContainerBox
           altColor={data.teamData.team.alternateColor}
           mainColor={data.teamData.team.color}
           isDesktopScreen={isDesktopScreen}
         >
           {userSelection === "stats" && <TeamStats stats={data.teamStats} />}
-          {userSelection === "schedule" && (
-            <TeamSchedule teamSchedule={data.teamSchedule} league="nba" />
-          )}
+          {userSelection === "schedule" && <TeamSchedule teamSchedule={data.teamSchedule} league="nba" />}
           {userSelection === "news" && (
-            <Articles
-              title={`${data.teamData.team.name} News`}
-              teamNews={data.teamNews}
-              limit={8}
-            />
+            <Articles title={`${data.teamData.team.name} News`} teamNews={data.teamNews} limit={8} />
           )}
         </ContainerBox>
       </>

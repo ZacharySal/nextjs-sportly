@@ -1,6 +1,6 @@
 import { Box, CircularProgress } from "@mui/material";
 
-function loading() {
+function Loading() {
   return (
     <Box className="w-full h-screen flex justify-center items-center">
       <CircularProgress />
@@ -8,4 +8,4 @@ function loading() {
   );
 }
 
-export default loading;
+export default Loading;

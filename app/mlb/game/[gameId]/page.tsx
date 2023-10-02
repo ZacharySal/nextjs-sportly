@@ -14,6 +14,7 @@ import MLBBoxscore from "@/app/_components/MLBBoxscore";
 import MLBScoringPlays from "@/app/_components/MLBScoringPlays";
 import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
+import Loading from "@/app/_components/Loading";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -80,7 +81,8 @@ export default function Page({ params }: { params: { gameId: string } }) {
     );
   }
 
-  if (!isLoading) {
+  if (isLoading) return <Loading />;
+  else {
     return (
       <>
         {isDesktopScreen ? (

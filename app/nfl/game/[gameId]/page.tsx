@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography, backdropClasses, useMediaQuery } from "@mui/material";
+import { Box, Typography, CircularProgress, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import ContainerBox from "@/app/_components/ContainerBox";
 import GameHeader from "@/app/_components/GameHeader";
@@ -15,6 +15,7 @@ import DivisionStandings from "@/app/_components/DivisionStandings";
 import NFLGameDrives from "@/app/_components/NFLGameDrives";
 import NFLScoringPlays from "@/app/_components/NFLScoringPlays";
 import GameUserSelection from "@/app/_components/GameUserSelection";
+import Loading from "@/app/_components/Loading";
 //import NFLGameStats from "@/app/_components/NFLGameStats";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -31,42 +32,12 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
       <Box className="w-full bg-white rounded-xl drop-shadow-md p-3">
         <Typography className="text-sm opacity-70 font-semibold text-start">Game Leaders</Typography>
 
-        <Box className="grid grid-cols-2 grid-rows-[0.25rem, 1rem, 0.25rem, 1rem, 0.25rem, 1rem] gap-x-2 gap-y-0">
-          <Typography className="text-sm col-span-2 text-center opacity-70 mb-[-0.5rem]">Passing Yards</Typography>
-
-          {/* HOME TEAM PASSING LEADER */}
-          <Box className="flex flex-row justify-between items-center">
-            <Box className="flex flex-col justify-center items-center gap-1">
-              <Image
-                src={data.gameData.leaders[0].leaders[0].leaders[0].athlete.headshot.href}
-                width={100}
-                height={100}
-                alt="player"
-                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
-              />
-              <Typography className="text-xs opacity-80">{data.gameData.leaders[0].team.abbreviation}</Typography>
-            </Box>
-            <Box className="flex flex-col items-end">
-              <Typography className="max-w-[6rem] truncate text-sm opacity-80 font-bold">
-                {data.gameData.leaders[0].leaders[0].leaders[0].athlete.shortName}
-              </Typography>
-              <Typography className="max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {data.gameData.leaders[0].leaders[0].leaders[0].displayValue}
-              </Typography>
-            </Box>
-          </Box>
+        <Box className="grid grid-rows-[20px,auto,20px,auto,20px,auto] grid-cols-2 gap-x-2 gap-y-0 items-center justify-between">
+          <Typography className="text-sm text-center opacity-70 mb-[-0.5rem] col-span-2">Passing Yards</Typography>
 
           {/* AWAY TEAM PASSING LEADER */}
-          <Box className="flex flex-row justify-between items-center">
-            <Box className="flex flex-col items-start">
-              <Typography className=" max-w-[6rem] truncate text-sm opacity-80 font-bold">
-                {data.gameData.leaders[1].leaders[0].leaders[0].athlete.shortName}
-              </Typography>
-              <Typography className=" max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {data.gameData.leaders[1].leaders[0].leaders[0].displayValue}
-              </Typography>
-            </Box>
-            <Box className="flex flex-col justify-center items-center gap-1">
+          <Box className="grid place-items-end justify-center gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between">
+            <Box className="flex col-start-1 flex-col row-span-2 justify-center items-center gap-1">
               <Image
                 src={data.gameData.leaders[1].leaders[0].leaders[0].athlete.headshot.href}
                 width={100}
@@ -76,15 +47,19 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               />
               <Typography className="text-xs opacity-80">{data.gameData.leaders[1].team.abbreviation}</Typography>
             </Box>
+            <Typography className="col-start-2 row-start-1 text-end text-xs opacity-80 font-bold">
+              {data.gameData.leaders[1].leaders[0].leaders[0].athlete.shortName}
+            </Typography>
+            <Typography className="col-start-2 row-start-2 flex h-full text-end text-[10px] opacity-90">
+              {data.gameData.leaders[1].leaders[0].leaders[0].displayValue}
+            </Typography>
           </Box>
 
-          <Typography className="text-sm col-span-2 text-center opacity-70 mb-[-0.5rem]">Rushing Yards</Typography>
-
-          {/* HOME TEAM RUSHING LEADER */}
-          <Box className="flex flex-row justify-between items-center">
-            <Box className="flex flex-col justify-center items-center gap-1">
+          {/* HOME TEAM PASSING LEADER */}
+          <Box className="grid items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between">
+            <Box className="flex col-start-2 flex-col row-span-2 justify-center items-center gap-1">
               <Image
-                src={data.gameData.leaders[0].leaders[1].leaders[0].athlete.headshot.href}
+                src={data.gameData.leaders[0].leaders[0].leaders[0].athlete.headshot.href}
                 width={100}
                 height={100}
                 alt="player"
@@ -92,27 +67,20 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               />
               <Typography className="text-xs opacity-80">{data.gameData.leaders[0].team.abbreviation}</Typography>
             </Box>
-            <Box className="flex flex-col items-end">
-              <Typography className="max-w-[6rem] truncate text-sm opacity-80 font-bold">
-                {data.gameData.leaders[0].leaders[1].leaders[0].athlete.shortName}
-              </Typography>
-              <Typography className=" max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {data.gameData.leaders[0].leaders[1].leaders[0].displayValue}
-              </Typography>
-            </Box>
+
+            <Typography className="col-start-1 row-start-1 w-full text-start text-xs opacity-80 font-bold">
+              {data.gameData.leaders[0].leaders[0].leaders[0].athlete.shortName}
+            </Typography>
+            <Typography className="col-start-1 row-start-2 flex h-full text-start text-[10px] opacity-90">
+              {data.gameData.leaders[0].leaders[0].leaders[0].displayValue}
+            </Typography>
           </Box>
 
+          <Typography className="text-sm col-span-2 text-center opacity-70 mb-[-0.5rem]">Rushing Yards</Typography>
+
           {/* AWAY TEAM RUSHING LEADER */}
-          <Box className="flex flex-row justify-between items-center">
-            <Box className="flex flex-col items-start">
-              <Typography className="max-w-[6rem] truncate text-sm opacity-80 font-bold">
-                {data.gameData.leaders[1].leaders[1].leaders[0].athlete.shortName}
-              </Typography>
-              <Typography className=" max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {data.gameData.leaders[1].leaders[1].leaders[0].displayValue}
-              </Typography>
-            </Box>
-            <Box className="flex flex-col justify-center items-center gap-1">
+          <Box className="grid place-items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between">
+            <Box className="flex col-start-1 flex-col row-span-2 justify-center items-center gap-1">
               <Image
                 src={data.gameData.leaders[1].leaders[1].leaders[0].athlete.headshot.href}
                 width={100}
@@ -122,13 +90,19 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               />
               <Typography className="text-xs opacity-80">{data.gameData.leaders[1].team.abbreviation}</Typography>
             </Box>
+            <Typography className="col-start-2 row-start-1 truncate text-end text-xs opacity-80 font-bold">
+              {data.gameData.leaders[1].leaders[1].leaders[0].athlete.shortName}
+            </Typography>
+            <Typography className="col-start-2 row-start-2 flex h-full text-end text-[10px] opacity-90">
+              {data.gameData.leaders[1].leaders[1].leaders[0].displayValue}
+            </Typography>
           </Box>
-          <Typography className="text-sm col-span-2 text-center opacity-70 mb-[-0.5rem]">Recieving Yards</Typography>
-          {/* HOME TEAM RECIEVING */}
-          <Box className="flex flex-row justify-between items-center">
-            <Box className="flex flex-col justify-center items-center gap-1">
+
+          {/* HOME TEAM RUSHING LEADER */}
+          <Box className="grid items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between">
+            <Box className="flex col-start-2 flex-col row-span-2 justify-center items-center gap-1">
               <Image
-                src={data.gameData.leaders[0].leaders[2].leaders[0].athlete.headshot.href}
+                src={data.gameData.leaders[0].leaders[1].leaders[0].athlete.headshot.href}
                 width={100}
                 height={100}
                 alt="player"
@@ -136,27 +110,20 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               />
               <Typography className="text-xs opacity-80">{data.gameData.leaders[0].team.abbreviation}</Typography>
             </Box>
-            <Box className="flex flex-col items-end">
-              <Typography className="max-w-[6rem] truncate text-sm opacity-80 font-bold">
-                {data.gameData.leaders[0].leaders[2].leaders[0].athlete.shortName}
-              </Typography>
-              <Typography className=" max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {data.gameData.leaders[0].leaders[2].leaders[0].displayValue}
-              </Typography>
-            </Box>
+
+            <Typography className="col-start-1 row-start-1 w-full text-start text-xs opacity-80 font-bold">
+              {data.gameData.leaders[0].leaders[1].leaders[0].athlete.shortName}
+            </Typography>
+            <Typography className="col-start-1 row-start-2 flex h-full text-start text-[10px] opacity-90">
+              {data.gameData.leaders[0].leaders[1].leaders[0].displayValue}
+            </Typography>
           </Box>
 
+          <Typography className="text-sm col-span-2 text-center opacity-70 mb-[-0.5rem]">Receiving Yards</Typography>
+
           {/* AWAY TEAM RECIEVING LEADER */}
-          <Box className="flex flex-row justify-between items-center">
-            <Box className="flex flex-col items-start">
-              <Typography className="text-sm opacity-80 font-bold">
-                {data.gameData.leaders[1].leaders[2].leaders[0].athlete.shortName}
-              </Typography>
-              <Typography className=" max-w-[6rem] text-[10px] opacity-90 word truncate">
-                {data.gameData.leaders[1].leaders[2].leaders[0].displayValue}
-              </Typography>
-            </Box>
-            <Box className="flex flex-col justify-center items-center gap-1">
+          <Box className="grid place-items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between">
+            <Box className="flex col-start-1 flex-col row-span-2 justify-center items-center gap-1">
               <Image
                 src={data.gameData.leaders[1].leaders[2].leaders[0].athlete.headshot.href}
                 width={100}
@@ -166,6 +133,33 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               />
               <Typography className="text-xs opacity-80">{data.gameData.leaders[1].team.abbreviation}</Typography>
             </Box>
+            <Typography className="col-start-2 row-start-1 text-end text-xs opacity-80 font-bold">
+              {data.gameData.leaders[1].leaders[2].leaders[0].athlete.shortName}
+            </Typography>
+            <Typography className="col-start-2 row-start-2 flex h-full text-end text-[10px] opacity-90">
+              {data.gameData.leaders[1].leaders[2].leaders[0].displayValue}
+            </Typography>
+          </Box>
+
+          {/* HOME TEAM RECIEVING LEADER */}
+          <Box className="grid items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between">
+            <Box className="flex col-start-2 flex-col row-span-2 justify-center items-center gap-1">
+              <Image
+                src={data.gameData.leaders[0].leaders[2].leaders[0].athlete.headshot.href}
+                width={100}
+                height={100}
+                alt="player"
+                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
+              />
+              <Typography className="text-xs opacity-80">{data.gameData.leaders[0].team.abbreviation}</Typography>
+            </Box>
+
+            <Typography className="col-start-1 row-start-1 w-full text-start text-xs opacity-80 font-bold">
+              {data.gameData.leaders[0].leaders[2].leaders[0].athlete.shortName}
+            </Typography>
+            <Typography className="col-start-1 row-start-2 flex h-full text-start text-[10px] opacity-90">
+              {data.gameData.leaders[0].leaders[2].leaders[0].displayValue}
+            </Typography>
           </Box>
         </Box>
       </Box>
@@ -231,11 +225,9 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
     );
   }
 
-  if (!isLoading) {
-    console.log(data);
-  }
-
-  if (!isLoading) {
+  if (isLoading) {
+    return <Loading />;
+  } else {
     return (
       <>
         {isDesktopScreen ? (

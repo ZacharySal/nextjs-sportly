@@ -12,6 +12,7 @@ import { Box, Typography, useMediaQuery } from "@mui/material";
 import NBABoxscore from "@/app/_components/NBABoxscore";
 import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
+import Loading from "@/app/_components/Loading";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -20,10 +21,6 @@ export default function Page({ params }: { params: { gameId: string } }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nba/gameData/${params.gameId}`, fetcher);
-
-  function getTeamName(id: string) {
-    return id === data.homeTeam.id ? data.homeTeam.team.name : data.awayTeam.team.name;
-  }
 
   function teamStats() {
     return (
@@ -48,7 +45,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
                 <Box className="flex flex-col justify-center gap-2 items-center">
                   <Typography className="text-sm">{statName}</Typography>
                   <Typography className="font-semibold text-3xl">{value.displayValue}</Typography>
-                  <Typography className="text-base opacity-70">{value.rankDisplayValue}</Typography>
+                  <Typography className="text-base opacity-70">{value.rankDisplayValue || "N/A"}</Typography>
                 </Box>
               </Box>
             ))}
@@ -74,7 +71,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
                 <Box className="flex flex-col justify-center gap-2 items-center">
                   <Typography className="text-sm">{statName}</Typography>
                   <Typography className="font-semibold text-3xl">{value.displayValue}</Typography>
-                  <Typography className="text-base opacity-70">{value.rankDisplayValue}</Typography>
+                  <Typography className="text-base opacity-70">{value.rankDisplayValue || "N/A"}</Typography>
                 </Box>
               </Box>
             ))}
@@ -84,7 +81,8 @@ export default function Page({ params }: { params: { gameId: string } }) {
     );
   }
 
-  if (!isLoading) {
+  if (isLoading) return <Loading />;
+  else {
     return isDesktopScreen ? (
       <>
         <GameHeader
