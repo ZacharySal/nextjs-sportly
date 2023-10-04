@@ -28,7 +28,7 @@ function ContainerBox({
             rotate: "130deg",
           },
         }}
-        className="w-full 2xl:w-4/5 grid grid-cols-[1fr_3fr_1fr] px-14 mx-auto gap-8 my-8"
+        className="max-w-full 2xl:w-4/5 grid grid-cols-[1fr_minmax(0,3fr)_1fr] px-14 mx-auto gap-8 my-8"
       >
         {children}
       </Box>

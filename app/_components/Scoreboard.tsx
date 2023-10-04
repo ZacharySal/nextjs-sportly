@@ -135,7 +135,7 @@ function Scoreboard({
           </Box>
           <Box
             id="style-1"
-            className="w-full flex flex-row border border-black border-opacity-20 rounded-md mt-2 border-radius-md overflow-x-auto"
+            className="max-w-full flex flex-row border border-black border-opacity-20 rounded-md mt-2 border-radius-md overflow-x-auto"
           >
             {seasonWeeks.map((week: any) => {
               return (
@@ -162,8 +162,8 @@ function Scoreboard({
   function mlbDateSelector() {
     return (
       <>
-        <Box className="flex flex-col justify-center items-center mb-5">
-          <Box id="style-1" className=" w-full flex  flex-row overflow-x-scroll bg-white drop-shadow-md gap-3">
+        <Box className="w-full flex flex-col justify-center items-center mb-5">
+          <Box id="style-1" className="max-w-full flex flex-row overflow-x-auto bg-white drop-shadow-md gap-3">
             {seasonWeeks.map((date: string, i: string) => (
               <div
                 key={uuidv4()}
@@ -186,7 +186,7 @@ function Scoreboard({
     return (
       <>
         <Box className="flex flex-col justify-center items-center mb-5">
-          <Box id="style-1" className=" w-full flex  flex-row overflow-x-scroll bg-white drop-shadow-md gap-3">
+          <Box id="style-1" className="max-w-full flex  flex-row overflow-x-auto bg-white drop-shadow-md gap-3">
             {seasonWeeks.map((date: string, i: string) => (
               <div
                 key={uuidv4()}
@@ -207,7 +207,7 @@ function Scoreboard({
 
   if (isLoading)
     return (
-      <Box className="max-w-full overflow-x-hidden py-2">
+      <Box className="max-w-full py-2">
         {isNfl && nflWeekSelector()}
         {isMlb && mlbDateSelector()}
         {isNba && nbaDateSelector()}
@@ -217,7 +217,7 @@ function Scoreboard({
       </Box>
     );
   return (
-    <Box className="max-w-full overflow-x-hidden py-2">
+    <Box className="max-w-full py-2">
       {isNfl && nflWeekSelector()}
       {isMlb && mlbDateSelector()}
       {isNba && nbaDateSelector()}
