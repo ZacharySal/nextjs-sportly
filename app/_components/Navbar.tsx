@@ -13,12 +13,24 @@ export default function Navbar() {
         <Typography className="cursor-pointer">NFL</Typography>
       </Link>
       <Link href="/mlb">
-        <Typography className="cursor-pointer" onClick={() => router.push("/mlb")}>
+        <Typography
+          className="cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            router.push("/mlb");
+          }}
+        >
           MLB
         </Typography>
       </Link>
       <Link href="/nba">
-        <Typography className="cursor-pointer" onClick={() => router.push("/nba")}>
+        <Typography
+          className="cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            router.push("/nba");
+          }}
+        >
           NBA
         </Typography>
       </Link>

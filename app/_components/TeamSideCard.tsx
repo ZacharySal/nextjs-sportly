@@ -6,14 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function TeamSideCard({
-  name,
-  league,
-}: {
-  name: string;
-  league: string;
-}) {
-  const router = useRouter();
+export default function TeamSideCard({ name, league }: { name: string; league: string }) {
   let parts = name[0].split(" ");
   let teamName = parts.pop();
   let location = parts.join(" ");
@@ -26,10 +19,7 @@ export default function TeamSideCard({
 
   return (
     <Link href={`/${league}/team/${name[1]}`}>
-      <Box
-        sx={{ cursor: "pointer" }}
-        className="flex justify-start flex-row items-center gap-1 mt-2"
-      >
+      <Box sx={{ cursor: "pointer" }} className="flex justify-start flex-row items-center gap-1 mt-2">
         <Image
           src={`/${league}/${teamName?.replace(" ", "").toLowerCase()}.png`}
           width={100}

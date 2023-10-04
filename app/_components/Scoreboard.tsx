@@ -43,14 +43,18 @@ function Scoreboard({
     key = `https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50&week=${nflSelectedWeek.value}&seasontype=${type}&year=${year}`;
   }
   if (isNba) {
-    key = `https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50&date=${nbaSelectedDate}`;
+    key = `https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50&date=${nbaSelectedDate.replaceAll("/", "")}`;
   }
   // get scoreboard on data for MLB
   if (isMlb) {
-    key = `https://cdn.espn.com/core/mlb/scoreboard?xhr=1&limit=50&date=${mlbSelectedDate}`;
+    key = `https://cdn.espn.com/core/mlb/scoreboard?xhr=1&limit=50&date=${mlbSelectedDate.replaceAll("/", "")}`;
   }
 
   const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 5000 });
+
+  if (!isLoading) {
+    console.log(key);
+  }
 
   const allYears = () => {
     let res = [];
@@ -87,8 +91,8 @@ function Scoreboard({
   }
 
   function getMlbCalendarDate(date: string) {
-    const newDate = new Date(date).toLocaleDateString("en-CA");
-    return newDate.replaceAll("-", "");
+    const test = date.substring(0, date.indexOf("T"));
+    return test.replaceAll("-", "");
   }
 
   function nflWeekSelector() {
@@ -102,7 +106,10 @@ function Scoreboard({
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={year}
-                onChange={(e) => setYear(e.target.value)}
+                onChange={(e) => {
+                  e.preventDefault;
+                  setYear(e.target.value);
+                }}
                 style={{ height: 28 }}
               >
                 {allYears()}
@@ -114,7 +121,10 @@ function Scoreboard({
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={type}
-                onChange={(e) => setType(e.target.value)}
+                onChange={(e) => {
+                  e.preventDefault;
+                  setType(e.target.value);
+                }}
                 style={{ height: 28 }}
               >
                 <MenuItem value={1}>Preseason</MenuItem>
