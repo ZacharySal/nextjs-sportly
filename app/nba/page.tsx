@@ -30,7 +30,15 @@ export default function Home() {
             <LeagueHeader backgroundColor="013369" league="nba" />
             <ContainerBox altColor="013369" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
               <AllTeams allTeams={nbaDivisionTeams} league="nba" />
-              <Scoreboard seasonWeeks={data.nbaWeeks} league="nba" />
+              <Scoreboard
+                seasonWeeks={data.nbaWeeks}
+                league="nba"
+                events={null}
+                year={null}
+                type={null}
+                setYear={null}
+                setType={null}
+              />
               <Articles title={`NBA News`} teamNews={data.news} limit={10} />
             </ContainerBox>
           </>
@@ -40,7 +48,17 @@ export default function Home() {
             <LeagueUserSelection userSelection={userSelection} setUserSelection={setUserSelection} />
             <ContainerBox altColor="013369" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
               {userSelection === "teams" && <AllTeams allTeams={nbaDivisionTeams} league="nba" />}
-              {userSelection === "scoreboard" && <Scoreboard seasonWeeks={data.nbaWeeks} league="nba" />}
+              {userSelection === "scoreboard" && (
+                <Scoreboard
+                  seasonWeeks={data.nbaWeeks}
+                  league="nba"
+                  events={data.events}
+                  year={null}
+                  type={null}
+                  setYear={null}
+                  setType={null}
+                />
+              )}
               {userSelection === "news" && <Articles title={`NBA News`} teamNews={data.news} limit={10} />}
             </ContainerBox>
           </>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography, CircularProgress } from "@mui/material";
+import { Box, Typography, CircularProgress, FormControl, InputLabel, Select, MenuItem, Divider } from "@mui/material";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import ScoreCard from "./ScoreCard";
@@ -9,7 +9,23 @@ import { v4 as uuidv4 } from "uuid";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-function Scoreboard({ seasonWeeks, league }: { seasonWeeks: any; league: string }) {
+function Scoreboard({
+  seasonWeeks,
+  league,
+  events = null,
+  year = null,
+  type = null,
+  setType = null,
+  setYear = null,
+}: {
+  seasonWeeks: any;
+  league: string;
+  events: any;
+  year: any;
+  type: any;
+  setType: any;
+  setYear: any;
+}) {
   const [mlbSelectedDate, setMlbSelctedDate] = useState("");
   const [nbaSelectedDate, setNbaSelectedDate] = useState("");
   const [nflSelectedWeek, setNflSelectedWeek] = useState<any>({
@@ -24,9 +40,8 @@ function Scoreboard({ seasonWeeks, league }: { seasonWeeks: any; league: string 
   let key;
 
   if (isNfl) {
-    key = `https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50&week=${nflSelectedWeek.weekValue}&seasontype=${nflSelectedWeek.seasonValue}`;
+    key = `https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50&week=${nflSelectedWeek.value}&seasontype=${type}&year=${year}`;
   }
-
   if (isNba) {
     key = `https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50&date=${nbaSelectedDate}`;
   }
@@ -36,6 +51,20 @@ function Scoreboard({ seasonWeeks, league }: { seasonWeeks: any; league: string 
   }
 
   const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 5000 });
+
+  const allYears = () => {
+    let res = [];
+
+    for (let i = 2016; i <= 2023; i++) {
+      res.push(
+        <MenuItem key={uuidv4()} value={`${i}`}>
+          {i}
+        </MenuItem>
+      );
+    }
+
+    return res;
+  };
 
   function convertNflDate(date: string) {
     return new Date(date).toLocaleDateString(undefined, {
@@ -64,26 +93,59 @@ function Scoreboard({ seasonWeeks, league }: { seasonWeeks: any; league: string 
 
   function nflWeekSelector() {
     return (
-      <Box id="style-1" className="w-full flex flex-row overflow-x-auto bg-white mb-5">
-        {Object.entries(seasonWeeks).map(([index, season]: any) =>
-          season.seasonWeeks.map((week: any) => {
-            return (
-              <Box
-                key={uuidv4()}
-                onClick={() => setNflSelectedWeek(week)}
-                className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer gap-1 width-40 p-2"
+      <>
+        <Box className="p-2 bg-white mb-5 rounded-xl drop-shadow-md">
+          <Typography className="mb-1 font-semibold opacity-80 text-sm">NFL Scoreboard</Typography>
+          <Box className="w-full h-auto flex flex-row justify-start gap-1 mt-2">
+            <FormControl sx={{ fontSize: "8px" }} size="small">
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                style={{ height: 28 }}
               >
-                <Typography className="text-sm font-semibold">{week.weekLabel}</Typography>
-                <Box className="flex flex-row gap-1 justify-center items-center">
-                  <Typography className="text-xs">{convertNflDate(week.weekStartDate)}</Typography>
-                  <Typography className="text-xs">-</Typography>
-                  <Typography className="text-xs">{convertNflDate(week.weekEndDate)}</Typography>
+                {allYears()}
+              </Select>
+            </FormControl>
+
+            <FormControl size="small">
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                style={{ height: 28 }}
+              >
+                <MenuItem value={1}>Preseason</MenuItem>
+                <MenuItem value={2}>Regular</MenuItem>
+                <MenuItem value={3}>Postseason</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <Box
+            id="style-1"
+            className="w-full flex flex-row border border-black border-opacity-20 rounded-md mt-2 border-radius-md overflow-x-auto"
+          >
+            {seasonWeeks.map((week: any) => {
+              return (
+                <Box
+                  key={uuidv4()}
+                  onClick={() => setNflSelectedWeek(week)}
+                  className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer gap-1 width-40 p-2"
+                >
+                  <Typography className="text-sm font-[500]">{week.alternateLabel}</Typography>
+                  <Box className="flex flex-row gap-1 justify-center items-center">
+                    <Typography className="text-xs">{convertNflDate(week.startDate)}</Typography>
+                    <Typography className="text-xs">-</Typography>
+                    <Typography className="text-xs">{convertNflDate(week.endDate)}</Typography>
+                  </Box>
                 </Box>
-              </Box>
-            );
-          })
-        )}
-      </Box>
+              );
+            })}
+          </Box>
+        </Box>
+      </>
     );
   }
 

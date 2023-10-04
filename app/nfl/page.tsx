@@ -18,7 +18,12 @@ export default function Home() {
   const [userSelection, setUserSelection] = useState("scoreboard");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  const { data, isLoading } = useSwr("https://nextjs-sportly.vercel.app/api/nfl/leagueData", fetcher);
+  const [year, setYear] = useState("2023");
+  const [type, setType] = useState("2");
+
+  console.log(`Year:${year}, Type:${type}`);
+
+  const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nfl/leagueData/${year}/${type}`, fetcher);
 
   if (isLoading) return <Loading />;
   else {
@@ -29,7 +34,15 @@ export default function Home() {
             <LeagueHeader backgroundColor="013369" league="nfl" />
             <ContainerBox altColor="013369" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
               <AllTeams allTeams={nflDivisonTeams} league="nfl" />
-              <Scoreboard seasonWeeks={data.seasonWeeks} league="nfl" />
+              <Scoreboard
+                league="nfl"
+                seasonWeeks={data.seasonWeeks}
+                events={data.events}
+                year={year}
+                type={type}
+                setYear={setYear}
+                setType={setType}
+              />
               <Articles title={`NFL News`} teamNews={data.newsData} limit={10} />
             </ContainerBox>
           </>
@@ -39,7 +52,17 @@ export default function Home() {
             <LeagueUserSelection userSelection={userSelection} setUserSelection={setUserSelection} />
             <ContainerBox altColor="013369" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
               {userSelection === "teams" && <AllTeams allTeams={nflDivisonTeams} league="nfl" />}
-              {userSelection === "scoreboard" && <Scoreboard seasonWeeks={data.seasonWeeks} league="nfl" />}
+              {userSelection === "scoreboard" && (
+                <Scoreboard
+                  league="nfl"
+                  seasonWeeks={data.seasonWeeks}
+                  events={data.events}
+                  year={year}
+                  type={type}
+                  setYear={setYear}
+                  setType={setType}
+                />
+              )}
               {userSelection === "news" && <Articles title={`NFL News`} teamNews={data.newsData} limit={10} />}
             </ContainerBox>
           </>

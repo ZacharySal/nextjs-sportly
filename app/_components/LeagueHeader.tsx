@@ -1,13 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 
-export default function LeagueHeader({
-  backgroundColor,
-  league,
-}: {
-  backgroundColor: string;
-  league: string;
-}) {
+export default function LeagueHeader({ backgroundColor, league }: { backgroundColor: string; league: string }) {
   let fullLeague;
 
   if (league === "nfl") fullLeague = "National Football League";
@@ -16,7 +10,7 @@ export default function LeagueHeader({
   return (
     <Box
       sx={{ backgroundColor: `#${backgroundColor}` }}
-      className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-5 md:pl-60 drop-shadow-md"
+      className="w-full h-40 flex-row flex justify-start items-center gap-6 pl-5 md:pl-60"
     >
       <Box className="flex flex-row justify-center items-center gap-3">
         <Image
@@ -27,12 +21,8 @@ export default function LeagueHeader({
           className=" w-20 md:w-32 object-cover"
         />
         <Box className="flex flex-col text-white opacity-80">
-          <Typography className=" text-xl md:text-3xl opacity-70">
-            {fullLeague}
-          </Typography>
-          <Typography className=" text-xl md:text-3xl font-bold">
-            {league.toUpperCase()}
-          </Typography>
+          <Typography className=" text-xl md:text-3xl opacity-70">{fullLeague}</Typography>
+          <Typography className=" text-xl md:text-3xl font-bold">{league.toUpperCase()}</Typography>
         </Box>
       </Box>
     </Box>

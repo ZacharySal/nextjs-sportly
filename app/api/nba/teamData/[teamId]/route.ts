@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server"
 
 export async function GET(request: Request, { params }: { params: { teamId: string }}) {
-    const { searchParams } = new URL(request.url);
-    const teamId = searchParams.get('teamId');
 
     const teamDataResponse = await fetch(`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${params.teamId}`,  {
         cache: "no-cache",
