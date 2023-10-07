@@ -163,7 +163,10 @@ function Scoreboard({
     return (
       <>
         <Box className="w-full flex flex-col justify-center items-center mb-5">
-          <Box id="style-1" className="max-w-full flex flex-row overflow-x-auto bg-white drop-shadow-md gap-3">
+          <Box
+            id="style-1"
+            className="max-w-full flex flex-row flex-shrink-0 overflow-x-auto bg-white drop-shadow-md gap-2"
+          >
             {seasonWeeks.map((date: string, i: string) => (
               <div
                 key={uuidv4()}

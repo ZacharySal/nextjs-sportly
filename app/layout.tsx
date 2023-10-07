@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
+import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./_components/Navbar";
 import Loading from "./_components/Loading";
 import { Suspense } from "react";
@@ -17,7 +17,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <Suspense fallback={<p>Loading Page</p>}>{children}</Suspense>
+        <Suspense fallback={<Loading />}>{children}</Suspense>
+        <Analytics />
       </body>
     </html>
   );
