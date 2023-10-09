@@ -68,21 +68,10 @@ export default function ScoreCard({
   }
 
   return (
-    <Box className="w-full h-auto grid grid-cols-[1fr_4fr_1fr] grid-rows-[1fr_2fr_2fr_3fr] rounded-xl text-start text-black p-2 gap-1 gap-y-2 drop-shadow-md bg-white">
+    <Box className="w-full max-w-[25rem] h-auto grid grid-cols-[1fr_4fr_1fr] grid-rows-[1fr_2fr_2fr_3fr] rounded-xl text-start text-black p-2 gap-1 gap-y-2 drop-shadow-md bg-white">
       <Typography className="text-xs row-start-1 col-start-1 col-span-3 md:text-sm font-semibold text-start">
         {gameDescription}
       </Typography>
-
-      {/* Away Team Name and Logo*/}
-      <Image
-        src={`/${league}/${awayTeamName.replace(" ", "").toLowerCase()}.png`}
-        width={100}
-        height={100}
-        alt="away team logo"
-        className="w-10 my-auto object-contain"
-      />
-      <Typography className="text-sm md:text-base my-auto">{awayTeamName}</Typography>
-      <Typography className="text-center text-sm font-semibold md:font-bold my-auto">{awayTeamScore || 0}</Typography>
       {/* Home Team Name and Logo*/}
       <Image
         src={`/${league}/${homeTeamName.replace(" ", "").toLowerCase()}.png`}
@@ -94,6 +83,19 @@ export default function ScoreCard({
       <Typography className="text-sm  my-auto md:text-base">{homeTeamName}</Typography>
       <Typography className="text-center text-sm my-auto font-semibold md:text-base md:font-bold">
         {homeTeamScore || 0}
+      </Typography>
+
+      {/* Away Team Name and Logo*/}
+      <Image
+        src={`/${league}/${awayTeamName.replace(" ", "").toLowerCase()}.png`}
+        width={100}
+        height={100}
+        alt="away team logo"
+        className="w-10 my-auto object-contain"
+      />
+      <Typography className="text-sm md:text-base my-auto">{awayTeamName}</Typography>
+      <Typography className="text-center text-sm font-semibold md:font-bold md:text-base my-auto">
+        {awayTeamScore || 0}
       </Typography>
 
       {/* CTA Buttons */}

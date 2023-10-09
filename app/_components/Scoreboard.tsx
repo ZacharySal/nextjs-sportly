@@ -224,7 +224,7 @@ function Scoreboard({
       {isNfl && nflWeekSelector()}
       {isMlb && mlbDateSelector()}
       {isNba && nbaDateSelector()}
-      <Box className="w-full grid grid-cols-2 gap-3">
+      <Box className="w-full grid grid-cols-2 2xl:grid-cols-3 2xl:gap-5 gap-3">
         {data.content.sbData.events.map((game: any, i: string) => (
           <ScoreCard key={uuidv4()} gameInfo={game} version={1} league={league} teamView={false} />
         ))}
