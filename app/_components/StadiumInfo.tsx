@@ -7,13 +7,16 @@ export default function StadiumInfo({ data }: { data: any }) {
       <Box className="w-full flex flex-col bg-white rounded-xl drop-shadow-md gap-2 p-3">
         <Typography className="text-sm opacity-70 font-semibold text-start">Stadium Information</Typography>
 
-        <Image
-          src={data.gameData.gameInfo.venue.images[0]?.href}
-          width={200}
-          height={200}
-          className="w-full object-contain rounded"
-          alt="Stadium"
-        />
+        <Box className="w-auto h-48 relative">
+          <Image
+            src={data.gameData.gameInfo.venue.images[0]?.href}
+            fill
+            priority={true}
+            className="object-cover rounded"
+            alt="Stadium"
+          />
+        </Box>
+
         <Typography className="opacity-80 font-bold">{data.gameData.gameInfo.venue.fullName}</Typography>
         <Typography className="opacity-80 text-sm mt-[-0.5rem]">
           {data.gameData.gameInfo.venue.address.city}, {data.gameData.gameInfo.venue.address.state}

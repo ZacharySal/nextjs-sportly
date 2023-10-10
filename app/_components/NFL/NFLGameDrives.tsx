@@ -8,7 +8,7 @@ export default function NFLGameDrives({ data }: { data: any }) {
     <Box className="w-full bg-white rounded-xl p-3">
       <Typography className="text-sm opacity-70 font-semibold mb-4">Game Drives</Typography>
       <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
-      <Box id="style-1" className="w-full max-h-[40rem] overflow-y-auto ">
+      <Box id="style-1" className="w-full md:max-h-[40rem] overflow-y-auto ">
         {data.gameData.drives.previous.map((drive: any) => (
           <Accordion key={uuidv4()}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">

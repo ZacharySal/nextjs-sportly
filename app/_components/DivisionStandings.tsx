@@ -42,15 +42,7 @@ export default function DivisionStandings({ data, isNFL = false }: { data: any; 
           </TableHead>
           <TableBody>
             {group.standings.entries.map((team: any) => (
-              <TableRow
-                key={uuidv4()}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                  "&:nth-child(odd) td, &:nth-child(odd) th": {
-                    backgroundColor: "#edeef0;",
-                  },
-                }}
-              >
+              <TableRow key={uuidv4()}>
                 <TableCell
                   className="text-xs"
                   component="th"

@@ -21,8 +21,6 @@ export default function Home() {
   const [year, setYear] = useState("2023");
   const [type, setType] = useState("2");
 
-  console.log(`Year:${year}, Type:${type}`);
-
   const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nfl/leagueData/${year}/${type}`, fetcher);
 
   if (isLoading) return <Loading />;

@@ -10,20 +10,21 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
 import StadiumInfo from "@/app/_components/StadiumInfo";
-import NFLBoxscore from "@/app/_components/NFLBoxscore";
+import NFLBoxscore from "@/app/_components/NFL/NFLBoxscore";
 import DivisionStandings from "@/app/_components/DivisionStandings";
-import NFLGameDrives from "@/app/_components/NFLGameDrives";
-import NFLScoringPlays from "@/app/_components/NFLScoringPlays";
+import NFLGameDrives from "@/app/_components/NFL/NFLGameDrives";
+import NFLScoringPlays from "@/app/_components/NFL/NFLScoringPlays";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
-//import NFLGameStats from "@/app/_components/NFLGameStats";
+import NFLGameStats from "@/app/_components/NFL/NFLGameStats";
+import NFLPlayByPlay from "@/app/_components/NFL/NFLPlayByPlay";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function TeamPage({ params }: { params: { gameId: string } }) {
   const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nfl/gameData/${params.gameId}`, fetcher);
 
-  const [userSelection, setUserSelection] = useState("gameInfo");
+  const [userSelection, setUserSelection] = useState("recap");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   function gameLeaders() {
@@ -286,31 +287,27 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               mainColor={data.isGameStarted ? data.winningTeam.team.color : "gray"}
               isDesktopScreen={isDesktopScreen}
             >
-              {userSelection === "gameInfo" && (
+              {userSelection === "recap" && (
                 <>
                   <Box className="w-full flex flex-col justify-center items-center gap-3">
-                    <StadiumInfo data={data} />
-                    {data.isGameStarted && gameLeaders()}
-                    <DivisionStandings data={data} isNFL={true} />
-                  </Box>
-                </>
-              )}
-
-              {userSelection === "stats" && teamStats()}
-
-              {userSelection === "scoreInfo" && (
-                <>
-                  <Box className="w-full flex flex-col gap-5">
                     {data.isGameStarted && (
                       <>
                         <NFLBoxscore data={data} />
+                        {gameLeaders()}
                         <NFLScoringPlays data={data} />
-                        <NFLGameDrives data={data} />
                       </>
                     )}
+                    <DivisionStandings data={data} isNFL={true} />
+                    <StadiumInfo data={data} />
                   </Box>
                 </>
               )}
+
+              {/* {userSelection === "stats" && teamStats()} */}
+
+              {userSelection === "boxscore" && <NFLGameStats data={data} league="nfl" />}
+
+              {userSelection === "playbyplay" && <NFLPlayByPlay data={data} />}
 
               {userSelection === "news" && (
                 <>

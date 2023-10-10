@@ -10,16 +10,17 @@ import useSwr from "swr";
 import { useState } from "react";
 import React from "react";
 import StadiumInfo from "@/app/_components/StadiumInfo";
-import MLBBoxscore from "@/app/_components/MLBBoxscore";
-import MLBScoringPlays from "@/app/_components/MLBScoringPlays";
+import MLBBoxscore from "@/app/_components/MLB/MLBBoxscore";
+import MLBScoringPlays from "@/app/_components/MLB/MLBScoringPlays";
 import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
+import NFLGameStats from "@/app/_components/NFL/NFLGameStats";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Page({ params }: { params: { gameId: string } }) {
-  const [userSelection, setUserSelection] = useState("gameInfo");
+  const [userSelection, setUserSelection] = useState("recap");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/mlb/gameData/${params.gameId}`, fetcher);
@@ -135,21 +136,24 @@ export default function Page({ params }: { params: { gameId: string } }) {
               mainColor={data.isGameStarted ? data.winningTeam.team.color : "gray"}
               isDesktopScreen={isDesktopScreen}
             >
-              {userSelection === "gameInfo" && (
+              {userSelection === "recap" && (
                 <Box className="w-full flex flex-col justify-center items-center gap-3">
-                  <StadiumInfo data={data} />
+                  {data.isGameStarted && data.homeTeam.linescores && <MLBBoxscore data={data} />}
+                  {data.isGameStarted && <MLBScoringPlays data={data} />}
                   <DivisionStandings data={data} isNFL={false} />
+                  <StadiumInfo data={data} />
                 </Box>
               )}
 
-              {userSelection === "scoreInfo" && (
+              {userSelection === "playbyplay" && (
                 <Box className="w-full flex flex-col gap-5">
-                  {data.isGameStarted && data.homeTeam.linescores && <MLBBoxscore data={data} />}
                   {data.isGameStarted && <MLBScoringPlays data={data} />}
                 </Box>
               )}
 
               {userSelection === "stats" && teamStats()}
+
+              {userSelection === "boxscore" && <NFLGameStats data={data} league="mlb" />}
 
               {userSelection === "news" && <Articles title="MLB News" teamNews={data.gameData.news} limit={6} />}
             </ContainerBox>
