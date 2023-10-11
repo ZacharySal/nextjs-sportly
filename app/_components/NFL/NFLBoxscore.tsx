@@ -6,7 +6,7 @@ export default function NFLBoxscore({ data }: { data: any }) {
     <>
       <Box className="w-full bg-white p-3 rounded-xl drop-shadow-md grid items-center text-center grid-cols-8 grid-rows-[0.25rem, 0.5rem, 0.5rem] gap-y-2">
         <Typography className="text-sm font-semibold opacity-70 col-start-1 col-span-2 text-start">
-          Box Score
+          Score Recap
         </Typography>
         <Typography className="text-sm opacity-60 col-start-4">1</Typography>
         <Typography className="text-sm opacity-60 col-start-5">2</Typography>
@@ -24,7 +24,7 @@ export default function NFLBoxscore({ data }: { data: any }) {
             className="w-8 object-contain"
             alt="home team logo"
           />
-          <Typography className=" text-sm md:text-base font-semibold opacity-80">
+          <Typography className="text-sm md:text-base font-semibold opacity-80">
             {data.gameData.header.competitions[0].competitors[0].team.name}
           </Typography>
           <Typography className="hidden md:block text-sm opacity-60">

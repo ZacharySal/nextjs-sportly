@@ -50,7 +50,7 @@ export default function NFLScoringPlays({ data }: { data: any }) {
   }
 
   return (
-    <Box className="w-full bg-white rounded-xl drop-shadow-md flex flex-col justify-center items-center p-3">
+    <Box className="w-full bg-white rounded-xl md:drop-shadow-md flex flex-col justify-center items-center p-3">
       <Typography className=" w-full text-left text-sm opacity-70 font-semibold">Scoring Plays</Typography>
       <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
       {data.firstQuarterScoringPlays.length > 0 && (
