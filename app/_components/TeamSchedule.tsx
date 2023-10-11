@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function TeamSchedule({ teamSchedule, league }: { teamSchedule: any; league: string }) {
   return (
-    <Box className="w-full place-items-center grid grid-cols-2 gap-2 md:gap-5">
+    <Box className="w-full place-items-center grid grid-cols-2 2xl:grid-cols-3 gap-2 md:gap-5">
       {teamSchedule.events.map((game: any) => (
         <ScoreCard key={uuidv4()} gameInfo={game} version={2} league={league} teamView={true} />
       ))}
