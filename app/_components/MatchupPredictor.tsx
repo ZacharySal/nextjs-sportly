@@ -2,7 +2,13 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 
 export default function MatchupPredictor({ data, league }: { data: any; league: string }) {
-  const awayTeamChance = (Number(data.gameData.predictor.awayTeam.teamChanceLoss) * 360) / 100;
+  const homeTeamChance = (Number(data.gameData.predictor.homeTeam.gameProjection) * 360) / 100;
+
+  const [losingTeamColor, winningTeamColor] =
+    homeTeamChance > 180
+      ? [data.awayTeam.team.color, data.homeTeam.team.color]
+      : [data.homeTeam.team.color, data.awayTeam.team.color];
+
   return (
     <Box className="w-full bg-white rounded-xl drop-shadow-md p-3">
       <Typography className="font-semibold opacity-70 text-sm">Matchup Predictor</Typography>
@@ -13,10 +19,10 @@ export default function MatchupPredictor({ data, league }: { data: any; league: 
       >
         <div
           style={{
-            backgroundColor: `#${data.awayTeam.team.color}`,
-            backgroundImage: `linear-gradient(${360 - awayTeamChance}deg, transparent 50%, #${
-              data.homeTeam.team.color
-            } 50%), linear-gradient(0deg, #${data.homeTeam.team.color} 50%, transparent 50%)`,
+            backgroundColor: `#${losingTeamColor}`,
+            backgroundImage: `linear-gradient(${
+              360 - homeTeamChance
+            }deg, transparent 50%, #${winningTeamColor} 50%), linear-gradient(0deg, #${winningTeamColor} 50%, transparent 50%)`,
           }}
           className="circle-border"
         >
