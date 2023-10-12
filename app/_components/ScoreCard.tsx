@@ -22,15 +22,24 @@ export default function ScoreCard({
   let gameId: string;
   let gameDate: string = version === 2 ? game.date : gameInfo.date;
   let gameDescription: string = game.status.type.description;
-  let homeTeamId: string = homeTeam.id;
   let homeTeamName: string = homeTeam.team.shortDisplayName;
   let homeTeamScore;
-  let awayTeamId: string = awayTeam.id;
   let awayTeamName: string = awayTeam.team.shortDisplayName;
+
+  const gameDetailsFinal = awayTeamName !== "TBD" || homeTeamName !== "TBD";
 
   let awayTeamScore;
 
   gameDate = new Date(gameInfo.date).toLocaleDateString();
+
+  const setTeamImageSrc = (teamName: string) => {
+    try {
+      const src = require(`public/${league}/${teamName.replace(" ", "").toLowerCase()}.png`);
+      return src;
+    } catch {
+      return `/default.png`;
+    }
+  };
 
   if (!teamView) {
     let index = gameInfo?.uid?.indexOf("e");
@@ -74,7 +83,7 @@ export default function ScoreCard({
       </Typography>
       {/* Home Team Name and Logo*/}
       <Image
-        src={`/${league}/${homeTeamName.replace(" ", "").toLowerCase()}.png`}
+        src={setTeamImageSrc(homeTeamName)}
         width={100}
         height={100}
         alt="home team logo"
@@ -87,7 +96,7 @@ export default function ScoreCard({
 
       {/* Away Team Name and Logo*/}
       <Image
-        src={`/${league}/${awayTeamName.replace(" ", "").toLowerCase()}.png`}
+        src={setTeamImageSrc(awayTeamName)}
         width={100}
         height={100}
         alt="away team logo"
@@ -99,10 +108,13 @@ export default function ScoreCard({
       </Typography>
 
       {/* CTA Buttons */}
-      <Box className="w-full flex flex-col justify-center gap-2 col-span-3 items-center">
+      <Box
+        sx={{ opacity: gameDetailsFinal ? 1 : 0.5 }}
+        className="w-full flex flex-col justify-center gap-2 col-span-3 items-center"
+      >
         <Divider flexItem className="w-full " />
         <Box className="w-full flex flex-row justify-around">
-          <Link href={`/${league}/game/${gameId}`}>
+          <Link href={gameDetailsFinal ? `/${league}/game/${gameId}` : ""}>
             <div className="text-center bg-[#1b48e0] border border-[#1b48e0] rounded p-2 px-3 text-sm text-white truncate cursor-pointer">
               Game Details
             </div>

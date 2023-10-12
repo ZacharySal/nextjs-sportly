@@ -18,6 +18,7 @@ import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
 import NFLGameStats from "@/app/_components/NFL/NFLGameStats";
 import NFLPlayByPlay from "@/app/_components/NFL/NFLPlayByPlay";
+import MatchupPredictor from "@/app/_components/MatchupPredictor";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -30,7 +31,9 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
   function gameLeaders() {
     return (
       <Box className="w-full bg-white rounded-xl drop-shadow-md p-3">
-        <Typography className="text-sm opacity-70 font-semibold text-start">Game Leaders</Typography>
+        <Typography className="text-sm opacity-70 font-semibold text-start">
+          {data.isGameStarted ? "Game Leaders" : "Season Leaders"}
+        </Typography>
 
         <Box className="grid grid-rows-[20px,auto,20px,auto,20px,auto] grid-cols-2 gap-x-2 gap-y-0 items-center justify-between">
           <Typography className="text-sm text-center opacity-70 mb-[-0.5rem] col-span-2">Passing Yards</Typography>
@@ -43,7 +46,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                 width={100}
                 height={100}
                 alt="player"
-                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
+                className="w-12 h-12 md:w-[30px] md:h-[30px] border rounded-full object-cover"
               />
               <Typography className="text-xs opacity-80">{data.gameData.leaders[1].team.abbreviation}</Typography>
             </Box>
@@ -63,7 +66,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                 width={100}
                 height={100}
                 alt="player"
-                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
+                className="w-12 h-12 md:w-[30px] md:h-[30px] border rounded-full object-cover"
               />
               <Typography className="text-xs opacity-80">{data.gameData.leaders[0].team.abbreviation}</Typography>
             </Box>
@@ -86,7 +89,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                 width={100}
                 height={100}
                 alt="player"
-                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
+                className="w-12 h-12 md:w-[30px] md:h-[30px] border rounded-full object-cover"
               />
               <Typography className="text-xs opacity-80">{data.gameData.leaders[1].team.abbreviation}</Typography>
             </Box>
@@ -106,7 +109,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                 width={100}
                 height={100}
                 alt="player"
-                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
+                className="w-12 h-12 md:w-[30px] md:h-[30px] border rounded-full object-cover"
               />
               <Typography className="text-xs opacity-80">{data.gameData.leaders[0].team.abbreviation}</Typography>
             </Box>
@@ -129,7 +132,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                 width={100}
                 height={100}
                 alt="player"
-                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
+                className="w-12 h-12 md:w-[30px] md:h-[30px] border rounded-full object-cover"
               />
               <Typography className="text-xs opacity-80">{data.gameData.leaders[1].team.abbreviation}</Typography>
             </Box>
@@ -149,7 +152,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                 width={100}
                 height={100}
                 alt="player"
-                className="w-10 h-10 md:w-[30px] md:h-[30px] border rounded-full object-cover"
+                className="w-12 h-12 md:w-[30px] md:h-[30px] border rounded-full object-cover"
               />
               <Typography className="text-xs opacity-80">{data.gameData.leaders[0].team.abbreviation}</Typography>
             </Box>
@@ -161,6 +164,17 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               {data.gameData.leaders[0].leaders[2].leaders[0].displayValue}
             </Typography>
           </Box>
+        </Box>
+      </Box>
+    );
+  }
+
+  function seasonLeaders() {
+    return (
+      <Box className="w-full bg-white rounded-xl drop-shadow-md p-3">
+        <Typography className="text-sm opacity-70 font-semibold text-start">Season Leaders</Typography>
+        <Box className="grid grid-rows-[20px,auto,20px,auto,20px,auto] grid-cols-2 gap-x-2 gap-y-0 items-center justify-between">
+          <Typography className="text-sm text-center opacity-70 mb-[-0.5rem] col-span-2">Passing Yards</Typography>
         </Box>
       </Box>
     );
@@ -290,11 +304,17 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
               {userSelection === "recap" && (
                 <>
                   <Box className="w-full flex flex-col justify-center items-center gap-3">
-                    {data.isGameStarted && (
+                    {data.isGameStarted ? (
                       <>
                         <NFLBoxscore data={data} />
                         {gameLeaders()}
                         <NFLScoringPlays data={data} />
+                        <MatchupPredictor data={data} league={"nfl"} />
+                      </>
+                    ) : (
+                      <>
+                        <MatchupPredictor data={data} league={"nfl"} />
+                        {gameLeaders()}
                       </>
                     )}
                     <DivisionStandings data={data} isNFL={true} />

@@ -52,10 +52,6 @@ function Scoreboard({
 
   const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 5000 });
 
-  if (!isLoading) {
-    console.log(key);
-  }
-
   const allYears = () => {
     let res = [];
 

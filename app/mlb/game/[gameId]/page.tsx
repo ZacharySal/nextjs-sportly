@@ -16,6 +16,7 @@ import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
 import NFLGameStats from "@/app/_components/NFL/NFLGameStats";
+import MatchupPredictor from "@/app/_components/MatchupPredictor";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -140,6 +141,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
                 <Box className="w-full flex flex-col justify-center items-center gap-3">
                   {data.isGameStarted && data.homeTeam.linescores && <MLBBoxscore data={data} />}
                   {data.isGameStarted && <MLBScoringPlays data={data} />}
+                  <MatchupPredictor data={data} league="mlb" />
                   <DivisionStandings data={data} isNFL={false} />
                   <StadiumInfo data={data} />
                 </Box>

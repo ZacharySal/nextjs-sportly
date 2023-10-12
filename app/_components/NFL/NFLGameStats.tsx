@@ -17,8 +17,6 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
     }
   };
 
-  console.log(data.gameData.boxscore);
-
   const teamBoxScore = (teamOption: number) => (
     <>
       {data.gameData.boxscore.players[teamOption].statistics.map((statType: any) => (
@@ -39,7 +37,7 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
             <table className="stat-table rounded-xl bg-white">
               <thead>
                 <tr>
-                  <th className=" text-xs font-semibold" align="left">
+                  <th className="name-col text-xs font-semibold" align="left">
                     Name
                   </th>
                   {statType.labels.map((label: string) => (
@@ -53,8 +51,8 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
               <tbody>
                 {statType.athletes.map((athlete: any) => (
                   <tr key={uuidv4()}>
-                    <td className="text-xs pl-1" align="left">
-                      {athlete.athlete.displayName || ""}
+                    <td className="name-col text-xs pl-1" align="left">
+                      {athlete.athlete.displayName}
                     </td>
                     {athlete.stats.map((stat: any) => (
                       <td key={uuidv4()} className="text-xs" align="center">
@@ -64,7 +62,7 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
                   </tr>
                 ))}
                 <tr>
-                  <td className="text-xs pl-1 font-semibold" align="left">
+                  <td className="name-col text-xs pl-1 font-semibold" align="left">
                     TEAM
                   </td>
                   {statType.totals.map((displayValue: any) => (

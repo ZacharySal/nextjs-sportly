@@ -18,10 +18,10 @@ export default function NBABoxscore({ data }: { data: any }) {
           src={`/nba/${data.homeTeam.team.name.replace(" ", "").toLowerCase()}.png`}
           width={100}
           height={100}
-          className="w-10 object-contain"
+          className="w-8 object-contain"
           alt="home team logo"
         />
-        <Typography className="font-semibold">{data.homeTeam.team.name}</Typography>
+        <Typography className="text-sm md:text-base  font-semibold">{data.homeTeam.team.name}</Typography>
       </Box>
 
       <Box className="col-span-3 row-start-3 flex flex-row justify-start items-center gap-2">
@@ -29,23 +29,39 @@ export default function NBABoxscore({ data }: { data: any }) {
           src={`/nba/${data.awayTeam.team.name.replace(" ", "").toLowerCase()}.png`}
           width={100}
           height={100}
-          className="w-10 object-contain"
+          className="w-8 object-contain"
           alt="away team logo"
         />
-        <Typography className="font-semibold">{data.awayTeam.team.name}</Typography>
+        <Typography className="text-sm md:text-base  font-semibold">{data.awayTeam.team.name}</Typography>
       </Box>
 
-      <Typography className="opacity-70 col-start-4 row-start-2">{data.homeTeam.linescores[0].displayValue}</Typography>
-      <Typography className="opacity-70 col-start-5 row-start-2">{data.homeTeam.linescores[1].displayValue}</Typography>
-      <Typography className="opacity-70 col-start-6 row-start-2">{data.homeTeam.linescores[2].displayValue}</Typography>
-      <Typography className="opacity-70 col-start-7 row-start-2">{data.homeTeam.linescores[3].displayValue}</Typography>
-      <Typography className="opacity-70 col-start-8 row-start-2">{data.homeTeam.score}</Typography>
+      <Typography className="text-sm md:text-base  opacity-70 col-start-4 row-start-2">
+        {data.homeTeam.linescores[0].displayValue}
+      </Typography>
+      <Typography className="text-sm md:text-base  opacity-70 col-start-5 row-start-2">
+        {data.homeTeam.linescores[1].displayValue}
+      </Typography>
+      <Typography className="text-sm md:text-base  opacity-70 col-start-6 row-start-2">
+        {data.homeTeam.linescores[2].displayValue}
+      </Typography>
+      <Typography className="text-sm md:text-base  opacity-70 col-start-7 row-start-2">
+        {data.homeTeam.linescores[3].displayValue}
+      </Typography>
+      <Typography className="text-sm md:text-base font-bold col-start-8 row-start-2">{data.homeTeam.score}</Typography>
 
-      <Typography className="opacity-70 col-start-4 row-start-3">{data.awayTeam.linescores[0].displayValue}</Typography>
-      <Typography className="opacity-70 col-start-5 row-start-3">{data.awayTeam.linescores[1].displayValue}</Typography>
-      <Typography className="opacity-70 col-start-6 row-start-3">{data.awayTeam.linescores[2].displayValue}</Typography>
-      <Typography className="opacity-70 col-start-7 row-start-3">{data.awayTeam.linescores[3].displayValue}</Typography>
-      <Typography className="font-bold col-start-8 row-start-3">{data.awayTeam.score}</Typography>
+      <Typography className="text-sm md:text-base  opacity-70 col-start-4 row-start-3">
+        {data.awayTeam.linescores[0].displayValue}
+      </Typography>
+      <Typography className="text-sm md:text-base  opacity-70 col-start-5 row-start-3">
+        {data.awayTeam.linescores[1].displayValue}
+      </Typography>
+      <Typography className="text-sm md:text-base  opacity-70 col-start-6 row-start-3">
+        {data.awayTeam.linescores[2].displayValue}
+      </Typography>
+      <Typography className="text-sm md:text-base  opacity-70 col-start-7 row-start-3">
+        {data.awayTeam.linescores[3].displayValue}
+      </Typography>
+      <Typography className="text-sm md:text-base font-bold col-start-8 row-start-3">{data.awayTeam.score}</Typography>
     </Box>
   );
 }

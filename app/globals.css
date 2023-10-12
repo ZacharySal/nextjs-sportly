@@ -44,9 +44,13 @@ tr {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.name-col {
+  border-right: 1px solid rgba(0, 0, 0, 0.3) !important;
+}
+
 thead tr {
   border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(0, 0, 0, 0.3) !important;
 }
 
 .button-active {
@@ -55,6 +59,63 @@ thead tr {
   box-shadow: 0px 0px 1px 10px white, 0px 0px 10px 5px rgba(0, 0, 0, 0.9);
   color: red;
 }
+
+.circle {
+  position: relative;
+  top: 15px;
+  left: 15px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+.matchup-image-home {
+  position: absolute;
+  top: 35%;
+  right: 10%;
+}
+
+.matchup-image-away {
+  position: absolute;
+  top: 35%;
+  left: 10%;
+}
+
+.circle::before {
+  position: absolute;
+  content: "";
+  top: 15%;
+  right: 49%;
+  width: 1px;
+  height: 95px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.matchup-predictor::before {
+  position: absolute;
+  content: attr(data-awayteamchance);
+  font-weight: 800;
+  top: 20%;
+  left: 5%;
+}
+
+.matchup-predictor::after {
+  position: absolute;
+  content: attr(data-hometeamchance);
+  font-weight: 800;
+  bottom: 10%;
+  right: 5%;
+}
+
+.circle-border {
+  position: relative;
+  text-align: center;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+}
+
 #style-1::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #f5f5f5;
