@@ -18,9 +18,9 @@ export default function MatchupPredictor({ data, league }: { data: any; league: 
               data.homeTeam.team.color
             } 50%), linear-gradient(0deg, #${data.homeTeam.team.color} 50%, transparent 50%)`,
           }}
-          className={`circle-border`}
+          className="circle-border"
         >
-          <div className={`circle`}>
+          <div className="circle">
             <img
               className="matchup-image-home w-10 object-contain"
               src={`/${league}/${data.homeTeam.team.name.toLowerCase()}.png`}

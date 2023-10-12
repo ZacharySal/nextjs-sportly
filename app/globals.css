@@ -92,25 +92,30 @@ thead tr {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+.matchup-predictor {
+  position: relative;
+}
+
 .matchup-predictor::before {
   position: absolute;
   content: attr(data-awayteamchance);
-  font-weight: 800;
-  top: 20%;
+  font-weight: 900;
+  font-size: 1.15rem;
+  top: 10%;
   left: 5%;
 }
 
 .matchup-predictor::after {
   position: absolute;
   content: attr(data-hometeamchance);
-  font-weight: 800;
+  font-size: 1.15rem;
+  font-weight: 900;
   bottom: 10%;
   right: 5%;
 }
 
 .circle-border {
   position: relative;
-  text-align: center;
   width: 160px;
   height: 160px;
   border-radius: 50%;
