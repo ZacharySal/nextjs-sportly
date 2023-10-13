@@ -11,7 +11,12 @@ export default function NFLGameDrives({ data }: { data: any }) {
       <Box id="style-1" className="w-full md:max-h-[40rem] overflow-y-auto ">
         {data.gameData.drives.previous.map((drive: any) => (
           <Accordion key={uuidv4()}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+            <AccordionSummary
+              sx={{ padding: 0 }}
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
               <Box className="w-full grid grid-cols-[3fr_2fr] gap-x-2 text-center">
                 <Box className="flex flex-row items-center gap-2">
                   <Image
@@ -39,7 +44,7 @@ export default function NFLGameDrives({ data }: { data: any }) {
                 </Box>
               </Box>
             </AccordionSummary>
-            <AccordionDetails sx={{ backgroundColor: "#edeef0;" }}>
+            <AccordionDetails sx={{ backgroundColor: "#edeef0;", padding: "8px 8px 8px" }}>
               <Box className="flex flex-col gap-3">
                 {drive.plays.map((play: any) => (
                   <Box
