@@ -2,12 +2,9 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request, { params }: { params: {year: string, type: string }}) {
 
-  // we need to get the weeks for the selected year, and seasonType
-  // const weeksDataResponse = await fetch("https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50",{
-  //     cache: "no-cache",
-  // });
-
-  const seasonDataResponse = await fetch(`https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50&seasontype=${params.type}&year=${params.year}`)
+  const seasonDataResponse = await fetch(`https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50&seasontype=${params.type}&year=${params.year}`, {
+    cache: "no-cache",
+  })
 
   // we need to select the weeks matching the given seasonType
 
