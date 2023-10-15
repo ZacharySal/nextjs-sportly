@@ -11,6 +11,7 @@ import useSwr from "swr";
 import { useState } from "react";
 import { useMediaQuery } from "@mui/material";
 import Loading from "../_components/Loading";
+import NBAScoreboard from "../_components/NBA/NBAScoreboard";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -48,17 +49,7 @@ export default function Home() {
             <LeagueUserSelection userSelection={userSelection} setUserSelection={setUserSelection} />
             <ContainerBox altColor="013369" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
               {userSelection === "teams" && <AllTeams allTeams={nbaDivisionTeams} league="nba" />}
-              {userSelection === "scoreboard" && (
-                <Scoreboard
-                  seasonWeeks={data.nbaWeeks}
-                  league="nba"
-                  events={data.events}
-                  year={null}
-                  type={null}
-                  setYear={null}
-                  setType={null}
-                />
-              )}
+              {userSelection === "scoreboard" && <NBAScoreboard currentDate={data.currentDate} />}
               {userSelection === "news" && <Articles title={`NBA News`} teamNews={data.news} limit={10} />}
             </ContainerBox>
           </>

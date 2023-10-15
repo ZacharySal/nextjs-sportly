@@ -141,7 +141,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
                 <Box className="w-full flex flex-col justify-center items-center gap-3">
                   {data.isGameStarted && data.homeTeam.linescores && <MLBBoxscore data={data} />}
                   {data.isGameStarted && <MLBScoringPlays data={data} />}
-                  <MatchupPredictor data={data} league="mlb" />
+                  {data.gameData.predictor && <MatchupPredictor data={data} league="mlb" />}
                   <DivisionStandings data={data} isNFL={false} />
                   <StadiumInfo data={data} />
                 </Box>

@@ -1,8 +1,7 @@
 "use client";
 
-import { Box, Typography, CircularProgress, FormControl, InputLabel, Select, MenuItem, Divider } from "@mui/material";
-import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { Box, Typography, CircularProgress, FormControl, Select, MenuItem } from "@mui/material";
+import { useState } from "react";
 import ScoreCard from "./ScoreCard";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
@@ -52,6 +51,10 @@ function Scoreboard({
 
   const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 5000 });
 
+  if (isMlb && !isLoading) {
+    console.log(data.content.dateParams.date);
+  }
+
   const allYears = () => {
     let res = [];
 
@@ -93,65 +96,63 @@ function Scoreboard({
 
   function nflWeekSelector() {
     return (
-      <>
-        <Box className="p-2 bg-white mb-5 rounded-xl drop-shadow-md">
-          <Typography className="mb-1 font-semibold opacity-80 text-sm">NFL Scoreboard</Typography>
-          <Box className="w-full h-auto flex flex-row justify-start gap-1 mt-2">
-            <FormControl sx={{ fontSize: "8px" }} size="small">
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={year}
-                onChange={(e) => {
-                  e.preventDefault;
-                  setYear(e.target.value);
-                }}
-                style={{ height: 28 }}
-              >
-                {allYears()}
-              </Select>
-            </FormControl>
+      <Box className="p-2 bg-white mb-5 rounded-xl drop-shadow-md">
+        <Typography className="mb-1 font-semibold text-xl opacity-80">NFL Scoreboard</Typography>
+        <Box className="w-full h-auto flex flex-row justify-start gap-1 mt-2">
+          <FormControl sx={{ fontSize: "8px" }} size="small">
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={year}
+              onChange={(e) => {
+                e.preventDefault;
+                setYear(e.target.value);
+              }}
+              style={{ height: 28 }}
+            >
+              {allYears()}
+            </Select>
+          </FormControl>
 
-            <FormControl size="small">
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={type}
-                onChange={(e) => {
-                  e.preventDefault;
-                  setType(e.target.value);
-                }}
-                style={{ height: 28 }}
-              >
-                <MenuItem value={1}>Preseason</MenuItem>
-                <MenuItem value={2}>Regular</MenuItem>
-                <MenuItem value={3}>Postseason</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-          <Box
-            id="style-1"
-            className="max-w-full flex flex-row border border-black border-opacity-20 rounded-md mt-2 border-radius-md overflow-x-auto"
-          >
-            {seasonWeeks.map((week: any) => {
-              return (
-                <Box
-                  key={uuidv4()}
-                  onClick={() => setNflSelectedWeek(week)}
-                  className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer gap-1 width-40 p-2"
-                >
-                  <Typography className="text-sm font-[500]">{week.alternateLabel}</Typography>
-                  <Box className="flex flex-row gap-1 justify-center items-center">
-                    <Typography className="text-xs">{convertNflDate(week.startDate)}</Typography>
-                    <Typography className="text-xs">-</Typography>
-                    <Typography className="text-xs">{convertNflDate(week.endDate)}</Typography>
-                  </Box>
-                </Box>
-              );
-            })}
-          </Box>
+          <FormControl size="small">
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={type}
+              onChange={(e) => {
+                e.preventDefault;
+                setType(e.target.value);
+              }}
+              style={{ height: 28 }}
+            >
+              <MenuItem value={1}>Preseason</MenuItem>
+              <MenuItem value={2}>Regular</MenuItem>
+              <MenuItem value={3}>Postseason</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
-      </>
+        <Box
+          id="style-1"
+          className="max-w-full flex flex-row border border-black border-opacity-20 rounded-md mt-2 border-radius-md overflow-x-auto"
+        >
+          {seasonWeeks.map((week: any) => {
+            return (
+              <Box
+                key={uuidv4()}
+                onClick={() => setNflSelectedWeek(week)}
+                className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer gap-1 width-40 p-2"
+              >
+                <Typography className="text-sm font-[500]">{week.alternateLabel}</Typography>
+                <Box className="flex flex-row gap-1 justify-center items-center">
+                  <Typography className="text-xs">{convertNflDate(week.startDate)}</Typography>
+                  <Typography className="text-xs">-</Typography>
+                  <Typography className="text-xs">{convertNflDate(week.endDate)}</Typography>
+                </Box>
+              </Box>
+            );
+          })}
+        </Box>
+      </Box>
     );
   }
 
@@ -164,16 +165,19 @@ function Scoreboard({
             className="max-w-full flex flex-row flex-shrink-0 overflow-x-auto bg-white drop-shadow-md gap-2"
           >
             {seasonWeeks.map((date: string, i: string) => (
-              <div
-                key={uuidv4()}
-                onClick={() => setMlbSelctedDate(getMlbCalendarDate(date))}
-                className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer gap-1 width-40 p-2"
-              >
-                <Typography className="text-sm font-semibold">{getMlbWeekday(date)}</Typography>
-                <Box className="flex flex-row gap-1 justify-center items-center">
-                  <Typography className="text-xs">{getMlbDate(date)}</Typography>
-                </Box>
-              </div>
+              <>
+                {console.log(date)}
+                <div
+                  key={uuidv4()}
+                  onClick={() => setMlbSelctedDate(getMlbCalendarDate(date))}
+                  className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer gap-1 width-40 p-2"
+                >
+                  <Typography className="text-sm font-semibold">{getMlbWeekday(date)}</Typography>
+                  <Box className="flex flex-row gap-1 justify-center items-center">
+                    <Typography className="text-xs">{getMlbDate(date)}</Typography>
+                  </Box>
+                </div>
+              </>
             ))}
           </Box>
         </Box>

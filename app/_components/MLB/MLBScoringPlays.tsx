@@ -15,7 +15,7 @@ export default function MLBScoringPlays({ data }: { data: any }) {
   }
 
   return (
-    <Box className="grid grid-cols-[25px_5px_20px_auto_15px_15px] grid-rows-[20px_auto] gap-x-3 gap-y-2 bg-white p-3 drop-shadow-md items-center rounded-xl">
+    <Box className="w-full grid grid-cols-[25px_5px_20px_auto_15px_15px] grid-rows-[20px_auto] gap-x-3 gap-y-2 bg-white p-3 drop-shadow-md items-center rounded-xl">
       <Typography className="text-sm opacity-70 font-semibold row-1 col-span-6">Scoring Plays</Typography>
       {finalScoringPlays.map((play: any) => (
         <React.Fragment key={uuidv4()}>

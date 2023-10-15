@@ -309,11 +309,11 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                         <NFLBoxscore data={data} />
                         {gameLeaders()}
                         <NFLScoringPlays data={data} />
-                        <MatchupPredictor data={data} league={"nfl"} />
+                        {data.gameData.predictor && <MatchupPredictor data={data} league={"nfl"} />}
                       </>
                     ) : (
                       <>
-                        <MatchupPredictor data={data} league={"nfl"} />
+                        {data.gameData.predictor && <MatchupPredictor data={data} league={"nfl"} />}
                         {gameLeaders()}
                       </>
                     )}

@@ -1,25 +1,36 @@
 import { NextResponse } from "next/server";
 
-export async function GET(){
-    const nbaWeeksResponse = await fetch("http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/calendar/ondays?lang=en&region=us",{
-        cache: "no-cache",
-  });
-
-    if (!nbaWeeksResponse.ok){
-        throw new Error("Failed to fetch NBA weeks");
+export async function GET() {
+  const nbaWeeksResponse = await fetch(
+    "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/calendar/ondays?lang=en&region=us",
+    {
+      cache: "no-cache",
     }
+  );
 
-    const nbaWeeks = await nbaWeeksResponse.json();
+  if (!nbaWeeksResponse.ok) {
+    throw new Error("Failed to fetch NBA weeks");
+  }
 
-    const nbaNewsResponse = await fetch("https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=50");
+  const nbaWeeks = await nbaWeeksResponse.json();
 
-    if (!nbaNewsResponse.ok){
-        throw new Error("Failed to fetch NBA weeks");
-    }
+  const nbaDate = await fetch("https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50");
 
-    const nbaNews = await nbaNewsResponse.json();
+  if (!nbaDate.ok) {
+    throw new Error("Failed to fetch NBA weeks");
+  }
 
-    const nbaDates = nbaWeeks.eventDate.dates.map((date: string) => (date));
+  const nbaDateResponse = await nbaDate.json();
 
-    return NextResponse.json({ "nbaWeeks": nbaDates, "news": nbaNews})
+  const nbaNewsResponse = await fetch("https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=50");
+
+  if (!nbaNewsResponse.ok) {
+    throw new Error("Failed to fetch NBA weeks");
+  }
+
+  const nbaNews = await nbaNewsResponse.json();
+
+  const nbaDates = nbaWeeks.eventDate.dates.map((date: string) => date);
+
+  return NextResponse.json({ nbaWeeks: nbaDates, news: nbaNews, currentDate: nbaDateResponse.content.dateParams.date });
 }

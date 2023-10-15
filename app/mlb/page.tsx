@@ -11,6 +11,7 @@ import Scoreboard from "../_components/Scoreboard";
 import LeagueHeader from "../_components/LeagueHeader";
 import LeagueUserSelection from "../_components/LeagueUserSelection";
 import Loading from "../_components/Loading";
+import MLBScoreboard from "../_components/MLB/MLBScoreboard";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -48,17 +49,7 @@ export default function Home() {
           <LeagueUserSelection userSelection={userSelection} setUserSelection={setUserSelection} />
           <ContainerBox altColor="002D72" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
             {userSelection === "teams" && <AllTeams allTeams={mlbDivisonTeams} league="mlb" />}
-            {userSelection === "scoreboard" && (
-              <Scoreboard
-                seasonWeeks={data.days}
-                league={"mlb"}
-                events={null}
-                year={null}
-                type={null}
-                setYear={null}
-                setType={null}
-              />
-            )}
+            {userSelection === "scoreboard" && <MLBScoreboard currentDate={data.currentDate} />}
             {userSelection === "news" && <Articles title={`MLB News`} teamNews={data.news} limit={10} />}
           </ContainerBox>
         </main>
