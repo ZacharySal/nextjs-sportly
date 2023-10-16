@@ -98,7 +98,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
 
   function dateSelector() {
     return (
-      <Box className="w-full p-2 bg-white mb-5 rounded-xl drop-shadow-md">
+      <Box className="w-full p-2 bg-white mb-3 rounded-xl drop-shadow-md">
         <Typography className="mb-1 font-semibold text-xl opacity-80">NBA Scoreboard</Typography>
         <Box className="w-full grid grid-cols-[1fr_auto]">
           <Box id="style-1" className="w-full flex flex-row overflow-x-auto justify-evenly items-center">

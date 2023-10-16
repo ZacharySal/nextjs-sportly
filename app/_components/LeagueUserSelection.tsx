@@ -10,7 +10,7 @@ export default function LeagueUserSelection({
   const isSelected = (selection: string) => selection === userSelection;
 
   return (
-    <Box className="block md:hidden w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
+    <Box className="block md:hidden w-full h-10 flex justify-start items-center gap-3 bg-white pl-5 drop-shadow-md">
       <Typography
         onClick={() => setUserSelection("scoreboard")}
         sx={{ fontWeight: isSelected("scoreboard") ? "700" : "400" }}

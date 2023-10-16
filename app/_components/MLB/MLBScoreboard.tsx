@@ -58,7 +58,7 @@ function getFullDate(date: string) {
   return newDate;
 }
 
-function NBAScoreboard({ currentDate }: { currentDate: string }) {
+function MLBScoreboard({ currentDate }: { currentDate: string }) {
   const [selectedYear, setSelectedYear] = useState("2023");
 
   const daysInYear = getDaysArray(new Date(`${selectedYear}-01-01`), new Date(`${selectedYear}-12-31`));
@@ -98,7 +98,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
 
   function dateSelector() {
     return (
-      <Box className="w-full p-2 bg-white mb-5 rounded-xl drop-shadow-md">
+      <Box className="w-full p-2 bg-white mb-3 rounded-xl drop-shadow-md">
         <Typography className="mb-1 font-semibold text-xl opacity-80">MLB Scoreboard</Typography>
         <Box className="w-full grid grid-cols-[1fr_auto]">
           <Box id="style-1" className="w-full flex flex-row overflow-x-auto justify-evenly items-center">
@@ -160,4 +160,4 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
   );
 }
 
-export default NBAScoreboard;
+export default MLBScoreboard;
