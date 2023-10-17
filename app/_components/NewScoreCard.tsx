@@ -33,6 +33,10 @@ export default function ScoreCard({
 
   gameDate = new Date(gameInfo.date).toLocaleDateString();
 
+  console.log(JSON.stringify(awayTeam.name));
+
+  console.log(JSON.stringify(homeTeam.name));
+
   const setTeamImageSrc = (teamName: string) => {
     try {
       const src = require(`public/${league}/${teamName.replace(" ", "").toLowerCase()}.png`);
@@ -113,7 +117,11 @@ export default function ScoreCard({
               awayTeam === winner ? "winning-score" : ""
             } text-end text-sm font-semibold md:text-base md:font-bold`}
           >
-            {game.status.type.description === "Scheduled" ? awayTeam.records[0].summary : awayTeamScore}
+            {game.status.type.description === "Scheduled"
+              ? gameDetailsFinal
+                ? awayTeam.records[0].summary
+                : ""
+              : awayTeamScore}
           </Typography>
 
           {/* HOME TEAM IMG AND NAME */}
@@ -139,7 +147,11 @@ export default function ScoreCard({
               homeTeam === winner ? "winning-score" : ""
             } text-end text-sm font-semibold md:text-base md:font-bold`}
           >
-            {game.status.type.description === "Scheduled" ? homeTeam.records[0].summary : homeTeamScore}
+            {game.status.type.description === "Scheduled"
+              ? gameDetailsFinal
+                ? homeTeam.records[0].summary
+                : ""
+              : homeTeamScore}
           </Typography>
         </Box>
         <Typography className="flex w-full justify-start pl-2 items-center text-xs opacity-70 font-semibold">

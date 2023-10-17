@@ -154,10 +154,10 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
             </Typography>
             <Divider />
             {data.content.sbData.events.map((game: any, i: number) => (
-              <>
-                <ScoreCard key={uuidv4()} gameInfo={game} version={1} league={"mlb"} teamView={false} />
+              <Box key={uuidv4()}>
+                <ScoreCard gameInfo={game} version={1} league={"mlb"} teamView={false} />
                 {i !== data.content.sbData.events.length - 1 && <Divider />}
-              </>
+              </Box>
             ))}
           </Box>
         )}
