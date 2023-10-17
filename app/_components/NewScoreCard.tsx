@@ -1,9 +1,8 @@
 "use client";
 
-import { Divider, Box, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { type } from "os";
 
 export default function ScoreCard({
   gameInfo,
@@ -118,8 +117,8 @@ export default function ScoreCard({
             } text-end text-sm font-semibold md:text-base md:font-bold`}
           >
             {game.status.type.description === "Scheduled"
-              ? gameDetailsFinal
-                ? awayTeam.records[0].summary
+              ? gameDetailsFinal && typeof awayTeam.records !== "undefined"
+                ? awayTeam?.records[0].summary
                 : ""
               : awayTeamScore}
           </Typography>
@@ -148,7 +147,7 @@ export default function ScoreCard({
             } text-end text-sm font-semibold md:text-base md:font-bold`}
           >
             {game.status.type.description === "Scheduled"
-              ? gameDetailsFinal
+              ? gameDetailsFinal && typeof homeTeam.records !== "undefined"
                 ? homeTeam.records[0].summary
                 : ""
               : homeTeamScore}
