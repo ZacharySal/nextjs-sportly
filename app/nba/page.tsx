@@ -3,7 +3,7 @@
 import Articles from "../_components/Articles";
 import LeagueUserSelection from "../_components/LeagueUserSelection";
 import ContainerBox from "../_components/ContainerBox";
-import Scoreboard from "../_components/Scoreboard";
+import NBAScoreboard from "../_components/NBA/NBAScoreboard";
 import LeagueHeader from "../_components/LeagueHeader";
 import AllTeams from "../_components/AllTeams";
 import { nbaDivisionTeams } from "../_lib/constants";
@@ -11,7 +11,6 @@ import useSwr from "swr";
 import { useState } from "react";
 import { useMediaQuery } from "@mui/material";
 import Loading from "../_components/Loading";
-import NBAScoreboard from "../_components/NBA/NBAScoreboard";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -31,15 +30,7 @@ export default function Home() {
             <LeagueHeader backgroundColor="013369" league="nba" />
             <ContainerBox altColor="013369" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
               <AllTeams allTeams={nbaDivisionTeams} league="nba" />
-              <Scoreboard
-                seasonWeeks={data.nbaWeeks}
-                league="nba"
-                events={null}
-                year={null}
-                type={null}
-                setYear={null}
-                setType={null}
-              />
+              <NBAScoreboard currentDate={data.currentDate} />
               <Articles title={`NBA News`} teamNews={data.news} limit={10} />
             </ContainerBox>
           </>

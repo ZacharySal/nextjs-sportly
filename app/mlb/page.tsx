@@ -7,7 +7,6 @@ import { mlbDivisonTeams } from "../_lib/constants";
 import ContainerBox from "../_components/ContainerBox";
 import Articles from "../_components/Articles";
 import AllTeams from "../_components/AllTeams";
-import Scoreboard from "../_components/Scoreboard";
 import LeagueHeader from "../_components/LeagueHeader";
 import LeagueUserSelection from "../_components/LeagueUserSelection";
 import Loading from "../_components/Loading";
@@ -29,15 +28,7 @@ export default function Home() {
           <LeagueHeader backgroundColor="002D72" league="mlb" />
           <ContainerBox altColor="002D72" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
             <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
-            <Scoreboard
-              seasonWeeks={data.days}
-              league={"mlb"}
-              events={null}
-              year={null}
-              type={null}
-              setYear={null}
-              setType={null}
-            />
+            <MLBScoreboard currentDate={data.currentDate} />
             <Articles title={`MLB News`} teamNews={data.news} limit={10} />
           </ContainerBox>
         </main>

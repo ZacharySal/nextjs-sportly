@@ -2,7 +2,7 @@
 
 import { Box, Typography, CircularProgress, Divider } from "@mui/material";
 import { useEffect, useState } from "react";
-import ScoreCard from "../ScoreCard";
+import ScoreCard from "../NewScoreCard";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -105,7 +105,7 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
             <FontAwesomeIcon
               onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 365)}
               icon={faAngleLeft}
-              style={{ fontSize: "0.75rem", color: "black" }}
+              style={{ color: "black" }}
             />
             {getDateElements().map((date: string) => (
               <Box
@@ -123,13 +123,11 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
             <FontAwesomeIcon
               onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 365)}
               icon={faAngleRight}
-              style={{ fontSize: "0.75rem", color: "black" }}
+              style={{ color: "black" }}
             />
           </Box>
           <ButtonDatePicker value={calendarValue} onChange={(newValue) => setNewCalendarDate(newValue["$d"])} />
         </Box>
-        <Divider />
-        <Typography className="opacity-80 font-semibold mt-2 text-center">{getFullDate(selectedDate)}</Typography>
       </Box>
     );
   }
@@ -137,7 +135,7 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
   if (isLoading)
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Box className="w-full py-2 flex flex-col justify-center items-center">
+        <Box className="w-full py-2 flex flex-col justify-center items-center md:justify-start mt-[-0.5rem]">
           {dateSelector()}
           <Box className="w-full flex justify-center items-center">
             <CircularProgress />
@@ -147,14 +145,23 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
     );
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box className="w-full py-2 flex flex-col justify-center items-center">
+      <Box className="w-full py-2 flex flex-col justify-center md:justify-start items-center mt-[-0.5rem]">
         {dateSelector()}
-        <Box className="w-full grid grid-cols-2 2xl:grid-cols-3 2xl:gap-5 gap-3">
-          {data.content.sbData.events.map((game: any, i: string) => (
-            <ScoreCard key={uuidv4()} gameInfo={game} version={1} league={"mlb"} teamView={false} />
-          ))}
-        </Box>
-        {data.content.sbData.events.length === 0 && <p className="mt-5">No games to display</p>}
+        {data.content.sbData.events.length !== 0 && (
+          <Box className="w-full grid gap-2 bg-white p-2 rounded-xl">
+            <Typography className="opacity-80 font-semibold mt-2 text-start text-sm md:text-base">
+              {getFullDate(selectedDate)}
+            </Typography>
+            <Divider />
+            {data.content.sbData.events.map((game: any, i: number) => (
+              <>
+                <ScoreCard key={uuidv4()} gameInfo={game} version={1} league={"mlb"} teamView={false} />
+                {i !== data.content.sbData.events.length - 1 && <Divider />}
+              </>
+            ))}
+          </Box>
+        )}
+        {data.content.sbData.events.length === 0 && <p className="w-full text-center mt-5">No games to display</p>}
       </Box>
     </LocalizationProvider>
   );

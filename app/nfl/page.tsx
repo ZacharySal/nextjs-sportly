@@ -6,7 +6,7 @@ import useSwr from "swr";
 import { nflDivisonTeams } from "../_lib/constants";
 import Articles from "../_components/Articles";
 import ContainerBox from "../_components/ContainerBox";
-import Scoreboard from "../_components/Scoreboard";
+import Scoreboard from "../_components/NFL/NFLScoreboard";
 import LeagueHeader from "../_components/LeagueHeader";
 import AllTeams from "../_components/AllTeams";
 import LeagueUserSelection from "../_components/LeagueUserSelection";
