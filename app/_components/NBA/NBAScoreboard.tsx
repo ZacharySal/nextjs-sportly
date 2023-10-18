@@ -112,7 +112,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
                 key={uuidv4()}
                 onClick={() => setSelectedDate(date)}
                 style={{ opacity: date === selectedDate ? 1 : 0.5 }}
-                className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer gap-1 p-2"
+                className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer p-2"
               >
                 <Typography className="text-sm font-semibold">{getWeekDay(date)}</Typography>
                 <Box className="flex flex-row gap-1 justify-center items-center">

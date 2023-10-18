@@ -1,8 +1,18 @@
 "use client";
 
-import { Box, Typography, CircularProgress, FormControl, Select, MenuItem, Divider } from "@mui/material";
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  FormControl,
+  Select,
+  MenuItem,
+  Divider,
+  useMediaQuery,
+} from "@mui/material";
 import { JSX, useState } from "react";
-import ScoreCard from "../NewScoreCard";
+import NewScoreCard from "../NewScoreCard";
+import ScoreCard from "../ScoreCard";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
 import test from "node:test";
@@ -29,6 +39,8 @@ function NFLScoreboard({
     weekValue: "",
     seasonValue: "",
   });
+
+  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   let groupedGames: any;
 
@@ -150,7 +162,7 @@ function NFLScoreboard({
           <Divider />
           {gamesOnDate.map((game: any, i: number) => (
             <Box key={uuidv4()}>
-              <ScoreCard gameInfo={game} version={1} league={league} teamView={false} />
+              <NewScoreCard gameInfo={game} version={1} league={league} teamView={false} />
               {i !== gamesOnDate.length - 1 && <Divider />}
             </Box>
           ))}

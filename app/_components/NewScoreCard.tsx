@@ -104,7 +104,7 @@ export default function ScoreCard({
             />
             <Typography
               sx={{ opacity: awayTeam === winner ? "1" : "0.6" }}
-              className="text-sm font-semibold tracking-wide md:text-base"
+              className="font-semibold tracking-wide md:text-base"
             >
               {awayTeamName}
             </Typography>
@@ -112,9 +112,7 @@ export default function ScoreCard({
           {/* AWAY TEAM SCORE */}
           <Typography
             sx={{ opacity: awayTeam === winner ? "1" : "0.6" }}
-            className={`${
-              awayTeam === winner ? "winning-score" : ""
-            } text-end text-sm font-semibold md:text-base md:font-bold`}
+            className={`${awayTeam === winner ? "winning-score" : ""} text-end font-semibold md:text-base md:font-bold`}
           >
             {game.status.type.description === "Scheduled"
               ? gameDetailsFinal && typeof awayTeam.records !== "undefined"
@@ -132,19 +130,14 @@ export default function ScoreCard({
               alt="home team logo"
               className="w-7 object-contain"
             />
-            <Typography
-              sx={{ opacity: homeTeam === winner ? "1" : "0.6" }}
-              className="text-sm font-semibold tracking-wide md:text-base"
-            >
+            <Typography sx={{ opacity: homeTeam === winner ? "1" : "0.6" }} className="font-semibold tracking-wide">
               {homeTeamName}
             </Typography>
           </Box>
           {/* HOME TEAM SCORE */}
           <Typography
             sx={{ opacity: homeTeam === winner ? "1" : "0.6" }}
-            className={`${
-              homeTeam === winner ? "winning-score" : ""
-            } text-end text-sm font-semibold md:text-base md:font-bold`}
+            className={`${homeTeam === winner ? "winning-score" : ""} text-end font-semibold md:text-base md:font-bold`}
           >
             {game.status.type.description === "Scheduled"
               ? gameDetailsFinal && typeof homeTeam.records !== "undefined"
