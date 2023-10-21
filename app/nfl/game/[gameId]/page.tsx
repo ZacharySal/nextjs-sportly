@@ -264,7 +264,9 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
             >
               <Box className="flex self-start flex-col justify-center items-center gap-3">
                 <StadiumInfo data={data} />
-                {data.isGameStarted && gameLeaders()}
+                {data.gameData.leaders[0].leaders.length > 0 &&
+                  data.gameData.leaders[1].leaders.length > 0 &&
+                  gameLeaders()}
                 <DivisionStandings data={data} isNFL={true} />
               </Box>
 
@@ -307,14 +309,18 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                     {data.isGameStarted ? (
                       <>
                         <NFLBoxscore data={data} />
-                        {gameLeaders()}
+                        {data.gameData.leaders[0].leaders.length > 0 &&
+                          data.gameData.leaders[1].leaders.length > 0 &&
+                          gameLeaders()}
                         <NFLScoringPlays data={data} />
                         {data.gameData.predictor && <MatchupPredictor data={data} league={"nfl"} />}
                       </>
                     ) : (
                       <>
                         {data.gameData.predictor && <MatchupPredictor data={data} league={"nfl"} />}
-                        {gameLeaders()}
+                        {data.gameData.leaders[0].leaders.length > 0 &&
+                          data.gameData.leaders[1].leaders.length > 0 &&
+                          gameLeaders()}
                       </>
                     )}
                     <DivisionStandings data={data} isNFL={true} />

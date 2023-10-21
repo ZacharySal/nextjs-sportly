@@ -32,10 +32,6 @@ export default function ScoreCard({
 
   gameDate = new Date(gameInfo.date).toLocaleDateString();
 
-  console.log(JSON.stringify(awayTeam.name));
-
-  console.log(JSON.stringify(homeTeam.name));
-
   const setTeamImageSrc = (teamName: string) => {
     try {
       const src = require(`public/${league}/${teamName.replace(" ", "").toLowerCase()}.png`);
@@ -104,7 +100,7 @@ export default function ScoreCard({
             />
             <Typography
               sx={{ opacity: awayTeam === winner ? "1" : "0.6" }}
-              className="font-semibold tracking-wide md:text-base"
+              className="text-sm font-semibold tracking-wide md:text-base"
             >
               {awayTeamName}
             </Typography>
@@ -112,7 +108,9 @@ export default function ScoreCard({
           {/* AWAY TEAM SCORE */}
           <Typography
             sx={{ opacity: awayTeam === winner ? "1" : "0.6" }}
-            className={`${awayTeam === winner ? "winning-score" : ""} text-end font-semibold md:text-base md:font-bold`}
+            className={`${
+              awayTeam === winner ? "winning-score" : ""
+            } text-sm text-end font-semibold md:text-base md:font-bold`}
           >
             {game.status.type.description === "Scheduled"
               ? gameDetailsFinal && typeof awayTeam.records !== "undefined"
@@ -130,14 +128,19 @@ export default function ScoreCard({
               alt="home team logo"
               className="w-7 object-contain"
             />
-            <Typography sx={{ opacity: homeTeam === winner ? "1" : "0.6" }} className="font-semibold tracking-wide">
+            <Typography
+              sx={{ opacity: homeTeam === winner ? "1" : "0.6" }}
+              className="text-sm md:text-base font-semibold tracking-wide"
+            >
               {homeTeamName}
             </Typography>
           </Box>
           {/* HOME TEAM SCORE */}
           <Typography
             sx={{ opacity: homeTeam === winner ? "1" : "0.6" }}
-            className={`${homeTeam === winner ? "winning-score" : ""} text-end font-semibold md:text-base md:font-bold`}
+            className={`${
+              homeTeam === winner ? "winning-score" : ""
+            } text-sm text-end font-semibold md:text-base md:font-bold`}
           >
             {game.status.type.description === "Scheduled"
               ? gameDetailsFinal && typeof homeTeam.records !== "undefined"
@@ -150,6 +153,11 @@ export default function ScoreCard({
           {gameDescription}
         </Typography>
       </Box>
+      {typeof game.notes[0]?.headline === "undefined" ? (
+        ""
+      ) : (
+        <Typography className="text-xs p-1 opacity-60">{game.notes[0].headline}</Typography>
+      )}
     </Link>
   );
 }

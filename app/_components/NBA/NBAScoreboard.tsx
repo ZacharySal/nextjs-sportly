@@ -11,6 +11,7 @@ import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import ButtonDatePicker from "../MLB/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import useWindowDimensions from "../useWindowDimensions";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -59,6 +60,8 @@ function getFullDate(date: string) {
 }
 
 function NBAScoreboard({ currentDate }: { currentDate: string }) {
+  const { height, width } = useWindowDimensions();
+
   const [selectedYear, setSelectedYear] = useState("2023");
 
   const daysInYear = getDaysArray(new Date(`${selectedYear}-01-01`), new Date(`${selectedYear}-12-31`));
@@ -79,7 +82,8 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
 
   function getDateElements() {
     const dateElements = [];
-    for (let i = -2; i <= 1; i++) {
+    const maxEls = Math.min(Math.floor(width / 100), 7);
+    for (let i = -1; i <= maxEls - 2; i++) {
       dateElements.push(formattedDaysInYear[mod(currentIndex + i, 365)]);
     }
     return dateElements;
@@ -100,12 +104,12 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
     return (
       <Box className="w-full p-2 bg-white mb-3 rounded-xl drop-shadow-md">
         <Typography className="mb-1 font-semibold text-xl opacity-80">NBA Scoreboard</Typography>
-        <Box className="w-full grid grid-cols-[1fr_auto]">
-          <Box id="style-1" className="w-full flex flex-row overflow-x-auto justify-evenly items-center">
+        <Box className="w-full flex gap-3 items-center">
+          <Box id="style-1" className="w-full flex flex-row overflow-x-auto justify-between items-center">
             <FontAwesomeIcon
               onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 365)}
               icon={faAngleLeft}
-              style={{ color: "black" }}
+              style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
             {getDateElements().map((date: string) => (
               <Box
@@ -123,7 +127,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
             <FontAwesomeIcon
               onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 365)}
               icon={faAngleRight}
-              style={{ color: "black" }}
+              style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
           </Box>
           <ButtonDatePicker value={calendarValue} onChange={(newValue) => setNewCalendarDate(newValue["$d"])} />

@@ -7,6 +7,8 @@ import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 import { UseDateFieldProps } from "@mui/x-date-pickers/DateField";
 import { BaseSingleInputFieldProps, DateValidationError, FieldSection } from "@mui/x-date-pickers/models";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import CalendarMonthOutlined from "@mui/icons-material/CalendarMonthOutlined";
+import { Paper } from "@mui/material";
 
 interface ButtonFieldProps
   extends UseDateFieldProps<any>,
@@ -26,7 +28,9 @@ function ButtonField(props: ButtonFieldProps) {
       aria-label={ariaLabel}
       onClick={() => setOpen?.((prev) => !prev)}
     >
-      <CalendarMonthOutlinedIcon sx={{ color: "black" }} />
+      <Paper elevation={1} className="relative bg-white p-3">
+        <CalendarMonthOutlined sx={{ color: "black" }} />
+      </Paper>
     </Button>
   );
 }

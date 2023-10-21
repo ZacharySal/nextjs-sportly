@@ -168,3 +168,16 @@ thead tr {
   border-bottom: 8px solid transparent;
   border-right: 8px solid black;
 }
+
+.date-selector {
+  position: absolute;
+  width: max-content;
+  height: max-content;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 20px 30px;
+  right: 0;
+  bottom: 0;
+  top: 4rem;
+}
