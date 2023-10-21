@@ -18,7 +18,7 @@ export default function Home() {
   const [userSelection, setUserSelection] = useState("scoreboard");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  const { data, isLoading } = useSwr(`http://localhost:3000/api/nfl/leagueData`, fetcher);
+  const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nfl/leagueData`, fetcher);
 
   if (isLoading) return <Loading />;
   else {
