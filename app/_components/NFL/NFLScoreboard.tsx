@@ -101,7 +101,7 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
     return (
       <Box className="relative z-10 w-full p-2 bg-white mb-3 rounded-xl drop-shadow-md">
         <Typography className="mb-1 font-semibold text-xl opacity-80">NFL Scoreboard</Typography>
-        <Box className="w-full flex gap-3 items-center">
+        <Box className="pl-2 w-full flex gap-3 items-center">
           <Box className="w-full flex flex-row overflow-x-auto justify-between items-center">
             <FontAwesomeIcon
               onClick={() => setCurrentWeekIndex(mod(currentWeekIndex - 3, allDates.length))}
@@ -156,8 +156,8 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
     let els: any[] = [];
     groupedGames.forEach((gamesOnDate: any, i: any) => {
       els.push(
-        <Box key={uuidv4()} className="w-full grid gap-2 bg-white p-2 rounded-xl mb-2">
-          <Typography className="opacity-80 font-semibold mt-2 text-start text-sm md:text-base">{i}</Typography>
+        <Box key={uuidv4()} className="w-full grid bg-white p-2 pb-0 rounded-xl mb-2">
+          <Typography className="opacity-80 font-semibold mt-1 text-start text-sm md:text-base mb-2">{i}</Typography>
           <Divider />
           {gamesOnDate.map((game: any, i: number) => (
             <Box key={uuidv4()}>

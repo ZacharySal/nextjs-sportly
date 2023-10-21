@@ -101,9 +101,9 @@ export default function ScoreCard({
 
   return (
     <Link href={gameDetailsFinal ? `/${league}/game/${gameId}` : ""}>
-      <Box className="w-full grid grid-cols-[1fr_25%] gap-3">
+      <Box className="w-full grid grid-cols-[1fr_25%] gap-3 py-2">
         {/* 1ST COLUMN: GAME INFO */}
-        <Box className="w-full grid grid-cols-[1fr_auto] items-center grid-rows-[1fr_1fr] score-cell relative py-1 md:py-2">
+        <Box className="w-full grid grid-cols-[1fr_auto] items-center grid-rows-[1fr_1fr] score-cell relative">
           {/* AWAY TEAM IMG AND NAME */}
           <Box className="flex items-center gap-2">
             <Image
@@ -177,7 +177,7 @@ export default function ScoreCard({
         )}
       </Box>
       {typeof game.notes[0]?.headline !== "undefined" && (
-        <Typography className="text-xs p-1 opacity-60">{game.notes[0].headline}</Typography>
+        <Typography className="text-xs p-1 opacity-60 mt-[-0.35rem]">{game.notes[0].headline}</Typography>
       )}
     </Link>
   );

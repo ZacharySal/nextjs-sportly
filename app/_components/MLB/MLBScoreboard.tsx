@@ -105,7 +105,7 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
       <Box className="w-full p-2 bg-white mb-3 rounded-xl drop-shadow-md">
         <Typography className="mb-1 font-semibold text-xl opacity-80">MLB Scoreboard</Typography>
         <Box className="w-full flex gap-3 items-center">
-          <Box id="style-1" className="w-full flex flex-row overflow-x-auto justify-between items-center">
+          <Box id="style-1" className="pl-2 w-full flex flex-row overflow-x-auto justify-between items-center">
             <FontAwesomeIcon
               onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 365)}
               icon={faAngleLeft}
@@ -152,8 +152,8 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
       <Box className="w-full py-2 flex flex-col justify-center md:justify-start items-center mt-[-0.5rem]">
         {dateSelector()}
         {data.content.sbData.events.length !== 0 && (
-          <Box className="w-full grid gap-2 bg-white p-2 rounded-xl">
-            <Typography className="opacity-80 font-semibold mt-2 text-start text-sm md:text-base">
+          <Box className="w-full grid bg-white p-2 pb-0 rounded-xl mb-2">
+            <Typography className="opacity-80 font-semibold mt-1 text-start text-sm md:text-base mb-2">
               {getFullDate(selectedDate)}
             </Typography>
             <Divider />

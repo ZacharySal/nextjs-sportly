@@ -142,12 +142,12 @@ thead tr {
 }
 .score-cell::after {
   background: rgba(0, 0, 0, 0.1);
-  bottom: 2px;
+  bottom: 0px;
   content: "";
   position: absolute;
   right: 0;
-  top: 0;
-  height: auto;
+  top: 5px;
+  height: 85%;
   width: 1px;
 }
 
