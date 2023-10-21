@@ -47,6 +47,8 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
 
   const { height, width } = useWindowDimensions();
 
+  console.log("rendering");
+
   // const [currentYearIndex, setCurrentYearIndex] = useState(
   //   allNFLDates.map((year) => year.year).indexOf(String(seasonData.currentYear))
   // );

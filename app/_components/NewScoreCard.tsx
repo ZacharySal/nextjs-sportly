@@ -95,6 +95,7 @@ export default function ScoreCard({
               src={setTeamImageSrc(awayTeamName)}
               width={100}
               height={100}
+              priority={true}
               alt="home team logo"
               className="w-7 object-contain"
             />
@@ -125,6 +126,7 @@ export default function ScoreCard({
               src={setTeamImageSrc(homeTeamName)}
               width={100}
               height={100}
+              priority={true}
               alt="home team logo"
               className="w-7 object-contain"
             />
@@ -153,9 +155,7 @@ export default function ScoreCard({
           {gameDescription}
         </Typography>
       </Box>
-      {typeof game.notes[0]?.headline === "undefined" ? (
-        ""
-      ) : (
+      {typeof game.notes[0]?.headline !== "undefined" && (
         <Typography className="text-xs p-1 opacity-60">{game.notes[0].headline}</Typography>
       )}
     </Link>
