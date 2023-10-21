@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 
 export default function NBABoxscore({ data }: { data: any }) {
-  console.log(data);
   return (
     <Box className="w-full bg-white p-3 rounded-xl drop-shadow-md grid items-center text-center grid-cols-8 grid-rows-[0.25rem, 0.5rem, 0.5rem] gap-y-2 gap-x-0">
       <Typography className="text-sm font-semibold opacity-70 col-start-1 col-span-2 text-start">

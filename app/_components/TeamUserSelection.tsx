@@ -10,26 +10,23 @@ export default function TeamUserSelection({
   const isSelected = (selection: string) => selection === userSelection;
 
   return (
-    <Box className="block md:hidden w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
+    <Box className="block drop-shadow-md md:hidden w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
       <Typography
         onClick={() => setUserSelection("schedule")}
-        sx={{ fontWeight: isSelected("schedule") ? "700" : "400" }}
-        className="opacity-70 text-sm"
+        className={`${userSelection === "schedule" && "selection-active"} h-full flex items-center relative text-sm`}
       >
         Schedule
       </Typography>
       <Typography
         onClick={() => setUserSelection("stats")}
-        sx={{ fontWeight: isSelected("stats") ? "700" : "400" }}
-        className="opacity-70 text-sm"
+        className={`${userSelection === "stats" && "selection-active"} h-full flex items-center relative text-sm`}
       >
         Stats
       </Typography>
 
       <Typography
         onClick={() => setUserSelection("news")}
-        sx={{ fontWeight: isSelected("news") ? "700" : "400" }}
-        className="opacity-70 text-sm"
+        className={`${userSelection === "news" && "selection-active"} h-full flex items-center relative text-sm`}
       >
         News
       </Typography>

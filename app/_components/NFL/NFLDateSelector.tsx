@@ -50,7 +50,6 @@ function mod(n: number, m: number) {
 function NFLDateSelector({ seasonData }: { seasonData: any }) {
   let weeks = seasonData.seasonWeeks;
 
-  console.log(seasonData);
   let selectedWeek = seasonData.currentWeek;
 
   const [selectedYear, setYear] = useState(seasonData.currentYear);
@@ -62,10 +61,6 @@ function NFLDateSelector({ seasonData }: { seasonData: any }) {
     fetcher,
     { refreshInterval: 5000 }
   );
-
-  if (isLoading) {
-    console.log("loading");
-  }
 
   if (!isLoading) {
     let newWeeks: any = [];

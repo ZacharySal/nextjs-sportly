@@ -21,7 +21,7 @@ export default function ScoreCard({
 
   let gameId: string;
   let gameDate: string = version === 2 ? game.date : gameInfo.date;
-  let gameDescription: string = game.status.type.description;
+  let gameDescription: any = game.status.type.description;
   let homeTeamName: string = homeTeam.team.shortDisplayName;
   let homeTeamScore: any;
   let awayTeamName: string = awayTeam.team.shortDisplayName;
@@ -68,8 +68,23 @@ export default function ScoreCard({
     }
   }
 
-  if (gameDescription === "In Progress" || gameDescription === "Scheduled") {
+  if (gameDescription === "In Progress") {
     gameDescription = game.status.type.shortDetail;
+  } else if (gameDescription === "Scheduled") {
+    const date = new Date(game.date).toLocaleTimeString("en-US", {
+      timeZone: "America/Chicago",
+      hour: "numeric",
+      minute: "2-digit",
+    });
+    const channel = game?.geoBroadcasts[0]?.media?.shortName || "";
+    const odds = typeof game?.odds == "undefined" ? "" : game.odds[0].details;
+    gameDescription = (
+      <Box className="flex flex-col">
+        <Typography className="text-xs opacity-90 font-semibold">{date}</Typography>
+        <Typography className="text-xs opacity-70">{channel}</Typography>
+        <Typography className="text-xs opacity-70">{odds}</Typography>
+      </Box>
+    );
   } else {
     gameDescription = gameDescription;
   }
@@ -100,7 +115,7 @@ export default function ScoreCard({
               className="w-7 object-contain"
             />
             <Typography
-              sx={{ opacity: awayTeam === winner ? "1" : "0.6" }}
+              sx={{ opacity: awayTeam === winner || game.status.type.description === "Scheduled" ? "1" : "0.6" }}
               className="text-sm font-semibold tracking-wide md:text-base"
             >
               {awayTeamName}
@@ -108,7 +123,7 @@ export default function ScoreCard({
           </Box>
           {/* AWAY TEAM SCORE */}
           <Typography
-            sx={{ opacity: awayTeam === winner ? "1" : "0.6" }}
+            sx={{ opacity: awayTeam === winner || game.status.type.description === "Scheduled" ? "1" : "0.6" }}
             className={`${
               awayTeam === winner ? "winning-score" : ""
             } text-sm text-end font-semibold md:text-base md:font-bold`}
@@ -131,7 +146,7 @@ export default function ScoreCard({
               className="w-7 object-contain"
             />
             <Typography
-              sx={{ opacity: homeTeam === winner ? "1" : "0.6" }}
+              sx={{ opacity: homeTeam === winner || game.status.type.description === "Scheduled" ? "1" : "0.6" }}
               className="text-sm md:text-base font-semibold tracking-wide"
             >
               {homeTeamName}
@@ -139,7 +154,7 @@ export default function ScoreCard({
           </Box>
           {/* HOME TEAM SCORE */}
           <Typography
-            sx={{ opacity: homeTeam === winner ? "1" : "0.6" }}
+            sx={{ opacity: homeTeam === winner || game.status.type.description === "Scheduled" ? "1" : "0.6" }}
             className={`${
               homeTeam === winner ? "winning-score" : ""
             } text-sm text-end font-semibold md:text-base md:font-bold`}
@@ -151,9 +166,15 @@ export default function ScoreCard({
               : homeTeamScore}
           </Typography>
         </Box>
-        <Typography className="flex w-full justify-start pl-2 items-center text-xs opacity-70 font-semibold">
-          {gameDescription}
-        </Typography>
+        {typeof gameDescription === "string" ? (
+          <Typography className="flex w-full justify-start items-center text-xs opacity-70 font-semibold">
+            {gameDescription}
+          </Typography>
+        ) : (
+          <Box className="flex w-full justify-start items-center text-xs opacity-70 font-semibold">
+            {gameDescription}
+          </Box>
+        )}
       </Box>
       {typeof game.notes[0]?.headline !== "undefined" && (
         <Typography className="text-xs p-1 opacity-60">{game.notes[0].headline}</Typography>

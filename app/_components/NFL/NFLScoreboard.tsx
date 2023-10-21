@@ -47,12 +47,6 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
 
   const { height, width } = useWindowDimensions();
 
-  console.log("rendering");
-
-  // const [currentYearIndex, setCurrentYearIndex] = useState(
-  //   allNFLDates.map((year) => year.year).indexOf(String(seasonData.currentYear))
-  // );
-
   const [showDateSelector, setShowDateSelector] = useState(false);
 
   const [selectedWeekInfo, setSelectedWeekInfo] = useState({
@@ -96,8 +90,8 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
     const ungroupedGames = data.content.sbData.events.map((game: any) => {
       return { ...game, date: getFullDate(game.date) };
     });
-    let gg = ungroupedGames.reverse();
-    groupedGames = gg.reduce(
+    //let gg = ungroupedGames.reverse();
+    groupedGames = ungroupedGames.reduce(
       (entryMap: any, e: any) => entryMap.set(e.date, [...(entryMap.get(e.date) || []), e]),
       new Map()
     );

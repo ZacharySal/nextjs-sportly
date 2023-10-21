@@ -12,11 +12,10 @@ export default function GameUserSelection({
   const isSelected = (selection: string) => selection === userSelection;
 
   return (
-    <Box className="block w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
+    <Box className="block drop-shadow-md w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
       <Typography
         onClick={() => setUserSelection("recap")}
-        sx={{ fontWeight: isSelected("recap") ? "700" : "400" }}
-        className="opacity-70 text-sm"
+        className={`${userSelection === "recap" && "selection-active"} h-full flex items-center relative text-sm`}
       >
         Recap
       </Typography>
@@ -24,15 +23,17 @@ export default function GameUserSelection({
         <>
           <Typography
             onClick={() => setUserSelection("playbyplay")}
-            sx={{ fontWeight: isSelected("playbyplay") ? "700" : "400" }}
-            className="opacity-70 text-sm"
+            className={`${
+              userSelection === "playbyplay" && "selection-active"
+            } h-full flex items-center relative text-sm`}
           >
             Play-by-Play
           </Typography>
           <Typography
             onClick={() => setUserSelection("boxscore")}
-            sx={{ fontWeight: isSelected("boxscore") ? "700" : "400" }}
-            className="opacity-70 text-sm"
+            className={`${
+              userSelection === "boxscore" && "selection-active"
+            } h-full flex items-center relative text-sm`}
           >
             Box Score
           </Typography>
@@ -41,8 +42,7 @@ export default function GameUserSelection({
 
       <Typography
         onClick={() => setUserSelection("news")}
-        sx={{ fontWeight: isSelected("news") ? "700" : "400" }}
-        className="opacity-70 text-sm"
+        className={`${userSelection === "news" && "selection-active"} h-full flex items-center relative text-sm`}
       >
         News
       </Typography>
