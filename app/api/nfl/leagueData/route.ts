@@ -5,8 +5,6 @@ export async function GET(request: Request) {
     cache: "no-cache",
   });
 
-  // we need to select the weeks matching the given seasonType
-
   if (!seasonDataResponse.ok) {
     throw new Error("Failed to fetch NFL weeks data");
   }
@@ -16,8 +14,6 @@ export async function GET(request: Request) {
   const newsData = seasonData.news;
 
   let weeks: any = [];
-
-  // we only want the selected season type weeks, not weeks for every season type
 
   for (let seasonType of seasonData.content.sbData.leagues[0].calendar) {
     {
@@ -29,9 +25,18 @@ export async function GET(request: Request) {
     }
   }
 
+  const standingsDataResponse = await fetch("https://cdn.espn.com/core/nfl/standings?xhr=1");
+
+  if (!standingsDataResponse.ok) {
+    throw new Error("Failed to fetch NFL standings data");
+  }
+
+  const standingsData = await standingsDataResponse.json();
+
   return NextResponse.json({
     seasonWeeks: weeks,
     newsData: newsData,
+    standings: standingsData.content,
     currentType: seasonData.content.sbData.season.type,
     currentYear: seasonData.content.sbData.season.year,
     currentWeek: seasonData.content.sbData.week.number,

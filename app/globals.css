@@ -26,31 +26,81 @@ main {
   padding: 10px;
 }
 
-th {
-  padding: 4px;
+.stat-table tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-tbody tr:nth-child(even) {
-  background-color: #edeef09c;
+.stat-table .name-col {
+  border-right: 1px solid rgba(0, 0, 0, 0.3) !important;
 }
 
-td {
+.stat-table thead tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+.stat-table td {
   min-width: 50px;
   padding: 8px;
   white-space: nowrap;
 }
 
-tr {
+.stat-table tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+.stat-table tbody tr:nth-child(odd) {
+  background-color: #edeef0;
+}
+
+/* STANDINGS TABLE */
+
+.standings-table {
+  border-collapse: collapse;
+}
+
+.standings-table tbody:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+.standings-table tr {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.name-col {
-  border-right: 1px solid rgba(0, 0, 0, 0.3) !important;
+.standings-table > * td,
+th {
+  padding: 6px 8px;
 }
 
-thead tr {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+.standings-table thead tr {
+  background-color: white;
   border-top: 1px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+.standings-first-col {
+  white-space: nowrap;
+  border-collapse: collapse;
+}
+
+.standings-first-col .name-col,
+.name-col-header {
+  min-width: 5.25rem;
+  background-color: inherit;
+  left: 0;
+  z-index: 25;
+  border-right: 1px solid rgba(0, 0, 0, 0.3) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+.standings-first-col .name-col-header {
+  background-color: white;
+  padding: 6px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.standings-first-col tr:nth-child(odd) {
+  background-color: #f5f5f5;
 }
 
 .button-active {

@@ -49,32 +49,32 @@ export default function NFLBoxscore({ data }: { data: any }) {
         </Box>
 
         <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-2">
-          {data.homeTeam.linescores[0]?.displayValue || "0"}
+          {data.homeTeam.linescores[0]?.displayValue || "-"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-2">
-          {data.homeTeam.linescores[1]?.displayValue || "0"}
+          {data.homeTeam.linescores[1]?.displayValue || "-"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-2">
-          {data.homeTeam.linescores[2]?.displayValue || "0"}
+          {data.homeTeam.linescores[2]?.displayValue || "-"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-2">
-          {data.homeTeam.linescores[3]?.displayValue || "0"}
+          {data.homeTeam.linescores[3]?.displayValue || "-"}
         </Typography>
         <Typography className="text-sm md:text-base font-bold col-start-8 row-start-2">
           {data.gameData.header.competitions[0].competitors[0].score}
         </Typography>
 
         <Typography className="text-sm md:text-base opacity-70 col-start-4 row-start-3">
-          {data.awayTeam.linescores[0]?.displayValue || "0"}
+          {data.awayTeam.linescores[0]?.displayValue || "-"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-5 row-start-3">
-          {data.awayTeam.linescores[1]?.displayValue || "0"}
+          {data.awayTeam.linescores[1]?.displayValue || "-"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-6 row-start-3">
-          {data.awayTeam.linescores[2]?.displayValue || "0"}
+          {data.awayTeam.linescores[2]?.displayValue || "-"}
         </Typography>
         <Typography className="text-sm md:text-base opacity-70 col-start-7 row-start-3">
-          {data.awayTeam.linescores[3]?.displayValue || "0"}
+          {data.awayTeam.linescores[3]?.displayValue || "-"}
         </Typography>
         <Typography className="text-sm md:text-base  font-bold col-start-8 row-start-3">
           {data.gameData.header.competitions[0].competitors[1].score}

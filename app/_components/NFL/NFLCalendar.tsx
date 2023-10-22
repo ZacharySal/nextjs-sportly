@@ -27,7 +27,7 @@ export default function NFLCalendar({
   const calendarSelectedYear = allNFLDates[currentCalendarYearIndex].year;
 
   return (
-    <Box className="p-4 date-selector flex flex-col justify-center gap-2">
+    <Box className="p-4 date-selector flex flex-col justify-center gap-1">
       <Box className="w-full flex justify-between items-center mb-2">
         <FontAwesomeIcon
           onClick={() => setCurrentCalendarYearIndex(mod(currentCalendarYearIndex - 1, allNFLDates.length))}
@@ -77,7 +77,7 @@ export default function NFLCalendar({
       ))}
       <Typography
         onClick={() => setShowDateSelector(false)}
-        className="text-xs text-left w-full items-start justify-start flex text-blue-400 cursor-pointer mt-2"
+        className="text-xs text-left w-full items-start justify-start flex text-blue-400 cursor-pointer"
       >
         CLOSE
       </Typography>

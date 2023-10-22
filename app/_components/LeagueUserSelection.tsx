@@ -24,6 +24,12 @@ export default function LeagueUserSelection({
         Teams
       </Typography>
       <Typography
+        onClick={() => setUserSelection("standings")}
+        className={`${userSelection === "standings" && "selection-active"} h-full flex items-center relative text-sm`}
+      >
+        Standings
+      </Typography>
+      <Typography
         onClick={() => setUserSelection("news")}
         className={`${userSelection === "news" && "selection-active"} h-full flex items-center relative text-sm`}
       >
