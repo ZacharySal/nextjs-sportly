@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
 import Image from "next/image";
+import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function LeagueStandings({ standingsData }: { standingsData: any }) {
@@ -22,13 +22,13 @@ export default function LeagueStandings({ standingsData }: { standingsData: any 
             <Box className="flex flex-row items-start">
               <tbody className="standings-first-col">
                 {conference.groups.map((division: any) => (
-                  <>
+                  <React.Fragment key={uuidv4()}>
                     <th className="name-col-header text-xs font-[500] z-10 uppercase" align="center">
                       {division.name}
                     </th>
                     {division.standings.entries.map((team: any) => (
-                      <tr>
-                        <td key={uuidv4()} className="text-xs name-col z-10" align="center">
+                      <tr key={uuidv4()}>
+                        <td className="text-xs name-col z-10" align="center">
                           <Box className="flex items-center justify-start pl-1 gap-2 w-full">
                             <Image
                               src={setTeamImageSrc(team.team.shortDisplayName)}
@@ -43,13 +43,13 @@ export default function LeagueStandings({ standingsData }: { standingsData: any 
                         </td>
                       </tr>
                     ))}
-                  </>
+                  </React.Fragment>
                 ))}
               </tbody>
               <Box className="w-full max-w-full bg-white overflow-x-scroll z-[0]">
                 <div className="standings-table w-full max-w-full bg-white overflow-x-scroll relative">
                   {conference.groups.map((division: any) => (
-                    <>
+                    <React.Fragment key={uuidv4()}>
                       <thead>
                         <tr>
                           <th className="text-xs font-[500]" align="center">
@@ -92,7 +92,7 @@ export default function LeagueStandings({ standingsData }: { standingsData: any 
                       </thead>
 
                       {division.standings.entries.map((team: any) => (
-                        <tbody>
+                        <tbody key={uuidv4()}>
                           <tr>
                             {team.stats.map((stat: any) => (
                               <td
@@ -115,7 +115,7 @@ export default function LeagueStandings({ standingsData }: { standingsData: any 
                           </tr>
                         </tbody>
                       ))}
-                    </>
+                    </React.Fragment>
                   ))}
                 </div>
               </Box>
