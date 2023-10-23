@@ -27,7 +27,7 @@ export default function LeagueStandings({ standingsData, league }: { standingsDa
           {standingsData.standings.groups.map((conference: any) => (
             <React.Fragment key={uuidv4()}>
               <Typography className="px-2 font-sm font-bold opacity-80 capitalize">{conference.name}</Typography>
-              <Box className="flex flex-row items-start">
+              <Box className="w-full flex flex-row items-start">
                 <table className="border-collapse">
                   <thead className="standings-first-col">
                     {conference.groups.map((division: any) => (
@@ -38,7 +38,7 @@ export default function LeagueStandings({ standingsData, league }: { standingsDa
                           </th>
                         </tr>
                         {division.standings.entries.map((team: any) => (
-                          <tr key={uuidv4()}>
+                          <tr key={uuidv4()} className="team-info-cell">
                             <td className="text-xs name-col z-10" align="center">
                               <Link href={`/${league}/team/${team.team.id}`}>
                                 <Box className="flex items-center justify-start pl-1 gap-2 w-full">
@@ -60,10 +60,10 @@ export default function LeagueStandings({ standingsData, league }: { standingsDa
                     ))}
                   </thead>
                 </table>
-                <Box className="w-full max-w-full bg-white overflow-x-scroll z-[0]">
-                  <Box className="standings-table w-full max-w-full bg-white overflow-x-scroll relative">
+                <Box className="overflow-x-auto">
+                  <table className="standings-table max-w-full bg-white">
                     {conference.groups.map((division: any) => (
-                      <table key={uuidv4()}>
+                      <React.Fragment key={uuidv4()}>
                         <thead>
                           <tr>
                             {division.standings.entries[0].stats.map((statType: any) => (
@@ -74,33 +74,31 @@ export default function LeagueStandings({ standingsData, league }: { standingsDa
                           </tr>
                         </thead>
 
-                        <tbody>
-                          {division.standings.entries.map((team: any) => (
-                            <tr key={uuidv4()}>
-                              {team.stats.map((stat: any) => (
-                                <td
-                                  key={uuidv4()}
-                                  style={{
-                                    color:
-                                      stat.abbreviation === "DIFF"
-                                        ? Number(stat.displayValue > 0)
-                                          ? "#094"
-                                          : "#d00"
-                                        : "black",
-                                    opacity: stat.abbreviation === "DIFF" ? "1" : "0.6",
-                                  }}
-                                  className="text-xs"
-                                  align="center"
-                                >
-                                  {stat.displayValue}
-                                </td>
-                              ))}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                        {division.standings.entries.map((team: any) => (
+                          <tr key={uuidv4()} className="team-stat-cell">
+                            {team.stats.map((stat: any) => (
+                              <td
+                                key={uuidv4()}
+                                style={{
+                                  color:
+                                    stat.abbreviation === "DIFF"
+                                      ? Number(stat.displayValue > 0)
+                                        ? "#094"
+                                        : "#d00"
+                                      : "black",
+                                  opacity: stat.abbreviation === "DIFF" ? "1" : "0.6",
+                                }}
+                                className="text-xs"
+                                align="center"
+                              >
+                                {stat.displayValue}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </React.Fragment>
                     ))}
-                  </Box>
+                  </table>
                 </Box>
               </Box>
             </React.Fragment>

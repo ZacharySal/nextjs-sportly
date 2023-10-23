@@ -57,6 +57,7 @@ main {
 
 .standings-table {
   border-collapse: collapse;
+  white-space: nowrap;
 }
 
 .standings-table tr {
@@ -74,7 +75,7 @@ th {
   border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
-.standings-table table:first-child thead tr {
+.standings-table thead:first-child tr {
   background-color: white;
   border-top: 1px solid rgba(0, 0, 0, 0.3) !important;
 }
@@ -87,7 +88,7 @@ th {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.standings-table table tbody tr:nth-child(even) {
+.standings-table tr:nth-child(even of .team-stat-cell) {
   background-color: hsl(0, 0%, 97%);
 }
 
@@ -113,7 +114,7 @@ th {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
-.standings-first-col tr:nth-child(odd) {
+.standings-first-col tr:nth-child(even of tr.team-info-cell) {
   background-color: hsl(0, 0%, 97%);
 }
 
