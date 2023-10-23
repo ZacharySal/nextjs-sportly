@@ -141,7 +141,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Box className="w-full py-2 flex flex-col justify-center md:justify-start items-center mt-[-0.5rem]">
           {dateSelector()}
-          <Box className="w-full flex justify-center items-center">
+          <Box className="w-full flex justify-center mt-14 items-center">
             <CircularProgress />
           </Box>
         </Box>

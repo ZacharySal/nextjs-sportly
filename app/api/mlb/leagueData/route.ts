@@ -30,5 +30,19 @@ export async function GET() {
   let mlbDays: any[] = [];
 
   mlbDaysData.eventDate.dates.map((date: string) => mlbDays.push(date));
-  return NextResponse.json({ news: newsData, days: mlbDays, currentDate: mlbDateResponse.content.dateParams.date });
+
+  const standingsDataResponse = await fetch("https://cdn.espn.com/core/mlb/standings?xhr=1", { cache: "no-cache" });
+
+  if (!standingsDataResponse.ok) {
+    throw new Error("Failed to fetch NFL standings data");
+  }
+
+  const standingsData = await standingsDataResponse.json();
+
+  return NextResponse.json({
+    news: newsData,
+    days: mlbDays,
+    currentDate: mlbDateResponse.content.dateParams.date,
+    standings: standingsData.content,
+  });
 }

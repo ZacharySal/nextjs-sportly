@@ -15,6 +15,9 @@ export default function ScoreCard({
   league: string;
   teamView: boolean;
 }) {
+  if (typeof gameInfo.competitions === "undefined") {
+    return null;
+  }
   const game = gameInfo.competitions[0];
   const homeTeam = game.competitors[0];
   const awayTeam = game.competitors[1];

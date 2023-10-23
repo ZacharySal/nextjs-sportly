@@ -32,5 +32,20 @@ export async function GET() {
 
   const nbaDates = nbaWeeks.eventDate.dates.map((date: string) => date);
 
-  return NextResponse.json({ nbaWeeks: nbaDates, news: nbaNews, currentDate: nbaDateResponse.content.dateParams.date });
+  const standingsDataResponse = await fetch("https://cdn.espn.com/core/nba/standings?xhr=1&seasonType=1", {
+    cache: "no-cache",
+  });
+
+  if (!standingsDataResponse.ok) {
+    throw new Error("Failed to fetch NFL standings data");
+  }
+
+  const standingsData = await standingsDataResponse.json();
+
+  return NextResponse.json({
+    nbaWeeks: nbaDates,
+    news: nbaNews,
+    currentDate: nbaDateResponse.content.dateParams.date,
+    standings: standingsData.content,
+  });
 }

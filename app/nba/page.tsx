@@ -11,6 +11,7 @@ import useSwr from "swr";
 import { useState } from "react";
 import { useMediaQuery } from "@mui/material";
 import Loading from "../_components/Loading";
+import LeagueStandings from "../_components/LeagueStandings";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -41,6 +42,7 @@ export default function Home() {
             <ContainerBox altColor="013369" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
               {userSelection === "teams" && <AllTeams allTeams={nbaDivisionTeams} league="nba" />}
               {userSelection === "scoreboard" && <NBAScoreboard currentDate={data.currentDate} />}
+              {userSelection === "standings" && <LeagueStandings standingsData={data.standings} league="nba" />}
               {userSelection === "news" && <Articles title={`NBA News`} teamNews={data.news} limit={10} />}
             </ContainerBox>
           </>

@@ -175,7 +175,7 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
     return (
       <Box className="w-full py-2 mt-[-0.5rem]">
         {nflWeekSelector()}
-        <Box className="w-full flex justify-center items-center">
+        <Box className="w-full flex justify-center mt-14 items-center">
           <CircularProgress />
         </Box>
       </Box>
@@ -185,12 +185,6 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
       <Box className="w-full py-2 mt-[-0.5rem]">
         {nflWeekSelector()}
         {printSortedGames()}
-      </Box>
-    );
-  } else {
-    return (
-      <Box className="mt-20 w-full flex justify-center items-center">
-        <CircularProgress />
       </Box>
     );
   }
