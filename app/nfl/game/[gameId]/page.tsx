@@ -12,15 +12,13 @@ import React from "react";
 import StadiumInfo from "@/app/_components/StadiumInfo";
 import NFLBoxscore from "@/app/_components/NFL/NFLBoxscore";
 import DivisionStandings from "@/app/_components/DivisionStandings";
-import NFLGameDrives from "@/app/_components/NFL/NFLGameDrives";
 import NFLScoringPlays from "@/app/_components/NFL/NFLScoringPlays";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
 import NFLGameStats from "@/app/_components/NFL/NFLGameStats";
 import NFLPlayByPlay from "@/app/_components/NFL/NFLPlayByPlay";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import GameRecapArticle from "@/app/_components/GameRecapArticle";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -39,8 +37,6 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
     `https://nextjs-sportly.vercel.app/api/nfl/gameData/${params.gameId}`,
     fetcher
   );
-
-  const router = useRouter();
 
   if (!isLoading) {
     console.log(data);
@@ -336,8 +332,8 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
             <GameUserSelection
               userSelection={userSelection}
               setUserSelection={setUserSelection}
-              data={data}
               isDesktopScreen={isDesktopScreen}
+              data={data}
             />
 
             <ContainerBox isDesktopScreen={isDesktopScreen}>
@@ -352,73 +348,11 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
                 <NFLGameStats data={data} league="nfl" />
               )}
 
-              {userSelection === "gamecast" && (
+              {userSelection === "gamecast" && data.isGameStarted && (
                 <Box className="flex flex-col gap-5">
-                  {data.isGameStarted && (
-                    <>
-                      {data.gameData.article.images.length > 0 && (
-                        <Box className="w-full bg-white p-3 rounded-xl">
-                          <Box className="w-full relative cursor-pointer article-video-container overflow-hidden">
-                            <Image
-                              width={1000}
-                              height={1000}
-                              alt="video"
-                              src={data.gameData.article.images[0].url}
-                              className="w-full object-cover video-preview rounded-xl"
-                            />
-                            <Link
-                              target="_blank"
-                              href={
-                                data.gameData.article.video[0].links["web"].href
-                              }
-                            >
-                              <Box className="gray-circle"></Box>
-                            </Link>
-                            <Box className="arrow"></Box>
-                          </Box>
-                          <Link
-                            target="_blank"
-                            href={data.gameData.article.links["web"].href}
-                          >
-                            <Box className="article-container w-full bg-white rounded-xl p-3 mt-3 cursor-pointer custom-shadow">
-                              <Typography className="text-sm opacity-80 font-semibold article-headline">
-                                {data.gameData.article.headline}
-                              </Typography>
-                              <Typography className="text-sm opacity-70">
-                                {data.gameData.article.description}
-                              </Typography>
-                              <Typography className="text-sm opacity-60 mt-2">
-                                {convertDate(data.gameData.article.published) +
-                                  " - AP"}
-                              </Typography>
-                            </Box>
-                          </Link>
-                        </Box>
-                      )}
-                      {typeof data.gameData.article !== "undefined" &&
-                        data.gameData.article.images.length === 0 && (
-                          <Link
-                            target="_blank"
-                            href={data.gameData.article.links["web"].href}
-                          >
-                            <Box className="article-container w-full bg-white p-3 rounded-xl cursor-pointer color-red">
-                              <Typography className="text-sm opacity-80 font-[600] article-headline">
-                                {data.gameData.article.headline}
-                              </Typography>
-                              <Typography className="text-sm opacity-60">
-                                {data.gameData.article.description}
-                              </Typography>
-                              <Typography className="text-sm opacity-60 mt-2">
-                                {convertDate(data.gameData.article.published) +
-                                  " - AP"}
-                              </Typography>
-                            </Box>
-                          </Link>
-                        )}
-                      <NFLBoxscore data={data} />
-                      <NFLScoringPlays data={data} />
-                    </>
-                  )}
+                  <GameRecapArticle data={data} />
+                  <NFLBoxscore data={data} />
+                  <NFLScoringPlays data={data} />
                 </Box>
               )}
 

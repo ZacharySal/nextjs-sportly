@@ -31,7 +31,10 @@ export default function NFLGameStats({
     <>
       {data.gameData.boxscore.players[teamOption].statistics.map(
         (statType: any) => (
-          <Box key={uuidv4()} className="bg-white rounded-xl w-full mb-3">
+          <Box
+            key={uuidv4()}
+            className="bg-white rounded-xl w-full h-auto mb-3"
+          >
             <Box className="flex items-center justify-start gap-1 mb-2">
               <img
                 className="w-7 object-contain"
@@ -45,8 +48,7 @@ export default function NFLGameStats({
                 {tableHeader(statType, teamOption)}
               </Typography>
             </Box>
-            <Box className="max-w-full w-full overflow-x-scroll">
-              {/* JacksonVille Passing */}
+            <Box className="max-w-full w-full overflow-x-auto">
               <table className="stat-table rounded-xl bg-white">
                 <thead>
                   <tr>

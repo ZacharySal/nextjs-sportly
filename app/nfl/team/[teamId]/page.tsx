@@ -17,7 +17,10 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   const [userSelection, setUserSelection] = useState("schedule");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nfl/teamData/${params.teamId}`, fetcher);
+  const { data, isLoading } = useSwr(
+    `https://nextjs-sportly.vercel.app/api/nfl/teamData/${params.teamId}`,
+    fetcher
+  );
 
   if (isLoading) return <Loading />;
   else
@@ -26,11 +29,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
         {isDesktopScreen ? (
           <>
             <TeamHeader teamData={data.teamData} league="nfl" />
-            <ContainerBox
-              altColor={data.teamData.team.alternateColor}
-              mainColor={data.teamData.team.color}
-              isDesktopScreen={isDesktopScreen}
-            >
+            <ContainerBox isDesktopScreen={isDesktopScreen}>
               <Box className="flex-basis-1/4">
                 <TeamStats stats={data.teamStats} />
               </Box>
@@ -38,22 +37,33 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
               <Box className="flex-basis-1/2">
                 <TeamSchedule teamSchedule={data.teamSchedule} league="nfl" />
               </Box>
-              <Articles title={`${data.teamData.team.name} News`} teamNews={data.teamNews} limit={8} />
+              <Articles
+                title={`${data.teamData.team.name} News`}
+                teamNews={data.teamNews}
+                limit={8}
+              />
             </ContainerBox>
           </>
         ) : (
           <>
             <TeamHeader teamData={data.teamData} league="nfl" />
-            <TeamUserSelection userSelection={userSelection} setUserSelection={setUserSelection} />
-            <ContainerBox
-              altColor={data.teamData.team.alternateColor}
-              mainColor={data.teamData.team.color}
-              isDesktopScreen={isDesktopScreen}
-            >
-              {userSelection === "stats" && <TeamStats stats={data.teamStats} />}
-              {userSelection === "schedule" && <TeamSchedule teamSchedule={data.teamSchedule} league="nfl" />}
+            <TeamUserSelection
+              userSelection={userSelection}
+              setUserSelection={setUserSelection}
+            />
+            <ContainerBox isDesktopScreen={isDesktopScreen}>
+              {userSelection === "stats" && (
+                <TeamStats stats={data.teamStats} />
+              )}
+              {userSelection === "schedule" && (
+                <TeamSchedule teamSchedule={data.teamSchedule} league="nfl" />
+              )}
               {userSelection === "news" && (
-                <Articles title={`${data.teamData.team.name} News`} teamNews={data.teamNews} limit={8} />
+                <Articles
+                  title={`${data.teamData.team.name} News`}
+                  teamNews={data.teamNews}
+                  limit={8}
+                />
               )}
             </ContainerBox>
           </>

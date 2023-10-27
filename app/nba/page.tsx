@@ -31,11 +31,12 @@ export default function Home() {
       <main>
         {isDesktopScreen ? (
           <>
-            <ContainerBox
-              altColor="013369"
-              mainColor="D50A0A"
-              isDesktopScreen={isDesktopScreen}
-            >
+            <LeagueUserSelection
+              userSelection={userSelection}
+              setUserSelection={setUserSelection}
+              league="nba"
+            />
+            <ContainerBox isDesktopScreen={isDesktopScreen}>
               <AllTeams allTeams={nbaDivisionTeams} league="nba" />
               <NBAScoreboard currentDate={data.currentDate} />
               <Articles title={`NBA News`} teamNews={data.news} limit={10} />
@@ -48,11 +49,7 @@ export default function Home() {
               setUserSelection={setUserSelection}
               league="nba"
             />
-            <ContainerBox
-              altColor="013369"
-              mainColor="D50A0A"
-              isDesktopScreen={isDesktopScreen}
-            >
+            <ContainerBox isDesktopScreen={isDesktopScreen}>
               {userSelection === "teams" && (
                 <AllTeams allTeams={nbaDivisionTeams} league="nba" />
               )}

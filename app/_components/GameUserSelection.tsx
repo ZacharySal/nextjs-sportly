@@ -11,49 +11,49 @@ export default function GameUserSelection({
   data: any;
   isDesktopScreen: boolean;
 }) {
-  const isSelected = (selection: string) => selection === userSelection;
-
   return (
-    <Box className="drop-shadow-md w-full max-w-full overflow-x-auto h-10 flex justify-start items-center gap-3 bg-white py-5 pl-5">
-      <Typography
-        onClick={() => setUserSelection("gamecast")}
-        className={`${
-          userSelection === "gamecast" && "selection-active"
-        } h-full flex items-center relative text-sm flex-shrink-0 cursor-pointer`}
-      >
-        Gamecast
-      </Typography>
-      {data.isGameStarted && (
-        <>
-          <Typography
-            onClick={() => setUserSelection("playbyplay")}
-            className={`${
-              userSelection === "playbyplay" && "selection-active"
-            } h-full flex items-center relative text-sm flex-shrink-0 cursor-pointer`}
-          >
-            Play-by-Play
-          </Typography>
-          <Typography
-            onClick={() => setUserSelection("boxscore")}
-            className={`${
-              userSelection === "boxscore" && "selection-active"
-            } h-full flex items-center relative text-sm flex-shrink-0 cursor-pointer`}
-          >
-            Box Score
-          </Typography>
-        </>
-      )}
-
-      {!isDesktopScreen && (
+    <Box className="w-full bg-white">
+      <Box className="drop-shadow-md w-full 2xl:w-1/2 max-w-full overflow-x-auto h-10 flex justify-start 2xl:justify-center items-center gap-3 py-5 pl-5">
         <Typography
-          onClick={() => setUserSelection("news")}
+          onClick={() => setUserSelection("gamecast")}
           className={`${
-            userSelection === "news" && "selection-active"
+            userSelection === "gamecast" && "selection-active"
           } h-full flex items-center relative text-sm flex-shrink-0 cursor-pointer`}
         >
-          News
+          Gamecast
         </Typography>
-      )}
+        {data.isGameStarted && (
+          <>
+            <Typography
+              onClick={() => setUserSelection("playbyplay")}
+              className={`${
+                userSelection === "playbyplay" && "selection-active"
+              } h-full flex items-center relative text-sm flex-shrink-0 cursor-pointer`}
+            >
+              Play-by-Play
+            </Typography>
+            <Typography
+              onClick={() => setUserSelection("boxscore")}
+              className={`${
+                userSelection === "boxscore" && "selection-active"
+              } h-full flex items-center relative text-sm flex-shrink-0 cursor-pointer`}
+            >
+              Box Score
+            </Typography>
+          </>
+        )}
+
+        {!isDesktopScreen && (
+          <Typography
+            onClick={() => setUserSelection("news")}
+            className={`${
+              userSelection === "news" && "selection-active"
+            } h-full flex items-center relative text-sm flex-shrink-0 cursor-pointer`}
+          >
+            News
+          </Typography>
+        )}
+      </Box>
     </Box>
   );
 }

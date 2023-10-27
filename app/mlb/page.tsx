@@ -27,47 +27,40 @@ export default function Home() {
   if (isLoading) return <Loading />;
   else {
     return isDesktopScreen ? (
-      <>
-        <main>
-          <ContainerBox
-            altColor="002D72"
-            mainColor="D50A0A"
-            isDesktopScreen={isDesktopScreen}
-          >
-            <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
-            <MLBScoreboard currentDate={data.currentDate} />
-            <Articles title={`MLB News`} teamNews={data.news} limit={10} />
-          </ContainerBox>
-        </main>
-      </>
+      <main>
+        <LeagueUserSelection
+          userSelection={userSelection}
+          setUserSelection={setUserSelection}
+          league="mlb"
+        />
+        <ContainerBox isDesktopScreen={isDesktopScreen}>
+          <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
+          <MLBScoreboard currentDate={data.currentDate} />
+          <Articles title={`MLB News`} teamNews={data.news} limit={10} />
+        </ContainerBox>
+      </main>
     ) : (
-      <>
-        <main>
-          <LeagueUserSelection
-            userSelection={userSelection}
-            setUserSelection={setUserSelection}
-            league="mlb"
-          />
-          <ContainerBox
-            altColor="002D72"
-            mainColor="D50A0A"
-            isDesktopScreen={isDesktopScreen}
-          >
-            {userSelection === "teams" && (
-              <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
-            )}
-            {userSelection === "standings" && (
-              <LeagueStandings standingsData={data.standings} league="mlb" />
-            )}
-            {userSelection === "scoreboard" && (
-              <MLBScoreboard currentDate={data.currentDate} />
-            )}
-            {userSelection === "news" && (
-              <Articles title={`MLB News`} teamNews={data.news} limit={10} />
-            )}
-          </ContainerBox>
-        </main>
-      </>
+      <main>
+        <LeagueUserSelection
+          userSelection={userSelection}
+          setUserSelection={setUserSelection}
+          league="mlb"
+        />
+        <ContainerBox isDesktopScreen={isDesktopScreen}>
+          {userSelection === "teams" && (
+            <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
+          )}
+          {userSelection === "standings" && (
+            <LeagueStandings standingsData={data.standings} league="mlb" />
+          )}
+          {userSelection === "scoreboard" && (
+            <MLBScoreboard currentDate={data.currentDate} />
+          )}
+          {userSelection === "news" && (
+            <Articles title={`MLB News`} teamNews={data.news} limit={10} />
+          )}
+        </ContainerBox>
+      </main>
     );
   }
 }

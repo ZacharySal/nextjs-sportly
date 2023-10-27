@@ -317,12 +317,10 @@ th {
 
 .game-header-logo-wrapper--left{
   transform: skew(-25deg) translateX(-40px);
-  left: 150px;
 }
 
 .game-header-logo-wrapper--right{
   transform: skew(25deg) translateX(40px);
-  right: 150px;
 }
 
 .game-header-logo--left {
@@ -342,7 +340,7 @@ th {
   position: absolute;
   top: 0;
   width: 2px;
-  z-index: 20;
+  z-index: 10;
 }
 
 .game-header-logo-wrapper--left::after {

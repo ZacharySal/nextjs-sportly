@@ -42,18 +42,18 @@ export default function GameHeader({
   return (
     <>
       {isDesktopScreen ? (
-        <>
+        <Box className="bg-white w-full flex justify-center border-b border-[rgba(0,0,0,0.2)] z-40 sticky top-[3rem]">
           <Box
             sx={{
               backgroundColor: "#fff",
             }}
-            className="w-full h-28 flex-row flex justify-center border-b border-[rgba(0,0,0,0.2)] items-center gap-24 relative sticky top-[3rem] z-40"
+            className="w-full 2xl:w-2/5 h-28 flex-row flex justify-center items-center gap-10 relative"
           >
             <Box className="flex flex-row justify-center items-center gap-3">
               <Box className="flex flex-col text-black">
                 <Box
                   sx={{ backgroundColor: "#" + awayTeam.team.color }}
-                  className="mr-10 game-header-logo-wrapper game-header-logo-wrapper--left"
+                  className="mr-10 game-header-logo-wrapper game-header-logo-wrapper--left left-0 2xl:left-[-150px]"
                 >
                   <Image
                     src={`/${league}/${awayTeam.team.name
@@ -144,7 +144,7 @@ export default function GameHeader({
               </Box>
               <Box
                 sx={{ backgroundColor: "#" + homeTeam.team.color }}
-                className="ml-10 game-header-logo-wrapper game-header-logo-wrapper--right"
+                className="ml-10 game-header-logo-wrapper game-header-logo-wrapper--right right-0 2xl:right-[-150px]"
               >
                 <Image
                   src={`/${league}/${homeTeam.team.name
@@ -158,7 +158,7 @@ export default function GameHeader({
               </Box>
             </Box>
           </Box>
-        </>
+        </Box>
       ) : (
         <>
           {gameInfo.status.type.description === "Scheduled" ? (

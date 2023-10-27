@@ -18,6 +18,7 @@ const config: Config = {
       },
       screens: {
         "md": "1000px",
+        "3xl": "2200px",
       }
     },
   },
