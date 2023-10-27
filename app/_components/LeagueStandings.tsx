@@ -8,7 +8,6 @@ function getMLBDivisionName(divisionName: any) {
   return divisionName.substring(15, divisionName.length);
 }
 export default function LeagueStandings({ standingsData, league }: { standingsData: any; league: string }) {
-  console.log(standingsData);
   const setTeamImageSrc = (teamName: string) => {
     try {
       const src = require(`public/${league}/${teamName.replace(" ", "").toLowerCase()}.png`);

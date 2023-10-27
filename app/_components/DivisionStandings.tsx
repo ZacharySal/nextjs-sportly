@@ -1,9 +1,27 @@
-import { Box, Typography, TableRow, TableCell, TableHead, TableContainer, TableBody, Table } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TableRow,
+  TableCell,
+  TableHead,
+  TableContainer,
+  TableBody,
+  Table,
+} from "@mui/material";
+import Link from "next/link";
 import { v4 as uuidv4 } from "uuid";
 
 // NFL win / loss stats are shaped differently
 
-export default function DivisionStandings({ data, isNFL = false }: { data: any; isNFL: boolean }) {
+export default function DivisionStandings({
+  data,
+  isNFL = false,
+  league,
+}: {
+  data: any;
+  isNFL: boolean;
+  league: string;
+}) {
   function getWins(team: any) {
     return isNFL ? team.stats[5].displayValue : team.stats[4].displayValue;
   }
@@ -15,10 +33,15 @@ export default function DivisionStandings({ data, isNFL = false }: { data: any; 
   }
 
   return data.gameData.standings.groups.map((group: any) => (
-    <Box key={uuidv4()} className="w-full bg-white rounded-xl drop-shadow-md p-3">
-      <Typography className="font-semibold opacity-70 text-sm">{group.header}</Typography>
+    <Box key={uuidv4()} className="w-full bg-white rounded-xl p-3">
+      <Typography className="font-semibold opacity-70 text-sm">
+        {group.header}
+      </Typography>
 
-      <TableContainer style={{ maxWidth: "100%", marginTop: "0.5rem" }} component={Box}>
+      <TableContainer
+        style={{ maxWidth: "100%", marginTop: "0.5rem" }}
+        component={Box}
+      >
         <Table aria-label="simple table" size="small">
           <TableHead
             sx={{
@@ -26,16 +49,32 @@ export default function DivisionStandings({ data, isNFL = false }: { data: any; 
             }}
           >
             <TableRow>
-              <TableCell className=" text-sm font-semibold" align="left" style={{ width: "6rem" }}>
+              <TableCell
+                className=" text-sm font-semibold"
+                align="left"
+                style={{ width: "6rem" }}
+              >
                 Team
               </TableCell>
-              <TableCell className=" text-sm font-semibold" style={{ width: "4rem" }} align="center">
+              <TableCell
+                className=" text-sm font-semibold"
+                style={{ width: "4rem" }}
+                align="center"
+              >
                 W
               </TableCell>
-              <TableCell className=" text-sm font-semibold" style={{ width: "4rem" }} align="center">
+              <TableCell
+                className=" text-sm font-semibold"
+                style={{ width: "4rem" }}
+                align="center"
+              >
                 L
               </TableCell>
-              <TableCell style={{ fontStyle: "bold", width: "4rem" }} className=" text-sm font-semibold" align="center">
+              <TableCell
+                style={{ fontStyle: "bold", width: "4rem" }}
+                className=" text-sm font-semibold"
+                align="center"
+              >
                 WP
               </TableCell>
             </TableRow>
@@ -49,18 +88,24 @@ export default function DivisionStandings({ data, isNFL = false }: { data: any; 
                   scope="row"
                   sx={{
                     fontWeight:
-                      data.homeTeam.team.location.includes(team.team) || data.awayTeam.team.location.includes(team.team)
+                      data.homeTeam.team.location.includes(team.team) ||
+                      data.awayTeam.team.location.includes(team.team)
                         ? "700"
                         : "400",
+                    color: "#06c",
+                    cursor: "pointer",
                   }}
                 >
-                  {team.team}
+                  <Link target="_blank" href={`/${league}/team/${team.id}`}>
+                    {team.team}
+                  </Link>
                 </TableCell>
 
                 <TableCell
                   sx={{
                     fontWeight:
-                      data.homeTeam.team.location.includes(team.team) || data.awayTeam.team.location.includes(team.team)
+                      data.homeTeam.team.location.includes(team.team) ||
+                      data.awayTeam.team.location.includes(team.team)
                         ? "700"
                         : "400",
                   }}
@@ -71,7 +116,8 @@ export default function DivisionStandings({ data, isNFL = false }: { data: any; 
                 <TableCell
                   sx={{
                     fontWeight:
-                      data.homeTeam.team.location.includes(team.team) || data.awayTeam.team.location.includes(team.team)
+                      data.homeTeam.team.location.includes(team.team) ||
+                      data.awayTeam.team.location.includes(team.team)
                         ? "700"
                         : "400",
                   }}
@@ -82,7 +128,8 @@ export default function DivisionStandings({ data, isNFL = false }: { data: any; 
                 <TableCell
                   sx={{
                     fontWeight:
-                      data.homeTeam.team.location.includes(team.team) || data.awayTeam.team.location.includes(team.team)
+                      data.homeTeam.team.location.includes(team.team) ||
+                      data.awayTeam.team.location.includes(team.team)
                         ? "700"
                         : "400",
                   }}

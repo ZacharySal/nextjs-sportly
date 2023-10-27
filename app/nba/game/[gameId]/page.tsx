@@ -19,10 +19,13 @@ import MatchupPredictor from "@/app/_components/MatchupPredictor";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Page({ params }: { params: { gameId: string } }) {
-  const [userSelection, setUserSelection] = useState("recap");
+  const [userSelection, setUserSelection] = useState("gamecast");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nba/gameData/${params.gameId}`, fetcher);
+  const { data, isLoading } = useSwr(
+    `https://nextjs-sportly.vercel.app/api/nba/gameData/${params.gameId}`,
+    fetcher
+  );
 
   function teamStats() {
     return (
@@ -30,53 +33,73 @@ export default function Page({ params }: { params: { gameId: string } }) {
         <Box className="w-full flex flex-col gap-2 mb-5">
           <Box className="flex flex-row gap-1 justify-start items-center">
             <Image
-              src={`/nba/${data.homeTeam.team.name.replace(" ", "").toLowerCase()}.png`}
+              src={`/nba/${data.homeTeam.team.name
+                .replace(" ", "")
+                .toLowerCase()}.png`}
               width={100}
               height={100}
               className="w-8 object-contain"
               alt="home team logo"
             />
-            <Typography className="opacity-70 font-semibold">{data.homeTeam.team.name} Stats</Typography>
+            <Typography className="opacity-70 font-semibold">
+              {data.homeTeam.team.name} Stats
+            </Typography>
           </Box>
           <Box className="grid grid-cols-3 gap-1">
-            {Object.entries(data.awayTeamStats).map(([statName, value]: [string, any]) => (
-              <Box
-                key={uuidv4()}
-                className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md"
-              >
-                <Box className="flex flex-col justify-center gap-2 items-center">
-                  <Typography className="text-sm">{statName}</Typography>
-                  <Typography className="font-semibold text-3xl">{value.displayValue}</Typography>
-                  <Typography className="text-base opacity-70">{value.rankDisplayValue || "N/A"}</Typography>
+            {Object.entries(data.awayTeamStats).map(
+              ([statName, value]: [string, any]) => (
+                <Box
+                  key={uuidv4()}
+                  className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md"
+                >
+                  <Box className="flex flex-col justify-center gap-2 items-center">
+                    <Typography className="text-sm">{statName}</Typography>
+                    <Typography className="font-semibold text-3xl">
+                      {value.displayValue}
+                    </Typography>
+                    <Typography className="text-base opacity-70">
+                      {value.rankDisplayValue || "N/A"}
+                    </Typography>
+                  </Box>
                 </Box>
-              </Box>
-            ))}
+              )
+            )}
           </Box>
         </Box>
         <Box className="w-full flex flex-col gap-1">
           <Box className="flex flex-row gap-1 justify-start items-center">
             <Image
-              src={`/nba/${data.awayTeam.team.name.replace(" ", "").toLowerCase()}.png`}
+              src={`/nba/${data.awayTeam.team.name
+                .replace(" ", "")
+                .toLowerCase()}.png`}
               width={100}
               height={100}
               className="w-8 object-contain"
               alt="away team logo"
             />
-            <Typography className="opacity-70 font-semibold">{data.awayTeam.team.name} Stats</Typography>
+            <Typography className="opacity-70 font-semibold">
+              {data.awayTeam.team.name} Stats
+            </Typography>
           </Box>
           <Box className="grid grid-cols-3 gap-1">
-            {Object.entries(data.homeTeamStats).map(([statName, value]: [string, any]) => (
-              <Box
-                key={uuidv4()}
-                className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md"
-              >
-                <Box className="flex flex-col justify-center gap-2 items-center">
-                  <Typography className="text-sm">{statName}</Typography>
-                  <Typography className="font-semibold text-3xl">{value.displayValue}</Typography>
-                  <Typography className="text-base opacity-70">{value.rankDisplayValue || "N/A"}</Typography>
+            {Object.entries(data.homeTeamStats).map(
+              ([statName, value]: [string, any]) => (
+                <Box
+                  key={uuidv4()}
+                  className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md"
+                >
+                  <Box className="flex flex-col justify-center gap-2 items-center">
+                    <Typography className="text-sm">{statName}</Typography>
+                    <Typography className="font-semibold text-3xl">
+                      {value.displayValue}
+                    </Typography>
+                    <Typography className="text-base opacity-70">
+                      {value.rankDisplayValue || "N/A"}
+                    </Typography>
+                  </Box>
                 </Box>
-              </Box>
-            ))}
+              )
+            )}
           </Box>
         </Box>
       </>
@@ -97,15 +120,17 @@ export default function Page({ params }: { params: { gameId: string } }) {
           gameInfo={data.gameInfo}
           isDesktopScreen={isDesktopScreen}
         />
-
-        <ContainerBox
-          altColor={data.isGameStarted ? data.winningTeam.team.alternateColor : "gray"}
-          mainColor={data.isGameStarted ? data.winningTeam.team.color : "gray"}
+        <GameUserSelection
+          userSelection={userSelection}
+          setUserSelection={setUserSelection}
+          data={data}
           isDesktopScreen={isDesktopScreen}
-        >
+        />
+
+        <ContainerBox isDesktopScreen={isDesktopScreen}>
           <Box className="flex self-start flex-col justify-center items-center gap-3">
             <StadiumInfo data={data} />
-            <DivisionStandings data={data} isNFL={false} />
+            <DivisionStandings data={data} isNFL={false} league="nba" />
           </Box>
 
           <Box className="flex-col gap-5">
@@ -128,29 +153,44 @@ export default function Page({ params }: { params: { gameId: string } }) {
           gameInfo={data.gameInfo}
           isDesktopScreen={isDesktopScreen}
         />
-        <GameUserSelection userSelection={userSelection} setUserSelection={setUserSelection} data={data} />
-
-        <ContainerBox
-          altColor={data.isGameStarted ? data.winningTeam.team.alternateColor : "gray"}
-          mainColor={data.isGameStarted ? data.winningTeam.team.color : "gray"}
+        <GameUserSelection
+          userSelection={userSelection}
+          setUserSelection={setUserSelection}
+          data={data}
           isDesktopScreen={isDesktopScreen}
-        >
-          {userSelection === "recap" && (
+        />
+
+        <ContainerBox isDesktopScreen={isDesktopScreen}>
+          {userSelection === "gamecast" && (
             <Box className="w-full flex flex-col justify-center items-center gap-3">
               {data.isGameStarted && <NBABoxscore data={data} />}
-              {data.gameData.predictor && <MatchupPredictor data={data} league="nba" />}
-              <DivisionStandings data={data} isNFL={false} />
+              {data.gameData.predictor && (
+                <MatchupPredictor data={data} league="nba" />
+              )}
+              <DivisionStandings data={data} isNFL={false} league="nba" />
               <StadiumInfo data={data} />
             </Box>
           )}
 
-          {userSelection === "playbyplay" && <>{data.isGameStarted && <NBABoxscore data={data} />}</>}
+          {userSelection === "playbyplay" && (
+            <>{data.isGameStarted && <NBABoxscore data={data} />}</>
+          )}
 
-          {userSelection === "boxscore" && <>{data.isGameStarted && <NFLGameStats data={data} league="nba" />}</>}
+          {userSelection === "boxscore" && (
+            <>
+              {data.isGameStarted && <NFLGameStats data={data} league="nba" />}
+            </>
+          )}
 
           {userSelection === "stats" && teamStats()}
 
-          {userSelection === "news" && <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />}
+          {userSelection === "news" && (
+            <Articles
+              title="NBA News"
+              teamNews={data.gameData.news}
+              limit={6}
+            />
+          )}
         </ContainerBox>
       </>
     );

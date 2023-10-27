@@ -14,7 +14,9 @@ export async function GET() {
 
   const nbaWeeks = await nbaWeeksResponse.json();
 
-  const nbaDate = await fetch("https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50");
+  const nbaDate = await fetch("https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50", {
+    cache: "no-cache",
+  });
 
   if (!nbaDate.ok) {
     throw new Error("Failed to fetch NBA weeks");

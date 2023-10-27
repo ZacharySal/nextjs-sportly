@@ -19,7 +19,10 @@ export default function Home() {
   const [userSelection, setUserSelection] = useState("scoreboard");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  const { data, isLoading } = useSwr(`https://nextjs-sportly.vercel.app/api/nfl/leagueData`, fetcher);
+  const { data, isLoading } = useSwr(
+    `https://nextjs-sportly.vercel.app/api/nfl/leagueData`,
+    fetcher
+  );
 
   if (isLoading) return <Loading />;
   else {
@@ -27,22 +30,49 @@ export default function Home() {
       <main>
         {isDesktopScreen ? (
           <>
-            <LeagueHeader backgroundColor="013369" league="nfl" />
-            <ContainerBox altColor="013369" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
+            <ContainerBox
+              altColor="013369"
+              mainColor="D50A0A"
+              isDesktopScreen={isDesktopScreen}
+            >
               <AllTeams allTeams={nflDivisonTeams} league="nfl" />
               <Scoreboard seasonData={data} />
-              <Articles title={`NFL News`} teamNews={data.newsData} limit={10} />
+              <Articles
+                title={`NFL News`}
+                teamNews={data.newsData}
+                limit={10}
+              />
             </ContainerBox>
           </>
         ) : (
           <>
-            <LeagueHeader backgroundColor="013369" league="nfl" />
-            <LeagueUserSelection userSelection={userSelection} setUserSelection={setUserSelection} />
-            <ContainerBox altColor="013369" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
-              {userSelection === "teams" && <AllTeams allTeams={nflDivisonTeams} league="nfl" />}
-              {userSelection === "scoreboard" && <Scoreboard seasonData={data} />}
-              {userSelection === "standings" && <LeagueStandings standingsData={data.standings} league="nfl" />}
-              {userSelection === "news" && <Articles title={`NFL News`} teamNews={data.newsData} limit={10} />}
+            {/* <LeagueHeader backgroundColor="013369" league="nfl" /> */}
+            <LeagueUserSelection
+              userSelection={userSelection}
+              setUserSelection={setUserSelection}
+              league="nfl"
+            />
+            <ContainerBox
+              altColor="013369"
+              mainColor="D50A0A"
+              isDesktopScreen={isDesktopScreen}
+            >
+              {userSelection === "teams" && (
+                <AllTeams allTeams={nflDivisonTeams} league="nfl" />
+              )}
+              {userSelection === "scoreboard" && (
+                <Scoreboard seasonData={data} />
+              )}
+              {userSelection === "standings" && (
+                <LeagueStandings standingsData={data.standings} league="nfl" />
+              )}
+              {userSelection === "news" && (
+                <Articles
+                  title={`NFL News`}
+                  teamNews={data.newsData}
+                  limit={10}
+                />
+              )}
             </ContainerBox>
           </>
         )}

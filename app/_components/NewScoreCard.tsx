@@ -170,11 +170,11 @@ export default function ScoreCard({
           </Typography>
         </Box>
         {typeof gameDescription === "string" ? (
-          <Typography className="flex w-full justify-start items-center text-xs opacity-70 font-semibold">
+          <Typography sx={{color: gameDescription === "Final" ? "black" : "#d50a0a"}}className="flex w-full justify-start items-center text-xs opacity-80 font-semibold">
             {gameDescription}
           </Typography>
         ) : (
-          <Box className="flex w-full justify-start items-center text-xs opacity-70 font-semibold">
+          <Box className="flex w-full justify-start items-center text-xs opacity-80 font-semibold">
             {gameDescription}
           </Box>
         )}

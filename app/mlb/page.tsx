@@ -18,7 +18,10 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function Home() {
   const [userSelection, setUserSelection] = useState("scoreboard");
 
-  const { data, isLoading } = useSwr("https://nextjs-sportly.vercel.app/api/mlb/leagueData", fetcher);
+  const { data, isLoading } = useSwr(
+    "https://nextjs-sportly.vercel.app/api/mlb/leagueData",
+    fetcher
+  );
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   if (isLoading) return <Loading />;
@@ -26,8 +29,11 @@ export default function Home() {
     return isDesktopScreen ? (
       <>
         <main>
-          <LeagueHeader backgroundColor="002D72" league="mlb" />
-          <ContainerBox altColor="002D72" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
+          <ContainerBox
+            altColor="002D72"
+            mainColor="D50A0A"
+            isDesktopScreen={isDesktopScreen}
+          >
             <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
             <MLBScoreboard currentDate={data.currentDate} />
             <Articles title={`MLB News`} teamNews={data.news} limit={10} />
@@ -37,13 +43,28 @@ export default function Home() {
     ) : (
       <>
         <main>
-          <LeagueHeader backgroundColor="002D72" league="mlb" />
-          <LeagueUserSelection userSelection={userSelection} setUserSelection={setUserSelection} />
-          <ContainerBox altColor="002D72" mainColor="D50A0A" isDesktopScreen={isDesktopScreen}>
-            {userSelection === "teams" && <AllTeams allTeams={mlbDivisonTeams} league="mlb" />}
-            {userSelection === "standings" && <LeagueStandings standingsData={data.standings} league="mlb" />}
-            {userSelection === "scoreboard" && <MLBScoreboard currentDate={data.currentDate} />}
-            {userSelection === "news" && <Articles title={`MLB News`} teamNews={data.news} limit={10} />}
+          <LeagueUserSelection
+            userSelection={userSelection}
+            setUserSelection={setUserSelection}
+            league="mlb"
+          />
+          <ContainerBox
+            altColor="002D72"
+            mainColor="D50A0A"
+            isDesktopScreen={isDesktopScreen}
+          >
+            {userSelection === "teams" && (
+              <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
+            )}
+            {userSelection === "standings" && (
+              <LeagueStandings standingsData={data.standings} league="mlb" />
+            )}
+            {userSelection === "scoreboard" && (
+              <MLBScoreboard currentDate={data.currentDate} />
+            )}
+            {userSelection === "news" && (
+              <Articles title={`MLB News`} teamNews={data.news} limit={10} />
+            )}
           </ContainerBox>
         </main>
       </>

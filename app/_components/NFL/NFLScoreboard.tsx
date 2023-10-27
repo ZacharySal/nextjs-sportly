@@ -99,7 +99,7 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
 
   function nflWeekSelector() {
     return (
-      <Box className="relative z-10 w-full p-2 bg-white mb-3 rounded-xl drop-shadow-md">
+      <Box className="relative z-10 w-full p-2 bg-white mb-3 rounded-xl">
         <Typography className="mb-1 font-semibold text-xl opacity-80">NFL Scoreboard</Typography>
         <Box className="pl-2 w-full flex gap-3 items-center">
           <Box className="w-full flex flex-row overflow-x-auto justify-between items-center">
