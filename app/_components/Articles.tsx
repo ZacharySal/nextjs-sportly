@@ -20,6 +20,7 @@ function Articles({
         {title}
       </Typography>
       {teamNews.articles
+        .filter((article: any) => article.type !== "Preview")
         .slice(0, articleLimit)
         .map((article: any, index: number) => (
           <React.Fragment key={uuidv4()}>

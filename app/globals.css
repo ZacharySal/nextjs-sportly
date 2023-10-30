@@ -61,7 +61,7 @@ main {
 }
 
 .stat-table tbody tr:nth-child(odd) {
-  background-color: #edeef0;
+  background-color: hsl(0, 0%, 97%);
 }
 
 /* STANDINGS TABLE */
@@ -75,8 +75,7 @@ main {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.standings-table > * td,
-th {
+.standings-table-cell {
   padding: 6px 8px;
   white-space: nowrap;
 }
@@ -177,8 +176,8 @@ th {
   content: attr(data-awayteamchance);
   font-weight: 900;
   font-size: 1.15rem;
-  top: 10%;
-  left: 5%;
+  top: 5%;
+  left: 2%;
 }
 
 .matchup-predictor::after {
@@ -186,8 +185,8 @@ th {
   content: attr(data-hometeamchance);
   font-size: 1.15rem;
   font-weight: 900;
-  bottom: 10%;
-  right: 5%;
+  bottom: 5%;
+  right: 2%;
 }
 
 .circle-border {
@@ -284,16 +283,6 @@ th {
   right: 0;
   bottom: 0;
   top: 4rem;
-}
-
-.selection-active::before {
-  bottom: -1.25rem;
-  left: 0;
-  right: 0;
-  content: "";
-  background-color: #d50a0a;
-  height: 4px;
-  position: absolute;
 }
 
 .user-selection-logo::after {
@@ -428,5 +417,134 @@ th {
 
 .article-container:hover .article-headline{
   color: #1a49a0;
-
 }
+
+.team-schedule-card {
+  cursor: pointer;
+}
+
+.team-schedule-card:hover {
+  background-color: #fff;
+}
+
+.anchor-link {
+  color: #06c;
+}
+
+.anchor-link:hover{
+  color:  rgb(1, 70, 138)
+}
+
+.team-link:hover {
+  color: #06c;
+}
+
+.nav-selection {
+  min-height: 100%;
+  color: rgba(0,0,0,0.8);
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  position: relative;
+  font-size:13px;
+  cursor: pointer;
+}
+
+.nav-selection {
+  transition: all 0.35s;
+}
+
+.nav-selection::before {
+  transition: all 0.35s;
+  bottom: 0rem;
+  left: 0;
+  right: 0;
+  content: "";
+  background-color: #d50a0a;
+  height: 0px;
+  position: absolute;
+}
+
+.testing:hover > a:not(.selection-active) {
+  opacity: 0.5;
+}
+
+.testing:hover > .sub-selection:not(.selection-active) {
+  opacity: 0.5;
+}
+
+.testing .sub-selection:hover {
+  opacity: 1 !important;
+}
+
+.testing > .sub-selection:not(.selection-active) {
+  opacity: 0.5;
+}
+
+
+.testing:hover > .selection-active::before {
+  height: 0px;
+}
+
+.selection-active::before {
+  height: 4px;
+}
+
+.testing a:hover {
+  opacity: 1 !important;
+}
+
+.testing a:hover::before {
+  height: 4px;
+}
+
+.testing div:hover::before {
+  height: 2px;
+}
+
+.sub-selector .selection-active::before {
+  height: 2px;
+}
+
+.playbyplay-table tr:nth-child(odd){
+  background-color: hsl(0, 0%, 97%);
+}
+
+.menu-option:hover .menu-dropdown {
+  display: block;
+}
+
+.menu-dropdown:hover {
+  display: block;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 2.75rem;
+  left: 0;
+  width: max-content;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  z-index: 40;
+}
+
+.menu-dropdown-team:hover {
+  background-color: white;
+}
+
+.menu-dropdown-option {
+  cursor: pointer;
+}
+
+.menu-dropdown-option:hover {
+  background-color: #d50a0a;
+  opacity: 1;
+  color: white;
+}
+

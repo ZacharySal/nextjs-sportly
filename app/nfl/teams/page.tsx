@@ -3,20 +3,18 @@
 import { Box, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import useSwr from "swr";
-import { nflDivisonTeams } from "../_lib/constants";
-import Articles from "../_components/Articles";
-import ContainerBox from "../_components/ContainerBox";
-import Scoreboard from "../_components/NFL/NFLScoreboard";
-import LeagueHeader from "../_components/LeagueHeader";
-import AllTeams from "../_components/AllTeams";
-import LeagueUserSelection from "../_components/LeagueUserSelection";
-import LeagueStandings from "../_components/LeagueStandings";
-import Loading from "../_components/Loading";
+import { nflDivisonTeams } from "@/app/_lib/constants";
+import Articles from "@/app/_components/Articles";
+import ContainerBox from "@/app/_components/ContainerBox";
+import AllTeams from "@/app/_components/AllTeams";
+import LeagueHeader from "@/app/_components/LeagueHeader";
+import LeagueUserSelection from "@/app/_components/LeagueUserSelection";
+import Loading from "@/app/_components/Loading";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home() {
-  const [userSelection, setUserSelection] = useState("scoreboard");
+  const [userSelection, setUserSelection] = useState("teams");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const { data, isLoading } = useSwr(
@@ -33,7 +31,7 @@ export default function Home() {
             <LeagueUserSelection userSelection={userSelection} league="nfl" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
               <Box className="basis-2/3">
-                <Scoreboard seasonData={data} />
+                <AllTeams allTeams={nflDivisonTeams} league="nfl" />
               </Box>
               <Box className="basis-1/4">
                 <Articles
@@ -49,7 +47,7 @@ export default function Home() {
             {/* <LeagueHeader backgroundColor="013369" league="nfl" /> */}
             <LeagueUserSelection userSelection={userSelection} league="nfl" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <Scoreboard seasonData={data} />
+              <AllTeams allTeams={nflDivisonTeams} league="nfl" />
             </ContainerBox>
           </>
         )}

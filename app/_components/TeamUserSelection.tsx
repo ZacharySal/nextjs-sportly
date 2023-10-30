@@ -1,35 +1,35 @@
 import { Box, Typography } from "@mui/material";
+import Link from "next/link";
 
 export default function TeamUserSelection({
   userSelection,
-  setUserSelection,
 }: {
   userSelection: string;
-  setUserSelection: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const isSelected = (selection: string) => selection === userSelection;
 
   return (
-    <Box className="block drop-shadow-md md:hidden w-full h-10 flex justify-start items-center gap-3 bg-white pl-5">
-      <Typography
-        onClick={() => setUserSelection("schedule")}
-        className={`${userSelection === "schedule" && "selection-active"} h-full flex items-center relative text-sm`}
-      >
-        Schedule
-      </Typography>
-      <Typography
-        onClick={() => setUserSelection("stats")}
-        className={`${userSelection === "stats" && "selection-active"} h-full flex items-center relative text-sm`}
-      >
-        Stats
-      </Typography>
-
-      <Typography
-        onClick={() => setUserSelection("news")}
-        className={`${userSelection === "news" && "selection-active"} h-full flex items-center relative text-sm`}
-      >
-        News
-      </Typography>
+    <Box className="w-full bg-white">
+      <Box className="drop-shadow-md w-full 2xl:w-1/2 max-w-full overflow-x-auto h-10 flex justify-start 2xl:justify-center items-center gap-3 py-2 pl-5">
+        <Link href={`home`}>
+          <Typography
+            className={`${
+              isSelected("home") && "selection-active"
+            } flex items-center relative text-sm cursor-pointer`}
+          >
+            Home
+          </Typography>
+        </Link>
+        {/* <Link href={`stats`}>
+          <Typography
+            className={`${
+              isSelected("stats") && "selection-active"
+            } flex items-center relative text-sm cursor-pointer`}
+          >
+            Stats
+          </Typography>
+        </Link> */}
+      </Box>
     </Box>
   );
 }

@@ -37,7 +37,9 @@ export default function ScoreCard({
 
   const setTeamImageSrc = (teamName: string) => {
     try {
-      const src = require(`public/${league}/${teamName.replace(" ", "").toLowerCase()}.png`);
+      const src = require(`public/${league}/${teamName
+        .replace(" ", "")
+        .toLowerCase()}.png`);
       return src;
     } catch {
       return `/default.png`;
@@ -83,7 +85,9 @@ export default function ScoreCard({
     const odds = typeof game?.odds == "undefined" ? "" : game.odds[0].details;
     gameDescription = (
       <Box className="flex flex-col">
-        <Typography className="text-xs opacity-90 font-semibold">{date}</Typography>
+        <Typography className="text-xs opacity-90 font-semibold">
+          {date}
+        </Typography>
         <Typography className="text-xs opacity-70">{channel}</Typography>
         <Typography className="text-xs opacity-70">{odds}</Typography>
       </Box>
@@ -103,7 +107,7 @@ export default function ScoreCard({
   const winner = getWinner();
 
   return (
-    <Link href={gameDetailsFinal ? `/${league}/game/${gameId}` : ""}>
+    <Link href={gameDetailsFinal ? `/${league}/game/${gameId}/home` : ""}>
       <Box className="w-full grid grid-cols-[1fr_25%] gap-3 py-2">
         {/* 1ST COLUMN: GAME INFO */}
         <Box className="w-full grid grid-cols-[1fr_auto] items-center grid-rows-[1fr_1fr] score-cell relative">
@@ -118,7 +122,13 @@ export default function ScoreCard({
               className="w-7 object-contain"
             />
             <Typography
-              sx={{ opacity: awayTeam === winner || game.status.type.description === "Scheduled" ? "1" : "0.6" }}
+              sx={{
+                opacity:
+                  awayTeam === winner ||
+                  game.status.type.description === "Scheduled"
+                    ? "1"
+                    : "0.6",
+              }}
               className="text-sm font-semibold tracking-wide md:text-base"
             >
               {awayTeamName}
@@ -126,7 +136,13 @@ export default function ScoreCard({
           </Box>
           {/* AWAY TEAM SCORE */}
           <Typography
-            sx={{ opacity: awayTeam === winner || game.status.type.description === "Scheduled" ? "1" : "0.6" }}
+            sx={{
+              opacity:
+                awayTeam === winner ||
+                game.status.type.description === "Scheduled"
+                  ? "1"
+                  : "0.6",
+            }}
             className={`${
               awayTeam === winner ? "winning-score" : ""
             } text-sm text-end font-semibold md:text-base md:font-bold`}
@@ -149,7 +165,13 @@ export default function ScoreCard({
               className="w-7 object-contain"
             />
             <Typography
-              sx={{ opacity: homeTeam === winner || game.status.type.description === "Scheduled" ? "1" : "0.6" }}
+              sx={{
+                opacity:
+                  homeTeam === winner ||
+                  game.status.type.description === "Scheduled"
+                    ? "1"
+                    : "0.6",
+              }}
               className="text-sm md:text-base font-semibold tracking-wide"
             >
               {homeTeamName}
@@ -157,7 +179,13 @@ export default function ScoreCard({
           </Box>
           {/* HOME TEAM SCORE */}
           <Typography
-            sx={{ opacity: homeTeam === winner || game.status.type.description === "Scheduled" ? "1" : "0.6" }}
+            sx={{
+              opacity:
+                homeTeam === winner ||
+                game.status.type.description === "Scheduled"
+                  ? "1"
+                  : "0.6",
+            }}
             className={`${
               homeTeam === winner ? "winning-score" : ""
             } text-sm text-end font-semibold md:text-base md:font-bold`}
@@ -170,7 +198,10 @@ export default function ScoreCard({
           </Typography>
         </Box>
         {typeof gameDescription === "string" ? (
-          <Typography sx={{color: gameDescription === "Final" ? "black" : "#d50a0a"}}className="flex w-full justify-start items-center text-xs opacity-80 font-semibold">
+          <Typography
+            sx={{ color: gameDescription === "Final" ? "black" : "#d50a0a" }}
+            className="flex w-full justify-start items-center text-xs opacity-80 font-semibold"
+          >
             {gameDescription}
           </Typography>
         ) : (
@@ -180,7 +211,9 @@ export default function ScoreCard({
         )}
       </Box>
       {typeof game.notes[0]?.headline !== "undefined" && (
-        <Typography className="text-xs p-1 opacity-60 mt-[-0.35rem]">{game.notes[0].headline}</Typography>
+        <Typography className="text-xs p-1 opacity-60 mt-[-0.35rem]">
+          {game.notes[0].headline}
+        </Typography>
       )}
     </Link>
   );

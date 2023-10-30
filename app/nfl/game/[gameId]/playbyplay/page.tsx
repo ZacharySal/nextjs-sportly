@@ -3,34 +3,16 @@
 import { Box, Typography, useMediaQuery, Divider } from "@mui/material";
 import Image from "next/image";
 import ContainerBox from "@/app/_components/ContainerBox";
-import GameHeader from "@/app/_components/GameHeader";
-import Articles from "@/app/_components/Articles";
 import useSwr from "swr";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import React from "react";
-import StadiumInfo from "@/app/_components/StadiumInfo";
-import NFLBoxscore from "@/app/_components/NFL/NFLBoxscore";
 import DivisionStandings from "@/app/_components/DivisionStandings";
-import NFLScoringPlays from "@/app/_components/NFL/NFLScoringPlays";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
-import NFLGameStats from "@/app/_components/NFL/NFLGameStats";
 import NFLPlayByPlay from "@/app/_components/NFL/NFLPlayByPlay";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
-import GameRecapArticle from "@/app/_components/GameRecapArticle";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-function convertDate(date: string) {
-  return new Date(date).toLocaleString("en-US", {
-    month: "short",
-    day: "2-digit",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
-}
 
 export default function TeamPage({ params }: { params: { gameId: string } }) {
   const { data, isLoading } = useSwr(
@@ -38,11 +20,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
     fetcher
   );
 
-  if (!isLoading) {
-    console.log(data);
-  }
-
-  const [userSelection, setUserSelection] = useState("gamecast");
+  const [userSelection, setUserSelection] = useState("playbyplay");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   function gameLeaders() {
@@ -237,81 +215,6 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
     );
   }
 
-  function teamStats() {
-    return (
-      <>
-        <Box className="w-full flex flex-col gap-2 mb-5">
-          <Box className="flex flex-row gap-1 justify-start items-center">
-            <Image
-              src={`/nfl/${data.gameData.header.competitions[0].competitors[0].team.name.toLowerCase()}.png`}
-              width={100}
-              height={100}
-              alt="team logo"
-              className="w-8 object-contain"
-            />
-            <Typography className="opacity-70 font-semibold">
-              {data.homeTeam.team.name} Stats
-            </Typography>
-          </Box>
-          <Box className="grid grid-cols-3 gap-1">
-            {Object.entries(data.awayTeamStats).map(
-              ([statName, value]: [string, any]) => (
-                <React.Fragment key={uuidv4()}>
-                  <Box className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md">
-                    <Box className="flex flex-col justify-center gap-2 items-center">
-                      <Typography className="text-sm">{statName}</Typography>
-                      <Typography className="font-semibold text-3xl">
-                        {value.displayValue}
-                      </Typography>
-                      <Typography className="text-base opacity-70">
-                        {value.rankDisplayValue}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </React.Fragment>
-              )
-            )}
-          </Box>
-        </Box>
-        <Box className="w-full flex flex-col gap-2">
-          <Box className="flex flex-row gap-1 justify-start items-center">
-            <Image
-              src={`/nfl/${data.gameData.header.competitions[0].competitors[1].team.name
-                .replace(" ", "")
-                .toLowerCase()}.png`}
-              width={100}
-              height={100}
-              alt="team logo"
-              className="w-8 object-contain"
-            />
-            <Typography className="opacity-70 font-semibold">
-              {data.awayTeam.team.name} Stats
-            </Typography>
-          </Box>
-          <Box className="grid grid-cols-3 gap-1">
-            {Object.entries(data.homeTeamStats).map(
-              ([statName, value]: [string, any]) => (
-                <React.Fragment key={uuidv4()}>
-                  <Box className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md">
-                    <Box className="flex flex-col justify-center gap-2 items-center">
-                      <Typography className="text-sm">{statName}</Typography>
-                      <Typography className="font-semibold text-3xl">
-                        {value.displayValue}
-                      </Typography>
-                      <Typography className="text-base opacity-70">
-                        {value.rankDisplayValue}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </React.Fragment>
-              )
-            )}
-          </Box>
-        </Box>
-      </>
-    );
-  }
-
   if (isLoading) {
     return <Loading />;
   } else {
@@ -319,122 +222,27 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
       <>
         {isDesktopScreen ? (
           <>
-            <GameHeader
-              backgroundColor={data.backgroundColor}
-              homeTeam={data.homeTeam}
-              awayTeam={data.awayTeam}
-              winningTeam={data.winningTeam}
-              gameInfo={data.gameInfo}
-              league="nfl"
-              isGameStarted={data.isGameStarted}
-              isDesktopScreen={isDesktopScreen}
-            />
-            <GameUserSelection
-              userSelection={userSelection}
-              setUserSelection={setUserSelection}
-              isDesktopScreen={isDesktopScreen}
-              data={data}
-            />
-
+            <GameUserSelection userSelection={userSelection} data={data} />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <Box className="flex self-start flex-col justify-center items-center gap-3">
+              <Box className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+                {data.gameData.predictor && (
+                  <MatchupPredictor data={data} league={"nfl"} />
+                )}
                 {data.gameData.leaders[0].leaders.length > 0 &&
                   data.gameData.leaders[1].leaders.length > 0 &&
                   gameLeaders()}
-                <StadiumInfo data={data} />
-              </Box>
-
-              {userSelection === "boxscore" && (
-                <NFLGameStats data={data} league="nfl" />
-              )}
-
-              {userSelection === "gamecast" && data.isGameStarted && (
-                <Box className="flex flex-col gap-5">
-                  <GameRecapArticle data={data} />
-                  <NFLBoxscore data={data} />
-                  <NFLScoringPlays data={data} />
-                </Box>
-              )}
-
-              {userSelection === "playbyplay" && <NFLPlayByPlay data={data} />}
-
-              <Box className="flex self-start flex-col justify-center items-center gap-3">
                 <DivisionStandings data={data} isNFL={true} league="nfl" />
-                <Articles
-                  title="NFL News"
-                  teamNews={data.gameData.news}
-                  limit={6}
-                />
+              </Box>
+              <Box className="flex flex-col gap-5 basis-2/3">
+                <NFLPlayByPlay data={data} />
               </Box>
             </ContainerBox>
           </>
         ) : (
           <>
-            <GameHeader
-              backgroundColor={"#013369"}
-              homeTeam={data.homeTeam}
-              awayTeam={data.awayTeam}
-              winningTeam={data.winningTeam}
-              gameInfo={data.gameInfo}
-              league="nfl"
-              isGameStarted={data.isGameStarted}
-              isDesktopScreen={isDesktopScreen}
-            />
-
-            <GameUserSelection
-              userSelection={userSelection}
-              setUserSelection={setUserSelection}
-              isDesktopScreen={isDesktopScreen}
-              data={data}
-            />
+            <GameUserSelection userSelection={userSelection} data={data} />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
-              {userSelection === "gamecast" && (
-                <>
-                  <Box className="w-full flex flex-col justify-center items-center gap-3">
-                    {data.isGameStarted ? (
-                      <>
-                        <NFLBoxscore data={data} />
-                        {data.gameData.leaders[0].leaders.length > 0 &&
-                          data.gameData.leaders[1].leaders.length > 0 &&
-                          gameLeaders()}
-                        <NFLScoringPlays data={data} />
-                        {data.gameData.predictor && (
-                          <MatchupPredictor data={data} league={"nfl"} />
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {data.gameData.predictor && (
-                          <MatchupPredictor data={data} league={"nfl"} />
-                        )}
-                        {data.gameData.leaders[0].leaders.length > 0 &&
-                          data.gameData.leaders[1].leaders.length > 0 &&
-                          gameLeaders()}
-                      </>
-                    )}
-                    <DivisionStandings data={data} isNFL={true} league="nfl" />
-                    <StadiumInfo data={data} />
-                  </Box>
-                </>
-              )}
-
-              {/* {userSelection === "stats" && teamStats()} */}
-
-              {userSelection === "boxscore" && (
-                <NFLGameStats data={data} league="nfl" />
-              )}
-
-              {userSelection === "playbyplay" && <NFLPlayByPlay data={data} />}
-
-              {userSelection === "news" && (
-                <>
-                  <Articles
-                    title="NFL News"
-                    teamNews={data.gameData.news}
-                    limit={6}
-                  />
-                </>
-              )}
+              <NFLPlayByPlay data={data} />
             </ContainerBox>
           </>
         )}

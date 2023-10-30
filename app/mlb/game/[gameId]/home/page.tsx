@@ -1,7 +1,7 @@
 "use client";
 
-import GameHeader from "@/app/_components/GameHeader";
 import ContainerBox from "@/app/_components/ContainerBox";
+import GameRecapArticle from "@/app/_components/GameRecapArticle";
 import Articles from "@/app/_components/Articles";
 import { v4 as uuidv4 } from "uuid";
 import { Box, Typography, useMediaQuery } from "@mui/material";
@@ -112,56 +112,39 @@ export default function Page({ params }: { params: { gameId: string } }) {
       <>
         {isDesktopScreen ? (
           <>
-            <GameHeader
-              backgroundColor={data.backgroundColor}
-              homeTeam={data.homeTeam}
-              awayTeam={data.awayTeam}
-              winningTeam={data.winningTeam}
-              isGameStarted={data.isGameStarted}
-              league="mlb"
-              gameInfo={data.gameInfo}
-              isDesktopScreen={isDesktopScreen}
-            />
-
             <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <Box className="flex self-start flex-col justify-center items-center gap-3">
+              <Box className="flex self-start basis-1/4  flex-col justify-center items-center gap-3">
                 <StadiumInfo data={data} />
                 <DivisionStandings data={data} isNFL={false} league="mlb" />
               </Box>
 
-              <Box className="flex flex-col gap-5">
+              <Box className="flex flex-col basis-1/2 gap-5">
                 {data.isGameStarted && data.homeTeam.linescores && (
                   <MLBBoxscore data={data} />
                 )}
-                {data.isGameStarted && <MLBScoringPlays data={data} />}
-                {teamStats()}
+                {data.isGameStarted && (
+                  <>
+                    <GameRecapArticle data={data} />
+                    <MLBScoringPlays data={data} />
+                  </>
+                )}
               </Box>
 
-              <Articles
-                title="MLB News"
-                teamNews={data.gameData.news}
-                limit={6}
-              />
+              <Box className="basis-1/4 flex flex-col gap-3">
+                {data.gameData.predictor && (
+                  <MatchupPredictor data={data} league="mlb" />
+                )}
+                <Articles
+                  title="MLB News"
+                  teamNews={data.gameData.news}
+                  limit={6}
+                />
+              </Box>
             </ContainerBox>
           </>
         ) : (
           <>
-            <GameHeader
-              backgroundColor={"#002D72"}
-              homeTeam={data.homeTeam}
-              awayTeam={data.awayTeam}
-              winningTeam={data.winningTeam}
-              isGameStarted={data.isGameStarted}
-              league="mlb"
-              gameInfo={data.gameInfo}
-              isDesktopScreen={isDesktopScreen}
-            />
-            <GameUserSelection
-              userSelection={userSelection}
-              setUserSelection={setUserSelection}
-              data={data}
-              isDesktopScreen={isDesktopScreen}
-            />
+            <GameUserSelection userSelection={userSelection} data={data} />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
               {userSelection === "gamecast" && (
                 <Box className="w-full flex flex-col justify-center items-center gap-3">

@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import {
   mlbDivisonTeams,
@@ -7,24 +7,25 @@ import {
 } from "../_lib/constants";
 
 export default function GameHeader({
-  backgroundColor,
-  homeTeam,
-  awayTeam,
-  winningTeam,
-  gameInfo,
   league,
-  isGameStarted,
-  isDesktopScreen,
+  data,
 }: {
-  backgroundColor: string;
-  homeTeam: any;
-  awayTeam: any;
-  winningTeam: any;
-  gameInfo: any;
   league: string;
-  isGameStarted: boolean;
-  isDesktopScreen: boolean;
+  data: any;
 }) {
+  console.log(data);
+  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const homeTeam = data.header.competitions[0].competitors[0];
+  const awayTeam = data.header.competitions[0].competitors[1];
+  const gameInfo = data.header.competitions[0];
+  const isGameStarted =
+    league === "nfl"
+      ? data.drives
+        ? true
+        : false
+      : data.plays?.length > 0
+      ? true
+      : false;
   const gameDate = new Date(gameInfo.date);
 
   function findTeamDivison(teamName: string) {
@@ -42,18 +43,13 @@ export default function GameHeader({
   return (
     <>
       {isDesktopScreen ? (
-        <Box className="bg-white w-full flex justify-center border-b border-[rgba(0,0,0,0.2)] z-40 sticky top-[3rem]">
-          <Box
-            sx={{
-              backgroundColor: "#fff",
-            }}
-            className="w-full 2xl:w-2/5 h-28 flex-row flex justify-center items-center gap-10 relative"
-          >
+        <Box className="bg-white w-full flex justify-center border-b border-[rgba(0,0,0,0.2)] z-40 sticky top-[2.75rem]">
+          <Box className="w-full 2xl:w-2/5 h-28 flex-row flex justify-center items-center gap-10 relative">
             <Box className="flex flex-row justify-center items-center gap-3">
               <Box className="flex flex-col text-black">
                 <Box
                   sx={{ backgroundColor: "#" + awayTeam.team.color }}
-                  className="mr-10 game-header-logo-wrapper game-header-logo-wrapper--left left-0 2xl:left-[-150px]"
+                  className="mr-10 game-header-logo-wrapper game-header-logo-wrapper--left md:left-0 xl:left-[150px] 2xl:left-[-150px]"
                 >
                   <Image
                     src={`/${league}/${awayTeam.team.name
@@ -144,7 +140,7 @@ export default function GameHeader({
               </Box>
               <Box
                 sx={{ backgroundColor: "#" + homeTeam.team.color }}
-                className="ml-10 game-header-logo-wrapper game-header-logo-wrapper--right right-0 2xl:right-[-150px]"
+                className="ml-10 game-header-logo-wrapper game-header-logo-wrapper--right md:right-0 xl:right-[150px]  2xl:right-[-150px]"
               >
                 <Image
                   src={`/${league}/${homeTeam.team.name

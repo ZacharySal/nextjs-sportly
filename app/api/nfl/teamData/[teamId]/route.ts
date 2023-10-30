@@ -21,7 +21,7 @@ export async function GET(request: Request,{ params }: { params: { teamId: strin
 
     const teamSchedule = await teamScheduleResponse.json();
 
-    const teamStatsResponse = await fetch(`https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/1/teams/${params.teamId}/statistics`);
+    const teamStatsResponse = await fetch(`https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/2/teams/${params.teamId}/statistics`);
 
     if(!teamStatsResponse.ok) {
         throw new Error("Failed to fetch team data")

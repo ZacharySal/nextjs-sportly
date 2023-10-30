@@ -9,7 +9,7 @@ import AllTeams from "../_components/AllTeams";
 import { nbaDivisionTeams } from "../_lib/constants";
 import useSwr from "swr";
 import { useState } from "react";
-import { useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import Loading from "../_components/Loading";
 import LeagueStandings from "../_components/LeagueStandings";
 
@@ -31,24 +31,19 @@ export default function Home() {
       <main>
         {isDesktopScreen ? (
           <>
-            <LeagueUserSelection
-              userSelection={userSelection}
-              setUserSelection={setUserSelection}
-              league="nba"
-            />
+            <LeagueUserSelection userSelection={userSelection} league="nba" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <AllTeams allTeams={nbaDivisionTeams} league="nba" />
-              <NBAScoreboard currentDate={data.currentDate} />
-              <Articles title={`NBA News`} teamNews={data.news} limit={10} />
+              <Box className="basis-2/3">
+                <NBAScoreboard currentDate={data.currentDate} />
+              </Box>
+              <Box className="basis-1/4">
+                <Articles title={`NBA News`} teamNews={data.news} limit={10} />
+              </Box>
             </ContainerBox>
           </>
         ) : (
           <>
-            <LeagueUserSelection
-              userSelection={userSelection}
-              setUserSelection={setUserSelection}
-              league="nba"
-            />
+            <LeagueUserSelection userSelection={userSelection} league="nba" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
               {userSelection === "teams" && (
                 <AllTeams allTeams={nbaDivisionTeams} league="nba" />
@@ -57,7 +52,7 @@ export default function Home() {
                 <NBAScoreboard currentDate={data.currentDate} />
               )}
               {userSelection === "standings" && (
-                <LeagueStandings standingsData={data.standings} league="nba" />
+                <LeagueStandings data={data} league="nba" />
               )}
               {userSelection === "news" && (
                 <Articles title={`NBA News`} teamNews={data.news} limit={10} />

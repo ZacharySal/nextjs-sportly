@@ -7,6 +7,7 @@ import { mlbDivisonTeams } from "../_lib/constants";
 import ContainerBox from "../_components/ContainerBox";
 import Articles from "../_components/Articles";
 import AllTeams from "../_components/AllTeams";
+import { Box } from "@mui/material";
 import LeagueHeader from "../_components/LeagueHeader";
 import LeagueUserSelection from "../_components/LeagueUserSelection";
 import Loading from "../_components/Loading";
@@ -28,30 +29,25 @@ export default function Home() {
   else {
     return isDesktopScreen ? (
       <main>
-        <LeagueUserSelection
-          userSelection={userSelection}
-          setUserSelection={setUserSelection}
-          league="mlb"
-        />
+        <LeagueUserSelection userSelection={userSelection} league="mlb" />
         <ContainerBox isDesktopScreen={isDesktopScreen}>
-          <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
-          <MLBScoreboard currentDate={data.currentDate} />
-          <Articles title={`MLB News`} teamNews={data.news} limit={10} />
+          <Box className="basis-2/3">
+            <MLBScoreboard currentDate={data.currentDate} />
+          </Box>
+          <Box className="basis-1/4">
+            <Articles title={`MLB News`} teamNews={data.news} limit={10} />
+          </Box>
         </ContainerBox>
       </main>
     ) : (
       <main>
-        <LeagueUserSelection
-          userSelection={userSelection}
-          setUserSelection={setUserSelection}
-          league="mlb"
-        />
+        <LeagueUserSelection userSelection={userSelection} league="mlb" />
         <ContainerBox isDesktopScreen={isDesktopScreen}>
           {userSelection === "teams" && (
             <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
           )}
           {userSelection === "standings" && (
-            <LeagueStandings standingsData={data.standings} league="mlb" />
+            <LeagueStandings data={data} league="mlb" />
           )}
           {userSelection === "scoreboard" && (
             <MLBScoreboard currentDate={data.currentDate} />

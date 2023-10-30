@@ -46,10 +46,11 @@ export default function MatchupPredictor({
       <Box
         className="matchup-predictor w-full bg-white rounded-xl p-2 flex justify-center items-center"
         data-awayteamchance={
-          data.gameData.predictor.awayTeam.gameProjection + "%"
+          Math.floor(data.gameData.predictor.awayTeam.gameProjection) + "%"
         }
         data-hometeamchance={
-          100 - data.gameData.predictor.awayTeam.gameProjection + "%"
+          Math.floor(100 - data.gameData.predictor.awayTeam.gameProjection) +
+          "%"
         }
       >
         <div
