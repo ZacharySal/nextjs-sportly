@@ -2,7 +2,7 @@
 
 import { Box, Typography, CircularProgress, Divider } from "@mui/material";
 import { useEffect, useState } from "react";
-import ScoreCard from "../NewScoreCard";
+import ScoreCard from "../ScoreCard";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

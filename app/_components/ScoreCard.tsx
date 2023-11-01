@@ -1,6 +1,6 @@
 "use client";
 
-import { Divider, Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,26 +15,39 @@ export default function ScoreCard({
   league: string;
   teamView: boolean;
 }) {
+  if (typeof gameInfo.competitions === "undefined") {
+    return null;
+  }
+
+  console.log(gameInfo);
+
+  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
   const game = gameInfo.competitions[0];
   const homeTeam = game.competitors[0];
   const awayTeam = game.competitors[1];
 
   let gameId: string;
   let gameDate: string = version === 2 ? game.date : gameInfo.date;
-  let gameDescription: string = game.status.type.description;
+  let gameDescription: any = game.status.type.description;
   let homeTeamName: string = homeTeam.team.shortDisplayName;
-  let homeTeamScore;
+  let homeTeamScore: any;
   let awayTeamName: string = awayTeam.team.shortDisplayName;
 
   const gameDetailsFinal = awayTeamName !== "TBD" || homeTeamName !== "TBD";
 
-  let awayTeamScore;
+  let awayTeamScore: any;
 
   gameDate = new Date(gameInfo.date).toLocaleDateString();
+  let gameTime = new Date(gameInfo.date).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
 
   const setTeamImageSrc = (teamName: string) => {
     try {
-      const src = require(`public/${league}/${teamName.replace(" ", "").toLowerCase()}.png`);
+      const src = require(`public/${league}/${teamName
+        .replace(" ", "")
+        .toLowerCase()}.png`);
       return src;
     } catch {
       return `/default.png`;
@@ -63,67 +76,246 @@ export default function ScoreCard({
       homeTeamScore = "";
       awayTeamScore = "";
     } else {
-      homeTeamScore = homeTeam.score;
-      awayTeamScore = awayTeam.score;
+      homeTeamScore = Number(homeTeam.score);
+      awayTeamScore = Number(awayTeam.score);
     }
   }
 
-  if (gameDescription === "In Progress" || gameDescription === "Scheduled") {
+  if (gameDescription === "In Progress") {
     gameDescription = game.status.type.shortDetail;
-  } else if (gameDescription === "Final") {
-    gameDescription = `Final • ${gameDate}`;
+  } else if (gameDescription === "Scheduled") {
+    const date = new Date(game.date).toLocaleTimeString("en-US", {
+      timeZone: "America/Chicago",
+      hour: "numeric",
+      minute: "2-digit",
+    });
+    const channel = game?.geoBroadcasts[0]?.media?.shortName || "";
+    const odds = typeof game?.odds == "undefined" ? "" : game.odds[0].details;
+    gameDescription = (
+      <Box className="flex flex-col">
+        <Typography className="text-xs opacity-90 font-semibold">
+          {date}
+        </Typography>
+        <Typography className="text-xs opacity-70">{channel}</Typography>
+        <Typography className="text-xs opacity-70">{odds}</Typography>
+      </Box>
+    );
   } else {
     gameDescription = gameDescription;
   }
 
-  return (
-    <Box className="w-full max-w-[25rem] h-auto grid grid-cols-[1fr_4fr_1fr] grid-rows-[1fr_2fr_2fr_3fr] rounded-xl text-start text-black p-2 gap-1 gap-y-2 drop-shadow-md bg-white">
-      <Typography className="text-xs row-start-1 col-start-1 col-span-3 md:text-sm font-semibold text-start">
-        {gameDescription}
-      </Typography>
-      {/* Home Team Name and Logo*/}
-      <Image
-        src={setTeamImageSrc(homeTeamName)}
-        width={100}
-        height={100}
-        alt="home team logo"
-        className="w-10 my-auto object-contain"
-      />
-      <Typography className="text-sm  my-auto md:text-base">{homeTeamName}</Typography>
-      <Typography className="text-center text-sm my-auto font-semibold md:text-base md:font-bold">
-        {homeTeamScore || 0}
-      </Typography>
+  const getWinner = () => {
+    if (typeof homeTeamScore === "number") {
+      return homeTeamScore > awayTeamScore ? homeTeam : awayTeam;
+    } else {
+      return null;
+    }
+  };
 
-      {/* Away Team Name and Logo*/}
-      <Image
-        src={setTeamImageSrc(awayTeamName)}
-        width={100}
-        height={100}
-        alt="away team logo"
-        className="w-10 my-auto object-contain"
-      />
-      <Typography className="text-sm md:text-base my-auto">{awayTeamName}</Typography>
-      <Typography className="text-center text-sm font-semibold md:font-bold md:text-base my-auto">
-        {awayTeamScore || 0}
-      </Typography>
+  const mobileView = () => (
+    <Link href={gameDetailsFinal ? `/${league}/game/${gameId}/home` : ""}>
+      <Box className="w-full grid grid-cols-[1fr_25%] gap-3 py-2">
+        {/* 1ST COLUMN: GAME INFO */}
+        <Box className="w-full grid grid-cols-[1fr_auto] items-center grid-rows-[1fr_1fr] score-cell relative">
+          {/* AWAY TEAM IMG AND NAME */}
+          <Box className="flex items-center gap-2">
+            <Image
+              src={setTeamImageSrc(awayTeamName)}
+              width={100}
+              height={100}
+              priority={true}
+              alt="home team logo"
+              className="w-7 object-contain"
+            />
+            <Typography
+              sx={{
+                opacity:
+                  awayTeam === winner ||
+                  game.status.type.description === "Scheduled"
+                    ? "1"
+                    : "0.6",
+              }}
+              className="text-sm font-semibold tracking-wide md:text-base"
+            >
+              {awayTeamName}
+            </Typography>
+          </Box>
+          {/* AWAY TEAM SCORE */}
+          <Typography
+            sx={{
+              opacity:
+                awayTeam === winner ||
+                game.status.type.description === "Scheduled"
+                  ? "1"
+                  : "0.6",
+            }}
+            className={`${
+              awayTeam === winner ? "winning-score" : ""
+            } text-sm text-end font-semibold md:text-base md:font-bold`}
+          >
+            {game.status.type.description === "Scheduled"
+              ? gameDetailsFinal && typeof awayTeam.records !== "undefined"
+                ? awayTeam?.records[0].summary
+                : ""
+              : awayTeamScore}
+          </Typography>
 
-      {/* CTA Buttons */}
-      <Box
-        sx={{ opacity: gameDetailsFinal ? 1 : 0.5 }}
-        className="w-full flex flex-col justify-center gap-2 col-span-3 items-center"
-      >
-        <Divider flexItem className="w-full " />
-        <Box className="w-full flex flex-row justify-around">
-          <Link href={gameDetailsFinal ? `/${league}/game/${gameId}` : ""}>
-            <div className="text-center bg-[#1b48e0] border border-[#1b48e0] rounded p-2 px-3 text-sm text-white truncate cursor-pointer">
-              Game Details
-            </div>
-          </Link>
-          <div className="hidden md:block border border-[#1b48e0] rounded p-2 px-3 text-sm bg-white font-bold text-[#1b48e0] truncate cursor-pointer">
-            Highlights
-          </div>
+          {/* HOME TEAM IMG AND NAME */}
+          <Box className="flex items-center gap-2">
+            <Image
+              src={setTeamImageSrc(homeTeamName)}
+              width={100}
+              height={100}
+              priority={true}
+              alt="home team logo"
+              className="w-7 object-contain"
+            />
+            <Typography
+              sx={{
+                opacity:
+                  homeTeam === winner ||
+                  game.status.type.description === "Scheduled"
+                    ? "1"
+                    : "0.6",
+              }}
+              className="text-sm md:text-base font-semibold tracking-wide"
+            >
+              {homeTeamName}
+            </Typography>
+          </Box>
+          {/* HOME TEAM SCORE */}
+          <Typography
+            sx={{
+              opacity:
+                homeTeam === winner ||
+                game.status.type.description === "Scheduled"
+                  ? "1"
+                  : "0.6",
+            }}
+            className={`${
+              homeTeam === winner ? "winning-score" : ""
+            } text-sm text-end font-semibold md:text-base md:font-bold`}
+          >
+            {game.status.type.description === "Scheduled"
+              ? gameDetailsFinal && typeof homeTeam.records !== "undefined"
+                ? homeTeam.records[0].summary
+                : ""
+              : homeTeamScore}
+          </Typography>
+        </Box>
+        {typeof gameDescription === "string" ? (
+          <Typography
+            sx={{ color: gameDescription === "Final" ? "black" : "#d50a0a" }}
+            className="flex w-full justify-start items-center text-xs opacity-80 font-semibold"
+          >
+            {gameDescription}
+          </Typography>
+        ) : (
+          <Box className="flex w-full justify-start items-center text-xs opacity-80 font-semibold">
+            {gameDescription}
+          </Box>
+        )}
+      </Box>
+      {typeof game.notes[0]?.headline !== "undefined" && (
+        <Typography className="text-xs p-1 opacity-60 mt-[-0.35rem]">
+          {game.notes[0].headline}
+        </Typography>
+      )}
+    </Link>
+  );
+
+  const desktopView = () => (
+    <Box className="grid grid-cols-3 p-2">
+      {/* game date, network */}
+      <Box className="min-w-full flex flex-col gap-1 col-start-1">
+        <Typography className="text-[12px]">
+          <span className="opacity-70 font-[600]">{gameTime}</span>
+        </Typography>
+        {/* away team*/}
+        <Box className="flex flex-row gap-2 items-center">
+          <Image
+            src={setTeamImageSrc(awayTeamName)}
+            width={100}
+            height={100}
+            priority={true}
+            alt="home team logo"
+            className="w-9 object-contain"
+          />
+          <Box className="flex flex-col">
+            <Typography className="text-sm font-semibold opacity-80">
+              {awayTeamName}
+            </Typography>
+            <Typography className="text-sm opacity-60">{`(${homeTeam.records[0].summary})`}</Typography>
+          </Box>
+        </Box>
+        <Box className="flex flex-row gap-2 items-center">
+          <Image
+            src={setTeamImageSrc(homeTeamName)}
+            width={100}
+            height={100}
+            priority={true}
+            alt="home team logo"
+            className="w-9 object-contain"
+          />
+          <Box className="flex flex-col">
+            <Typography className="text-sm font-semibold opacity-80">
+              {homeTeamName}
+            </Typography>
+            <Typography className="text-sm opacity-60">{`(${awayTeam.records[0].summary})`}</Typography>
+          </Box>
+        </Box>
+      </Box>
+
+      <Box className="min-w-full flex flex-col col-start-2">
+        <Box>
+          <Typography className="text-[11px] opacity-70 font-[600]">{`${game.venue.fullName}`}</Typography>
+          <Typography className="text-[11px] opacity-60]">{`${game.venue.address.city}, ${game.venue.address.state}`}</Typography>
+        </Box>
+        <Box></Box>
+      </Box>
+
+      <Box className="min-w-full flex flex-col gap-2 col-start-3">
+        <Typography className="text-[11px] opacity-60">
+          PLAYERS TO WATCH
+        </Typography>
+        {/* away team point leader */}
+        <Box className="flex flex-row items-center gap-2">
+          <Image
+            src={game.competitors[1].leaders[0].leaders[0].athlete.headshot}
+            width={100}
+            height={100}
+            priority={true}
+            alt="away team points leader"
+            className="w-[35px] h-[35px] border rounded-full object-cover"
+          />
+          <Box className="flex flex-col">
+            <Typography className="text-xs">{`${game.competitors[1].leaders[0].leaders[0].athlete.displayName} ${game.competitors[1].leaders[0].leaders[0].athlete.position.abbreviation} - ${game.competitors[0].team.abbreviation}`}</Typography>
+            <Typography className="text-xs">{`${Math.floor(
+              game.competitors[1].leaders[0].leaders[0].value
+            )} PPG`}</Typography>
+          </Box>
+        </Box>
+        <Box className="flex flex-row items-center gap-2">
+          <Image
+            src={game.competitors[0].leaders[0].leaders[0].athlete.headshot}
+            width={100}
+            height={100}
+            priority={true}
+            alt="away team points leader"
+            className="w-[35px] h-[35px] border rounded-full object-cover"
+          />
+          <Box className="flex flex-col">
+            <Typography className="text-xs">{`${game.competitors[0].leaders[0].leaders[0].athlete.displayName} ${game.competitors[0].leaders[0].leaders[0].athlete.position.abbreviation} - ${game.competitors[0].team.abbreviation}`}</Typography>
+            <Typography className="text-xs">{`${Math.floor(
+              game.competitors[0].leaders[0].leaders[0].value
+            )} PPG`}</Typography>
+          </Box>
         </Box>
       </Box>
     </Box>
   );
+
+  const winner = getWinner();
+
+  return <>{isDesktopScreen ? mobileView() : mobileView()}</>;
 }

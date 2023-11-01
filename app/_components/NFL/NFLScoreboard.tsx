@@ -8,7 +8,7 @@ import {
   Paper,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import NewScoreCard from "../NewScoreCard";
+import NewScoreCard from "../ScoreCard";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

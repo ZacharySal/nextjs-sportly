@@ -1,6 +1,6 @@
 import { Box, Typography, Divider } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import ScoreCard from "./NewScoreCard";
+import ScoreCard from "./ScoreCard";
 
 export default function SeasonSeries({ data }: { data: any }) {
   return (

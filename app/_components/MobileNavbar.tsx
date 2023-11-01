@@ -3,11 +3,11 @@ import { russo } from "../layout";
 
 export default function MobileNavbar() {
   return (
-    <nav className="w-full h-11 z-50 flex justify-start items-center flex-row sticky top-0 bg-[#2b2c2d]">
-      <div className="min-w-[12rem] h-full main-logo">
+    <Box className="w-full h-11 z-50 flex justify-between items-center flex-row sticky top-0 bg-[#2b2c2d]">
+      <Box className="w-[12rem] h-full main-logo">
         <Typography className={`${russo.className} rr`}>SPORTLY</Typography>
-      </div>
-      <Box className="w-full flex flex-row h-full gap-3 justify-start items-center ml-[-1rem]">
+      </Box>
+      <Box className="w-full basis-1/2 flex flex-row h-full gap-3 justify-between items-center pr-5">
         <Link href={`/nfl`} sx={{ textDecoration: "none" }}>
           <Typography className="text-white opacity-80">NFL</Typography>
         </Link>
@@ -18,7 +18,7 @@ export default function MobileNavbar() {
           <Typography className="text-white opacity-80">MLB</Typography>
         </Link>
       </Box>
-    </nav>
+    </Box>
   );
 }
 
