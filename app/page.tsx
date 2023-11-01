@@ -1,7 +1,17 @@
+"use client";
 import Home from "./nfl/page";
+import Navbar from "./_components/Navbar";
+import MobileNavbar from "./_components/MobileNavbar";
+import { useMediaQuery } from "@mui/material";
 
 function Page() {
-  return <Home />;
+  const isDesktopScreen = useMediaQuery("(min-width:1000px");
+  return (
+    <>
+      {isDesktopScreen ? <Navbar /> : <MobileNavbar />}
+      <Home />
+    </>
+  );
 }
 
 export default Page;
