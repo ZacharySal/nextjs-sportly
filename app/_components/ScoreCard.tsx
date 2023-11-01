@@ -304,5 +304,5 @@ export default function ScoreCard({
 
   const winner = getWinner();
 
-  return <>{isDesktopScreen ? desktopView() : mobileView()}</>;
+  return <>{isDesktopScreen ? mobileView() : mobileView()}</>;
 }
