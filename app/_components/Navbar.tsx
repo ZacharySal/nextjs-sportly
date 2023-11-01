@@ -1,6 +1,6 @@
 import { Link, Typography, Box } from "@mui/material";
-import { russo } from "../layout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { russo } from "../layout";
 import {
   nbaDivisionTeams,
   nameExceptions,
@@ -25,15 +25,6 @@ const setTeamImageSrc = (fullName: string, league: string) => {
   }
 
   return `/${league}/${teamName.replaceAll(" ", "").toLowerCase()}.png`;
-
-  // try {
-  //   const src = require(`public/${league}/${teamName
-  //     .replaceAll(" ", "")
-  //     .toLowerCase()}.png`);
-  //   return src;
-  // } catch {
-  //   return `/default.png`;
-  // }
 };
 
 export default function Navbar() {
@@ -123,24 +114,9 @@ export default function Navbar() {
   return (
     <nav className="w-full h-11 z-50 flex justify-start items-center flex-row sticky top-0 bg-[#2b2c2d]">
       <div className="min-w-[12rem] h-full main-logo">
-        <Typography
-          style={{
-            width: "75%",
-            fontSize: "1.25rem",
-            letterSpacing: "2px",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontWeight: "400",
-            color: "white",
-          }}
-          className={russo.className}
-        >
-          SPORTLY
-        </Typography>
+        <Typography className={`${russo.className} rr`}>SPORTLY</Typography>
       </div>
-      <Box className="w-full flex flex-row h-full md:justify-start md:ml-1 md:gap-20 justify-evenly ml-[-2rem]">
+      <Box className="w-full flex flex-row h-full gap-4 justify-start md:ml-1 md:gap-20 ml-[-1rem]">
         <>
           {dropDownMenu("nfl", nflDivisonTeams)}
           {dropDownMenu("nba", nbaDivisionTeams)}

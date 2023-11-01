@@ -17,46 +17,34 @@ import LeagueStandings from "../_components/LeagueStandings";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home() {
-  const [userSelection, setUserSelection] = useState("scoreboard");
-
   const { data, isLoading } = useSwr(
     "https://nextjs-sportly.vercel.app/api/mlb/leagueData",
     fetcher
   );
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
+  const desktopView = () => (
+    <>
+      <Box className="basis-2/3">
+        <MLBScoreboard currentDate={data.currentDate} />
+      </Box>
+      <Box className="basis-1/4">
+        <Articles title={`MLB News`} teamNews={data.news} limit={10} />
+      </Box>
+    </>
+  );
+
+  const mobileView = () => <MLBScoreboard currentDate={data.currentDate} />;
+
   if (isLoading) return <Loading />;
   else {
-    return isDesktopScreen ? (
-      <main>
-        <LeagueUserSelection userSelection={userSelection} league="mlb" />
+    return (
+      <>
+        <LeagueUserSelection userSelection="scoreboard" league="mlb" />
         <ContainerBox isDesktopScreen={isDesktopScreen}>
-          <Box className="basis-2/3">
-            <MLBScoreboard currentDate={data.currentDate} />
-          </Box>
-          <Box className="basis-1/4">
-            <Articles title={`MLB News`} teamNews={data.news} limit={10} />
-          </Box>
+          {isDesktopScreen ? desktopView() : mobileView()}
         </ContainerBox>
-      </main>
-    ) : (
-      <main>
-        <LeagueUserSelection userSelection={userSelection} league="mlb" />
-        <ContainerBox isDesktopScreen={isDesktopScreen}>
-          {userSelection === "teams" && (
-            <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
-          )}
-          {userSelection === "standings" && (
-            <LeagueStandings data={data} league="mlb" />
-          )}
-          {userSelection === "scoreboard" && (
-            <MLBScoreboard currentDate={data.currentDate} />
-          )}
-          {userSelection === "news" && (
-            <Articles title={`MLB News`} teamNews={data.news} limit={10} />
-          )}
-        </ContainerBox>
-      </main>
+      </>
     );
   }
 }

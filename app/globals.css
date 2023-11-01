@@ -19,6 +19,7 @@ main {
   height: 100%;
 }
 
+
 .main-logo {
   background: linear-gradient(
     118deg,
@@ -30,6 +31,19 @@ main {
     #2b2c2d 100%
   );
 }
+
+.rr {
+  font-weight: 800 !important;
+  font-size: 1.25rem !important;
+  letter-spacing: 0.05em !important;
+  width: 75% !important;
+  height: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  color: white !important;
+}
+
 .stat-table {
   min-width: 100%;
   border-collapse: collapse;
@@ -61,7 +75,7 @@ main {
 }
 
 .stat-table tbody tr:nth-child(odd) {
-  background-color: hsl(0, 0%, 97%);
+  background-color: hsl(0, 0%, 98%);
 }
 
 /* STANDINGS TABLE */
@@ -99,7 +113,7 @@ main {
 }
 
 .standings-table tr:nth-child(even of .team-stat-cell) {
-  background-color: hsl(0, 0%, 97%);
+  background-color: hsl(0, 0%, 98%);
 }
 
 .standings-first-col {
@@ -125,7 +139,7 @@ main {
 }
 
 .standings-first-col tr:nth-child(even of tr.team-info-cell) {
-  background-color: hsl(0, 0%, 97%);
+  background-color: hsl(0, 0%, 98%);
 }
 
 .button-active {
@@ -507,7 +521,7 @@ main {
 }
 
 .playbyplay-table tr:nth-child(odd){
-  background-color: hsl(0, 0%, 97%);
+  background-color: hsl(0, 0%, 98%);
 }
 
 .menu-option:hover .menu-dropdown {
@@ -516,6 +530,16 @@ main {
 
 .menu-dropdown:hover {
   display: block;
+}
+
+@media (max-width: 1000px) {
+  .menu-option:hover .menu-dropdown {
+    display: none;
+  }
+  
+  .menu-dropdown:hover {
+    display: none;
+  }
 }
 
 .menu-dropdown {
@@ -540,6 +564,22 @@ main {
 
 .menu-dropdown-option {
   cursor: pointer;
+}
+
+.menu-dropdown-option::before {
+  position: absolute;
+  content: '';
+  width: 10px;
+  height: 20px;
+  top: 0;
+  transform: translateY(-100%);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid white;
+  left: 15px;
+  background-color: transparent;
+  opacity: 1;
+  color: white;
 }
 
 .menu-dropdown-option:hover {

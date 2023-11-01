@@ -14,9 +14,12 @@ export async function GET() {
 
   const nbaWeeks = await nbaWeeksResponse.json();
 
-  const nbaDate = await fetch("https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50", {
-    cache: "no-cache",
-  });
+  const nbaDate = await fetch(
+    "https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50",
+    {
+      cache: "no-cache",
+    }
+  );
 
   if (!nbaDate.ok) {
     throw new Error("Failed to fetch NBA weeks");
@@ -24,7 +27,12 @@ export async function GET() {
 
   const nbaDateResponse = await nbaDate.json();
 
-  const nbaNewsResponse = await fetch("https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=50");
+  const nbaNewsResponse = await fetch(
+    "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=50",
+    {
+      cache: "no-cache",
+    }
+  );
 
   if (!nbaNewsResponse.ok) {
     throw new Error("Failed to fetch NBA weeks");
@@ -34,9 +42,12 @@ export async function GET() {
 
   const nbaDates = nbaWeeks.eventDate.dates.map((date: string) => date);
 
-  const standingsDataResponse = await fetch("https://cdn.espn.com/core/nba/standings?xhr=1&seasonType=1", {
-    cache: "no-cache",
-  });
+  const standingsDataResponse = await fetch(
+    "https://cdn.espn.com/core/nba/standings?xhr=1&seasonType=1",
+    {
+      cache: "no-cache",
+    }
+  );
 
   if (!standingsDataResponse.ok) {
     throw new Error("Failed to fetch NFL standings data");

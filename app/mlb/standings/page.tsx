@@ -13,7 +13,6 @@ import LeagueHeader from "@/app/_components/LeagueHeader";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home() {
-  const [userSelection, setUserSelection] = useState("standings");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const { data, isLoading } = useSwr(
@@ -21,32 +20,28 @@ export default function Home() {
     fetcher
   );
 
+  const desktopView = () => (
+    <>
+      <Box className="basis-2/3">
+        <LeagueStandings data={data} league="mlb" />
+      </Box>
+      <Box className="basis-1/4">
+        <Articles title={`MLB News`} teamNews={data.news} limit={5} />
+      </Box>
+    </>
+  );
+
+  const mobileView = () => <LeagueStandings data={data} league="mlb" />;
+
   if (isLoading) return <Loading />;
   else {
     return (
-      <main>
-        {isDesktopScreen ? (
-          <>
-            <LeagueUserSelection userSelection={userSelection} league="mlb" />
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <Box className="basis-2/3">
-                <LeagueStandings data={data} league="mlb" />
-              </Box>
-              <Box className="basis-1/4">
-                <Articles title={`mlb News`} teamNews={data.news} limit={5} />
-              </Box>
-            </ContainerBox>
-          </>
-        ) : (
-          <>
-            {/* <LeagueHeader backgroundColor="013369" league="mlb" /> */}
-            <LeagueUserSelection userSelection={userSelection} league="mlb" />
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <LeagueStandings data={data} league="mlb" />
-            </ContainerBox>
-          </>
-        )}
-      </main>
+      <>
+        <LeagueUserSelection userSelection={"standings"} league="mlb" />
+        <ContainerBox isDesktopScreen={isDesktopScreen}>
+          {isDesktopScreen ? desktopView() : mobileView()}
+        </ContainerBox>
+      </>
     );
   }
 }

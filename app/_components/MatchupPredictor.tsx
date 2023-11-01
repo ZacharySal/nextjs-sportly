@@ -1,5 +1,5 @@
-import React from "react";
 import { Box, Typography } from "@mui/material";
+import Image from "next/image";
 
 function getRGB(color: string) {
   let parsedColor = parseInt(color.substring(1), 16);
@@ -63,18 +63,24 @@ export default function MatchupPredictor({
           className="circle-border"
         >
           <div className="circle">
-            <img
+            <Image
+              width={100}
+              height={100}
+              alt="home team"
               className="matchup-image-home w-10 object-contain"
               src={`/${league}/${data.homeTeam.team.name
                 .replaceAll(" ", "")
                 .toLowerCase()}.png`}
-            ></img>
-            <img
+            />
+            <Image
+              width={100}
+              height={100}
+              alt="away team"
               className="matchup-image-away w-10 object-contain"
               src={`/${league}/${data.awayTeam.team.name
                 .replaceAll(" ", "")
                 .toLowerCase()}.png`}
-            ></img>
+            />
           </div>
         </div>
       </Box>

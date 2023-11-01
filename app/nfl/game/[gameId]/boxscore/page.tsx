@@ -3,22 +3,13 @@
 import { Box, Typography, useMediaQuery, Divider } from "@mui/material";
 import Image from "next/image";
 import ContainerBox from "@/app/_components/ContainerBox";
-import GameHeader from "@/app/_components/GameHeader";
 import Articles from "@/app/_components/Articles";
 import useSwr from "swr";
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import React from "react";
-import StadiumInfo from "@/app/_components/StadiumInfo";
-import NFLBoxscore from "@/app/_components/NFL/NFLBoxscore";
 import DivisionStandings from "@/app/_components/DivisionStandings";
-import NFLScoringPlays from "@/app/_components/NFL/NFLScoringPlays";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
 import NFLGameStats from "@/app/_components/NFL/NFLGameStats";
-import NFLPlayByPlay from "@/app/_components/NFL/NFLPlayByPlay";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
-import GameRecapArticle from "@/app/_components/GameRecapArticle";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -28,7 +19,6 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
     fetcher
   );
 
-  const [userSelection, setUserSelection] = useState("boxscore");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   function gameLeaders() {
@@ -212,54 +202,40 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
             </Typography>
           </Box>
         </Box>
-        <Divider className="my-2" />
-        <Typography
-          onClick={() => setUserSelection("boxscore")}
-          className="text-center w-full h-full text-xs text-[#06c] cursor-pointer py-1 font-semibold"
-        >
-          Full Box Score
-        </Typography>
       </Box>
     );
   }
+
+  const desktopView = () => (
+    <>
+      <Box className="flex flex-col gap-5 basis-2/3">
+        <NFLGameStats data={data} league="nfl" />
+      </Box>
+
+      <Box className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+        {data.gameData.leaders[0].leaders.length > 0 &&
+          data.gameData.leaders[1].leaders.length > 0 &&
+          gameLeaders()}
+        {data.gameData.predictor && (
+          <MatchupPredictor data={data} league={"nfl"} />
+        )}
+        <DivisionStandings data={data} isNFL={true} league="nfl" />
+        <Articles title="NFL News" teamNews={data.gameData.news} limit={6} />
+      </Box>
+    </>
+  );
+
+  const mobileView = () => <NFLGameStats data={data} league="nfl" />;
 
   if (isLoading) {
     return <Loading />;
   } else {
     return (
       <>
-        {isDesktopScreen ? (
-          <>
-            <GameUserSelection userSelection={userSelection} data={data} />
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <Box className="flex flex-col gap-5 basis-2/3">
-                <NFLGameStats data={data} league="nfl" />
-              </Box>
-
-              <Box className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
-                {data.gameData.leaders[0].leaders.length > 0 &&
-                  data.gameData.leaders[1].leaders.length > 0 &&
-                  gameLeaders()}
-                {data.gameData.predictor && (
-                  <MatchupPredictor data={data} league={"nfl"} />
-                )}
-                <DivisionStandings data={data} isNFL={true} league="nfl" />
-                <Articles
-                  title="NFL News"
-                  teamNews={data.gameData.news}
-                  limit={6}
-                />
-              </Box>
-            </ContainerBox>
-          </>
-        ) : (
-          <>
-            <GameUserSelection userSelection={userSelection} data={data} />
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <NFLGameStats data={data} league="nfl" />
-            </ContainerBox>
-          </>
-        )}
+        <GameUserSelection userSelection={"boxscore"} data={data} />
+        <ContainerBox isDesktopScreen={isDesktopScreen}>
+          {isDesktopScreen ? desktopView() : mobileView()}
+        </ContainerBox>
       </>
     );
   }

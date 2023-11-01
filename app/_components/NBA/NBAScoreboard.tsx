@@ -16,7 +16,11 @@ import useWindowDimensions from "../useWindowDimensions";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const getDaysArray = function (start: any, end: any) {
-  for (var arr = [], dt = new Date(start); dt <= new Date(end); dt.setDate(dt.getDate() + 1)) {
+  for (
+    var arr = [], dt = new Date(start);
+    dt <= new Date(end);
+    dt.setDate(dt.getDate() + 1)
+  ) {
     arr.push(new Date(dt));
   }
   return arr;
@@ -64,20 +68,28 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
 
   const [selectedYear, setSelectedYear] = useState("2023");
 
-  const daysInYear = getDaysArray(new Date(`${selectedYear}-01-01`), new Date(`${selectedYear}-12-31`));
+  const daysInYear = getDaysArray(
+    new Date(`${selectedYear}-01-01`),
+    new Date(`${selectedYear}-12-31`)
+  );
   const formattedDaysInYear = daysInYear.map((v: any) => {
     return v.toISOString().slice(0, 10);
   });
 
   const [selectedDate, setSelectedDate] = useState(formatDate(currentDate));
   const [calendarValue, setCalendarValue] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(formattedDaysInYear.indexOf(formatDate(currentDate)));
+  const [currentIndex, setCurrentIndex] = useState(
+    formattedDaysInYear.indexOf(formatDate(currentDate))
+  );
 
   useEffect(() => {
     setCurrentIndex(formattedDaysInYear.indexOf(selectedDate));
-  }, [selectedDate]);
+  }, [selectedDate]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  let key = `https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50&date=${selectedDate.replaceAll("-", "")}`;
+  let key = `https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50&date=${selectedDate.replaceAll(
+    "-",
+    ""
+  )}`;
   const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 5000 });
 
   function getDateElements() {
@@ -103,11 +115,20 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
   function dateSelector() {
     return (
       <Box className="w-full p-2 bg-white mb-3 rounded-xl">
-        <Typography className="mb-1 font-semibold text-xl opacity-80">NBA Scoreboard</Typography>
+        <Typography className="mb-1 font-semibold text-xl opacity-80">
+          NBA Scoreboard
+        </Typography>
         <Box className="w-full flex gap-3 items-center">
-          <Box id="style-1" className="pl-2 w-full flex flex-row overflow-x-auto justify-between items-center">
+          <Box
+            id="style-1"
+            className="pl-2 w-full flex flex-row overflow-x-auto justify-between items-center"
+          >
             <FontAwesomeIcon
-              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 365)}
+              onClick={() =>
+                setCurrentIndex(
+                  (currentIndex: number) => (currentIndex - 4) % 365
+                )
+              }
               icon={faAngleLeft}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
@@ -118,19 +139,30 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
                 style={{ opacity: date === selectedDate ? 1 : 0.5 }}
                 className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer p-2"
               >
-                <Typography className="text-sm font-semibold">{getWeekDay(date)}</Typography>
+                <Typography className="text-sm font-semibold">
+                  {getWeekDay(date)}
+                </Typography>
                 <Box className="flex flex-row gap-1 justify-center items-center">
-                  <Typography className="text-xs">{getMonthAndDate(date)}</Typography>
+                  <Typography className="text-xs">
+                    {getMonthAndDate(date)}
+                  </Typography>
                 </Box>
               </Box>
             ))}
             <FontAwesomeIcon
-              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 365)}
+              onClick={() =>
+                setCurrentIndex(
+                  (currentIndex: number) => (currentIndex + 4) % 365
+                )
+              }
               icon={faAngleRight}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
           </Box>
-          <ButtonDatePicker value={calendarValue} onChange={(newValue) => setNewCalendarDate(newValue["$d"])} />
+          <ButtonDatePicker
+            value={calendarValue}
+            onChange={(newValue) => setNewCalendarDate(newValue["$d"])}
+          />
         </Box>
       </Box>
     );
@@ -160,13 +192,20 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
             <Divider />
             {data.content.sbData.events.map((game: any, i: number) => (
               <Box key={uuidv4()}>
-                <ScoreCard gameInfo={game} version={1} league={"nba"} teamView={false} />
+                <ScoreCard
+                  gameInfo={game}
+                  version={1}
+                  league={"nba"}
+                  teamView={false}
+                />
                 {i !== data.content.sbData.events.length - 1 && <Divider />}
               </Box>
             ))}
           </Box>
         )}
-        {data.content.sbData.events.length === 0 && <p className="w-full text-center mt-5">No games to display</p>}
+        {data.content.sbData.events.length === 0 && (
+          <p className="w-full text-center mt-5">No games to display</p>
+        )}
       </Box>
     </LocalizationProvider>
   );

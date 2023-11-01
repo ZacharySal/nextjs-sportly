@@ -1,12 +1,24 @@
 "use client";
 
-import { Box, Typography, CircularProgress, Divider, Paper } from "@mui/material";
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Divider,
+  Paper,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import NewScoreCard from "../NewScoreCard";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight, faAnglesLeft, faAnglesRight, faCalendar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faAnglesLeft,
+  faAnglesRight,
+  faCalendar,
+} from "@fortawesome/free-solid-svg-icons";
 import useWindowDimensions from "../useWindowDimensions";
 import React from "react";
 import { allNFLDates } from "@/app/_lib/constants";
@@ -35,7 +47,9 @@ function getDates(selectedYear: string) {
     (year: any) =>
       year.year === selectedYear &&
       year.weeksInYear.map((seasonType: any) =>
-        seasonType.weeks.map((week: any) => allWeeks.push({ ...week, seasonType: seasonType.seasonType }))
+        seasonType.weeks.map((week: any) =>
+          allWeeks.push({ ...week, seasonType: seasonType.seasonType })
+        )
       )
   );
 
@@ -64,14 +78,22 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
   const allDates = getDates(calendarSelectedYear);
 
   const [currentWeekIndex, setCurrentWeekIndex] = useState(
-    allDates.findIndex((week: any) => week.value == selectedWeekInfo.week && week.seasonType == selectedWeekInfo.type)
+    allDates.findIndex(
+      (week: any) =>
+        week.value == selectedWeekInfo.week &&
+        week.seasonType == selectedWeekInfo.type
+    )
   );
 
   useEffect(() => {
     setCurrentWeekIndex(
-      allDates.findIndex((week: any) => week.value == selectedWeekInfo.week && week.seasonType == selectedWeekInfo.type)
+      allDates.findIndex(
+        (week: any) =>
+          week.value == selectedWeekInfo.week &&
+          week.seasonType == selectedWeekInfo.type
+      )
     );
-  }, [selectedWeekInfo]);
+  }, [selectedWeekInfo]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function getDateElements() {
     const dateElements = [];
@@ -92,7 +114,8 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
     });
     //let gg = ungroupedGames.reverse();
     groupedGames = ungroupedGames.reduce(
-      (entryMap: any, e: any) => entryMap.set(e.date, [...(entryMap.get(e.date) || []), e]),
+      (entryMap: any, e: any) =>
+        entryMap.set(e.date, [...(entryMap.get(e.date) || []), e]),
       new Map()
     );
   }
@@ -100,11 +123,15 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
   function nflWeekSelector() {
     return (
       <Box className="relative z-10 w-full p-2 bg-white mb-3 rounded-xl">
-        <Typography className="mb-1 font-semibold text-xl opacity-80">NFL Scoreboard</Typography>
+        <Typography className="mb-1 font-semibold text-xl opacity-80">
+          NFL Scoreboard
+        </Typography>
         <Box className="pl-2 w-full flex gap-3 items-center">
           <Box className="w-full flex flex-row overflow-x-auto justify-between items-center">
             <FontAwesomeIcon
-              onClick={() => setCurrentWeekIndex(mod(currentWeekIndex - 3, allDates.length))}
+              onClick={() =>
+                setCurrentWeekIndex(mod(currentWeekIndex - 3, allDates.length))
+              }
               icon={faAngleLeft}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
@@ -113,21 +140,32 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
                 <Box
                   key={uuidv4()}
                   onClick={() => {
-                    setSelectedWeekInfo({ ...selectedWeekInfo, type: week.seasonType, week: week.value });
+                    setSelectedWeekInfo({
+                      ...selectedWeekInfo,
+                      type: week.seasonType,
+                      week: week.value,
+                    });
                   }}
                   sx={{
                     opacity:
-                      week.value == selectedWeekInfo.week && week.seasonType == selectedWeekInfo.type ? "1" : "0.3",
+                      week.value == selectedWeekInfo.week &&
+                      week.seasonType == selectedWeekInfo.type
+                        ? "1"
+                        : "0.3",
                   }}
                   className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer p-2"
                 >
-                  <Typography className="text-sm font-semibold">{week.label}</Typography>
+                  <Typography className="text-sm font-semibold">
+                    {week.label}
+                  </Typography>
                   <Typography className="text-xs">{week.dateRange}</Typography>
                 </Box>
               );
             })}
             <FontAwesomeIcon
-              onClick={() => setCurrentWeekIndex(mod(currentWeekIndex + 3, allDates.length))}
+              onClick={() =>
+                setCurrentWeekIndex(mod(currentWeekIndex + 3, allDates.length))
+              }
               icon={faAngleRight}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
@@ -135,7 +173,9 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
           <Paper elevation={1} className="relative bg-white p-3">
             <CalendarMonthOutlined
               sx={{ color: showDateSelector ? "#3e82d6" : "black" }}
-              onClick={() => setShowDateSelector((showDateSelector) => !showDateSelector)}
+              onClick={() =>
+                setShowDateSelector((showDateSelector) => !showDateSelector)
+              }
             />
             {showDateSelector && (
               <NFLCalendar
@@ -156,12 +196,22 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
     let els: any[] = [];
     groupedGames.forEach((gamesOnDate: any, i: any) => {
       els.push(
-        <Box key={uuidv4()} className="w-full grid bg-white p-2 pb-0 rounded-xl mb-2">
-          <Typography className="opacity-80 font-semibold mt-1 text-start text-sm md:text-base mb-2">{i}</Typography>
+        <Box
+          key={uuidv4()}
+          className="w-full grid bg-white p-2 pb-0 rounded-xl mb-2"
+        >
+          <Typography className="opacity-80 font-semibold mt-1 text-start text-sm md:text-base mb-2">
+            {i}
+          </Typography>
           <Divider />
           {gamesOnDate.map((game: any, i: number) => (
             <Box key={uuidv4()}>
-              <NewScoreCard gameInfo={game} version={1} league={"nfl"} teamView={false} />
+              <NewScoreCard
+                gameInfo={game}
+                version={1}
+                league={"nfl"}
+                teamView={false}
+              />
               {i !== gamesOnDate.length - 1 && <Divider />}
             </Box>
           ))}

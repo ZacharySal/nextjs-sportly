@@ -96,7 +96,10 @@ export default function DivisionStandings({
                     cursor: "pointer",
                   }}
                 >
-                  <Link href={`/${league}/team/${team.id}/home`}>
+                  <Link
+                    href={`/${league}/team/${team.id}/home`}
+                    className="whitespace-nowrap"
+                  >
                     {team.team}
                   </Link>
                 </TableCell>

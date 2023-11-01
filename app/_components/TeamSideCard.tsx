@@ -23,11 +23,11 @@ export default function TeamSideCard({
   }
 
   return (
-    <Link href={`/${league}/team/${name[1]}/home`}>
-      <Box
-        sx={{ cursor: "pointer" }}
-        className="flex justify-start flex-row items-center gap-2 mt-4"
-      >
+    <Box
+      sx={{ cursor: "pointer" }}
+      className="flex justify-start flex-row items-center gap-2 mt-4"
+    >
+      <Link href={`/${league}/team/${name[1]}/home`}>
         <Image
           src={`/${league}/${teamName?.replace(" ", "").toLowerCase()}.png`}
           width={100}
@@ -35,34 +35,37 @@ export default function TeamSideCard({
           alt="team logo"
           className="w-8 md:w-12 object-contain"
         />
-        <Box className="flex flex-col gap-1">
+      </Link>
+
+      <Box className="flex flex-col gap-1">
+        <Link href={`/${league}/team/${name[1]}/home`}>
           <Typography className="text-sm md:text-base team-link">
             {name[0]}
           </Typography>
-          <Box className="flex flex-row justify-start gap-1">
-            <Link href={`/${league}/team/${name[1]}/home`}>
-              <Typography className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
-                Statistics
-              </Typography>
-            </Link>
-            <Link href={`/${league}/team/${name[1]}/home`}>
-              <Typography className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
-                Schedule
-              </Typography>
-            </Link>
-            <Link href={`/${league}/team/${name[1]}/home`}>
-              <Typography className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
-                Roster
-              </Typography>
-            </Link>
-            <Link href={`/${league}/team/${name[1]}/home`}>
-              <Typography className="text-[11px] anchor-link">
-                Depth Chart
-              </Typography>
-            </Link>
-          </Box>
+        </Link>
+        <Box className="flex flex-row justify-start gap-1">
+          <Link href={`/${league}/team/${name[1]}/home`}>
+            <Typography className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
+              Statistics
+            </Typography>
+          </Link>
+          <Link href={`/${league}/team/${name[1]}/home`}>
+            <Typography className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
+              Schedule
+            </Typography>
+          </Link>
+          <Link href={`/${league}/team/${name[1]}/home`}>
+            <Typography className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
+              Roster
+            </Typography>
+          </Link>
+          <Link href={`/${league}/team/${name[1]}/home`}>
+            <Typography className="text-[11px] anchor-link">
+              Depth Chart
+            </Typography>
+          </Link>
         </Box>
       </Box>
-    </Link>
+    </Box>
   );
 }

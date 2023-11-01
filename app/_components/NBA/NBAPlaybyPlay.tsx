@@ -64,16 +64,19 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
       </Box>
       <table className="w-full text-left playbyplay-table">
         <thead className="justify-left items-left border-t border-b border-[rgba(0,0,0,0.1)]">
-          <th className="text-xs text-left px-0 opacity-70">TIME</th>
-          <th className="text-xs text-left pl-4 opacity-70" colSpan={2}>
-            PLAY
-          </th>
-          <th className="text-xs text-center px-2 opacity-70">
-            {data.awayTeam.team.abbreviation}
-          </th>
-          <th className="text-xs text-center opacity-70">
-            {data.homeTeam.team.abbreviation}
-          </th>
+          <tr>
+            {" "}
+            <th className="text-xs text-left px-0 opacity-70">TIME</th>
+            <th className="text-xs text-left pl-4 opacity-70" colSpan={2}>
+              PLAY
+            </th>
+            <th className="text-xs text-center px-2 opacity-70">
+              {data.awayTeam.team.abbreviation}
+            </th>
+            <th className="text-xs text-center opacity-70">
+              {data.homeTeam.team.abbreviation}
+            </th>
+          </tr>
         </thead>
         <tbody>
           {selectedPlays.map((play: any) => (

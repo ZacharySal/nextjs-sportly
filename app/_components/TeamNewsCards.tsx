@@ -65,7 +65,7 @@ export default function TeamNewsCards({
                   height={2000}
                   priority={true}
                   src={article.images[0].url}
-                  className="w-full max-h-[22rem] object-cover rounded-t-xl border-b-4 border-gray-300 object-center"
+                  className="min-w-full max-h-[22rem] object-cover rounded-t-xl border-b-4 border-gray-300"
                   alt="team logo"
                 />
                 <Box className="p-2">

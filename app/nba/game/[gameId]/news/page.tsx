@@ -1,13 +1,13 @@
 "use client";
 
-import useSwr from "swr";
 import ContainerBox from "@/app/_components/ContainerBox";
 import Articles from "@/app/_components/Articles";
 import { Box, useMediaQuery } from "@mui/material";
+import useSwr from "swr";
+import React from "react";
 import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
-import NFLGameStats from "@/app/_components/NFL/NFLGameStats";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -20,30 +20,32 @@ export default function Page({ params }: { params: { gameId: string } }) {
     fetcher
   );
 
-  const mobileView = <NFLGameStats data={data} league="nba" />;
-
-  const desktopView = (
+  const desktopView = () => (
     <>
-      <Box className="flex flex-col gap-3">
-        <NFLGameStats data={data} league="nba" />
+      <Box className="flex flex-col basis-1/2 gap-3">
+        <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
       </Box>
-      <Box className="flex flex-col basis-1/4 gap-3">
+
+      <Box className="basis-1/4 flex flex-col gap-3">
         {data.gameData.predictor && (
           <MatchupPredictor data={data} league="nba" />
         )}
         <DivisionStandings data={data} isNFL={false} league="nba" />
-        <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
       </Box>
     </>
+  );
+
+  const mobileView = () => (
+    <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
   );
 
   if (isLoading) return <Loading />;
   else {
     return (
       <>
-        <GameUserSelection userSelection={"boxscore"} data={data} />
+        <GameUserSelection userSelection={"news"} data={data} />
         <ContainerBox isDesktopScreen={isDesktopScreen}>
-          {isDesktopScreen ? desktopView : mobileView}
+          {isDesktopScreen ? desktopView() : mobileView()}
         </ContainerBox>
       </>
     );

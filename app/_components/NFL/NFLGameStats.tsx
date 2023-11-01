@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Image from "next/image";
 
 export default function NFLGameStats({
   data,
@@ -36,14 +37,17 @@ export default function NFLGameStats({
             className="bg-white rounded-xl w-full h-auto mb-3"
           >
             <Box className="flex items-center justify-start gap-1 mb-2">
-              <img
+              <Image
+                width={100}
+                height={100}
+                alt="team"
                 className="w-7 object-contain"
                 src={`/${league}/${data.gameData.boxscore.teams[
                   teamOption
                 ].team.shortDisplayName
                   .replaceAll(" ", "")
                   .toLowerCase()}.png`}
-              ></img>
+              />
               <Typography className="text-sm font-bold opacity-70 capitalize">
                 {tableHeader(statType, teamOption)}
               </Typography>

@@ -4,24 +4,22 @@ import { Box, Typography, useMediaQuery, Divider } from "@mui/material";
 import Image from "next/image";
 import ContainerBox from "@/app/_components/ContainerBox";
 import useSwr from "swr";
-import { useState } from "react";
-import React from "react";
 import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
 import NFLPlayByPlay from "@/app/_components/NFL/NFLPlayByPlay";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
+import Link from "next/link";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function TeamPage({ params }: { params: { gameId: string } }) {
+  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+
   const { data, isLoading } = useSwr(
     `https://nextjs-sportly.vercel.app/api/nfl/gameData/${params.gameId}`,
     fetcher
   );
-
-  const [userSelection, setUserSelection] = useState("playbyplay");
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   function gameLeaders() {
     return (
@@ -205,47 +203,43 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           </Box>
         </Box>
         <Divider className="my-2" />
-        <Typography
-          onClick={() => setUserSelection("boxscore")}
-          className="text-center w-full h-full text-xs text-[#06c] cursor-pointer py-1 font-semibold"
-        >
-          Full Box Score
-        </Typography>
+        <Link href="boxscore">
+          <Typography className="text-center w-full h-full text-xs text-[#06c] cursor-pointer py-1 font-semibold">
+            Full Box Score
+          </Typography>
+        </Link>
       </Box>
     );
   }
+
+  const desktopView = () => (
+    <>
+      <Box className="flex flex-col gap-5 basis-2/3">
+        <NFLPlayByPlay data={data} />
+      </Box>
+      <Box className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+        {data.gameData.predictor && (
+          <MatchupPredictor data={data} league={"nfl"} />
+        )}
+        {data.gameData.leaders[0].leaders.length > 0 &&
+          data.gameData.leaders[1].leaders.length > 0 &&
+          gameLeaders()}
+        <DivisionStandings data={data} isNFL={true} league="nfl" />
+      </Box>
+    </>
+  );
+
+  const mobileView = () => <NFLPlayByPlay data={data} />;
 
   if (isLoading) {
     return <Loading />;
   } else {
     return (
       <>
-        {isDesktopScreen ? (
-          <>
-            <GameUserSelection userSelection={userSelection} data={data} />
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <Box className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
-                {data.gameData.predictor && (
-                  <MatchupPredictor data={data} league={"nfl"} />
-                )}
-                {data.gameData.leaders[0].leaders.length > 0 &&
-                  data.gameData.leaders[1].leaders.length > 0 &&
-                  gameLeaders()}
-                <DivisionStandings data={data} isNFL={true} league="nfl" />
-              </Box>
-              <Box className="flex flex-col gap-5 basis-2/3">
-                <NFLPlayByPlay data={data} />
-              </Box>
-            </ContainerBox>
-          </>
-        ) : (
-          <>
-            <GameUserSelection userSelection={userSelection} data={data} />
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <NFLPlayByPlay data={data} />
-            </ContainerBox>
-          </>
-        )}
+        <GameUserSelection userSelection={"playbyplay"} data={data} />
+        <ContainerBox isDesktopScreen={isDesktopScreen}>
+          {isDesktopScreen ? desktopView() : mobileView()}
+        </ContainerBox>
       </>
     );
   }

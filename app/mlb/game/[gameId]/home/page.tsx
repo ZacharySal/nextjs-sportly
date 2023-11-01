@@ -21,7 +21,6 @@ import MatchupPredictor from "@/app/_components/MatchupPredictor";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Page({ params }: { params: { gameId: string } }) {
-  const [userSelection, setUserSelection] = useState("gamecast");
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const { data, isLoading } = useSwr(
@@ -29,159 +28,67 @@ export default function Page({ params }: { params: { gameId: string } }) {
     fetcher
   );
 
-  function teamStats() {
-    return (
-      <>
-        <Box className="w-full flex flex-col gap-2 mb-5">
-          <Box className="flex flex-row gap-1 justify-start items-center">
-            <Image
-              src={`/mlb/${data.homeTeam.team.name
-                .replace(" ", "")
-                .toLowerCase()}.png`}
-              width={100}
-              height={100}
-              alt="home team logo"
-              className="w-8 object-contain"
-            />
-            <Typography className="opacity-70 font-semibold">
-              {data.homeTeam.team.name} Stats
-            </Typography>
-          </Box>
-          <Box className="grid grid-cols-3 gap-1">
-            {Object.entries(data.awayTeamStats).map(
-              ([statName, value]: [string, any]) => (
-                <React.Fragment key={uuidv4()}>
-                  <Box className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md">
-                    <Box className="flex flex-col justify-center gap-2 items-center">
-                      <Typography className="text-sm">{statName}</Typography>
-                      <Typography className="font-semibold text-3xl">
-                        {value.displayValue}
-                      </Typography>
-                      <Typography className="text-base opacity-70">
-                        {value.rankDisplayValue}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </React.Fragment>
-              )
-            )}
-          </Box>
-        </Box>
-        <Box className="w-full flex flex-col gap-2">
-          <Box className="flex flex-row gap-1 justify-start items-center">
-            <Image
-              src={`/mlb/${data.awayTeam.team.name
-                .replace(" ", "")
-                .toLowerCase()}.png`}
-              width={100}
-              height={100}
-              alt="away team logo"
-              className="w-8 object-contain"
-            />
-            <Typography className="opacity-70 font-semibold">
-              {data.awayTeam.team.name} Stats
-            </Typography>
-          </Box>
-          <Box className="grid grid-cols-3 gap-1">
-            {Object.entries(data.homeTeamStats).map(
-              ([statName, value]: [string, any]) => (
-                <React.Fragment key={uuidv4()}>
-                  <Box className="w-auto flex justify-center items-center flex-row p-3 bg-white gap-1 drop-shadow-md">
-                    <Box className="flex flex-col justify-center gap-2 items-center">
-                      <Typography className="text-sm">{statName}</Typography>
-                      <Typography className="font-semibold text-3xl">
-                        {value.displayValue}
-                      </Typography>
-                      <Typography className="text-base opacity-70">
-                        {value.rankDisplayValue}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </React.Fragment>
-              )
-            )}
-          </Box>
-        </Box>
-      </>
-    );
-  }
+  const desktopView = () => (
+    <>
+      <Box className="flex self-start basis-1/4  flex-col justify-center items-center gap-3">
+        <StadiumInfo data={data} />
+        <DivisionStandings data={data} isNFL={false} league="mlb" />
+      </Box>
+
+      <Box className="flex flex-col basis-1/2 gap-5">
+        {data.isGameStarted && data.homeTeam.linescores && (
+          <>
+            <GameRecapArticle data={data} />
+            <MLBBoxscore data={data} />
+          </>
+        )}
+        {data.isGameStarted && (
+          <>
+            <MLBScoringPlays data={data} />
+          </>
+        )}
+      </Box>
+
+      <Box className="basis-1/4 flex flex-col gap-3">
+        {data.gameData.predictor && (
+          <MatchupPredictor data={data} league="mlb" />
+        )}
+        <Articles title="MLB News" teamNews={data.gameData.news} limit={6} />
+      </Box>
+    </>
+  );
+
+  const mobileView = () => (
+    <>
+      <Box className="w-full flex flex-col gap-3">
+        {data.isGameStarted && data.homeTeam.linescores && (
+          <>
+            <GameRecapArticle data={data} />
+            <MLBBoxscore data={data} />
+          </>
+        )}
+        {data.isGameStarted && (
+          <>
+            <MLBScoringPlays data={data} />
+          </>
+        )}
+        {data.gameData.predictor && (
+          <MatchupPredictor data={data} league="mlb" />
+        )}
+        <DivisionStandings data={data} isNFL={false} league="mlb" />
+        <StadiumInfo data={data} />
+      </Box>
+    </>
+  );
 
   if (isLoading) return <Loading />;
   else {
     return (
       <>
-        {isDesktopScreen ? (
-          <>
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <Box className="flex self-start basis-1/4  flex-col justify-center items-center gap-3">
-                <StadiumInfo data={data} />
-                <DivisionStandings data={data} isNFL={false} league="mlb" />
-              </Box>
-
-              <Box className="flex flex-col basis-1/2 gap-5">
-                {data.isGameStarted && data.homeTeam.linescores && (
-                  <MLBBoxscore data={data} />
-                )}
-                {data.isGameStarted && (
-                  <>
-                    <GameRecapArticle data={data} />
-                    <MLBScoringPlays data={data} />
-                  </>
-                )}
-              </Box>
-
-              <Box className="basis-1/4 flex flex-col gap-3">
-                {data.gameData.predictor && (
-                  <MatchupPredictor data={data} league="mlb" />
-                )}
-                <Articles
-                  title="MLB News"
-                  teamNews={data.gameData.news}
-                  limit={6}
-                />
-              </Box>
-            </ContainerBox>
-          </>
-        ) : (
-          <>
-            <GameUserSelection userSelection={userSelection} data={data} />
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
-              {userSelection === "gamecast" && (
-                <Box className="w-full flex flex-col justify-center items-center gap-3">
-                  {data.isGameStarted && data.homeTeam.linescores && (
-                    <MLBBoxscore data={data} />
-                  )}
-                  {data.isGameStarted && <MLBScoringPlays data={data} />}
-                  {data.gameData.predictor && (
-                    <MatchupPredictor data={data} league="mlb" />
-                  )}
-                  <DivisionStandings data={data} isNFL={false} league="mlb" />
-                  <StadiumInfo data={data} />
-                </Box>
-              )}
-
-              {userSelection === "playbyplay" && (
-                <Box className="w-full flex flex-col gap-5">
-                  {data.isGameStarted && <MLBScoringPlays data={data} />}
-                </Box>
-              )}
-
-              {userSelection === "stats" && teamStats()}
-
-              {userSelection === "boxscore" && (
-                <NFLGameStats data={data} league="mlb" />
-              )}
-
-              {userSelection === "news" && (
-                <Articles
-                  title="MLB News"
-                  teamNews={data.gameData.news}
-                  limit={6}
-                />
-              )}
-            </ContainerBox>
-          </>
-        )}
+        <GameUserSelection userSelection="gamecast" data={data} />
+        <ContainerBox isDesktopScreen={isDesktopScreen}>
+          {isDesktopScreen ? desktopView() : mobileView()}
+        </ContainerBox>
       </>
     );
   }

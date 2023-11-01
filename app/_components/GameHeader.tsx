@@ -13,7 +13,6 @@ export default function GameHeader({
   league: string;
   data: any;
 }) {
-  console.log(data);
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
   const homeTeam = data.header.competitions[0].competitors[0];
   const awayTeam = data.header.competitions[0].competitors[1];
@@ -163,7 +162,7 @@ export default function GameHeader({
                 sx={{
                   backgroundColor: "white",
                 }}
-                className="w-full h-20 border-b border-[rgba(0,0,0,0.2)] place-items-center justify-center gap-x-6 text-center text-black px-5 grid grid-rows-1 drop-shadow-sm sticky top-[2.5rem] z-40"
+                className="w-full h-20 border-b border-[rgba(0,0,0,0.2)] place-items-center justify-center gap-x-6 text-center text-black px-3 grid grid-rows-1 drop-shadow-sm sticky top-[2.5rem] z-40"
               >
                 {/*Away Team Logo, abv, and record*/}
                 <Box className="flex flex-row gap-1 justify-center items-center col-start-1">
@@ -171,7 +170,7 @@ export default function GameHeader({
                     <Typography className="text-sm opacity-80 font-semibold">
                       {awayTeam.team.abbreviation}
                     </Typography>
-                    <Typography className="text-xs opacity-80">
+                    <Typography className="text-xs opacity-80 whitespace-nowrap">
                       {awayTeam.record[0]?.displayValue || "0-0"}
                     </Typography>
                   </Box>
@@ -182,7 +181,7 @@ export default function GameHeader({
                     width={100}
                     height={100}
                     alt="away team logo"
-                    className="w-10 object-contain"
+                    className="w-8 object-contain"
                   />
                 </Box>
 
@@ -209,13 +208,13 @@ export default function GameHeader({
                     width={100}
                     height={100}
                     alt="home team logo"
-                    className="w-10 object-contain"
+                    className="w-8 object-contain"
                   />
                   <Box className="flex flex-col gap-1">
                     <Typography className="text-sm opacity-80 font-semibold">
                       {homeTeam.team.abbreviation}
                     </Typography>
-                    <Typography className="text-xs opacity-80">
+                    <Typography className="text-xs opacity-80 whitespace-nowrap">
                       {homeTeam.record[0]?.displayValue || "0-0"}
                     </Typography>
                   </Box>
@@ -228,7 +227,7 @@ export default function GameHeader({
                 sx={{
                   backgroundColor: "white",
                 }}
-                className="w-full h-20 px-5 py-10 border-b border-[rgba(0,0,0,0.2)] place-items-center text-center text-black grid grid-cols-5 grid-rows-1 drop-shadow-sm sticky top-[2.5rem] z-40"
+                className="w-full h-20 px-3 py-10 border-b border-[rgba(0,0,0,0.2)] place-items-center text-center text-black grid grid-cols-5 grid-rows-1 drop-shadow-sm sticky top-[2.5rem] z-40"
               >
                 {/*Home Team Logo, abv, and record*/}
                 <Box className="flex flex-row gap-1 items-center col-start-1">
@@ -236,7 +235,7 @@ export default function GameHeader({
                     <Typography className="text-xs opacity-70 font-semibold">
                       {awayTeam.team.abbreviation}
                     </Typography>
-                    <Typography className="text-xs opacity-70">
+                    <Typography className="text-xs opacity-70 whitespace-nowrap">
                       {awayTeam.record[0]?.displayValue || "0-0"}
                     </Typography>
                   </Box>
@@ -247,7 +246,7 @@ export default function GameHeader({
                     width={100}
                     height={100}
                     alt="away team logo"
-                    className="w-10 object-contain"
+                    className="w-8 object-contain"
                   />
                 </Box>
 
@@ -305,13 +304,13 @@ export default function GameHeader({
                     width={100}
                     height={100}
                     alt="home team logo"
-                    className="w-10 object-contain"
+                    className="w-8 object-contain"
                   />
                   <Box className="flex flex-col">
                     <Typography className="text-xs opacity-80 font-semibold">
                       {homeTeam.team.abbreviation}
                     </Typography>
-                    <Typography className="text-xs opacity-80">
+                    <Typography className="text-xs opacity-80  whitespace-nowrap">
                       {homeTeam.record[0]?.displayValue || "0-0"}
                     </Typography>
                   </Box>

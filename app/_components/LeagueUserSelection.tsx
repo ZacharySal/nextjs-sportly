@@ -16,8 +16,8 @@ export default function LeagueUserSelection({
 
   return (
     <Box className="w-full bg-white sticky top-[2.75rem] z-20 drop-shadow-lg">
-      <Box className="testing w-full 2xl:w-1/2 max-w-full overflow-x-auto overflow-y-hidden h-10 md:h-11 flex justify-start 2xl:justify-center items-center gap-5 pl-2 md:pl-10">
-        <Box className="relative flex-shrink-0 flex flex-row items-center gap-1 md:gap-2 leage-logo">
+      <Box className="testing w-full 2xl:w-1/2 max-w-full overflow-x-auto overflow-y-hidden h-10 md:h-11 flex justify-start 2xl:justify-center items-center gap-3 px-2 md:pl-10">
+        <Box className="relative flex-shrink-0 flex flex-row items-center gap-2 leage-logo">
           <Image
             src={`/${league}/${league}-logo.png`}
             width={500}
@@ -41,7 +41,10 @@ export default function LeagueUserSelection({
         >
           Standings
         </Link>
-        <Link className={selectionClass("news")} href={`/${league}/news`}>
+        <Link
+          className={`${selectionClass("news")} md:hidden`}
+          href={`/${league}/news`}
+        >
           News
         </Link>
       </Box>
