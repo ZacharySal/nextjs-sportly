@@ -192,12 +192,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
             <Divider />
             {data.content.sbData.events.map((game: any, i: number) => (
               <Box key={uuidv4()}>
-                <ScoreCard
-                  gameInfo={game}
-                  version={1}
-                  league={"nba"}
-                  teamView={false}
-                />
+                <ScoreCard gameInfo={game} league={"nba"} />
                 {i !== data.content.sbData.events.length - 1 && <Divider />}
               </Box>
             ))}

@@ -24,6 +24,7 @@ import React from "react";
 import { allNFLDates } from "@/app/_lib/constants";
 import CalendarMonthOutlined from "@mui/icons-material/CalendarMonthOutlined";
 import NFLCalendar from "./NFLCalendar";
+import ScoreCard from "../ScoreCard";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -206,12 +207,7 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
           <Divider />
           {gamesOnDate.map((game: any, i: number) => (
             <Box key={uuidv4()}>
-              <NewScoreCard
-                gameInfo={game}
-                version={1}
-                league={"nfl"}
-                teamView={false}
-              />
+              <ScoreCard gameInfo={game} league={"nfl"} />
               {i !== gamesOnDate.length - 1 && <Divider />}
             </Box>
           ))}
