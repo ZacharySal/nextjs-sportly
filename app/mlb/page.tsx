@@ -25,7 +25,7 @@ export default function Home() {
 
   const desktopView = () => (
     <>
-      <Box className="basis-2/3">
+      <Box className="basis-3/4">
         <MLBScoreboard currentDate={data.currentDate} />
       </Box>
       <Box className="basis-1/4">

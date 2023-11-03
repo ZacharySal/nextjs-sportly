@@ -13,7 +13,7 @@ export default function SeasonSeries({ data }: { data: any }) {
       </Typography>
       {data.gameData.seasonseries[0].events.map((event: any, i: number) => (
         <Box key={uuidv4()}>
-          <ScoreCard gameInfo={event} league={"mlb"} />
+          <ScoreCard gameInfo={event} league={"MLB"} />
           {i !== data.gameData.seasonseries[0].events.length - 1 && <Divider />}
         </Box>
       ))}

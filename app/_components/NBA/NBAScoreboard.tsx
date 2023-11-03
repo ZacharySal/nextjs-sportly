@@ -16,11 +16,7 @@ import useWindowDimensions from "../useWindowDimensions";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const getDaysArray = function (start: any, end: any) {
-  for (
-    var arr = [], dt = new Date(start);
-    dt <= new Date(end);
-    dt.setDate(dt.getDate() + 1)
-  ) {
+  for (var arr = [], dt = new Date(start); dt <= new Date(end); dt.setDate(dt.getDate() + 1)) {
     arr.push(new Date(dt));
   }
   return arr;
@@ -115,20 +111,14 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
   function dateSelector() {
     return (
       <Box className="w-full p-2 bg-white mb-3 rounded-xl">
-        <Typography className="mb-1 font-semibold text-xl opacity-80">
-          NBA Scoreboard
-        </Typography>
+        <Typography className="mb-1 font-semibold text-xl opacity-80">NBA Scoreboard</Typography>
         <Box className="w-full flex gap-3 items-center">
           <Box
             id="style-1"
             className="pl-2 w-full flex flex-row overflow-x-auto justify-between items-center"
           >
             <FontAwesomeIcon
-              onClick={() =>
-                setCurrentIndex(
-                  (currentIndex: number) => (currentIndex - 4) % 365
-                )
-              }
+              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 365)}
               icon={faAngleLeft}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
@@ -139,22 +129,14 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
                 style={{ opacity: date === selectedDate ? 1 : 0.5 }}
                 className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer p-2"
               >
-                <Typography className="text-sm font-semibold">
-                  {getWeekDay(date)}
-                </Typography>
+                <Typography className="text-sm font-semibold">{getWeekDay(date)}</Typography>
                 <Box className="flex flex-row gap-1 justify-center items-center">
-                  <Typography className="text-xs">
-                    {getMonthAndDate(date)}
-                  </Typography>
+                  <Typography className="text-xs">{getMonthAndDate(date)}</Typography>
                 </Box>
               </Box>
             ))}
             <FontAwesomeIcon
-              onClick={() =>
-                setCurrentIndex(
-                  (currentIndex: number) => (currentIndex + 4) % 365
-                )
-              }
+              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 365)}
               icon={faAngleRight}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
@@ -192,7 +174,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
             <Divider />
             {data.content.sbData.events.map((game: any, i: number) => (
               <Box key={uuidv4()}>
-                <ScoreCard gameInfo={game} league={"nba"} />
+                <ScoreCard gameInfo={game} league={"NBA"} />
                 {i !== data.content.sbData.events.length - 1 && <Divider />}
               </Box>
             ))}

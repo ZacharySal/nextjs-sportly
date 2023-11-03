@@ -32,15 +32,11 @@ export default function Home() {
           <>
             <LeagueUserSelection userSelection={userSelection} league="nfl" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <Box className="basis-2/3">
+              <Box className="basis-3/4">
                 <Scoreboard seasonData={data} />
               </Box>
               <Box className="basis-1/4">
-                <Articles
-                  title={`NFL News`}
-                  teamNews={data.newsData}
-                  limit={10}
-                />
+                <Articles title={`NFL News`} teamNews={data.newsData} limit={10} />
               </Box>
             </ContainerBox>
           </>

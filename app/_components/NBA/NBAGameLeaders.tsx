@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 
 export default function NBAGameLeaders({ data }: { data: any }) {
+  console.log(data);
   const [selectedStat, setSelectedStat] = useState("points");
   const homePointsLeader = data.gameData.leaders[0].leaders[0].leaders[0];
   const homeAssistsLeader = data.gameData.leaders[0].leaders[1].leaders[0];
@@ -30,9 +31,9 @@ export default function NBAGameLeaders({ data }: { data: any }) {
   return (
     <Box className="w-full bg-white rounded-xl p-3 pb-1">
       <Typography className="font-semibold opacity-70 text-sm">
-        Game Leaders
+        {data.gameData.isGameStarted ? "Game Leaders" : "Season Leaders"}
       </Typography>
-      <Box className="flex w-full justify-around items-center rounded-2xl h-8 mt-3 bg-white text-center testing sub-selector">
+      <Box className="flex w-full justify-around items-center rounded-2xl h-8 mt-2 bg-white text-center testing sub-selector">
         <Box
           onClick={() => setSelectedStat("points")}
           className={`${
@@ -83,18 +84,15 @@ export default function NBAGameLeaders({ data }: { data: any }) {
                     <Typography className="text-xs font-semibold opacity-80">
                       {stat.displayValue}
                     </Typography>
-                    <Typography className="text-xs opacity-60">
-                      {stat.shortDisplayName}
-                    </Typography>
+                    <Typography className="text-xs opacity-60">{stat.shortDisplayName}</Typography>
                   </Box>
                 ))}
               </Box>
             </Box>
           </Box>
         ))}
-
         <Link
-          href="boxscore"
+          href={data.isGameStarted ? "boxscore" : ""}
           className="text-center w-full h-full text-xs text-[#06c] py-1 cursor-pointer font-semibold anchor-link"
         >
           Full Box Score

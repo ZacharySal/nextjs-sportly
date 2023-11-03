@@ -33,7 +33,7 @@ export default function Home() {
           <>
             <LeagueUserSelection userSelection={userSelection} league="nba" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <Box className="basis-2/3">
+              <Box className="basis-3/4">
                 <NBAScoreboard currentDate={data.currentDate} />
               </Box>
               <Box className="basis-1/4">
@@ -45,15 +45,9 @@ export default function Home() {
           <>
             <LeagueUserSelection userSelection={userSelection} league="nba" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
-              {userSelection === "teams" && (
-                <AllTeams allTeams={nbaDivisionTeams} league="nba" />
-              )}
-              {userSelection === "scoreboard" && (
-                <NBAScoreboard currentDate={data.currentDate} />
-              )}
-              {userSelection === "standings" && (
-                <LeagueStandings data={data} league="nba" />
-              )}
+              {userSelection === "teams" && <AllTeams allTeams={nbaDivisionTeams} league="nba" />}
+              {userSelection === "scoreboard" && <NBAScoreboard currentDate={data.currentDate} />}
+              {userSelection === "standings" && <LeagueStandings data={data} league="nba" />}
               {userSelection === "news" && (
                 <Articles title={`NBA News`} teamNews={data.news} limit={10} />
               )}

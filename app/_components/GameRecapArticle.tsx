@@ -27,10 +27,7 @@ export default function GameRecapArticle({ data }: { data: any }) {
               src={data.gameData.article.images[0].url}
               className="w-full object-cover video-preview rounded-xl"
             />
-            <Link
-              target="_blank"
-              href={data.gameData.article.video[0].links["web"].href}
-            >
+            <Link target="_blank" href={data.gameData.article.video[0].links["web"].href}>
               <Box className="gray-circle"></Box>
             </Link>
             <Box className="arrow"></Box>
@@ -65,6 +62,7 @@ export default function GameRecapArticle({ data }: { data: any }) {
           </Box>
         </Link>
       )}
+      {!hasArticle && !hasVideo && null}
     </>
   );
 }
