@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 
 export default function NBAGameLeaders({ data }: { data: any }) {
-  console.log(data);
   const [selectedStat, setSelectedStat] = useState("points");
   const homePointsLeader = data.gameData.leaders[0].leaders[0].leaders[0];
   const homeAssistsLeader = data.gameData.leaders[0].leaders[1].leaders[0];
@@ -28,6 +27,7 @@ export default function NBAGameLeaders({ data }: { data: any }) {
     }
   };
 
+  if (data.gameData.leaders[0].leaders.length === 0) return null;
   return (
     <Box className="w-full bg-white rounded-xl p-3 pb-1">
       <Typography className="font-semibold opacity-70 text-sm">

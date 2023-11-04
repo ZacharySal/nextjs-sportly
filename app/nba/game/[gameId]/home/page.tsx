@@ -13,6 +13,7 @@ import MatchupPredictor from "@/app/_components/MatchupPredictor";
 import GameRecapArticle from "@/app/_components/GameRecapArticle";
 import NBAGameLeaders from "@/app/_components/NBA/NBAGameLeaders";
 import InjuryReport from "@/app/_components/InjuryReport";
+import LastFive from "@/app/_components/LastFive";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -24,15 +25,23 @@ export default function Page({ params }: { params: { gameId: string } }) {
     fetcher
   );
 
-  if (!isLoading) {
-    console.log(data);
-  }
-
   const mobileView = () => (
     <Box className="w-full flex flex-col justify-center items-center gap-3">
-      {data.isGameStarted && <NBABoxscore data={data} />}
-      {data.gameData.leaders[0].leaders.length > 0 && <NBAGameLeaders data={data} />}
-      {data.gameData.predictor && <MatchupPredictor data={data} league="nba" />}
+      <GameRecapArticle data={data} />
+      {data.isGameStarted ? (
+        <>
+          <NBABoxscore data={data} />
+          <NBAGameLeaders data={data} />
+          <MatchupPredictor data={data} league={"nba"} />
+        </>
+      ) : (
+        <>
+          <MatchupPredictor data={data} league={"nba"} />
+          <NBAGameLeaders data={data} />
+          <InjuryReport data={data} league="nba" />
+          <LastFive data={data} league="nba" isDesktopScreen={isDesktopScreen} />
+        </>
+      )}
       <DivisionStandings data={data} isNFL={false} league="nba" />
       <StadiumInfo data={data} />
     </Box>
@@ -41,6 +50,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
   const desktopView = () => (
     <>
       <Box className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+        <MatchupPredictor data={data} league="nba" />
         <DivisionStandings data={data} isNFL={false} league="nba" />
         <StadiumInfo data={data} />
       </Box>
@@ -49,22 +59,21 @@ export default function Page({ params }: { params: { gameId: string } }) {
         {!data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
-            {data.gameData.leaders[0].leaders.length > 0 && <NBAGameLeaders data={data} />}
+            <NBAGameLeaders data={data} />
             <InjuryReport data={data} league="nba" />
+            <LastFive data={data} league="nba" isDesktopScreen={isDesktopScreen} />
           </>
         )}
         {data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
-            {data.gameData.leaders[0].leaders.length > 0 && <NBAGameLeaders data={data} />}
+            <NBAGameLeaders data={data} />
             <NBABoxscore data={data} />
           </>
         )}
       </Box>
 
       <Box className="flex flex-col gap-3 basis-1/4">
-        {data.gameData.predictor && <MatchupPredictor data={data} league="nba" />}
-        {/* {data.gameData.seasonseries && <SeasonSeries data={data} />} */}
         <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
       </Box>
     </>

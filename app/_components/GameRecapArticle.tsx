@@ -13,8 +13,10 @@ function convertDate(date: string) {
 }
 
 export default function GameRecapArticle({ data }: { data: any }) {
+  if (typeof data.gameData.article == "undefined") return null;
   const hasVideo = data.gameData.article.images.length > 0;
   const hasArticle = typeof data.gameData.article !== "undefined";
+
   return (
     <>
       {hasVideo && (

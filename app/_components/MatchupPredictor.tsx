@@ -16,6 +16,7 @@ function isSimilar([r1, g1, b1]: any, [r2, g2, b2]: any) {
 export default function MatchupPredictor({ data, league }: { data: any; league: string }) {
   const awayTeamChance = (Number(data.gameData.predictor.awayTeam.gameProjection) * 360) / 100;
 
+  console.log(data);
   const homeTeamColor = data.homeTeam.team.color;
   let awayTeamColor = isSimilar(getRGB(`#${homeTeamColor}`), getRGB(`#${data.awayTeam.team.color}`))
     ? data.awayTeam.team.alternateColor
@@ -26,6 +27,7 @@ export default function MatchupPredictor({ data, league }: { data: any; league: 
 
   isSimilar(getRGB(`#${losingTeamColor}`), getRGB(`#${winningTeamColor}`));
 
+  if (typeof data.gameData.predictor === "undefined") return null;
   return (
     <Box className="w-full bg-white rounded-xl p-3">
       <Typography className="font-semibold opacity-70 text-sm">Matchup Predictor</Typography>
@@ -47,18 +49,18 @@ export default function MatchupPredictor({ data, league }: { data: any; league: 
         >
           <div className="circle">
             <Image
-              width={100}
-              height={100}
+              width={data.homeTeam.team.logos[0].width}
+              height={data.homeTeam.team.logos[0].height}
               alt="home team"
-              className="matchup-image-home w-10 object-contain"
-              src={`/${league}/${data.homeTeam.team.name.replaceAll(" ", "").toLowerCase()}.png`}
+              className="matchup-image-home w-9 object-contain"
+              src={data.homeTeam.team.logos[0].href}
             />
             <Image
-              width={100}
-              height={100}
+              width={data.awayTeam.team.logos[0].width}
+              height={data.awayTeam.team.logos[0].height}
               alt="away team"
-              className="matchup-image-away w-10 object-contain"
-              src={`/${league}/${data.awayTeam.team.name.replaceAll(" ", "").toLowerCase()}.png`}
+              className="matchup-image-away w-9 object-contain"
+              src={data.awayTeam.team.logos[0].href}
             />
           </div>
         </div>

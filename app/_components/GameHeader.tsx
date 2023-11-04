@@ -1,30 +1,14 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import Image from "next/image";
-import {
-  mlbDivisonTeams,
-  nbaDivisionTeams,
-  nflDivisonTeams,
-} from "../_lib/constants";
+import { mlbDivisonTeams, nbaDivisionTeams, nflDivisonTeams } from "../_lib/constants";
 
-export default function GameHeader({
-  league,
-  data,
-}: {
-  league: string;
-  data: any;
-}) {
+export default function GameHeader({ league, data }: { league: string; data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
   const homeTeam = data.header.competitions[0].competitors[0];
   const awayTeam = data.header.competitions[0].competitors[1];
   const gameInfo = data.header.competitions[0];
   const isGameStarted =
-    league === "nfl"
-      ? data.drives
-        ? true
-        : false
-      : data.plays?.length > 0
-      ? true
-      : false;
+    league === "nfl" ? (data.drives ? true : false) : data.plays?.length > 0 ? true : false;
   const gameDate = new Date(gameInfo.date);
 
   function findTeamDivison(teamName: string) {
@@ -51,11 +35,9 @@ export default function GameHeader({
                   className="mr-10 game-header-logo-wrapper game-header-logo-wrapper--left md:left-0 xl:left-[150px] 2xl:left-[-150px]"
                 >
                   <Image
-                    src={`/${league}/${awayTeam.team.name
-                      .replace(" ", "")
-                      .toLowerCase()}.png`}
-                    width={500}
-                    height={500}
+                    src={awayTeam.team.logos[3].href}
+                    width={awayTeam.team.logos[3].width}
+                    height={awayTeam.team.logos[3].height}
                     alt="away team logo"
                     className="w-44 object-cover game-header-logo--left"
                   />
@@ -69,21 +51,16 @@ export default function GameHeader({
                 </Typography>
               </Box>
               <Image
-                src={`/${league}/${awayTeam.team.name
-                  .replace(" ", "")
-                  .toLowerCase()}.png`}
-                width={100}
-                height={100}
+                src={awayTeam.team.logos[0].href}
+                width={awayTeam.team.logos[0].width}
+                height={awayTeam.team.logos[0].height}
                 alt="away team logo"
                 className="w-14 object-cover"
               />
               <Typography
                 sx={{
                   fontWeight: "700",
-                  opacity:
-                    Number(awayTeam.score) > Number(homeTeam.score)
-                      ? "0.8"
-                      : "0.5",
+                  opacity: Number(awayTeam.score) > Number(homeTeam.score) ? "0.8" : "0.5",
                 }}
                 className="w-full text-black text-4xl ml-4"
               >
@@ -99,8 +76,7 @@ export default function GameHeader({
             ) : (
               <Box>
                 <Typography className="text-black text-center text-2xl opacity-70 max-w-[20rem]">
-                  <span className="font-bold opacity-100">Scheduled</span>{" "}
-                  <br />
+                  <span className="font-bold opacity-100">Scheduled</span> <br />
                   {gameInfo.status.type.shortDetail}
                 </Typography>
               </Box>
@@ -110,21 +86,16 @@ export default function GameHeader({
               <Typography
                 sx={{
                   fontWeight: "700",
-                  opacity:
-                    Number(homeTeam.score) > Number(awayTeam.score)
-                      ? "0.8"
-                      : "0.5",
+                  opacity: Number(homeTeam.score) > Number(awayTeam.score) ? "0.8" : "0.5",
                 }}
                 className="w-full text-black text-4xl mr-4"
               >
                 {homeTeam.score}
               </Typography>
               <Image
-                src={`/${league}/${homeTeam.team.name
-                  .replace(" ", "")
-                  .toLowerCase()}.png`}
-                width={100}
-                height={100}
+                src={homeTeam.team.logos[0].href}
+                width={homeTeam.team.logos[0].width}
+                height={homeTeam.team.logos[0].height}
                 alt="home team logo"
                 className="w-14 object-cover"
               />
@@ -142,12 +113,10 @@ export default function GameHeader({
                 className="ml-10 game-header-logo-wrapper game-header-logo-wrapper--right md:right-0 xl:right-[150px]  2xl:right-[-150px]"
               >
                 <Image
-                  src={`/${league}/${homeTeam.team.name
-                    .replace(" ", "")
-                    .toLowerCase()}.png`}
-                  width={500}
-                  height={500}
-                  alt="home team logo"
+                  src={homeTeam.team.logos[3].href}
+                  width={homeTeam.team.logos[3].width}
+                  height={homeTeam.team.logos[3].height}
+                  alt="away team logo"
                   className="w-44 object-cover game-header-logo--right"
                 />
               </Box>
@@ -175,11 +144,9 @@ export default function GameHeader({
                     </Typography>
                   </Box>
                   <Image
-                    src={`/${league}/${awayTeam.team.name
-                      .replace(" ", "")
-                      .toLowerCase()}.png`}
-                    width={100}
-                    height={100}
+                    src={awayTeam.team.logos[0].href}
+                    width={awayTeam.team.logos[0].width}
+                    height={awayTeam.team.logos[0].height}
                     alt="away team logo"
                     className="w-8 object-contain"
                   />
@@ -202,11 +169,9 @@ export default function GameHeader({
                 {/*Home Team Logo, abv, and record*/}
                 <Box className="flex flex-row gap-1 justify-center items-center col-start-3">
                   <Image
-                    src={`/${league}/${homeTeam.team.name
-                      .replace(" ", "")
-                      .toLowerCase()}.png`}
-                    width={100}
-                    height={100}
+                    src={homeTeam.team.logos[0].href}
+                    width={homeTeam.team.logos[0].width}
+                    height={homeTeam.team.logos[0].height}
                     alt="home team logo"
                     className="w-8 object-contain"
                   />
@@ -240,11 +205,9 @@ export default function GameHeader({
                     </Typography>
                   </Box>
                   <Image
-                    src={`/${league}/${awayTeam.team.name
-                      .replace(" ", "")
-                      .toLowerCase()}.png`}
-                    width={100}
-                    height={100}
+                    src={awayTeam.team.logos[0].href}
+                    width={awayTeam.team.logos[0].width}
+                    height={awayTeam.team.logos[0].height}
                     alt="away team logo"
                     className="w-8 object-contain"
                   />
@@ -253,10 +216,7 @@ export default function GameHeader({
                 <Typography
                   sx={{
                     fontWeight: "700",
-                    opacity:
-                      Number(awayTeam.score) > Number(homeTeam.score)
-                        ? "1"
-                        : "0.5",
+                    opacity: Number(awayTeam.score) > Number(homeTeam.score) ? "1" : "0.5",
                   }}
                   className={`${
                     Number(awayTeam.score) > Number(homeTeam.score)
@@ -269,10 +229,7 @@ export default function GameHeader({
 
                 <Typography
                   sx={{
-                    color:
-                      gameInfo.status.type.shortDetail == "Final"
-                        ? "black"
-                        : "#d50a0a",
+                    color: gameInfo.status.type.shortDetail == "Final" ? "black" : "#d50a0a",
                   }}
                   className="opacity-90 whitespace-nowrap text-sm font-semibold col-start-3"
                 >
@@ -282,10 +239,7 @@ export default function GameHeader({
                 <Typography
                   sx={{
                     fontWeight: "700",
-                    opacity:
-                      Number(homeTeam.score) > Number(awayTeam.score)
-                        ? "1"
-                        : "0.5",
+                    opacity: Number(homeTeam.score) > Number(awayTeam.score) ? "1" : "0.5",
                   }}
                   className={`${
                     Number(homeTeam.score) > Number(awayTeam.score)
@@ -298,11 +252,9 @@ export default function GameHeader({
 
                 <Box className="flex flex-row gap-1 items-center col-start-5 text-black">
                   <Image
-                    src={`/${league}/${homeTeam.team.name
-                      .replace(" ", "")
-                      .toLowerCase()}.png`}
-                    width={100}
-                    height={100}
+                    src={homeTeam.team.logos[0].href}
+                    width={homeTeam.team.logos[0].width}
+                    height={homeTeam.team.logos[0].height}
                     alt="home team logo"
                     className="w-8 object-contain"
                   />

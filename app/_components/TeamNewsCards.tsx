@@ -3,17 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import Link from "next/link";
 
-const setTeamImageSrc = (teamName: string, league: string) => {
-  try {
-    const src = require(`public/${league}/${teamName
-      .replaceAll(" ", "")
-      .toLowerCase()}.png`);
-    return src;
-  } catch {
-    return `/default.png`;
-  }
-};
-
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString("en-US", {
     month: "short",
@@ -21,20 +10,11 @@ function formatDate(date: string) {
   });
 }
 
-export default function TeamNewsCards({
-  data,
-  league,
-}: {
-  data: any;
-  league: string;
-}) {
+export default function TeamNewsCards({ data, league }: { data: any; league: string }) {
   return (
     <>
       {data.teamNews.articles
-        .filter(
-          (article: any) =>
-            article.type !== "Preview" && article.type !== "Recap"
-        )
+        .filter((article: any) => article.type !== "Preview" && article.type !== "Recap")
         .map((article: any) => (
           <Link key={uuidv4()} target="_blank" href={article.links["web"].href}>
             <Box className="w-full bg-white px-3 py-1 flex rounded-xl mb-4 flex-col article-container">
@@ -42,13 +22,10 @@ export default function TeamNewsCards({
                 /*style={{backgroundColor: `#${data.teamData.team.color}`}}*/ className="flex flex-row justify-start items-center gap-2 mb-1"
               >
                 <Image
-                  width={100}
-                  height={100}
+                  width={data.teamData.team.logos[0].width}
+                  height={data.teamData.team.logos[0].height}
                   priority={true}
-                  src={setTeamImageSrc(
-                    data.teamData.team.shortDisplayName,
-                    league
-                  )}
+                  src={data.teamData.team.logos[0].href}
                   className="w-10 object-contain"
                   alt="team logo"
                 />
@@ -56,7 +33,6 @@ export default function TeamNewsCards({
                   <Typography className="font-semibold tracking-wider">
                     {data.teamData.team.name}
                   </Typography>
-                  {/* <Typography className="text-xs opacity-70 m-0">NFL</Typography> */}
                 </Box>
               </Box>
               <Box className="mb-2 bg-white drop-shadow-lg rounded-xl cursor-pointer">
@@ -74,9 +50,7 @@ export default function TeamNewsCards({
                   </Typography>
                   <Typography className="text-xs opacity-40">
                     {formatDate(article.published)} •{" "}
-                    {typeof article.byline !== "undefined"
-                      ? article.byline
-                      : "AP"}
+                    {typeof article.byline !== "undefined" ? article.byline : "AP"}
                   </Typography>
                 </Box>
               </Box>

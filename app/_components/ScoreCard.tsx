@@ -12,6 +12,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const game = gameInfo.competitions[0];
+
   const homeTeamName: string = game.competitors[0].team.shortDisplayName;
   const awayTeamName: string = game.competitors[1].team.shortDisplayName;
   const homeTeamScore = Number(game.competitors[0].score);
@@ -42,21 +43,6 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
 
   /* FEATURED ATHLETES FOR MLB TOP PERFORMERS */
 
-  if (!isLoading) {
-    console.log(data);
-  }
-
-  const setTeamImageSrc = (teamName: string) => {
-    try {
-      const src = require(`public/${league.toLowerCase()}/${teamName
-        .replace(" ", "")
-        .toLowerCase()}.png`);
-      return src;
-    } catch {
-      return `/default.png`;
-    }
-  };
-
   const getScoreOrRecord = (teamIndex: number) => {
     return isGameScheduled
       ? isGameDetailsFinalized && typeof game.competitors[teamIndex].records !== "undefined"
@@ -73,7 +59,9 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
         <Box className="flex flex-col justify-start gap-3">
           <Box className="flex flex-row items-center gap-2">
             <Image
-              src={data.gamepackageJSON.leaders[1].leaders[0].leaders[0].athlete.headshot.href}
+              src={
+                data.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
+              }
               width={100}
               height={100}
               priority={true}
@@ -103,7 +91,9 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           </Box>
           <Box className="flex flex-row items-center gap-2">
             <Image
-              src={data.gamepackageJSON.leaders[0].leaders[0].leaders[0].athlete.headshot.href}
+              src={
+                data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
+              }
               width={100}
               height={100}
               priority={true}
@@ -139,7 +129,9 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
         <Box className="flex flex-col justify-start gap-3">
           <Box className="flex flex-row items-center gap-2">
             <Image
-              src={data.gamepackageJSON.leaders[1].leaders[0].leaders[0].athlete.headshot.href}
+              src={
+                data.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
+              }
               width={100}
               height={100}
               priority={true}
@@ -160,7 +152,9 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           </Box>
           <Box className="flex flex-row items-center gap-2">
             <Image
-              src={data.gamepackageJSON.leaders[0].leaders[0].leaders[0].athlete.headshot.href}
+              src={
+                data.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
+              }
               width={100}
               height={100}
               priority={true}
@@ -367,19 +361,19 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
   };
 
   const mobileView = () => (
-    <Link href={isGameDetailsFinalized ? `/${league}/game/${gameId}/home` : ""}>
+    <Link href={isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""}>
       <Box className="w-full grid grid-cols-[1fr_25%] gap-3 py-2">
         {/* 1ST COLUMN: GAME INFO */}
         <Box className="w-full grid grid-cols-[1fr_auto] items-center grid-rows-[1fr_1fr] score-cell relative">
           {/* AWAY TEAM IMG AND NAME */}
           <Box className="flex items-center gap-2">
             <Image
-              src={setTeamImageSrc(awayTeamName)}
-              width={100}
-              height={100}
+              src={game.competitors[1].team.logo}
+              width={500}
+              height={500}
               priority={true}
               alt="home team logo"
-              className="w-7 object-contain"
+              className="w-6 object-contain"
             />
             <Typography
               sx={{
@@ -396,7 +390,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               opacity: awayTeamWon || isGameScheduled ? "1" : "0.6",
             }}
             className={`${
-              awayTeamWon && "winning-score"
+              awayTeamScore > homeTeamScore && "winning-score"
             } text-sm text-end font-semibold md:text-base md:font-bold`}
           >
             {getScoreOrRecord(1)}
@@ -405,12 +399,12 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           {/* HOME TEAM IMG AND NAME */}
           <Box className="flex items-center gap-2">
             <Image
-              src={setTeamImageSrc(homeTeamName)}
-              width={100}
-              height={100}
+              src={game.competitors[0].team.logo}
+              width={500}
+              height={500}
               priority={true}
               alt="home team logo"
-              className="w-7 object-contain"
+              className="w-6 object-contain"
             />
             <Typography
               sx={{
@@ -427,7 +421,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               opacity: homeTeamWon || isGameScheduled ? "1" : "0.6",
             }}
             className={`${
-              homeTeamWon ? "winning-score" : ""
+              homeTeamScore > awayTeamScore && "winning-score"
             } text-sm text-end font-semibold md:text-base md:font-bold`}
           >
             {getScoreOrRecord(0)}
@@ -479,9 +473,9 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           {/* away team*/}
           <Box className="flex flex-row gap-2 items-center mb-2 relative">
             <Image
-              src={setTeamImageSrc(awayTeamName)}
-              width={100}
-              height={100}
+              src={game.competitors[1].team.logo}
+              width={500}
+              height={500}
               priority={true}
               alt="home team logo"
               className="w-9 object-cover"
@@ -495,7 +489,11 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                   {awayTeamName}
                 </Typography>
                 {typeof game.competitors[0].records !== "undefined" && (
-                  <Typography className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${game.competitors[0].records[0].summary}, ${data["__gamepackage__"].awayTeam.record[1].displayValue} ${data["__gamepackage__"].awayTeam.record[1].type})`}</Typography>
+                  <Typography className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${
+                    game.competitors[0].records[0].summary
+                  }, ${data["__gamepackage__"].awayTeam?.record[1]?.displayValue || ""} ${
+                    data["__gamepackage__"].awayTeam?.record[1]?.type || ""
+                  })`}</Typography>
                 )}
               </Box>
               {(isGameInProgess || isGameFinished) && (
@@ -505,9 +503,9 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           </Box>
           <Box className="flex flex-row gap-2 items-center relative">
             <Image
-              src={setTeamImageSrc(homeTeamName)}
-              width={100}
-              height={100}
+              src={game.competitors[0].team.logo}
+              width={500}
+              height={500}
               priority={true}
               alt="home team logo"
               className="w-9 object-cover"
@@ -521,7 +519,11 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                   {homeTeamName}
                 </Typography>
                 {typeof game.competitors[1].records !== "undefined" && (
-                  <Typography className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${game.competitors[1].records[0].summary}, ${data["__gamepackage__"].homeTeam.record[1].displayValue} ${data["__gamepackage__"].homeTeam.record[1].type})`}</Typography>
+                  <Typography className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${
+                    game.competitors[1].records[0].summary
+                  }, ${data["__gamepackage__"].homeTeam?.record[1]?.displayValue || ""} ${
+                    data["__gamepackage__"].homeTeam?.record[1]?.type || ""
+                  })`}</Typography>
                 )}
               </Box>
               {(isGameInProgess || isGameFinished) && (
@@ -546,22 +548,24 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               <Typography className="text-[11px] opacity-60]">{`${game.venue.address.city}, ${game.venue.address.state}`}</Typography>
             </Box>
 
-            <Box className="border-b border-t border-[rgba(0,0,0,0.1)] py-2">
-              <Link
-                target="_blank"
-                href={data.gamepackageJSON.ticketsInfo["seatSituation"].eventLink}
-              >
-                <Box className="flex flex-row items-center gap-1">
-                  <FontAwesomeIcon
-                    icon={faTicket}
-                    style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
-                  />
-                  <Typography className="text-[12px] opacity-60] anchor-link">
-                    {data.gamepackageJSON.ticketsInfo["seatSituation"].summary}
-                  </Typography>
-                </Box>
-              </Link>
-            </Box>
+            {typeof data.gamepackageJSON.ticketsInfo !== "undefined" && (
+              <Box className="border-b border-t border-[rgba(0,0,0,0.1)] py-2">
+                <Link
+                  target="_blank"
+                  href={data.gamepackageJSON.ticketsInfo["seatSituation"].eventLink}
+                >
+                  <Box className="flex flex-row items-center gap-1">
+                    <FontAwesomeIcon
+                      icon={faTicket}
+                      style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
+                    />
+                    <Typography className="text-[12px] opacity-60] anchor-link">
+                      {data.gamepackageJSON.ticketsInfo["seatSituation"].summary}
+                    </Typography>
+                  </Box>
+                </Link>
+              </Box>
+            )}
 
             <Box>
               {odds && (
@@ -576,8 +580,8 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
             {data["gamepackageJSON"]["videos"].length > 0 && (
               <Box className="w-full h-full relative cursor-pointer article-video-container overflow-hidden">
                 <Image
-                  width={1000}
-                  height={1000}
+                  width={576}
+                  height={324}
                   alt="video"
                   src={
                     data["gamepackageJSON"]["videos"][data.gamepackageJSON.videos.length - 1]
@@ -631,63 +635,69 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
       <Box className="min-w-full min-h-full h-full flex flex-col gap-3 col-start-3 border-l border-[rgba(0,0,0,0.1)] px-2">
         {isGameScheduled && isGameDetailsFinalized && (
           <Box className="h-full flex flex-row gap-2 justify-between items-center">
-            <Box className="h-full flex flex-col justify-start gap-3">
-              <Typography className="text-[12px] opacity-60">PLAYERS TO WATCH</Typography>
-              {/* away team point leader */}
-              <Box className="flex flex-row items-center gap-2">
-                <Image
-                  src={game?.competitors[1]?.leaders[0]?.leaders[0]?.athlete.headshot}
-                  width={100}
-                  height={100}
-                  priority={true}
-                  alt="away team points leader"
-                  className="w-[40px] h-[40px] border rounded-full object-cover"
-                />
-                <Box className="flex flex-col">
-                  <Typography className="text-xs">
-                    {`${game.competitors[1].leaders[0].leaders[0].athlete.displayName} `}
-                    <span className="opacity-60">{`${game.competitors[1].leaders[0].leaders[0].athlete.position.abbreviation} - ${game.competitors[1].team.abbreviation}`}</span>
-                  </Typography>
-                  <Typography className="text-xs">
-                    {`${Math.floor(game.competitors[1].leaders[0].leaders[0].value)}`}
-                    <span className="text-[10px] opacity-60">{` ${game.competitors[0].leaders[0].abbreviation}`}</span>
-                  </Typography>
-                </Box>
-              </Box>
-              <Box className="flex flex-row items-center gap-2">
-                <Image
-                  src={game?.competitors[0]?.leaders[0]?.leaders[0]?.athlete.headshot}
-                  width={100}
-                  height={100}
-                  priority={true}
-                  alt="away team points leader"
-                  className="w-[40px] h-[40px] border rounded-full object-cover"
-                />
-                <Box className="flex flex-col">
-                  <Typography className="text-xs">
-                    {`${game.competitors[0].leaders[0].leaders[0].athlete.displayName} `}
-                    <span className="opacity-60">{`${game.competitors[0].leaders[0].leaders[0].athlete.position.abbreviation} - ${game.competitors[0].team.abbreviation}`}</span>
-                  </Typography>
+            {typeof game.competitors[1].leaders !== "undefined" &&
+              typeof game.competitors[0].leaders !== "undefined" && (
+                <Box className="h-full flex flex-col justify-start gap-3">
+                  <Typography className="text-[12px] opacity-60">PLAYERS TO WATCH</Typography>
+                  {/* away team point leader */}
+                  <Box className="flex flex-row items-center gap-2">
+                    <Image
+                      src={game?.competitors[1]?.leaders[0]?.leaders[0]?.athlete.headshot}
+                      width={100}
+                      height={100}
+                      priority={true}
+                      alt="away team points leader"
+                      className="w-[40px] h-[40px] border rounded-full object-cover"
+                    />
+                    <Box className="flex flex-col">
+                      <Typography className="text-xs">
+                        {`${game.competitors[1].leaders[0].leaders[0].athlete.displayName} `}
+                        <span className="opacity-60">{`${game.competitors[1].leaders[0].leaders[0].athlete.position.abbreviation} - ${game.competitors[1].team.abbreviation}`}</span>
+                      </Typography>
+                      <Typography className="text-xs">
+                        {`${Math.floor(game.competitors[1].leaders[0].leaders[0].value)}`}
+                        <span className="text-[10px] opacity-60">{` ${game.competitors[0].leaders[0].abbreviation}`}</span>
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box className="flex flex-row items-center gap-2">
+                    <Image
+                      src={game?.competitors[0]?.leaders[0]?.leaders[0]?.athlete.headshot}
+                      width={100}
+                      height={100}
+                      priority={true}
+                      alt="away team points leader"
+                      className="w-[40px] h-[40px] border rounded-full object-cover"
+                    />
+                    <Box className="flex flex-col">
+                      <Typography className="text-xs">
+                        {`${game.competitors[0].leaders[0].leaders[0].athlete.displayName} `}
+                        <span className="opacity-60">{`${game.competitors[0].leaders[0].leaders[0].athlete.position.abbreviation} - ${game.competitors[0].team.abbreviation}`}</span>
+                      </Typography>
 
-                  <Typography className="text-xs">
-                    {`${Math.floor(game.competitors[0].leaders[0].leaders[0].value)}`}
-                    <span className="text-[10px] opacity-60">{` ${game.competitors[0].leaders[0].abbreviation}`}</span>
-                  </Typography>
+                      <Typography className="text-xs">
+                        {`${Math.floor(game.competitors[0].leaders[0].leaders[0].value)}`}
+                        <span className="text-[10px] opacity-60">{` ${game.competitors[0].leaders[0].abbreviation}`}</span>
+                      </Typography>
+                    </Box>
+                  </Box>
                 </Box>
-              </Box>
-            </Box>
+              )}
+
             <Box className="flex flex-col items-start justify-start gap-3">
               <Link
                 href={isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""}
               >
                 <Box className="dt-scorecard-button">GAMECAST</Box>
               </Link>
-              <Link
-                target="_blank"
-                href={data.gamepackageJSON.ticketsInfo["seatSituation"].eventLink}
-              >
-                <Box className="dt-scorecard-button">TICKETS</Box>
-              </Link>
+              {typeof data.gamepackageJSON.ticketsInfo !== "undefined" && (
+                <Link
+                  target="_blank"
+                  href={data.gamepackageJSON.ticketsInfo.seatSituation.eventLink}
+                >
+                  <Box className="dt-scorecard-button">TICKETS</Box>
+                </Link>
+              )}
             </Box>
           </Box>
         )}
@@ -729,7 +739,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     return (
       <>
         {isDesktopScreen ? (
-          <Box className="animate-pulse w-full rounded-xl h-[7rem] bg-gray-200 p-2 my-2"></Box>
+          <Box className="animate-pulse w-full rounded-xl h-[8rem] bg-gray-200 p-4 my-2"></Box>
         ) : (
           <Box className="animate-pulse w-full rounded-xl h-[3.5rem] bg-gray-200 p-2 my-2"></Box>
         )}

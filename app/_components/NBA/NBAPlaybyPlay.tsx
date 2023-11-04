@@ -5,9 +5,7 @@ import Image from "next/image";
 
 const setTeamImageSrc = (teamName: string) => {
   try {
-    const src = require(`public/nba/${teamName
-      .replace(" ", "")
-      .toLowerCase()}.png`);
+    const src = require(`public/nba/${teamName.replace(" ", "").toLowerCase()}.png`);
     return src;
   } catch {
     return `/default.png`;
@@ -24,8 +22,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
     (play: any) => play.period.number === selectedQuarter
   );
 
-  const getTeamName = (teamId: string) =>
-    teamId === homeTeamId ? homeTeamName : awayTeamName;
+  const getTeamName = (teamId: string) => (teamId === homeTeamId ? homeTeamName : awayTeamName);
   return (
     <Box className="w-full bg-white rounded-xl p-3">
       <Box className="flex w-full justify-around items-center h-8 my-3 text-center testing sub-selector">
@@ -65,7 +62,6 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
       <table className="w-full text-left playbyplay-table">
         <thead className="justify-left items-left border-t border-b border-[rgba(0,0,0,0.1)]">
           <tr>
-            {" "}
             <th className="text-xs text-left px-0 opacity-70">TIME</th>
             <th className="text-xs text-left pl-4 opacity-70" colSpan={2}>
               PLAY
@@ -73,20 +69,13 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
             <th className="text-xs text-center px-2 opacity-70">
               {data.awayTeam.team.abbreviation}
             </th>
-            <th className="text-xs text-center opacity-70">
-              {data.homeTeam.team.abbreviation}
-            </th>
+            <th className="text-xs text-center opacity-70">{data.homeTeam.team.abbreviation}</th>
           </tr>
         </thead>
         <tbody>
           {selectedPlays.map((play: any) => (
-            <tr
-              key={uuidv4()}
-              className="border-t border-b border-[rgba(0,0,0,0.1)]"
-            >
-              <td className="text-xs text-left opacity-60 pl-1">
-                {play.clock.displayValue}
-              </td>
+            <tr key={uuidv4()} className="border-t border-b border-[rgba(0,0,0,0.1)]">
+              <td className="text-xs text-left opacity-60 pl-1">{play.clock.displayValue}</td>
 
               <td className="text-xs text-left p-2 pl-4" colSpan={2}>
                 {typeof play.team !== "undefined" ? (
@@ -107,9 +96,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
                     </Typography>
                   </Box>
                 ) : (
-                  <Typography className="text-xs text-left opacity-70">
-                    {play.text}
-                  </Typography>
+                  <Typography className="text-xs text-left opacity-70">{play.text}</Typography>
                 )}
               </td>
               <td className="text-xs text-center">{play.awayScore}</td>

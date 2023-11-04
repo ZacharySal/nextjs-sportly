@@ -24,71 +24,39 @@ function teamWon(event: any, teamName: string) {
     : false;
 }
 
-export default function DesktopTeamSchedule({
-  data,
-  league,
-}: {
-  data: any;
-  league: string;
-}) {
+export default function DesktopTeamSchedule({ data, league }: { data: any; league: string }) {
   const teamName = data.teamData.team.displayName;
-
-  const setTeamImageSrc = (teamName: string) => {
-    try {
-      const src = require(`public/${league}/${teamName
-        .replace(" ", "")
-        .toLowerCase()}.png`);
-      return src;
-    } catch {
-      return `/default.png`;
-    }
-  };
 
   function formatName(event: any, teamName: string) {
     let newss = event.name.replace(teamName, "");
     let n = newss.replace(" at ", " @ ");
     let b =
-      n.at(-1 - 1) === "@"
-        ? "vs " + n.substring(0, n.indexOf("@"))
-        : "@ " + n.split(" ").slice(-1);
+      n.at(-1 - 1) === "@" ? "vs " + n.substring(0, n.indexOf("@")) : "@ " + n.split(" ").slice(-1);
 
     return b.includes("vs") ? (
       <Box className="w-[8rem] p-1 flex flex-row items-center gap-1">
-        <Typography className="text-[11px] font-semibold opacity-70">
-          {" "}
-          vs{" "}
-        </Typography>
+        <Typography className="text-[11px] font-semibold opacity-70"> vs </Typography>
         <Image
-          width={100}
-          height={100}
+          width={event.competitions[0].competitors[1].team.logos[0].width}
+          height={event.competitions[0].competitors[1].team.logos[0].height}
           priority={true}
-          src={setTeamImageSrc(
-            event.competitions[0].competitors[1].team.shortDisplayName
-          )}
-          className="w-8 object-contain"
+          src={event.competitions[0].competitors[1].team.logos[0].href}
+          className="w-7 object-contain"
           alt="team logo"
         />
         <Typography className="text-[11px] font-semibold opacity-70">
-          {b
-            .substring(0, b.lastIndexOf(" "))
-            .split(" ")
-            .splice(-1)[0]
-            .replace("vs", "")}
+          {b.substring(0, b.lastIndexOf(" ")).split(" ").splice(-1)[0].replace("vs", "")}
         </Typography>
       </Box>
     ) : (
       <Box className="w-[8rem] p-1 flex flex-row items-center gap-1">
-        <Typography className="text-[11px] font-semibold opacity-70">
-          @
-        </Typography>
+        <Typography className="text-[11px] font-semibold opacity-70">@</Typography>
         <Image
-          width={100}
-          height={100}
+          width={event.competitions[0].competitors[0].team.logos[0].width}
+          height={event.competitions[0].competitors[0].team.logos[0].height}
           priority={true}
-          src={setTeamImageSrc(
-            event.competitions[0].competitors[0].team.shortDisplayName
-          )}
-          className="w-8 object-contain"
+          src={event.competitions[0].competitors[0].team.logos[0].href}
+          className="w-7 object-contain"
           alt="team logo"
         />
         <Typography className="text-[11px] font-semibold opacity-70">
