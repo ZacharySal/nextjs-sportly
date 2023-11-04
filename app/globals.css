@@ -33,7 +33,6 @@ main {
 }
 
 .rr {
-  font-weight: 800 !important;
   font-size: 1.25rem !important;
   letter-spacing: 0.05em !important;
   width: 80% !important;
@@ -666,4 +665,10 @@ main {
 
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite;
+}
+
+svg{
+  fill: #fff;
+  height: 20px;
+  width: 20px;
 }
