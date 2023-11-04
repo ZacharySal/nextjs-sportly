@@ -19,6 +19,7 @@ import { allNFLDates } from "@/app/_lib/constants";
 import CalendarMonthOutlined from "@mui/icons-material/CalendarMonthOutlined";
 import NFLCalendar from "./NFLCalendar";
 import ScoreCard from "../ScoreCard";
+import Loading from "../Loading";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -198,9 +199,7 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
     return (
       <Box className="w-full py-2 mt-[-0.5rem]">
         {nflWeekSelector()}
-        <Box className="w-full flex justify-center mt-14 items-center">
-          <CircularProgress />
-        </Box>
+        <Loading />
       </Box>
     );
   } else if (!isLoading) {

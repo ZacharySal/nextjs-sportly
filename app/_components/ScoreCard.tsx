@@ -715,12 +715,16 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                 <Box className="dt-scorecard-button">GAMECAST</Box>
               </Link>
               <Link
-                href={isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""}
+                href={
+                  isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/boxscore` : ""
+                }
               >
                 <Box className="dt-scorecard-button">BOX SCORE</Box>
               </Link>
               <Link
-                href={isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""}
+                href={
+                  isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/playbyplay` : ""
+                }
               >
                 <Box className="dt-scorecard-button">PLAYBYPLAY</Box>
               </Link>

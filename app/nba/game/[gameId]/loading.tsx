@@ -1,11 +1,8 @@
 import { Box, Stack, CircularProgress } from "@mui/material";
+import Loading from "@/app/_components/Loading";
 
 function loading() {
-  return (
-    <Box className="w-full h-80 flex justify-center items-center">
-      <CircularProgress />
-    </Box>
-  );
+  return <Loading />;
 }
 
 export default loading;
