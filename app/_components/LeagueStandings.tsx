@@ -44,7 +44,7 @@ export default function LeagueStandings({ data, league }: { data: any; league: s
                           {division.standings.entries.map((team: any) => (
                             <tr key={uuidv4()} className="team-info-cell">
                               <td className="text-xs name-col z-10" align="center">
-                                <Link href={`/${league}/team/${team.team.id}`}>
+                                <Link href={`/${league}/team/${team.team.id}/home`}>
                                   <Box className="flex items-center justify-start pl-1 gap-2 w-full">
                                     <Image
                                       src={team.team.logos[0].href}
