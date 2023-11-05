@@ -29,9 +29,9 @@ export default function LastFive({
 
   const teamLastFive = (teamId: number) => (
     <Box>
-      <table className="stat-table">
+      <table className="min-w-full table misc-table">
         <thead>
-          <tr className="text-[11px] opacity-70 ">
+          <tr className="text-[11px] table-header">
             <th className="pl-1" align="left">
               DATE
             </th>

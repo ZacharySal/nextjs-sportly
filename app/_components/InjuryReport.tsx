@@ -37,9 +37,9 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
                   {team.team.displayName}
                 </Typography>
               </Box>
-              <table className="stat-table">
+              <table className="table misc-table">
                 <thead>
-                  <tr className="text-[11px] opacity-70 ">
+                  <tr className="text-[11px] table-header">
                     <th className="pl-1" colSpan={2} align="left">
                       NAME, POS
                     </th>

@@ -13,6 +13,8 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
 
   const game = gameInfo.competitions[0];
 
+  const i = Math.floor(Math.random() * 3);
+
   const homeTeamName: string = game.competitors[0].team.shortDisplayName;
   const awayTeamName: string = game.competitors[1].team.shortDisplayName;
   const homeTeamScore = Number(game.competitors[0].score);
@@ -445,11 +447,6 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           </Box>
         )}
       </Box>
-      {isGameNoteAvailable && (
-        <Typography className="text-xs opacity-60 mt-[-0.35rem]">
-          {game.notes[0].headline}
-        </Typography>
-      )}
     </Link>
   );
 
@@ -531,11 +528,6 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               )}
             </Box>
           </Box>
-          {isGameNoteAvailable && (
-            <Typography className="text-xs p-1 opacity-60 mt-1">
-              {game.notes[0].headline}
-            </Typography>
-          )}
         </Box>
       </Box>
 
@@ -743,9 +735,11 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     return (
       <>
         {isDesktopScreen ? (
-          <Box className="animate-pulse w-full rounded-xl h-[8rem] bg-gray-200 p-4 my-2"></Box>
+          <Box className="w-full h-full">
+            <Box className="animate-pulse w-full rounded-xl h-[8rem] bg-gray-200 px-1 py-4 my-1"></Box>
+          </Box>
         ) : (
-          <Box className="animate-pulse w-full rounded-xl h-[3.5rem] bg-gray-200 p-2 my-2"></Box>
+          <Box className="animate-pulse w-full rounded-xl h-[3.5rem] bg-gray-200 py-2 my-1"></Box>
         )}
       </>
     );

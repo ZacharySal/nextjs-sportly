@@ -23,8 +23,8 @@ export default function GameRecapArticle({ data }: { data: any }) {
         <Box className="w-full bg-white p-3 rounded-xl">
           <Box className="w-full relative cursor-pointer article-video-container overflow-hidden">
             <Image
-              width={1000}
-              height={1000}
+              width={data.gameData.article.images[0].width}
+              height={data.gameData.article.images[0].height}
               alt="video"
               src={data.gameData.article.images[0].url}
               className="w-full object-cover video-preview rounded-xl"

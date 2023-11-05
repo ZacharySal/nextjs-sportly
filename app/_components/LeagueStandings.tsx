@@ -30,14 +30,11 @@ export default function LeagueStandings({ data, league }: { data: any; league: s
                 </Typography>
                 <Box className="min-w-full flex flex-row items-start">
                   <table className="border-collapse">
-                    <thead className="standings-first-col">
+                    <thead className="table-fixed-left-thead table-header">
                       {conference.groups.map((division: any) => (
                         <React.Fragment key={uuidv4()}>
-                          <tr>
-                            <th
-                              className="name-col-header text-xs font-[500] z-10 uppercase"
-                              align="center"
-                            >
+                          <tr className="table-header">
+                            <th className="uppercase" align="left">
                               {league === "nfl" ? division.name : getMLBDivisionName(division.name)}
                             </th>
                           </tr>
@@ -52,7 +49,7 @@ export default function LeagueStandings({ data, league }: { data: any; league: s
                                       height={team.team.logos[0].height}
                                       priority={true}
                                       alt="home team logo"
-                                      className="w-7 object-contain"
+                                      className="w-6 object-contain"
                                     />
                                     <Typography className="text-xs text-[#3e82d6]">
                                       {team.team.abbreviation}
@@ -67,17 +64,13 @@ export default function LeagueStandings({ data, league }: { data: any; league: s
                     </thead>
                   </table>
                   <Box className="w-full overflow-x-auto">
-                    <table className="min-w-full standings-table max-w-full bg-white">
+                    <table className="table standings-table">
                       {conference.groups.map((division: any) => (
                         <React.Fragment key={uuidv4()}>
                           <thead>
-                            <tr>
+                            <tr className="table-header">
                               {division.standings.entries[0].stats.map((statType: any) => (
-                                <th
-                                  key={uuidv4()}
-                                  className="text-xs font-[500] standings-table-cell"
-                                  align="center"
-                                >
+                                <th key={uuidv4()} align="center">
                                   {statType.shortDisplayName}
                                 </th>
                               ))}
@@ -85,7 +78,7 @@ export default function LeagueStandings({ data, league }: { data: any; league: s
                           </thead>
 
                           {division.standings.entries.map((team: any) => (
-                            <tr key={uuidv4()} className="team-stat-cell">
+                            <tr key={uuidv4()} className="standings-table-row">
                               {team.stats.map((stat: any) => (
                                 <td
                                   key={uuidv4()}
@@ -98,7 +91,7 @@ export default function LeagueStandings({ data, league }: { data: any; league: s
                                         : "black",
                                     opacity: stat.abbreviation === "DIFF" ? "1" : "0.6",
                                   }}
-                                  className="text-xs standings-table-cell"
+                                  className="table-cell"
                                   align="center"
                                 >
                                   {stat.displayValue}

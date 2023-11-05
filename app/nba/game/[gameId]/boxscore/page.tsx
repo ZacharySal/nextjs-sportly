@@ -9,6 +9,7 @@ import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
 import NFLGameStats from "@/app/_components/NFL/NFLGameStats";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
+import NBAGameStats from "@/app/_components/NBA/NBAGameStats";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -22,12 +23,12 @@ export default function Page({ params }: { params: { gameId: string } }) {
     fetcher
   );
 
-  const mobileView = () => <NFLGameStats data={data} league="nba" />;
+  const mobileView = () => <NBAGameStats data={data} isDesktopScreen={isDesktopScreen} />;
 
   const desktopView = () => (
     <>
       <Box className="flex flex-col gap-3">
-        <NFLGameStats data={data} league="nba" />
+        <NBAGameStats data={data} isDesktopScreen={isDesktopScreen} />
       </Box>
       <Box className="flex flex-col basis-1/4 gap-3">
         {data.gameData.predictor && <MatchupPredictor data={data} league="nba" />}
