@@ -24,8 +24,8 @@ export default function LastFive({
 }) {
   const [selectedTeam, setSelectedTeam] = useState(1);
 
-  const awayTeamName = data.gameData.boxscore.teams[0].team.shortDisplayName;
-  const homeTeamName = data.gameData.boxscore.teams[1].team.shortDisplayName;
+  const homeTeamName = data.gameData.boxscore.teams[0].team.shortDisplayName;
+  const awayTeamName = data.gameData.boxscore.teams[1].team.shortDisplayName;
 
   const teamLastFive = (teamId: number) => (
     <Box>
@@ -103,7 +103,7 @@ export default function LastFive({
               width={500}
               height={500}
               priority={true}
-              src={data.gameData.boxscore.teams[0].team.logo}
+              src={data.gameData.boxscore.teams[1].team.logo}
               className="w-6 object-contain"
               alt="team logo"
             />
@@ -121,7 +121,7 @@ export default function LastFive({
               width={500}
               height={500}
               priority={true}
-              src={data.gameData.boxscore.teams[1].team.logo}
+              src={data.gameData.boxscore.teams[0].team.logo}
               className="w-6 object-contain"
               alt="team logo"
             />
