@@ -18,10 +18,6 @@ export default function Home() {
     fetcher
   );
 
-  if (!isLoading) {
-    console.log(data);
-  }
-
   const desktopView = () => (
     <>
       <Box className="basis-2/3">

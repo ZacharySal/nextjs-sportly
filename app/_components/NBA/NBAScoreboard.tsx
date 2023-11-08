@@ -18,7 +18,12 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const getDaysArray = function (start: any, end: any) {
   for (var arr = [], dt = new Date(start); dt <= new Date(end); dt.setDate(dt.getDate() + 1)) {
-    arr.push(new Date(dt));
+    const date = new Date(dt);
+    var mm = ("0" + (date.getMonth() + 1)).slice(-2);
+    var dd = ("0" + date.getDate()).slice(-2);
+    var yy = date.getFullYear();
+    var dateString = yy + "-" + mm + "-" + dd;
+    arr.push(dateString);
   }
   return arr;
 };
@@ -69,18 +74,13 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
     new Date(`${selectedYear}-01-01`),
     new Date(`${selectedYear}-12-31`)
   );
-  const formattedDaysInYear = daysInYear.map((v: any) => {
-    return v.toISOString().slice(0, 10);
-  });
 
   const [selectedDate, setSelectedDate] = useState(formatDate(currentDate));
   const [calendarValue, setCalendarValue] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(
-    formattedDaysInYear.indexOf(formatDate(currentDate))
-  );
+  const [currentIndex, setCurrentIndex] = useState(daysInYear.indexOf(formatDate(currentDate)));
 
   useEffect(() => {
-    setCurrentIndex(formattedDaysInYear.indexOf(selectedDate));
+    setCurrentIndex(daysInYear.indexOf(selectedDate));
   }, [selectedDate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   let key = `https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50&date=${selectedDate.replaceAll(
@@ -93,7 +93,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
     const dateElements = [];
     const maxEls = Math.min(Math.floor(width / 100), 7);
     for (let i = -1; i <= maxEls - 2; i++) {
-      dateElements.push(formattedDaysInYear[mod(currentIndex + i, 365)]);
+      dateElements.push(daysInYear[mod(currentIndex + i, 365)]);
     }
     return dateElements;
   }

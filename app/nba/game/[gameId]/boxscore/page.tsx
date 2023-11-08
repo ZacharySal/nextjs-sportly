@@ -16,8 +16,6 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function Page({ params }: { params: { gameId: string } }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  console.log(params.gameId);
-
   const { data, isLoading } = useSwr(
     `https://nextjs-sportly.vercel.app/api/nba/gameData/${params.gameId}`,
     fetcher

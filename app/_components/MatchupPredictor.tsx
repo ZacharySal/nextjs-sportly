@@ -16,7 +16,6 @@ function isSimilar([r1, g1, b1]: any, [r2, g2, b2]: any) {
 export default function MatchupPredictor({ data, league }: { data: any; league: string }) {
   const awayTeamChance = (Number(data.gameData.predictor.awayTeam.gameProjection) * 360) / 100;
 
-  console.log(data);
   const homeTeamColor = data.homeTeam.team.color;
   let awayTeamColor = isSimilar(getRGB(`#${homeTeamColor}`), getRGB(`#${data.awayTeam.team.color}`))
     ? data.awayTeam.team.alternateColor

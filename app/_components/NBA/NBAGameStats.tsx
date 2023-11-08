@@ -15,7 +15,6 @@ export default function NBAGameStats({
   const awayTeamName = data.gameData.boxscore.teams[0].team.shortDisplayName;
   const homeTeamName = data.gameData.boxscore.teams[1].team.shortDisplayName;
 
-  console.log(data);
   const tableHeader = (statType: any, teamOption: number) => {
     return teamOption === 0
       ? data.gameData.boxscore.teams[0].team.displayName
@@ -28,7 +27,6 @@ export default function NBAGameStats({
     team: [0, 1, 2, 6, 7, 11, 13],
   };
 
-  compactStats.stats.map((index: number) => console.log(index));
   const teamBoxScore = (teamOption: number) => (
     <>
       {data.gameData.boxscore.players[teamOption].statistics.map((statType: any) => (
