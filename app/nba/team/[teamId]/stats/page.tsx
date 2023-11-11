@@ -15,7 +15,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const { data, isLoading } = useSwr(
-    `http://localhost:3000/api/nba/teamData/${params.teamId}`,
+    `https://nextjs-sportly.vercel.app/api/nba/teamData/${params.teamId}`,
     fetcher,
     { refreshInterval: 5000 }
   );
