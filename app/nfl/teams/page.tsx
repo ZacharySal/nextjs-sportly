@@ -17,7 +17,8 @@ export default function Home() {
 
   const { data, isLoading } = useSwr(
     `https://nextjs-sportly.vercel.app/api/nfl/leagueData`,
-    fetcher
+    fetcher,
+    { refreshInterval: 5000 }
   );
 
   const desktopView = () => (

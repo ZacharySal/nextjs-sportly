@@ -18,7 +18,8 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
 
   const { data, isLoading } = useSwr(
     `https://nextjs-sportly.vercel.app/api/nfl/gameData/${params.gameId}`,
-    fetcher
+    fetcher,
+    { refreshInterval: 5000 }
   );
 
   function gameLeaders() {
@@ -39,10 +40,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           <Box className="grid place-items-end justify-center gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between relative my-2">
             <Box className="flex col-start-1 flex-col row-span-2 justify-center items-center gap-1 player-divider">
               <Image
-                src={
-                  data.gameData.leaders[1].leaders[0].leaders[0].athlete
-                    .headshot.href
-                }
+                src={data.gameData.leaders[1].leaders[0].leaders[0].athlete.headshot.href}
                 width={100}
                 height={100}
                 alt="player"
@@ -64,10 +62,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           <Box className="grid items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between">
             <Box className="flex col-start-2 flex-col row-span-2 justify-center items-center gap-1">
               <Image
-                src={
-                  data.gameData.leaders[0].leaders[0].leaders[0].athlete
-                    .headshot.href
-                }
+                src={data.gameData.leaders[0].leaders[0].leaders[0].athlete.headshot.href}
                 width={100}
                 height={100}
                 alt="player"
@@ -97,10 +92,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           <Box className="grid place-items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between relative">
             <Box className="flex col-start-1 flex-col row-span-2 justify-center items-center gap-1 player-divider">
               <Image
-                src={
-                  data.gameData.leaders[1].leaders[1].leaders[0].athlete
-                    .headshot.href
-                }
+                src={data.gameData.leaders[1].leaders[1].leaders[0].athlete.headshot.href}
                 width={100}
                 height={100}
                 alt="player"
@@ -122,10 +114,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           <Box className="grid items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between my-2">
             <Box className="flex col-start-2 flex-col row-span-2 justify-center items-center gap-1">
               <Image
-                src={
-                  data.gameData.leaders[0].leaders[1].leaders[0].athlete
-                    .headshot.href
-                }
+                src={data.gameData.leaders[0].leaders[1].leaders[0].athlete.headshot.href}
                 width={100}
                 height={100}
                 alt="player"
@@ -155,10 +144,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           <Box className="grid place-items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between my-2 relative">
             <Box className="flex col-start-1 flex-col row-span-2 justify-center items-center gap-1 player-divider">
               <Image
-                src={
-                  data.gameData.leaders[1].leaders[2].leaders[0].athlete
-                    .headshot.href
-                }
+                src={data.gameData.leaders[1].leaders[2].leaders[0].athlete.headshot.href}
                 width={100}
                 height={100}
                 alt="player"
@@ -180,10 +166,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
           <Box className="grid items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between">
             <Box className="flex col-start-2 flex-col row-span-2 justify-center items-center gap-1">
               <Image
-                src={
-                  data.gameData.leaders[0].leaders[2].leaders[0].athlete
-                    .headshot.href
-                }
+                src={data.gameData.leaders[0].leaders[2].leaders[0].athlete.headshot.href}
                 width={100}
                 height={100}
                 alt="player"
@@ -218,9 +201,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
         <NFLPlayByPlay data={data} />
       </Box>
       <Box className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
-        {data.gameData.predictor && (
-          <MatchupPredictor data={data} league={"nfl"} />
-        )}
+        {data.gameData.predictor && <MatchupPredictor data={data} league={"nfl"} />}
         {data.gameData.leaders[0].leaders.length > 0 &&
           data.gameData.leaders[1].leaders.length > 0 &&
           gameLeaders()}

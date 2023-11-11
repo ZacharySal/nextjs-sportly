@@ -14,7 +14,8 @@ export default function RootLayout({
 }) {
   let { data, isLoading } = useSwr(
     `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/${params.teamId}`,
-    fetcher
+    fetcher,
+    { refreshInterval: 5000 }
   );
 
   if (!isLoading)

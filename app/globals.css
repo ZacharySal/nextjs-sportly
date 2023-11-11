@@ -81,9 +81,14 @@ main {
   background-color: hsl(0, 0%, 98%);
 }
 
-.standings-table-row:nth-child(even){
-  background-color: hsl(0, 0%, 98%);
+.standings-table tbody:nth-of-type(even) tr:nth-of-type(even):not(.table-header){
+  background-color: hsl(0, 0%, 98%) !important;
 }
+
+.standings-table tbody:nth-of-type(odd) tr:nth-child(odd):not(.table-header){
+  background-color: hsl(0, 0%, 98%) !important;
+}
+
 
 .table-header {
   color: #48494a;
@@ -121,8 +126,8 @@ main {
   border-collapse: collapse;
 }
 
-.table-fixed-left-thead tr > * {
-  min-width: 8rem;
+.table-fixed-left-thead tr  {
+  width: auto;
   height: 28px;
   background-color: inherit;
   left: 0;
@@ -130,6 +135,17 @@ main {
   border-right: 1px solid #dcdddf !important;
   border-bottom: 1px solid #f1f2f3 !important;
   padding: 0 12px 0 8px;
+}
+
+.table-fixed-left-thead tr > td  {
+  width: auto;
+  height: 28px;
+  background-color: inherit;
+  left: 0;
+  z-index: 25;
+  border-right: 1px solid #dcdddf !important;
+  border-bottom: 1px solid #f1f2f3 !important;
+  padding-right: 2.5rem;
 }
 
 .table-fixed-left-thead th {

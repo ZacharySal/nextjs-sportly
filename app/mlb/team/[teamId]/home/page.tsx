@@ -14,7 +14,8 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function TeamPage({ params }: { params: { teamId: string } }) {
   const { data, isLoading } = useSWR(
     `https://nextjs-sportly.vercel.app/api/mlb/teamData/${params.teamId}`,
-    fetcher
+    fetcher,
+    { refreshInterval: 5000 }
   );
 
   const desktopView = () => (
@@ -26,11 +27,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
         <TeamNewsCards data={data} league="mlb" />
       </Box>
       <Box className="basis-1/4">
-        <Articles
-          title={`${data.teamData.team.name} News`}
-          teamNews={data.teamNews}
-          limit={8}
-        />
+        <Articles title={`${data.teamData.team.name} News`} teamNews={data.teamNews} limit={8} />
       </Box>
     </ContainerBox>
   );

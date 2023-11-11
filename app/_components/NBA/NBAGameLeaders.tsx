@@ -27,11 +27,12 @@ export default function NBAGameLeaders({ data }: { data: any }) {
     }
   };
 
+  console.log(data);
   if (data.gameData.leaders[0].leaders.length === 0) return null;
   return (
     <Box className="w-full bg-white rounded-xl p-3 pb-1">
       <Typography className="font-semibold opacity-70 text-sm">
-        {data.gameData.isGameStarted ? "Game Leaders" : "Season Leaders"}
+        {data.isGameStarted ? "Game Leaders" : "Season Leaders"}
       </Typography>
       <Box className="flex w-full justify-around items-center rounded-2xl h-8 mt-2 bg-white text-center testing sub-selector">
         <Box

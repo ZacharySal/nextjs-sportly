@@ -18,7 +18,8 @@ export default function Page({ params }: { params: { gameId: string } }) {
 
   const { data, isLoading } = useSwr(
     `https://nextjs-sportly.vercel.app/api/nba/gameData/${params.gameId}`,
-    fetcher
+    fetcher,
+    { refreshInterval: 5000 }
   );
 
   const mobileView = () => <NBAGameStats data={data} isDesktopScreen={isDesktopScreen} />;

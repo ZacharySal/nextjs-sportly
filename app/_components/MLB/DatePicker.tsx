@@ -5,7 +5,11 @@ import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import Button from "@mui/material/Button";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 import { UseDateFieldProps } from "@mui/x-date-pickers/DateField";
-import { BaseSingleInputFieldProps, DateValidationError, FieldSection } from "@mui/x-date-pickers/models";
+import {
+  BaseSingleInputFieldProps,
+  DateValidationError,
+  FieldSection,
+} from "@mui/x-date-pickers/models";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import CalendarMonthOutlined from "@mui/icons-material/CalendarMonthOutlined";
 import { Paper } from "@mui/material";
@@ -17,7 +21,13 @@ interface ButtonFieldProps
 }
 
 function ButtonField(props: ButtonFieldProps) {
-  const { setOpen, id, disabled, InputProps: { ref } = {}, inputProps: { "aria-label": ariaLabel } = {} } = props;
+  const {
+    setOpen,
+    id,
+    disabled,
+    InputProps: { ref } = {},
+    inputProps: { "aria-label": ariaLabel } = {},
+  } = props;
 
   return (
     <Button
@@ -35,7 +45,9 @@ function ButtonField(props: ButtonFieldProps) {
   );
 }
 
-export default function ButtonDatePicker(props: Omit<DatePickerProps<any>, "open" | "onOpen" | "onClose">) {
+export default function ButtonDatePicker(
+  props: Omit<DatePickerProps<any>, "open" | "onOpen" | "onClose">
+) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -46,6 +58,7 @@ export default function ButtonDatePicker(props: Omit<DatePickerProps<any>, "open
       open={open}
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
+      minDate={new Date("2010-31-12")}
     />
   );
 }

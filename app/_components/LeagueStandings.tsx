@@ -8,7 +8,9 @@ function getMLBDivisionName(divisionName: any) {
   return divisionName.substring(15, divisionName.length);
 }
 export default function LeagueStandings({ data, league }: { data: any; league: string }) {
-  /* START HERE*/
+  if (league === "nba") {
+    console.log(data);
+  }
   if (typeof data.standings.standings.groups[0].groups === "undefined") {
     return (
       <Typography className="mx-auto my-5">
@@ -76,29 +78,30 @@ export default function LeagueStandings({ data, league }: { data: any; league: s
                               ))}
                             </tr>
                           </thead>
-
-                          {division.standings.entries.map((team: any) => (
-                            <tr key={uuidv4()} className="standings-table-row">
-                              {team.stats.map((stat: any) => (
-                                <td
-                                  key={uuidv4()}
-                                  style={{
-                                    color:
-                                      stat.abbreviation === "DIFF"
-                                        ? Number(stat.displayValue > 0)
-                                          ? "#094"
-                                          : "#d00"
-                                        : "black",
-                                    opacity: stat.abbreviation === "DIFF" ? "1" : "0.6",
-                                  }}
-                                  className="table-cell"
-                                  align="center"
-                                >
-                                  {stat.displayValue}
-                                </td>
-                              ))}
-                            </tr>
-                          ))}
+                          <tbody>
+                            {division.standings.entries.map((team: any) => (
+                              <tr key={uuidv4()} className="standings-table-row">
+                                {team.stats.map((stat: any) => (
+                                  <td
+                                    key={uuidv4()}
+                                    style={{
+                                      color:
+                                        stat.abbreviation === "DIFF"
+                                          ? Number(stat.displayValue > 0)
+                                            ? "#094"
+                                            : "#d00"
+                                          : "black",
+                                      opacity: stat.abbreviation === "DIFF" ? "1" : "0.6",
+                                    }}
+                                    className="table-cell"
+                                    align="center"
+                                  >
+                                    {stat.displayValue}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
                         </React.Fragment>
                       ))}
                     </table>

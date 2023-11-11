@@ -14,7 +14,8 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
 
   const { data, isLoading } = useSwr(
     `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/2/teams/${params.teamId}/statistics`,
-    fetcher
+    fetcher,
+    { refreshInterval: 5000 }
   );
 
   if (isLoading) return <Loading />;

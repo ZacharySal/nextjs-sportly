@@ -23,7 +23,8 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function TeamPage({ params }: { params: { gameId: string } }) {
   const { data, isLoading } = useSwr(
     `https://nextjs-sportly.vercel.app/api/nfl/gameData/${params.gameId}`,
-    fetcher
+    fetcher,
+    { refreshInterval: 5000 }
   );
 
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");

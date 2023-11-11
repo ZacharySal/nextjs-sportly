@@ -30,9 +30,7 @@ export default function Home() {
     </>
   );
 
-  const mobileView = () => (
-    <AllTeams allTeams={nbaDivisionTeams} league="nba" />
-  );
+  const mobileView = () => <AllTeams allTeams={nbaDivisionTeams} league="nba" />;
 
   if (isLoading) return <Loading />;
   else {

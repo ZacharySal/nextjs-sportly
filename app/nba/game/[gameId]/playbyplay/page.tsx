@@ -16,7 +16,8 @@ export default function Page({ params }: { params: { gameId: string } }) {
 
   const { data, isLoading } = useSwr(
     `https://nextjs-sportly.vercel.app/api/nba/gameData/${params.gameId}`,
-    fetcher
+    fetcher,
+    { refreshInterval: 5000 }
   );
 
   const desktopView = () => (
@@ -25,9 +26,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
         <NBAPlaybyPlay data={data} />
       </Box>
       <Box className="basis-1/4 flex flex-col gap-3">
-        {data.gameData.predictor && (
-          <MatchupPredictor data={data} league="nba" />
-        )}
+        {data.gameData.predictor && <MatchupPredictor data={data} league="nba" />}
         <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
       </Box>
     </>

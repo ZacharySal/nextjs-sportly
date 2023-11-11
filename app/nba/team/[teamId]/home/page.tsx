@@ -14,7 +14,8 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function TeamPage({ params }: { params: { teamId: string } }) {
   const { data, isLoading } = useSwr(
     `https://nextjs-sportly.vercel.app/api/nba/teamData/${params.teamId}`,
-    fetcher
+    fetcher,
+    { refreshInterval: 5000 }
   );
 
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
@@ -37,9 +38,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
           </Typography>
           <Box className="grid grid-cols-2 grid-rows-2 text-center justify-center border-t border-b border-dotted border-[rgba(0,0,0,0.3)]">
             <Box className="w-full flex flex-col gap-1 border-r border-rgba(0,0,0,0.1) border-b py-2">
-              <Typography className="text-sm opacity-60">
-                Points Per Game
-              </Typography>
+              <Typography className="text-sm opacity-60">Points Per Game</Typography>
               <Typography className="text-3xl opacity-80">
                 {data.teamStats["Points Per Game"].displayValue}
               </Typography>
@@ -48,9 +47,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
               </Typography>
             </Box>
             <Box className="w-full flex flex-col gap-1 border-rgba(0,0,0,0.1) border-b py-2">
-              <Typography className="text-sm opacity-60">
-                Assists Per Game
-              </Typography>
+              <Typography className="text-sm opacity-60">Assists Per Game</Typography>
               <Typography className="text-3xl opacity-80">
                 {data.teamStats["Assists Per Game"].displayValue}
               </Typography>
@@ -59,9 +56,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
               </Typography>
             </Box>
             <Box className="w-full flex flex-col gap-1 border-r border-rgba(0,0,0,0.1) py-2">
-              <Typography className="text-sm opacity-60 ">
-                Rebounds Per Game
-              </Typography>
+              <Typography className="text-sm opacity-60 ">Rebounds Per Game</Typography>
               <Typography className="text-3xl opacity-80">
                 {data.teamStats["Rebounds Per Game"].displayValue}
               </Typography>
@@ -70,9 +65,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
               </Typography>
             </Box>
             <Box className="w-full flex flex-col gap-1 py-2">
-              <Typography className="text-sm opacity-60">
-                3rd Point %
-              </Typography>
+              <Typography className="text-sm opacity-60">3rd Point %</Typography>
               <Typography className="text-3xl opacity-80">
                 {data.teamStats["3 Point %"].displayValue}
               </Typography>
@@ -87,11 +80,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
             </Typography>
           </Link>
         </Box>
-        <Articles
-          title={`${data.teamData.team.name} News`}
-          teamNews={data.teamNews}
-          limit={8}
-        />
+        <Articles title={`${data.teamData.team.name} News`} teamNews={data.teamNews} limit={8} />
       </Box>
     </>
   );

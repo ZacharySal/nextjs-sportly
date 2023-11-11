@@ -25,22 +25,19 @@ export default function Page({ params }: { params: { gameId: string } }) {
 
   const { data, isLoading } = useSwr(
     `https://nextjs-sportly.vercel.app/api/mlb/gameData/${params.gameId}`,
-    fetcher
+    fetcher,
+    { refreshInterval: 5000 }
   );
 
   const desktopView = () => (
     <>
       <Box className="flex flex-col basis-1/2 gap-3">
-        {data.isGameStarted && data.homeTeam.linescores && (
-          <MLBBoxscore data={data} />
-        )}
+        {data.isGameStarted && data.homeTeam.linescores && <MLBBoxscore data={data} />}
         {data.isGameStarted && <MLBScoringPlays data={data} />}
       </Box>
 
       <Box className="basis-1/4 flex flex-col gap-3">
-        {data.gameData.predictor && (
-          <MatchupPredictor data={data} league="mlb" />
-        )}
+        {data.gameData.predictor && <MatchupPredictor data={data} league="mlb" />}
         <DivisionStandings data={data} isNFL={false} league="mlb" />
         <Articles title="MLB News" teamNews={data.gameData.news} limit={6} />
       </Box>
@@ -50,9 +47,7 @@ export default function Page({ params }: { params: { gameId: string } }) {
   const mobileView = () => (
     <>
       <Box className="flex flex-col basis-1/2 gap-3">
-        {data.isGameStarted && data.homeTeam.linescores && (
-          <MLBBoxscore data={data} />
-        )}
+        {data.isGameStarted && data.homeTeam.linescores && <MLBBoxscore data={data} />}
         {data.isGameStarted && <MLBScoringPlays data={data} />}
       </Box>
     </>

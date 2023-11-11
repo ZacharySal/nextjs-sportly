@@ -16,7 +16,8 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
 
   const { data, isLoading } = useSwr(
     `https://nextjs-sportly.vercel.app/api/nfl/teamData/${params.teamId}`,
-    fetcher
+    fetcher,
+    { refreshInterval: 5000 }
   );
 
   const desktopView = () => (
@@ -36,9 +37,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
           </Typography>
           <Box className="grid grid-cols-2 grid-rows-2 text-center justify-center border-t border-b border-dotted border-[rgba(0,0,0,0.3)]">
             <Box className="w-full flex flex-col gap-1 border-r border-rgba(0,0,0,0.1) border-b py-2">
-              <Typography className="text-sm opacity-60">
-                Passing Yards
-              </Typography>
+              <Typography className="text-sm opacity-60">Passing Yards</Typography>
               <Typography className="text-3xl opacity-80">
                 {data.teamStats["Passing YPG"].displayValue}
               </Typography>
@@ -47,9 +46,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
               </Typography>
             </Box>
             <Box className="w-full flex flex-col gap-1 border-rgba(0,0,0,0.1) border-b py-2">
-              <Typography className="text-sm opacity-60">
-                Rushing Yards
-              </Typography>
+              <Typography className="text-sm opacity-60">Rushing Yards</Typography>
               <Typography className="text-3xl opacity-80">
                 {data.teamStats["Rushing YPG"].displayValue}
               </Typography>
@@ -58,9 +55,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
               </Typography>
             </Box>
             <Box className="w-full flex flex-col gap-1 border-r border-rgba(0,0,0,0.1) py-2">
-              <Typography className="text-sm opacity-60 ">
-                Total Points
-              </Typography>
+              <Typography className="text-sm opacity-60 ">Total Points</Typography>
               <Typography className="text-3xl opacity-80">
                 {data.teamStats["Total PPG"].displayValue}
               </Typography>
