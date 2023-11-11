@@ -8,6 +8,8 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
   const awayTeamName = data.gameData.boxscore.teams[0].team.shortDisplayName;
   const homeTeamName = data.gameData.boxscore.teams[1].team.shortDisplayName;
 
+  console.log(data);
+
   const tableHeader = (statType: any, teamOption: number) => {
     if (league == "nfl") {
       return statType.text;
@@ -45,14 +47,14 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
               <table className="border-collapse">
                 <thead className="table-fixed-left-thead table-header">
                   <tr>
-                    <th className="uppercase" align="left">
+                    <th className="uppercase pl-2" align="left">
                       Name
                     </th>
                   </tr>
                   {statType.athletes.map((athlete: any) => (
                     <tr key={uuidv4()} className="">
-                      <td className="athlete-name" align="left">
-                        {athlete.athlete.displayName}{" "}
+                      <td className="athlete-name pl-2" align="left">
+                        {athlete.athlete.displayName[0] + ". " + athlete.athlete.lastName}{" "}
                         <span className="text-[9px] text-[#6c6d6f] mb-5"></span>
                       </td>
                     </tr>

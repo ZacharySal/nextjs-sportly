@@ -8,6 +8,7 @@ import Loading from "@/app/_components/Loading";
 import DesktopTeamSchedule from "@/app/_components/DesktopTeamSchedule";
 import TeamNewsCards from "@/app/_components/TeamNewsCards";
 import Link from "next/link";
+import TeamUserSelection from "@/app/_components/TeamUserSelection";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -95,9 +96,12 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   if (isLoading) return <Loading />;
   else {
     return (
-      <ContainerBox isDesktopScreen={isDesktopScreen}>
-        {isDesktopScreen ? desktopView() : mobileView()}
-      </ContainerBox>
+      <>
+        <TeamUserSelection userSelection={"home"} />
+        <ContainerBox isDesktopScreen={isDesktopScreen}>
+          {isDesktopScreen ? desktopView() : mobileView()}
+        </ContainerBox>
+      </>
     );
   }
 }

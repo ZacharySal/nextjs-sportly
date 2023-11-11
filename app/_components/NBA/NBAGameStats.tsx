@@ -64,14 +64,14 @@ export default function NBAGameStats({
               <table className="border-collapse">
                 <thead className="table-fixed-left-thead table-header">
                   <tr>
-                    <th className="uppercase" align="left">
+                    <th className="uppercase pl-2" align="left">
                       Name
                     </th>
                   </tr>
                   {statType.athletes.map((athlete: any) => (
                     <tr key={uuidv4()} className="">
-                      <td className="athlete-name" align="left">
-                        {athlete.athlete.displayName}{" "}
+                      <td className="athlete-name pl-2" align="left">
+                        {athlete.athlete.shortName}{" "}
                         <span className="text-[9px] text-[#6c6d6f] mb-5">
                           {athlete.athlete.position.abbreviation}
                         </span>

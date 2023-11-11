@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { teamId: string } }
-) {
+export async function GET(request: Request, { params }: { params: { teamId: string } }) {
   const teamDataResponse = await fetch(
     `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${params.teamId}`,
     {
@@ -31,7 +28,7 @@ export async function GET(
   const teamSchedule = await teamScheduleResponse.json();
 
   const teamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2023/types/2/teams/${params.teamId}/statistics`,
+    `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2024/types/2/teams/${params.teamId}/statistics`,
     {
       cache: "no-cache",
     }
@@ -64,10 +61,41 @@ export async function GET(
     "3 Point %": teamStats.splits.categories[1].stats[13],
   };
 
+  const fullStats: Record<string, any> = {
+    Offensive: [
+      teamStats.splits.categories[2].stats[0],
+      teamStats.splits.categories[2].stats[2],
+      teamStats.splits.categories[2].stats[5],
+      teamStats.splits.categories[2].stats[7],
+      teamStats.splits.categories[2].stats[10],
+      teamStats.splits.categories[2].stats[11],
+      teamStats.splits.categories[2].stats[12],
+      teamStats.splits.categories[2].stats[13],
+      teamStats.splits.categories[2].stats[18],
+      teamStats.splits.categories[2].stats[20],
+    ],
+    Defensive: [
+      teamStats.splits.categories[0].stats[0],
+      teamStats.splits.categories[0].stats[1],
+      teamStats.splits.categories[0].stats[2],
+      teamStats.splits.categories[0].stats[3],
+      teamStats.splits.categories[0].stats[6],
+      teamStats.splits.categories[0].stats[7],
+    ],
+    General: [
+      teamStats.splits.categories[1].stats[1],
+      teamStats.splits.categories[1].stats[2],
+      teamStats.splits.categories[1].stats[4],
+      teamStats.splits.categories[1].stats[5],
+      teamStats.splits.categories[1].stats[6],
+    ],
+  };
+
   return NextResponse.json({
     teamData: teamData,
     teamSchedule: teamSchedule,
     teamStats: displayStats,
+    fullTeamStats: fullStats,
     teamNews: teamNews,
   });
 }

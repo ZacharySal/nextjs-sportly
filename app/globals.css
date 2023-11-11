@@ -115,6 +115,15 @@ main {
   font-variant-numeric: tabular-nums;
 }
 
+.t-table-cell {
+  font-size: 12px;
+  color: #6c6d6f;
+  padding: 0px 4px;
+  height: 28px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
 @media screen and (min-width: 1000px) {
   .table-cell {
    padding: 0px 18px;
@@ -145,7 +154,7 @@ main {
   z-index: 25;
   border-right: 1px solid #dcdddf !important;
   border-bottom: 1px solid #f1f2f3 !important;
-  padding-right: 2.5rem;
+  padding-right: 1.5rem;
 }
 
 .table-fixed-left-thead th {

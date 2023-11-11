@@ -20,11 +20,11 @@ export default function Home() {
 
   const desktopView = () => (
     <Box className="basis-2/4">
-      <Articles title={`MLB News`} teamNews={data.news} limit={10} />
+      <Articles title={`MLB News`} teamNews={data.news} limit={20} />
     </Box>
   );
 
-  const mobileView = () => <Articles title={`MLB News`} teamNews={data.news} limit={10} />;
+  const mobileView = () => <Articles title={`MLB News`} teamNews={data.news} limit={20} />;
 
   if (isLoading) return <Loading />;
   else {

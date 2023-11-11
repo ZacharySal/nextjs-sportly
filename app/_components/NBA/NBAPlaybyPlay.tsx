@@ -32,7 +32,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
             selectedQuarter === 1 && "selection-active"
           } nav-selection flex-grow sub-selection`}
         >
-          1st Quarter
+          1st
         </Box>
         <Box
           onClick={() => setSelectedQuarter(2)}
@@ -40,7 +40,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
             selectedQuarter === 2 && "selection-active"
           } nav-selection flex-grow sub-selection`}
         >
-          2nd Quarter
+          2nd
         </Box>
         <Box
           onClick={() => setSelectedQuarter(3)}
@@ -48,7 +48,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
             selectedQuarter === 3 && "selection-active"
           } nav-selection flex-grow sub-selection`}
         >
-          3rd Quarter
+          3rd
         </Box>
         <Box
           onClick={() => setSelectedQuarter(4)}
@@ -56,7 +56,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
             selectedQuarter === 4 && "selection-active"
           } nav-selection flex-grow sub-selection`}
         >
-          4th Quarter
+          4th
         </Box>
       </Box>
       <table className="w-full text-left playbyplay-table">
