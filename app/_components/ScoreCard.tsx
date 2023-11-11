@@ -735,11 +735,9 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     return (
       <>
         {isDesktopScreen ? (
-          <Box className="w-full h-full">
-            <Box className="animate-pulse w-full rounded-xl h-[8rem] bg-gray-200 px-1 py-4 my-1"></Box>
-          </Box>
+          <Box className="animate-pulse w-full rounded-xl h-[7.75rem] bg-gray-200 my-1"></Box>
         ) : (
-          <Box className="animate-pulse w-full rounded-xl h-[3.5rem] bg-gray-200 py-2 my-1"></Box>
+          mobileView()
         )}
       </>
     );

@@ -22,9 +22,9 @@ main {
 
 .main-logo {
   background: linear-gradient(
-    118deg,
-    #d50a0a 0%,
-    #d50a0a 75%,
+    120deg,
+    #d00 0%,
+    #d00 75%,
     hsl(0, 91%, 35%) 75%,
     hsl(0, 91%, 35%) 81%,
     #2b2c2d 81%,
@@ -504,7 +504,7 @@ main {
   left: 0;
   right: 0;
   content: "";
-  background-color: #d50a0a;
+  background-color: #d00;
   height: 0px;
   position: absolute;
 }
@@ -613,7 +613,7 @@ main {
 }
 
 .menu-dropdown-option:hover {
-  background-color: #d50a0a;
+  background-color: #d00;
   opacity: 1;
   color: white;
 }
