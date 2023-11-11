@@ -58,7 +58,6 @@ export default function ButtonDatePicker(
       open={open}
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
-      minDate={new Date("2010-31-12")}
     />
   );
 }
