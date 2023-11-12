@@ -215,8 +215,11 @@ export default function GameHeader({ league, data }: { league: string; data: any
                 className="w-full h-20 px-3 py-10 border-b border-[rgba(0,0,0,0.2)] place-items-center text-center text-black grid grid-cols-5 grid-rows-1 drop-shadow-sm sticky top-[2.5rem] z-40"
               >
                 {/*Home Team Logo, abv, and record*/}
-                <Link className="w-full " href={`/${league}/team/${awayTeam.team.id}/home`}>
-                  <Box className="flex flex-row gap-1 items-center col-start-1">
+                <Link
+                  className="w-full col-start-1"
+                  href={`/${league}/team/${awayTeam.team.id}/home`}
+                >
+                  <Box className="flex flex-row gap-1 items-center justify-end">
                     <Box className="flex flex-col">
                       <Typography className="text-xs opacity-70 font-semibold">
                         {awayTeam.team.abbreviation}
