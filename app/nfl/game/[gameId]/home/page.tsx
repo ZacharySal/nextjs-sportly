@@ -35,7 +35,7 @@ export default function TeamPage({ params }: { params: { gameId: string } }) {
     <>
       <Box className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
         <NFLGameLeaders data={data} />
-        <DivisionStandings data={data} isNFL={false} league="nba" />
+        <DivisionStandings data={data} isNFL={true} league="nfl" />
         <StadiumInfo data={data} />
       </Box>
 

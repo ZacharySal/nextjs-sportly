@@ -22,6 +22,8 @@ export default function DivisionStandings({
   isNFL: boolean;
   league: string;
 }) {
+  console.log(data);
+
   function getWins(team: any) {
     return isNFL ? team.stats[5].displayValue : team.stats[4].displayValue;
   }
@@ -34,14 +36,9 @@ export default function DivisionStandings({
 
   return data.gameData.standings.groups.map((group: any) => (
     <Box key={uuidv4()} className="w-full bg-white rounded-xl p-3">
-      <Typography className="font-semibold opacity-70 text-sm">
-        {group.header}
-      </Typography>
+      <Typography className="font-semibold opacity-70 text-sm">{group.header}</Typography>
 
-      <TableContainer
-        style={{ maxWidth: "100%", marginTop: "0.5rem" }}
-        component={Box}
-      >
+      <TableContainer style={{ maxWidth: "100%", marginTop: "0.5rem" }} component={Box}>
         <Table aria-label="simple table" size="small">
           <TableHead
             sx={{
@@ -49,11 +46,7 @@ export default function DivisionStandings({
             }}
           >
             <TableRow>
-              <TableCell
-                className=" text-sm font-semibold"
-                align="left"
-                style={{ width: "6rem" }}
-              >
+              <TableCell className=" text-sm font-semibold" align="left" style={{ width: "6rem" }}>
                 Team
               </TableCell>
               <TableCell
@@ -96,10 +89,7 @@ export default function DivisionStandings({
                     cursor: "pointer",
                   }}
                 >
-                  <Link
-                    href={`/${league}/team/${team.id}/home`}
-                    className="whitespace-nowrap"
-                  >
+                  <Link href={`/${league}/team/${team.id}/home`} className="whitespace-nowrap">
                     {team.team}
                   </Link>
                 </TableCell>

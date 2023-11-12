@@ -27,17 +27,13 @@ export default function Page({ params }: { params: { gameId: string } }) {
       </Box>
 
       <Box className="basis-1/4 flex flex-col gap-3">
-        {data.gameData.predictor && (
-          <MatchupPredictor data={data} league="nfl" />
-        )}
-        <DivisionStandings data={data} isNFL={false} league="nfl" />
+        {data.gameData.predictor && <MatchupPredictor data={data} league="nfl" />}
+        <DivisionStandings data={data} isNFL={true} league="nfl" />
       </Box>
     </>
   );
 
-  const mobileView = () => (
-    <Articles title="NFL News" teamNews={data.gameData.news} limit={6} />
-  );
+  const mobileView = () => <Articles title="NFL News" teamNews={data.gameData.news} limit={6} />;
 
   if (isLoading) return <Loading />;
   else {
