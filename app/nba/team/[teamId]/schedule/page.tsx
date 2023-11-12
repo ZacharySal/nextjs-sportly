@@ -23,13 +23,9 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
 
   const desktopView = () => (
     <>
-      <Box className="basis-1/4">
-        <DesktopTeamSchedule data={data} league="nba" isTeamView={false} />
-      </Box>
-
       <Box className="basis-1/2">
         {/* <TeamSchedule teamSchedule={data.teamSchedule} league="nfl" /> */}
-        <TeamNewsCards league="nba" data={data} />
+        <DesktopTeamSchedule data={data} league="nba" isTeamView={true} />
       </Box>
 
       <Box className="flex flex-col gap-3 basis-1/4">
@@ -88,7 +84,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
 
   const mobileView = () => (
     <Box className="w-full flex flex-col">
-      <TeamNewsCards data={data} league="nba" />
+      <DesktopTeamSchedule data={data} league="nba" isTeamView={true} />
     </Box>
   );
 
@@ -96,7 +92,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   else {
     return (
       <>
-        <TeamUserSelection userSelection={"home"} />
+        <TeamUserSelection userSelection={"schedule"} />
         <ContainerBox isDesktopScreen={isDesktopScreen}>
           {isDesktopScreen ? desktopView() : mobileView()}
         </ContainerBox>

@@ -53,7 +53,9 @@ export default function FullTeamStats({ data }: { data: any }) {
   };
   return (
     <Box className="w-full bg-white rounded-xl p-3">
-      <Typography className="mb-2 font-[600] opacity-70">Team Statistics</Typography>
+      <Typography className="text-xl md:text-2xl font-semibold mb-4 opacity-90">
+        {data.teamData.team.displayName} 2023 Statistics
+      </Typography>
       {view()}
     </Box>
   );

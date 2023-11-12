@@ -13,6 +13,12 @@ export default function TeamUserSelection({ userSelection }: { userSelection: st
         <Link className={selectionClass("stats")} href={`stats`}>
           Statistics
         </Link>
+        <Link className={selectionClass("roster")} href={`roster`}>
+          Roster
+        </Link>
+        <Link className={selectionClass("schedule")} href={`schedule`}>
+          Schedule
+        </Link>
       </Box>
     </Box>
   );

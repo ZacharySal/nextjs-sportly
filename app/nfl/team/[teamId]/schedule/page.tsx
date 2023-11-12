@@ -14,22 +14,22 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function TeamPage({ params }: { params: { teamId: string } }) {
   const { data, isLoading } = useSwr(
-    `https://nextjs-sportly.vercel.app/api/nba/teamData/${params.teamId}`,
+    `https://nextjs-sportly.vercel.app/api/nfl/teamData/${params.teamId}`,
     fetcher,
     { refreshInterval: 5000 }
   );
+
+  if (!isLoading) {
+    console.log(data);
+  }
 
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const desktopView = () => (
     <>
-      <Box className="basis-1/4">
-        <DesktopTeamSchedule data={data} league="nba" isTeamView={false} />
-      </Box>
-
       <Box className="basis-1/2">
         {/* <TeamSchedule teamSchedule={data.teamSchedule} league="nfl" /> */}
-        <TeamNewsCards league="nba" data={data} />
+        <DesktopTeamSchedule data={data} league="nfl" isTeamView={true} />
       </Box>
 
       <Box className="flex flex-col gap-3 basis-1/4">
@@ -39,39 +39,39 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
           </Typography>
           <Box className="grid grid-cols-2 grid-rows-2 text-center justify-center border-t border-b border-dotted border-[rgba(0,0,0,0.3)]">
             <Box className="w-full flex flex-col gap-1 border-r border-rgba(0,0,0,0.1) border-b py-2">
-              <Typography className="text-sm opacity-60">Points Per Game</Typography>
+              <Typography className="text-sm opacity-60">Passing Yards</Typography>
               <Typography className="text-3xl opacity-80">
-                {data.teamStats["Points Per Game"].displayValue}
+                {data.teamStats["Passing YPG"].displayValue}
               </Typography>
               <Typography className="opacity-70">
-                {data.teamStats["Points Per Game"].rankDisplayValue}
+                {data.teamStats["Passing YPG"].rankDisplayValue}
               </Typography>
             </Box>
             <Box className="w-full flex flex-col gap-1 border-rgba(0,0,0,0.1) border-b py-2">
-              <Typography className="text-sm opacity-60">Assists Per Game</Typography>
+              <Typography className="text-sm opacity-60">Rushing Yards</Typography>
               <Typography className="text-3xl opacity-80">
-                {data.teamStats["Assists Per Game"].displayValue}
+                {data.teamStats["Rushing YPG"].displayValue}
               </Typography>
               <Typography className="opacity-70">
-                {data.teamStats["Assists Per Game"].rankDisplayValue}
+                {data.teamStats["Rushing YPG"].rankDisplayValue}
               </Typography>
             </Box>
             <Box className="w-full flex flex-col gap-1 border-r border-rgba(0,0,0,0.1) py-2">
-              <Typography className="text-sm opacity-60 ">Rebounds Per Game</Typography>
+              <Typography className="text-sm opacity-60 ">Total Points</Typography>
               <Typography className="text-3xl opacity-80">
-                {data.teamStats["Rebounds Per Game"].displayValue}
+                {data.teamStats["Total PPG"].displayValue}
               </Typography>
               <Typography className="opacity-70">
-                {data.teamStats["Rebounds Per Game"].rankDisplayValue}
+                {data.teamStats["Total PPG"].rankDisplayValue}
               </Typography>
             </Box>
             <Box className="w-full flex flex-col gap-1 py-2">
-              <Typography className="text-sm opacity-60">3rd Point %</Typography>
+              <Typography className="text-sm opacity-60">3rd Down %</Typography>
               <Typography className="text-3xl opacity-80">
-                {data.teamStats["3 Point %"].displayValue}
+                {data.teamStats["3rd Down %"].displayValue}
               </Typography>
               <Typography className="opacity-70">
-                {data.teamStats["3 Point %"].rankDisplayValue}
+                {data.teamStats["3rd Down %"].rankDisplayValue}
               </Typography>
             </Box>
           </Box>
@@ -88,7 +88,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
 
   const mobileView = () => (
     <Box className="w-full flex flex-col">
-      <TeamNewsCards data={data} league="nba" />
+      <DesktopTeamSchedule data={data} league="nfl" isTeamView={true} />
     </Box>
   );
 
@@ -96,7 +96,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   else {
     return (
       <>
-        <TeamUserSelection userSelection={"home"} />
+        <TeamUserSelection userSelection={"schedule"} />
         <ContainerBox isDesktopScreen={isDesktopScreen}>
           {isDesktopScreen ? desktopView() : mobileView()}
         </ContainerBox>

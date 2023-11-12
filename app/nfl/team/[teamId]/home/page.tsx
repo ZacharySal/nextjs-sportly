@@ -24,7 +24,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   const desktopView = () => (
     <>
       <Box className="basis-1/4">
-        <DesktopTeamSchedule data={data} league="nfl" />
+        <DesktopTeamSchedule data={data} league="nfl" isTeamView={false} />
       </Box>
 
       <Box className="basis-1/2">
@@ -88,7 +88,6 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   const mobileView = () => (
     <>
       <TeamNewsCards data={data} league="nfl" />
-      <DesktopTeamSchedule data={data} league="nfl" />
     </>
   );
 

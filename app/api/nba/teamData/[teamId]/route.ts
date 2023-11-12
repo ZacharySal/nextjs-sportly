@@ -53,6 +53,16 @@ export async function GET(request: Request, { params }: { params: { teamId: stri
 
   const teamNews = await teamNewsResponse.json();
 
+  const teamRosterResponse = await fetch(
+    `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${params.teamId}/roster`
+  );
+
+  if (!teamRosterResponse.ok) {
+    throw new Error("Failed to fetch team data");
+  }
+
+  const teamRoster = await teamRosterResponse.json();
+
   const displayStats: Record<string, any> = {
     "Points Per Game": teamStats.splits.categories[2].stats[32],
     "Assists Per Game": teamStats.splits.categories[2].stats[34],
@@ -97,5 +107,6 @@ export async function GET(request: Request, { params }: { params: { teamId: stri
     teamStats: displayStats,
     fullTeamStats: fullStats,
     teamNews: teamNews,
+    teamRoster: teamRoster,
   });
 }

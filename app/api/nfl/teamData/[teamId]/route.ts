@@ -27,6 +27,16 @@ export async function GET(request: Request, { params }: { params: { teamId: stri
 
   const teamSchedule = await teamScheduleResponse.json();
 
+  const teamRosterResponse = await fetch(
+    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}/roster`
+  );
+
+  if (!teamRosterResponse.ok) {
+    throw new Error("Failed to fetch team data");
+  }
+
+  const teamRoster = await teamRosterResponse.json();
+
   const teamStatsResponse = await fetch(
     `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/2/teams/${params.teamId}/statistics`,
     {
@@ -117,6 +127,7 @@ export async function GET(request: Request, { params }: { params: { teamId: stri
     teamData: teamData,
     teamSchedule: teamSchedule,
     teamStats: displayStats,
+    teamRoster: teamRoster,
     fullTeamStats: fullStats,
     teamNews: teamNews,
   });

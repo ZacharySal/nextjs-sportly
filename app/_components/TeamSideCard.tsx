@@ -38,17 +38,17 @@ export default function TeamSideCard({ name, league }: { name: string; league: s
               Statistics
             </Typography>
           </Link>
-          <Link href={`/${league}/team/${name[1]}/home`}>
+          <Link href={`/${league}/team/${name[1]}/schedule`}>
             <Typography className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
               Schedule
             </Typography>
           </Link>
-          <Link href={`/${league}/team/${name[1]}/home`}>
+          <Link href={`/${league}/team/${name[1]}/roster`}>
             <Typography className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
               Roster
             </Typography>
           </Link>
-          <Link href={`/${league}/team/${name[1]}/home`}>
+          <Link href={`/${league}/team/${name[1]}/roster`}>
             <Typography className="text-[11px] anchor-link">Depth Chart</Typography>
           </Link>
         </Box>

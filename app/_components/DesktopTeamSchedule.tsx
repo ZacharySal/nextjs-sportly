@@ -24,7 +24,15 @@ function teamWon(event: any, teamName: string) {
     : false;
 }
 
-export default function DesktopTeamSchedule({ data, league }: { data: any; league: string }) {
+export default function DesktopTeamSchedule({
+  data,
+  league,
+  isTeamView = false,
+}: {
+  data: any;
+  league: string;
+  isTeamView: boolean;
+}) {
   const teamName = data.teamData.team.displayName;
 
   function formatName(event: any, teamName: string) {
@@ -70,10 +78,17 @@ export default function DesktopTeamSchedule({ data, league }: { data: any; leagu
   }
 
   return (
-    <Box className="w-full bg-white pt-3 rounded-xl">
-      <Typography className="px-3 py-1 mb-2 font-semibold text-base opacity-80">
-        2023 Schedule
-      </Typography>
+    <Box className="w-full bg-white rounded-xl">
+      {isTeamView ? (
+        <Typography className="text-xl md:text-2xl font-semibold mb-1 opacity-90 p-3">
+          {teamName} Schedule 2023
+        </Typography>
+      ) : (
+        <Typography className="px-3 py-1 mb-2 font-semibold text-base opacity-80 pt-3">
+          2023 Schedule
+        </Typography>
+      )}
+
       <Box className="grid grid-cols[2fr,auto,2fr] border-b border-t border-[rgba(0,0,0,0.1)] bg-[#f9f9fb] px-2 py-1">
         <Typography className="text-[10px] uppercase opacity-60 font-semibold">
           Regular Season

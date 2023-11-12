@@ -21,7 +21,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
   const desktopView = () => (
     <ContainerBox isDesktopScreen={isDesktopScreen}>
       <Box className="basis-1/4">
-        <DesktopTeamSchedule data={data} league="mlb" />
+        <DesktopTeamSchedule data={data} league="mlb" isTeamView={false} />
       </Box>
       <Box className="basis-1/2">
         <TeamNewsCards data={data} league="mlb" />
@@ -36,7 +36,7 @@ export default function TeamPage({ params }: { params: { teamId: string } }) {
     <>
       <ContainerBox isDesktopScreen={isDesktopScreen}>
         <Box className="flex flex-col gap-3">
-          <DesktopTeamSchedule data={data} league="mlb" />
+          <DesktopTeamSchedule data={data} league="mlb" isTeamView={false} />
           <TeamNewsCards data={data} league="mlb" />
         </Box>
       </ContainerBox>

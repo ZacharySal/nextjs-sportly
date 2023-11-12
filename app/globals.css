@@ -109,6 +109,7 @@ main {
 .table-cell {
   font-size: 12px;
   color: #6c6d6f;
+  min-width: 3rem;
   padding: 0px 8px;
   height: 28px;
   white-space: nowrap;
@@ -141,8 +142,6 @@ main {
   background-color: inherit;
   left: 0;
   z-index: 25;
-  border-right: 1px solid #dcdddf !important;
-  border-bottom: 1px solid #f1f2f3 !important;
   padding: 0 12px 0 8px;
 }
 
