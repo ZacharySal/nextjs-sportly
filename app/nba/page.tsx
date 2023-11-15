@@ -20,8 +20,7 @@ export default function Home() {
 
   const { data, isLoading } = useSwr(
     "https://nextjs-sportly.vercel.app/api/nba/leagueData",
-    fetcher,
-    { refreshInterval: 5000 }
+    fetcher
   );
 
   const isDesktopScreen = useMediaQuery("(min-width:1000px");

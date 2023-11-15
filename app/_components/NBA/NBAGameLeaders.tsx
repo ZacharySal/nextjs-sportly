@@ -61,7 +61,7 @@ export default function NBAGameLeaders({ data }: { data: any }) {
         </Box>
       </Box>
       <Divider />
-      <Box className="w-full flex flex-col p-2 pt-3 gap-3 items-center">
+      <Box className="w-full flex flex-col p-2 pt-3 px-4 gap-3 items-center">
         {getLeaderCategory().map((leader: any) => (
           <Box
             key={uuidv4()}
@@ -75,7 +75,7 @@ export default function NBAGameLeaders({ data }: { data: any }) {
               alt={"player picture"}
               className="w-12 h-12 md:w-[40px] md:h-[40px] border rounded-full object-cover"
             />
-            <Box className="flex flex-col w-full justify-start gap-1">
+            <Box className="flex flex-col px-3 w-full justify-start gap-1">
               <Typography className="text-xs font-semibold opacity-70">
                 {leader.athlete.fullName}
               </Typography>

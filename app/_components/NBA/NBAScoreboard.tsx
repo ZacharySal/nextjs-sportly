@@ -69,6 +69,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
   const { height, width } = useWindowDimensions();
 
   const [selectedYear, setSelectedYear] = useState("2023");
+  console.log(`Current Date: ${currentDate}`);
 
   const daysInYear = getDaysArray(
     new Date(`${selectedYear}-01-01`),

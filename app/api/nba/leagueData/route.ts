@@ -4,7 +4,7 @@ export async function GET() {
   const nbaWeeksResponse = await fetch(
     "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/calendar/ondays?lang=en&region=us",
     {
-      cache: "no-cache",
+      cache: "no-store",
     }
   );
 
@@ -14,12 +14,9 @@ export async function GET() {
 
   const nbaWeeks = await nbaWeeksResponse.json();
 
-  const nbaDate = await fetch(
-    "https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50",
-    {
-      cache: "no-cache",
-    }
-  );
+  const nbaDate = await fetch("https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50", {
+    cache: "no-store",
+  });
 
   if (!nbaDate.ok) {
     throw new Error("Failed to fetch NBA weeks");
@@ -30,7 +27,7 @@ export async function GET() {
   const nbaNewsResponse = await fetch(
     "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=50",
     {
-      cache: "no-cache",
+      cache: "no-store",
     }
   );
 
@@ -45,7 +42,7 @@ export async function GET() {
   const standingsDataResponse = await fetch(
     "https://cdn.espn.com/core/nba/standings?xhr=1&seasonType=1",
     {
-      cache: "no-cache",
+      cache: "no-store",
     }
   );
 
