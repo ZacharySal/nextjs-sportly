@@ -107,7 +107,12 @@ export default function LastFive({
               className="w-6 object-contain"
               alt="team logo"
             />
-            <Typography className="text-sm">{awayTeamName} Last Five</Typography>
+            <Typography
+              style={{ color: selectedTeam === 0 ? "black" : "#6c6d6f" }}
+              className="text-sm"
+            >
+              {awayTeamName} Last Five
+            </Typography>
           </Box>
         </Box>
         <Box
@@ -125,7 +130,12 @@ export default function LastFive({
               className="w-6 object-contain"
               alt="team logo"
             />
-            <Typography className="text-sm">{homeTeamName} Last Five</Typography>
+            <Typography
+              style={{ color: selectedTeam === 1 ? "black" : "#6c6d6f" }}
+              className="text-sm text-gray-500"
+            >
+              {homeTeamName} Last Five
+            </Typography>
           </Box>
         </Box>
       </Box>
