@@ -34,11 +34,84 @@ export default function DivisionStandings({
     return isNFL ? team.stats[4].displayValue : team.stats[3].displayValue;
   }
 
+  const isMatchingTeam = (name: string) =>
+    data.homeTeam.team.location.includes(name) || data.awayTeam.team.location.includes(name);
+
   return data.gameData.standings.groups.map((group: any) => (
     <Box key={uuidv4()} className="w-full bg-white rounded-xl p-3">
-      <Typography className="font-semibold opacity-70 text-sm">{group.header}</Typography>
+      <Typography className="font-semibold opacity-70 text-sm mb-2">{group.header}</Typography>
 
-      <TableContainer style={{ maxWidth: "100%", marginTop: "0.5rem" }} component={Box}>
+      <table className="misc-table table min-w-full">
+        <thead className="table-header">
+          <tr className="table-header">
+            <th align="left" className="table-header pl-2">
+              TEAM
+            </th>
+            <th className="" align="center">
+              W
+            </th>
+            <th className="table-header" align="center">
+              L
+            </th>
+            <th className="table-header" align="center">
+              WP
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {group.standings.entries.map((team: any) => (
+            <tr key={uuidv4()} className="w-full">
+              <td
+                style={{
+                  fontWeight: isMatchingTeam(team.team) ? "700" : "400",
+                  color: isMatchingTeam(team.team) ? "black" : "#6c6d6f",
+                }}
+                className="text-xs p-1"
+                align="left"
+              >
+                <Link
+                  href={`/${league}/team/${team.id}/home`}
+                  className="whitespace-nowrap anchor-link"
+                >
+                  {team.team}
+                </Link>
+              </td>
+              <td
+                style={{
+                  fontWeight: isMatchingTeam(team.team) ? "700" : "400",
+                  color: isMatchingTeam(team.team) ? "black" : "#6c6d6f",
+                }}
+                className="text-xs table-cell"
+                align="center"
+              >
+                {getWins(team)}
+              </td>
+              <td
+                style={{
+                  fontWeight: isMatchingTeam(team.team) ? "700" : "400",
+                  color: isMatchingTeam(team.team) ? "black" : "#6c6d6f",
+                }}
+                className="text-xs table-cell"
+                align="center"
+              >
+                {getLosses(team)}
+              </td>
+              <td
+                style={{
+                  fontWeight: isMatchingTeam(team.team) ? "700" : "400",
+                  color: isMatchingTeam(team.team) ? "black" : "#6c6d6f",
+                }}
+                className="text-xs table-cell"
+                align="center"
+              >
+                {getWinPercentage(team)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* <TableContainer style={{ maxWidth: "100%", marginTop: "0.5rem" }} component={Box}>
         <Table aria-label="simple table" size="small">
           <TableHead
             sx={{
@@ -134,7 +207,7 @@ export default function DivisionStandings({
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
     </Box>
   ));
 }

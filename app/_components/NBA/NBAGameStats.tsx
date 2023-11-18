@@ -107,7 +107,7 @@ export default function NBAGameStats({
                     {statType.athletes.map((athlete: any) => (
                       <tr key={uuidv4()}>
                         {athlete.stats.length === 0 ? (
-                          <td className="text-xs table-cell" align="left" colSpan={20}>
+                          <td className="text-xs table-cell" align="center" colSpan={20}>
                             {`DNP - ${athlete.reason}`}
                           </td>
                         ) : showAllStats ? (

@@ -13,6 +13,7 @@ const setTeamImageSrc = (teamName: string) => {
 };
 
 export default function NBAPlaybyPlay({ data }: { data: any }) {
+  console.log(data);
   const [selectedQuarter, setSelectedQuarter] = useState(1);
   const homeTeamName = data.homeTeam.team.name;
   const homeTeamId = data.homeTeam.team.id;
@@ -24,13 +25,13 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
 
   const getTeamName = (teamId: string) => (teamId === homeTeamId ? homeTeamName : awayTeamName);
   return (
-    <Box className="w-full bg-white rounded-xl p-3">
-      <Box className="flex w-full justify-around items-center h-8 my-3 text-center testing sub-selector">
+    <Box className="w-full bg-white rounded-xl p-3 max-w-full overflow-hidden">
+      <Box className="flex w-full justify-around items-center h-8 mb-3 text-center testing sub-selector">
         <Box
           onClick={() => setSelectedQuarter(1)}
           className={`${
             selectedQuarter === 1 && "selection-active"
-          } nav-selection flex-grow sub-selection`}
+          } nav-selection flex-grow sub-selection font-bold`}
         >
           1st
         </Box>
@@ -38,7 +39,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
           onClick={() => setSelectedQuarter(2)}
           className={`${
             selectedQuarter === 2 && "selection-active"
-          } nav-selection flex-grow sub-selection`}
+          } nav-selection flex-grow sub-selection font-bold`}
         >
           2nd
         </Box>
@@ -46,7 +47,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
           onClick={() => setSelectedQuarter(3)}
           className={`${
             selectedQuarter === 3 && "selection-active"
-          } nav-selection flex-grow sub-selection`}
+          } nav-selection flex-grow sub-selection font-bold`}
         >
           3rd
         </Box>
@@ -54,32 +55,29 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
           onClick={() => setSelectedQuarter(4)}
           className={`${
             selectedQuarter === 4 && "selection-active"
-          } nav-selection flex-grow sub-selection`}
+          } nav-selection flex-grow sub-selection font-bold`}
         >
           4th
         </Box>
       </Box>
-      <table className="w-full text-left playbyplay-table">
+      <table className="w-full text-left table stat-table">
         <thead className="justify-left items-left border-t border-b border-[rgba(0,0,0,0.1)]">
-          <tr>
-            <th className="text-xs text-left px-0 opacity-70">TIME</th>
-            <th className="text-xs text-left pl-4 opacity-70" colSpan={2}>
+          <tr className="table-header">
+            <th className="text-xs text-left px-0 w-[4rem]">TIME</th>
+            <th className="text-xs text-left w-[10rem]" colSpan={2}>
               PLAY
             </th>
-            <th className="text-xs text-center px-2 opacity-70">
-              {data.awayTeam.team.abbreviation}
-            </th>
-            <th className="text-xs text-center opacity-70">{data.homeTeam.team.abbreviation}</th>
+            <th className="text-xs text-center">{data.awayTeam.team.abbreviation}</th>
+            <th className="text-xs text-center">{data.homeTeam.team.abbreviation}</th>
           </tr>
         </thead>
         <tbody>
           {selectedPlays.map((play: any) => (
             <tr key={uuidv4()} className="border-t border-b border-[rgba(0,0,0,0.1)]">
-              <td className="text-xs text-left opacity-60 pl-1">{play.clock.displayValue}</td>
-
-              <td className="text-xs text-left p-2 pl-4" colSpan={2}>
+              <td className="text-xs text-left pl-1 table-cell">{play.clock.displayValue}</td>
+              <td className="text-xs text-left p-2 pl-0" align="left" colSpan={2}>
                 {typeof play.team !== "undefined" ? (
-                  <Box className="flex flex-row items-center justify-start gap-1">
+                  <Box className="w-full flex flex-row items-center justify-start gap-1">
                     <Image
                       width={100}
                       height={100}
@@ -89,18 +87,36 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
                     />
 
                     <Typography
-                      sx={{ fontWeight: play.scoringPlay ? "600" : "400" }}
-                      className="text-xs text-left opacity-70"
+                      sx={{
+                        fontWeight: play.scoringPlay ? "600" : "400",
+                        whiteSpace: "normal",
+                        color: play.scoringPlay ? "black" : "#6c6d6f",
+                      }}
+                      className="text-xs text-left w-full"
                     >
                       {play.text}
                     </Typography>
                   </Box>
                 ) : (
-                  <Typography className="text-xs text-left opacity-70">{play.text}</Typography>
+                  <Typography className="text-xs text-left w-full">{play.text}</Typography>
                 )}
               </td>
-              <td className="text-xs text-center">{play.awayScore}</td>
-              <td className="text-xs text-center">{play.homeScore}</td>
+              <td
+                style={{
+                  fontWeight: play.scoringPlay && play.team.id !== homeTeamId ? "700" : "400",
+                }}
+                className="text-xs table-cell text-center p-1"
+              >
+                {play.awayScore}
+              </td>
+              <td
+                style={{
+                  fontWeight: play.scoringPlay && play.team.id == homeTeamId ? "700" : "400",
+                }}
+                className="text-xs table-cell text-center p-1"
+              >
+                {play.homeScore}
+              </td>
             </tr>
           ))}
         </tbody>

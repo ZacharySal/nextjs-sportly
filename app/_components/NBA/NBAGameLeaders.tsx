@@ -61,7 +61,7 @@ export default function NBAGameLeaders({ data }: { data: any }) {
         </Box>
       </Box>
       <Divider />
-      <Box className="w-full flex flex-col p-2 pt-3 px-4 gap-3 items-center">
+      <Box className="w-full flex flex-col py-3 px-0 gap-3 items-center">
         {getLeaderCategory().map((leader: any) => (
           <Box
             key={uuidv4()}
@@ -79,7 +79,7 @@ export default function NBAGameLeaders({ data }: { data: any }) {
               <Typography className="text-xs font-semibold opacity-70">
                 {leader.athlete.fullName}
               </Typography>
-              <Box className="flex flex-row w-full justify-between">
+              <Box className="flex flex-row w-full justify-between pr-3">
                 {leader.statistics.map((stat: any, i: number) => (
                   <Box key={uuidv4()} className="flex flex-col text-center">
                     <Typography className="text-xs font-semibold opacity-80">

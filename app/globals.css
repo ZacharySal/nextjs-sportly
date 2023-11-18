@@ -19,7 +19,6 @@ main {
   height: 100%;
 }
 
-
 .main-logo {
   background: linear-gradient(
     120deg,
@@ -77,22 +76,21 @@ main {
   height: 28px;
 }
 
-.stat-table tr:nth-child(odd):not(.table-header){
+.stat-table tr:nth-child(odd):not(.table-header) {
   background-color: hsl(0, 0%, 98%);
 }
 
-.misc-table tr:nth-child(odd):not(.table-header){
+.misc-table tr:nth-child(odd):not(.table-header) {
   background-color: hsl(0, 0%, 98%);
 }
 
-.standings-table tbody:nth-of-type(even) tr:nth-of-type(even):not(.table-header){
+.standings-table tbody:nth-of-type(even) tr:nth-of-type(even):not(.table-header) {
   background-color: hsl(0, 0%, 98%) !important;
 }
 
-.standings-table tbody:nth-of-type(odd) tr:nth-child(odd):not(.table-header){
+.standings-table tbody:nth-of-type(odd) tr:nth-child(odd):not(.table-header) {
   background-color: hsl(0, 0%, 98%) !important;
 }
-
 
 .table-header {
   color: #48494a;
@@ -106,7 +104,7 @@ main {
   border-bottom: 1px solid #dcdddf !important;
 }
 
-.table thead tr th{
+.table thead tr th {
   padding: 4px;
 }
 
@@ -114,7 +112,6 @@ main {
   font-size: 12px;
   color: #6c6d6f;
   min-width: 3rem;
-  padding: 0px 4px;
   height: 28px;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
@@ -128,10 +125,9 @@ main {
   font-variant-numeric: tabular-nums;
 }
 
-
 @media screen and (min-width: 1000px) {
   .table-cell {
-   padding: 0px 18px;
+    min-width: none;
   }
 }
 
@@ -140,7 +136,7 @@ main {
   border-collapse: collapse;
 }
 
-.table-fixed-left-thead tr  {
+.table-fixed-left-thead tr {
   width: auto;
   height: 28px;
   background-color: inherit;
@@ -149,7 +145,7 @@ main {
   padding: 0 12px 0 8px;
 }
 
-.table-fixed-left-thead tr > td  {
+.table-fixed-left-thead tr > td {
   width: auto;
   height: 28px;
   background-color: inherit;
@@ -334,7 +330,7 @@ main {
 
 .user-selection-logo::after {
   position: absolute;
-  content: '';
+  content: "";
   right: 0;
   top: 0;
   bottom: 0;
@@ -346,16 +342,16 @@ main {
   width: 120px;
   height: 7rem;
   position: absolute;
-  top:0;
+  top: 0;
   bottom: 0;
   overflow: hidden;
 }
 
-.game-header-logo-wrapper--left{
+.game-header-logo-wrapper--left {
   transform: skew(-25deg) translateX(-40px);
 }
 
-.game-header-logo-wrapper--right{
+.game-header-logo-wrapper--right {
   transform: skew(25deg) translateX(40px);
 }
 
@@ -388,8 +384,8 @@ main {
 }
 
 .game-header-logo-wrapper::before {
-  background: -o-linear-gradient(left,rgba(0,0,0,0.3),transparent);
-  background: linear-gradient(90deg,rgba(0,0,0,0.3),transparent);
+  background: -o-linear-gradient(left, rgba(0, 0, 0, 0.3), transparent);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.3), transparent);
   bottom: 0;
   content: "";
   position: absolute;
@@ -406,17 +402,17 @@ main {
   right: 40px;
 }
 
-.article-video-container .video-preview{
+.article-video-container .video-preview {
   transition: all 0.25s;
 }
 
-.article-video-container:hover  .video-preview{
+.article-video-container:hover .video-preview {
   scale: 1.075;
 }
 
 .gray-circle {
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
   bottom: 0;
   right: 0;
@@ -442,7 +438,7 @@ main {
 .player-divider::after {
   content: "";
   position: absolute;
-  top:15px;
+  top: 15px;
   bottom: 0;
   right: -5px;
   width: 1px;
@@ -452,7 +448,7 @@ main {
 
 .arrow {
   position: absolute;
-  top:0;
+  top: 0;
   left: 2px;
   bottom: 0;
   right: 0px;
@@ -486,8 +482,7 @@ main {
   font-size: 11px;
 }
 
-
-.article-container:hover .article-headline{
+.article-container:hover .article-headline {
   color: #1a49a0;
 }
 
@@ -503,8 +498,8 @@ main {
   color: #06c;
 }
 
-.anchor-link:hover{
-  color:  rgb(1, 70, 138)
+.anchor-link:hover {
+  color: rgb(1, 70, 138);
 }
 
 .team-link:hover {
@@ -513,12 +508,12 @@ main {
 
 .nav-selection {
   min-height: 100%;
-  color: rgba(0,0,0,0.8);
-  display:flex;
-  align-items:center;
+  color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
   justify-content: center;
   position: relative;
-  font-size:13px;
+  font-size: 13px;
   cursor: pointer;
 }
 
@@ -553,7 +548,6 @@ main {
   opacity: 0.5;
 }
 
-
 .testing:hover > .selection-active::before {
   height: 0px;
 }
@@ -578,7 +572,7 @@ main {
   height: 2px;
 }
 
-.playbyplay-table tr:nth-child(odd){
+.playbyplay-table tr:nth-child(odd) {
   background-color: hsl(0, 0%, 98%);
 }
 
@@ -594,7 +588,7 @@ main {
   .menu-option:hover .menu-dropdown {
     display: none;
   }
-  
+
   .menu-dropdown:hover {
     display: none;
   }
@@ -626,7 +620,7 @@ main {
 
 .menu-dropdown-option::before {
   position: absolute;
-  content: '';
+  content: "";
   width: 10px;
   height: 20px;
   top: 0;
@@ -684,26 +678,25 @@ main {
 }
 
 .animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-svg{
+svg {
   fill: #fff;
   height: 20px;
   width: 20px;
 }
 
-
-.loader{
+.loader {
   position: absolute;
   width: 100px;
   height: 100px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
-.circular{
+.circular {
   animation: rotate 2s linear infinite;
   height: 100px;
   position: relative;
@@ -711,40 +704,36 @@ svg{
 }
 
 .path {
-  stroke-dasharray: 1,200;
+  stroke-dasharray: 1, 200;
   stroke-dashoffset: 0;
   stroke: #3772df;
-  animation:
-   dash 1.5s ease-in-out infinite,
-   color 6s ease-in-out infinite
-  ;
+  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
   stroke-linecap: round;
 }
 
-@keyframes rotate{
- 100%{
-  transform: rotate(360deg);
- }
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
 }
-@keyframes dash{
- 0%{
-  stroke-dasharray: 1,200;
-  stroke-dashoffset: 0;
- }
- 50%{
-  stroke-dasharray: 89,200;
-  stroke-dashoffset: -35;
- }
- 100%{
-  stroke-dasharray: 89,200;
-  stroke-dashoffset: -124;
- }
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
 }
 
 .compact-td {
   min-width: 0 !important;
   padding: 0px 8px !important;
-
 }
 .compact-name-col {
   width: max-content !important;
