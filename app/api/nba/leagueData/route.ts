@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const nbaWeeksResponse = await fetch(
-    "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/calendar/ondays?lang=en&region=us",
-    {
-      cache: "no-store",
-    }
+    "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/calendar/ondays?lang=en&region=us"
   );
 
   if (!nbaWeeksResponse.ok) {
@@ -14,9 +13,7 @@ export async function GET() {
 
   const nbaWeeks = await nbaWeeksResponse.json();
 
-  const nbaDate = await fetch("https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50", {
-    cache: "no-store",
-  });
+  const nbaDate = await fetch("https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50");
 
   if (!nbaDate.ok) {
     throw new Error("Failed to fetch NBA weeks");
@@ -25,10 +22,7 @@ export async function GET() {
   const nbaDateResponse = await nbaDate.json();
 
   const nbaNewsResponse = await fetch(
-    "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=50",
-    {
-      cache: "no-store",
-    }
+    "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=50"
   );
 
   if (!nbaNewsResponse.ok) {
@@ -40,10 +34,7 @@ export async function GET() {
   const nbaDates = nbaWeeks.eventDate.dates.map((date: string) => date);
 
   const standingsDataResponse = await fetch(
-    "https://cdn.espn.com/core/nba/standings?xhr=1&seasonType=1",
-    {
-      cache: "no-store",
-    }
+    "https://cdn.espn.com/core/nba/standings?xhr=1&seasonType=1"
   );
 
   if (!standingsDataResponse.ok) {
@@ -51,6 +42,8 @@ export async function GET() {
   }
 
   const standingsData = await standingsDataResponse.json();
+
+  console.log(nbaDateResponse.content.dateParams.date);
 
   return NextResponse.json({
     nbaWeeks: nbaDates,

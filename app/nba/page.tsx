@@ -19,7 +19,7 @@ export default function Home() {
   const [userSelection, setUserSelection] = useState("scoreboard");
 
   const { data, isLoading } = useSwr(
-    "https://nextjs-sportly.vercel.app/api/nba/leagueData",
+    "http://nextjs-sportly.vercel.app/api/nba/leagueData",
     fetcher
   );
 
