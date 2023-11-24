@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
-  const newsResponse = await fetch("https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news?limit=50", {
-    cache: "no-cache",
-  });
+  const newsResponse = await fetch(
+    "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news?limit=50"
+  );
 
   if (!newsResponse.ok) {
     throw new Error("Failed to fetch news");
@@ -12,7 +14,7 @@ export async function GET() {
   const newsData = await newsResponse.json();
 
   const mlbDaysResponse = await fetch(
-    "http://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/calendar/ondays?lang=en&region=us", 
+    "http://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/calendar/ondays?lang=en&region=us"
   );
 
   if (!mlbDaysResponse.ok) {
@@ -21,9 +23,7 @@ export async function GET() {
 
   const mlbDaysData = await mlbDaysResponse.json();
 
-  const mlbDate = await fetch("https://cdn.espn.com/core/mlb/scoreboard?xhr=1&limit=50", {
-    cache: "no-cache",
-  });
+  const mlbDate = await fetch("https://cdn.espn.com/core/mlb/scoreboard?xhr=1&limit=50");
 
   if (!mlbDate.ok) {
     throw new Error("Failed to fetch NBA weeks");
@@ -35,7 +35,9 @@ export async function GET() {
 
   mlbDaysData.eventDate.dates.map((date: string) => mlbDays.push(date));
 
-  const standingsDataResponse = await fetch("https://cdn.espn.com/core/mlb/standings?xhr=1", { cache: "no-cache" });
+  const standingsDataResponse = await fetch("https://cdn.espn.com/core/mlb/standings?xhr=1", {
+    cache: "no-cache",
+  });
 
   if (!standingsDataResponse.ok) {
     throw new Error("Failed to fetch NFL standings data");

@@ -1,14 +1,10 @@
 import { NextResponse } from "next/server";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { teamId: string } }
-) {
+export const dynamic = "force-dynamic";
+
+export async function GET(request: Request, { params }: { params: { teamId: string } }) {
   const teamDataResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/${params.teamId}`,
-    {
-      cache: "no-cache",
-    }
+    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/${params.teamId}`
   );
 
   if (!teamDataResponse.ok) {
@@ -18,12 +14,8 @@ export async function GET(
   const teamData = await teamDataResponse.json();
 
   const teamScheduleResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/${params.teamId}/schedule`,
-    {
-      cache: "no-cache",
-    }
+    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/${params.teamId}/schedule`
   );
-
   if (!teamScheduleResponse.ok) {
     throw new Error("Faied to fetch team data");
   }
@@ -31,10 +23,7 @@ export async function GET(
   const teamSchedule = await teamScheduleResponse.json();
 
   const teamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${params.teamId}/statistics`,
-    {
-      cache: "no-cache",
-    }
+    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${params.teamId}/statistics`
   );
 
   if (!teamStatsResponse.ok) {

@@ -1,14 +1,10 @@
 import { NextResponse } from "next/server";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { gameId: string } }
-) {
+export const dynamic = "force-dynamic";
+
+export async function GET(request: Request, { params }: { params: { gameId: string } }) {
   const gameDataResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${params.gameId}`,
-    {
-      cache: "no-cache",
-    }
+    `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${params.gameId}`
   );
 
   if (!gameDataResponse.ok) {
@@ -24,10 +20,7 @@ export async function GET(
   const awayTeamId = awayTeam.id;
 
   const homeTeamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2023/types/2/teams/${homeTeamId}/statistics`,
-    {
-      cache: "no-cache",
-    }
+    `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2023/types/2/teams/${homeTeamId}/statistics`
   );
 
   if (!homeTeamStatsResponse.ok) {
@@ -37,10 +30,7 @@ export async function GET(
   const homeTeamStats = await homeTeamStatsResponse.json();
 
   const awayTeamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2023/types/2/teams/${awayTeamId}/statistics`,
-    {
-      cache: "no-cache",
-    }
+    `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2023/types/2/teams/${awayTeamId}/statistics`
   );
 
   if (!awayTeamStatsResponse.ok) {
@@ -53,9 +43,7 @@ export async function GET(
 
   const isGameStarted = gameData.lastFiveGames ? false : true;
 
-  const backgroundColor = isGameStarted
-    ? `#${winningTeam.team.color}`
-    : "#013369";
+  const backgroundColor = isGameStarted ? `#${winningTeam.team.color}` : "#013369";
 
   const gameInfo = gameData.header.competitions[0];
 

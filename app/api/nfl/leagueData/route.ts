@@ -1,12 +1,9 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request) {
-  const seasonDataResponse = await fetch(
-    `https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50`,
-    {
-      cache: "no-cache",
-    }
-  );
+  const seasonDataResponse = await fetch(`https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50`);
 
   if (!seasonDataResponse.ok) {
     throw new Error("Failed to fetch NFL weeks data");
@@ -28,12 +25,7 @@ export async function GET(request: Request) {
     }
   }
 
-  const standingsDataResponse = await fetch(
-    "https://cdn.espn.com/core/nfl/standings?xhr=1",
-    {
-      cache: "no-cache",
-    }
-  );
+  const standingsDataResponse = await fetch("https://cdn.espn.com/core/nfl/standings?xhr=1");
 
   if (!standingsDataResponse.ok) {
     throw new Error("Failed to fetch NFL standings data");

@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request, { params }: { params: { teamId: string } }) {
   const teamDataResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}`,
-    {
-      cache: "no-cache",
-    }
+    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}`
   );
 
   if (!teamDataResponse.ok) {
@@ -15,10 +14,7 @@ export async function GET(request: Request, { params }: { params: { teamId: stri
   const teamData = await teamDataResponse.json();
 
   const teamScheduleResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}/schedule`,
-    {
-      cache: "no-cache",
-    }
+    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}/schedule`
   );
 
   if (!teamScheduleResponse.ok) {
@@ -38,10 +34,7 @@ export async function GET(request: Request, { params }: { params: { teamId: stri
   const teamRoster = await teamRosterResponse.json();
 
   const teamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/2/teams/${params.teamId}/statistics`,
-    {
-      cache: "no-cache",
-    }
+    `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/2/teams/${params.teamId}/statistics`
   );
 
   if (!teamStatsResponse.ok) {
@@ -51,10 +44,7 @@ export async function GET(request: Request, { params }: { params: { teamId: stri
   const teamStats = await teamStatsResponse.json();
 
   const teamNewsResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${params.teamId}`,
-    {
-      cache: "no-cache",
-    }
+    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${params.teamId}`
   );
 
   if (!teamNewsResponse.ok) {
