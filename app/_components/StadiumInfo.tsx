@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 
 export default function StadiumInfo({ data }: { data: any }) {
+  if (typeof data.gameData.gameInfo.venue.images[0] === "undefined") return null;
   return (
     <>
       <Box className="w-full flex flex-col bg-white rounded-xl gap-2 p-3">
@@ -23,8 +24,7 @@ export default function StadiumInfo({ data }: { data: any }) {
           {data.gameData.gameInfo.venue.fullName}
         </Typography>
         <Typography className="opacity-80 text-sm mt-[-0.5rem]">
-          {data.gameData.gameInfo.venue.address.city},{" "}
-          {data.gameData.gameInfo.venue.address.state}
+          {data.gameData.gameInfo.venue.address.city}, {data.gameData.gameInfo.venue.address.state}
         </Typography>
       </Box>
     </>

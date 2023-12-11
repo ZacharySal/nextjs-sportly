@@ -24,6 +24,10 @@ export default function GameHeader({ league, data }: { league: string; data: any
     }
   }
 
+  function isDefined(value: any) {
+    return typeof value !== "undefined";
+  }
+
   return (
     <>
       {isDesktopScreen ? (
@@ -49,7 +53,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   </Typography>
                   <Typography className="text-xs opacity-70 text-right">
                     {findTeamDivison(awayTeam.team.displayName)},{" "}
-                    {awayTeam.record[0]?.displayValue || "0-0"}
+                    {typeof awayTeam.record !== "undefined" && awayTeam.record[0].displayValue}
                   </Typography>
                 </Link>
               </Box>
@@ -114,7 +118,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   </Typography>
                   <Typography className="text-xs opacity-70 text-left">
                     {findTeamDivison(homeTeam.team.displayName)},{" "}
-                    {homeTeam.record[0]?.displayValue || "0-0"}
+                    {typeof homeTeam.record !== "undefined" && homeTeam.record[0].displayValue}
                   </Typography>
                 </Box>
               </Link>
@@ -225,7 +229,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
                         {awayTeam.team.abbreviation}
                       </Typography>
                       <Typography className="text-xs opacity-70 whitespace-nowrap">
-                        {awayTeam.record[0]?.displayValue || "0-0"}
+                        {typeof awayTeam.record !== "undefined" && awayTeam.record[0].displayValue}
                       </Typography>
                     </Box>
                     <Image
@@ -289,7 +293,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
                         {homeTeam.team.abbreviation}
                       </Typography>
                       <Typography className="text-xs opacity-80  whitespace-nowrap">
-                        {homeTeam.record[0]?.displayValue || "0-0"}
+                        {typeof homeTeam.record !== "undefined" && homeTeam.record[0].displayValue}
                       </Typography>
                     </Box>
                   </Box>
