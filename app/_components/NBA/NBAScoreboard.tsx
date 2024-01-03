@@ -16,7 +16,6 @@ import Loading from "../Loading";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-<<<<<<< HEAD
 const getDaysArray = function (start: any, end: any) {
   for (var arr = [], dt = new Date(start); dt <= new Date(end); dt.setDate(dt.getDate() + 1)) {
     const date = new Date(dt);
@@ -25,11 +24,6 @@ const getDaysArray = function (start: any, end: any) {
     var yy = date.getFullYear();
     var dateString = yy + "-" + mm + "-" + dd;
     arr.push(dateString);
-=======
-const getDaysArray = function (start: Date, end: Date) {
-  for (var arr = [], dt = new Date(start); dt <= new Date(end); dt.setDate(dt.getDate() + 1)) {
-    arr.push(new Date(dt));
->>>>>>> dev
   }
   return arr;
 };
@@ -74,7 +68,6 @@ function getFullDate(date: string) {
 function NBAScoreboard({ currentDate }: { currentDate: string }) {
   const { height, width } = useWindowDimensions();
 
-<<<<<<< HEAD
   const [selectedYear, setSelectedYear] = useState("2023");
   console.log(`Current Date: ${currentDate}`);
 
@@ -82,16 +75,6 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
     new Date(`${selectedYear}-01-01`),
     new Date(`${selectedYear}-12-31`)
   );
-=======
-  const [selectedYear, setSelectedYear] = useState(currentDate.substring(0, 4));
-  const pastYear = Number(selectedYear) - 1;
-
-  const daysInYear = getDaysArray(new Date(`${pastYear}-01-01`), new Date(`${selectedYear}-12-31`));
-
-  const formattedDaysInYear = daysInYear.map((v: any) => {
-    return v.toISOString().slice(0, 10);
-  });
->>>>>>> dev
 
   const [selectedDate, setSelectedDate] = useState(formatDate(currentDate));
   const [calendarValue, setCalendarValue] = useState("");
@@ -111,11 +94,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
     const dateElements = [];
     const maxEls = Math.min(Math.floor(width / 100), 7);
     for (let i = -1; i <= maxEls - 2; i++) {
-<<<<<<< HEAD
       dateElements.push(daysInYear[mod(currentIndex + i, 365)]);
-=======
-      dateElements.push(formattedDaysInYear[mod(currentIndex + i, 730)]);
->>>>>>> dev
     }
     return dateElements;
   }
@@ -141,11 +120,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
             className="pl-2 w-full flex flex-row overflow-x-auto justify-between items-center"
           >
             <FontAwesomeIcon
-<<<<<<< HEAD
               onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 365)}
-=======
-              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 730)}
->>>>>>> dev
               icon={faAngleLeft}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
@@ -163,11 +138,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
               </Box>
             ))}
             <FontAwesomeIcon
-<<<<<<< HEAD
               onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 365)}
-=======
-              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 730)}
->>>>>>> dev
               icon={faAngleRight}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
@@ -203,11 +174,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
             <Divider />
             {data.content.sbData.events.map((game: any, i: number) => (
               <Box key={uuidv4()}>
-<<<<<<< HEAD
                 <ScoreCard gameInfo={game} league={"NBA"} />
-=======
-                <ScoreCard gameInfo={game} version={1} league={"nba"} teamView={false} />
->>>>>>> dev
                 {i !== data.content.sbData.events.length - 1 && <Divider />}
               </Box>
             ))}

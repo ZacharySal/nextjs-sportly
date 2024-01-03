@@ -63,10 +63,12 @@ function getFullDate(date: string) {
 function MLBScoreboard({ currentDate }: { currentDate: string }) {
   const { height, width } = useWindowDimensions();
 
-  const [selectedYear, setSelectedYear] = useState(currentDate.substring(0, 4));
-  const pastYear = Number(selectedYear) - 1;
+  const [selectedYear, setSelectedYear] = useState("2023");
 
-  const daysInYear = getDaysArray(new Date(`${pastYear}-01-01`), new Date(`${selectedYear}-12-31`));
+  const daysInYear = getDaysArray(
+    new Date(`${selectedYear}-01-01`),
+    new Date(`${selectedYear}-12-31`)
+  );
   const formattedDaysInYear = daysInYear.map((v: any) => {
     return v.toISOString().slice(0, 10);
   });
@@ -91,7 +93,7 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
     const dateElements = [];
     const maxEls = Math.min(Math.floor(width / 100), 7);
     for (let i = -1; i <= maxEls - 2; i++) {
-      dateElements.push(formattedDaysInYear[mod(currentIndex + i, 730)]);
+      dateElements.push(formattedDaysInYear[mod(currentIndex + i, 365)]);
     }
     return dateElements;
   }
@@ -117,11 +119,7 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
             className="pl-2 w-full flex flex-row overflow-x-auto justify-between items-center"
           >
             <FontAwesomeIcon
-<<<<<<< HEAD
               onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 365)}
-=======
-              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 730)}
->>>>>>> dev
               icon={faAngleLeft}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
@@ -139,11 +137,7 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
               </Box>
             ))}
             <FontAwesomeIcon
-<<<<<<< HEAD
               onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 365)}
-=======
-              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 730)}
->>>>>>> dev
               icon={faAngleRight}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
@@ -178,11 +172,7 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
             <Divider />
             {data.content.sbData.events.map((game: any, i: number) => (
               <Box key={uuidv4()}>
-<<<<<<< HEAD
                 <ScoreCard gameInfo={game} league={"MLB"} />
-=======
-                <ScoreCard gameInfo={game} version={1} league={"mlb"} teamView={false} />
->>>>>>> dev
                 {i !== data.content.sbData.events.length - 1 && <Divider />}
               </Box>
             ))}

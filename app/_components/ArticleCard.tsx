@@ -8,8 +8,8 @@ export default function ArticleCard({ article }: { article: any }) {
         <Box className="w-full flex flex-col justify-center items-start gap-2">
           <Image
             src={article?.images[0]?.url}
-            width={article?.images[0]?.width || "400"}
-            height={article?.images[0]?.height || "400"}
+            width={400}
+            height={400}
             priority={true}
             alt="article picture"
             className="w-full object-contain"
