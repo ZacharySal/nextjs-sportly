@@ -12,6 +12,8 @@ import AllTeams from "../_components/AllTeams";
 import LeagueUserSelection from "../_components/LeagueUserSelection";
 import LeagueStandings from "../_components/LeagueStandings";
 import Loading from "../_components/Loading";
+import Navbar from "../_components/Navbar";
+import MobileNavbar from "../_components/MobileNavbar";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -31,6 +33,7 @@ export default function Home() {
       <main>
         {isDesktopScreen ? (
           <>
+            <Navbar />
             <LeagueUserSelection userSelection={userSelection} league="nfl" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
               <Box className="basis-3/4">
@@ -44,6 +47,7 @@ export default function Home() {
         ) : (
           <>
             {/* <LeagueHeader backgroundColor="013369" league="nfl" /> */}
+            <MobileNavbar />
             <LeagueUserSelection userSelection={userSelection} league="nfl" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
               <Scoreboard seasonData={data} />
