@@ -16,11 +16,7 @@ import useWindowDimensions from "../useWindowDimensions";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const getDaysArray = function (start: any, end: any) {
-  for (
-    var arr = [], dt = new Date(start);
-    dt <= new Date(end);
-    dt.setDate(dt.getDate() + 1)
-  ) {
+  for (var arr = [], dt = new Date(start); dt <= new Date(end); dt.setDate(dt.getDate() + 1)) {
     arr.push(new Date(dt));
   }
   return arr;
@@ -66,12 +62,10 @@ function getFullDate(date: string) {
 function MLBScoreboard({ currentDate }: { currentDate: string }) {
   const { height, width } = useWindowDimensions();
 
-  const [selectedYear, setSelectedYear] = useState("2023");
+  const [selectedYear, setSelectedYear] = useState(currentDate.substring(0, 4));
+  const pastYear = Number(selectedYear) - 1;
 
-  const daysInYear = getDaysArray(
-    new Date(`${selectedYear}-01-01`),
-    new Date(`${selectedYear}-12-31`)
-  );
+  const daysInYear = getDaysArray(new Date(`${pastYear}-01-01`), new Date(`${selectedYear}-12-31`));
   const formattedDaysInYear = daysInYear.map((v: any) => {
     return v.toISOString().slice(0, 10);
   });
@@ -96,7 +90,7 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
     const dateElements = [];
     const maxEls = Math.min(Math.floor(width / 100), 7);
     for (let i = -1; i <= maxEls - 2; i++) {
-      dateElements.push(formattedDaysInYear[mod(currentIndex + i, 365)]);
+      dateElements.push(formattedDaysInYear[mod(currentIndex + i, 730)]);
     }
     return dateElements;
   }
@@ -115,20 +109,14 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
   function dateSelector() {
     return (
       <Box className="w-full p-2 bg-white mb-3 rounded-xl">
-        <Typography className="mb-1 font-semibold text-xl opacity-80">
-          MLB Scoreboard
-        </Typography>
+        <Typography className="mb-1 font-semibold text-xl opacity-80">MLB Scoreboard</Typography>
         <Box className="w-full flex gap-3 items-center">
           <Box
             id="style-1"
             className="pl-2 w-full flex flex-row overflow-x-auto justify-between items-center"
           >
             <FontAwesomeIcon
-              onClick={() =>
-                setCurrentIndex(
-                  (currentIndex: number) => (currentIndex - 4) % 365
-                )
-              }
+              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 730)}
               icon={faAngleLeft}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
@@ -139,22 +127,14 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
                 style={{ opacity: date === selectedDate ? 1 : 0.5 }}
                 className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer p-2"
               >
-                <Typography className="text-sm font-semibold">
-                  {getWeekDay(date)}
-                </Typography>
+                <Typography className="text-sm font-semibold">{getWeekDay(date)}</Typography>
                 <Box className="flex flex-row gap-1 justify-center items-center">
-                  <Typography className="text-xs">
-                    {getMonthAndDate(date)}
-                  </Typography>
+                  <Typography className="text-xs">{getMonthAndDate(date)}</Typography>
                 </Box>
               </Box>
             ))}
             <FontAwesomeIcon
-              onClick={() =>
-                setCurrentIndex(
-                  (currentIndex: number) => (currentIndex + 4) % 365
-                )
-              }
+              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 730)}
               icon={faAngleRight}
               style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
             />
@@ -191,12 +171,7 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
             <Divider />
             {data.content.sbData.events.map((game: any, i: number) => (
               <Box key={uuidv4()}>
-                <ScoreCard
-                  gameInfo={game}
-                  version={1}
-                  league={"mlb"}
-                  teamView={false}
-                />
+                <ScoreCard gameInfo={game} version={1} league={"mlb"} teamView={false} />
                 {i !== data.content.sbData.events.length - 1 && <Divider />}
               </Box>
             ))}
