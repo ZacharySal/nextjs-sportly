@@ -370,7 +370,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           {/* AWAY TEAM IMG AND NAME */}
           <Box className="flex items-center gap-2">
             <Image
-              src={game.competitors[1].team.logo}
+              src={game.competitors[1].team.logo ?? "/default.png"}
               width={500}
               height={500}
               priority={true}
@@ -401,7 +401,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           {/* HOME TEAM IMG AND NAME */}
           <Box className="flex items-center gap-2">
             <Image
-              src={game.competitors[0].team.logo}
+              src={game.competitors[0].team.logo ?? "/default.png"}
               width={500}
               height={500}
               priority={true}
@@ -470,7 +470,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           {/* away team*/}
           <Box className="flex flex-row gap-2 items-center mb-2 relative">
             <Image
-              src={game.competitors[1].team.logo}
+              src={game.competitors[1].team.logo ?? "/default.png"}
               width={500}
               height={500}
               priority={true}
@@ -500,7 +500,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           </Box>
           <Box className="flex flex-row gap-2 items-center relative">
             <Image
-              src={game.competitors[0].team.logo}
+              src={game.competitors[0].team.logo ?? "/default.png"}
               width={500}
               height={500}
               priority={true}

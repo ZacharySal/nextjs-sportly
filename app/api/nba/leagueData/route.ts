@@ -43,8 +43,6 @@ export async function GET() {
 
   const standingsData = await standingsDataResponse.json();
 
-  console.log(nbaDateResponse.content.dateParams.date);
-
   return NextResponse.json({
     nbaWeeks: nbaDates,
     news: nbaNews,

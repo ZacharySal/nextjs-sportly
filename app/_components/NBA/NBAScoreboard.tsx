@@ -85,6 +85,7 @@ function NBAScoreboard({ currentDate }: { currentDate: string }) {
     "-",
     ""
   )}`;
+
   const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 5000 });
 
   function getDateElements() {
