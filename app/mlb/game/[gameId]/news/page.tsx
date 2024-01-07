@@ -1,50 +1,9 @@
-"use client";
+import View from "@/app/_components/MLB/views/game/News";
 
-import ContainerBox from "@/app/_components/ContainerBox";
-import Articles from "@/app/_components/Articles";
-import { Box, useMediaQuery } from "@mui/material";
-import useSwr from "swr";
-import React from "react";
-import DivisionStandings from "@/app/_components/DivisionStandings";
-import GameUserSelection from "@/app/_components/GameUserSelection";
-import Loading from "@/app/_components/Loading";
-import MatchupPredictor from "@/app/_components/MatchupPredictor";
+export default async function Page({ params }: { params: { gameId: string } }) {
+  const data = await fetch(`https://nextjs-sportly.vercel.app/api/mlb/gameData/${params.gameId}`, {
+    cache: "no-cache",
+  }).then((res) => res.json());
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-export default function Page({ params }: { params: { gameId: string } }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
-
-  const { data, isLoading } = useSwr(
-    `https://nextjs-sportly.vercel.app/api/mlb/gameData/${params.gameId}`,
-    fetcher,
-    { refreshInterval: 5000 }
-  );
-
-  const desktopView = () => (
-    <>
-      <Box className="flex flex-col basis-1/2 gap-3">
-        <Articles title="MLB News" teamNews={data.gameData.news} limit={6} />
-      </Box>
-
-      <Box className="basis-1/4 flex flex-col gap-3">
-        {data.gameData.predictor && <MatchupPredictor data={data} league="mlb" />}
-        <DivisionStandings data={data} isNFL={false} league="mlb" />
-      </Box>
-    </>
-  );
-
-  const mobileView = () => <Articles title="MLB News" teamNews={data.gameData.news} limit={6} />;
-
-  if (isLoading) return <Loading />;
-  else {
-    return (
-      <>
-        <GameUserSelection userSelection={"news"} data={data} />
-        <ContainerBox isDesktopScreen={isDesktopScreen}>
-          {isDesktopScreen ? desktopView() : mobileView()}
-        </ContainerBox>
-      </>
-    );
-  }
+  return <View data={data} />;
 }

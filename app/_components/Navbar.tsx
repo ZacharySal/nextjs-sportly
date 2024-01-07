@@ -39,23 +39,17 @@ export default function Navbar() {
 
       <Box className="menu-dropdown hidden">
         <Box className="flex flex-row gap-5">
-          <Box className="flex flex-col gap-1 text-black pt-3 w-1/7">
+          <Box className="flex flex-col gap-1 text-black pt-3 w-2/7 justify-start">
             <Link href={`/${league}`} className="no-underline text-black">
               <Typography className="rounded-md opacity-60 p-2 text-sm menu-dropdown-option">
                 Scores
               </Typography>
             </Link>
-            <Typography className="rounded-md opacity-60 p-2 text-sm menu-dropdown-option">
-              Schedules
-            </Typography>
             <Link href={`/${league}/standings`} className="no-underline text-black">
               <Typography className="rounded-md opacity-60 p-2 text-sm menu-dropdown-option">
                 Standings
               </Typography>
             </Link>
-            <Typography className="rounded-md opacity-60 p-2 text-sm menu-dropdown-option">
-              Stats
-            </Typography>
             <Link href={`/${league}/teams`} className="no-underline text-black">
               <Typography className="rounded-md opacity-60 p-2 text-sm menu-dropdown-option">
                 Teams

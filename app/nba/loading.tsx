@@ -1,4 +1,3 @@
-import { Box, CircularProgress } from "@mui/material";
 import Loading from "../_components/Loading";
 
 function loading() {

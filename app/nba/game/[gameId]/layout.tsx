@@ -15,7 +15,7 @@ export default function RootLayout({
   let { data, isLoading } = useSwr(
     `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${params.gameId}`,
     fetcher,
-    { refreshInterval: 5000 }
+    { refreshInterval: 30000 }
   );
   if (!isLoading)
     return (

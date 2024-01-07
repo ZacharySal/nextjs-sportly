@@ -15,7 +15,7 @@ export default function RootLayout({
   let { data, isLoading } = useSwr(
     `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${params.teamId}`,
     fetcher,
-    { refreshInterval: 5000 }
+    { refreshInterval: 30000 }
   );
 
   if (!isLoading)

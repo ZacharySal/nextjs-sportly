@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography, CircularProgress, Divider } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 import ScoreCard from "../ScoreCard";
 import useSwr from "swr";
@@ -11,7 +11,7 @@ import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import ButtonDatePicker from "../MLB/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import useWindowDimensions from "../useWindowDimensions";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 import Loading from "../Loading";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -87,7 +87,7 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
     "-",
     ""
   )}`;
-  const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 5000 });
+  const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 30000 });
 
   function getDateElements() {
     const dateElements = [];

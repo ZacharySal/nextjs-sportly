@@ -1,19 +1,12 @@
 "use client";
 
-import { Box, Typography, CircularProgress, Divider, Paper } from "@mui/material";
+import { Box, Typography, Divider, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
-import NewScoreCard from "../ScoreCard";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAngleLeft,
-  faAngleRight,
-  faAnglesLeft,
-  faAnglesRight,
-  faCalendar,
-} from "@fortawesome/free-solid-svg-icons";
-import useWindowDimensions from "../useWindowDimensions";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 import React from "react";
 import { allNFLDates } from "@/app/_lib/constants";
 import CalendarMonthOutlined from "@mui/icons-material/CalendarMonthOutlined";
@@ -99,7 +92,7 @@ function NFLScoreboard({ seasonData }: { seasonData: any }) {
   const dateElements = getDateElements();
 
   const key = `https://cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50&week=${selectedWeekInfo.week}&seasontype=${selectedWeekInfo.type}&year=${selectedWeekInfo.year}`;
-  const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 5000 });
+  const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 30000 });
 
   if (!isLoading) {
     const ungroupedGames = data.content.sbData.events.map((game: any) => {

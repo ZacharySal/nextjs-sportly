@@ -1,12 +1,11 @@
 "use client";
 
-import GameHeader from "@/app/_components/GameHeader";
 import TeamHeader from "@/app/_components/TeamHeader";
 import useSwr from "swr";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default function RootLayout({
+export default function Layout({
   children,
   params,
 }: {
@@ -16,7 +15,7 @@ export default function RootLayout({
   let { data, isLoading } = useSwr(
     `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${params.teamId}`,
     fetcher,
-    { refreshInterval: 5000 }
+    { refreshInterval: 30000 }
   );
   if (!isLoading)
     return (
