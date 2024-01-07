@@ -205,10 +205,10 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                   />
                   <Box className="flex flex-col">
                     <Typography className="text-xs opacity-80">
-                      {`${data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes[0]?.athlete?.shortName} `}
+                      {`${data?.gamepackageJSON?.header?.competitions?.[0]?.status?.featuredAthletes[0]?.athlete?.shortName} `}
                     </Typography>
                     <Typography className="text-[11px]">
-                      {`(${data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes[0]?.athlete?.record})`}
+                      {`(${data?.gamepackageJSON?.header?.competitions?.[0]?.status?.featuredAthletes[0]?.athlete?.record})`}
                     </Typography>
                   </Box>
                 </Box>
@@ -221,45 +221,45 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
 
                   <Image
                     src={
-                      data?.gamepackageJSON?.header.competitions[0].status.featuredAthletes[1]
+                      data?.gamepackageJSON?.header?.competitions?.[0]?.status
+                        ?.featuredAthletes?.[1].athlete?.headshot?.href
+                    }
+                    width={100}
+                    height={100}
+                    priority={true}
+                    alt={
+                      data?.gamepackageJSON?.header?.competitions[0]?.status.featuredAthletes[1]
+                        .athlete?.headshot?.alt || "N/A"
+                    }
+                    className="w-[30px] h-[30px] border rounded-full object-cover"
+                  />
+                  <Box className="flex flex-col">
+                    <Typography className="text-xs opacity-80">
+                      {`${data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes[1]?.athlete?.shortName} `}
+                    </Typography>
+                    <Typography className="text-[11px]">
+                      {`(${data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes[1]?.athlete?.record})`}
+                    </Typography>
+                  </Box>
+                </Box>
+              )}
+
+              {typeof data?.gamepackageJSON?.header?.competitions[0]?.status
+                ?.featuredAthletes[2] !== "undefined" && (
+                <Box className="flex flex-row items-center gap-1">
+                  <Typography className="text-[10px] opacity-60 w-[30px]">SAVE</Typography>
+
+                  <Image
+                    src={
+                      data?.gamepackageJSON.header.competitions[0].status.featuredAthletes[2]
                         .athlete?.headshot?.href
                     }
                     width={100}
                     height={100}
                     priority={true}
                     alt={
-                      data.gamepackageJSON.header.competitions[0].status.featuredAthletes[1].athlete
-                        ?.headshot?.alt || "N/A"
-                    }
-                    className="w-[30px] h-[30px] border rounded-full object-cover"
-                  />
-                  <Box className="flex flex-col">
-                    <Typography className="text-xs opacity-80">
-                      {`${data.gamepackageJSON.header.competitions[0].status.featuredAthletes[1].athlete.shortName} `}
-                    </Typography>
-                    <Typography className="text-[11px]">
-                      {`(${data.gamepackageJSON.header.competitions[0].status.featuredAthletes[1].athlete.record})`}
-                    </Typography>
-                  </Box>
-                </Box>
-              )}
-
-              {typeof data.gamepackageJSON.header.competitions[0].status.featuredAthletes[2] !==
-                "undefined" && (
-                <Box className="flex flex-row items-center gap-1">
-                  <Typography className="text-[10px] opacity-60 w-[30px]">SAVE</Typography>
-
-                  <Image
-                    src={
-                      data.gamepackageJSON.header.competitions[0].status.featuredAthletes[2].athlete
-                        ?.headshot?.href
-                    }
-                    width={100}
-                    height={100}
-                    priority={true}
-                    alt={
-                      data.gamepackageJSON.header.competitions[0].status.featuredAthletes[2].athlete
-                        ?.headshot?.alt
+                      data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes[2]
+                        ?.athlete?.headshot?.alt
                     }
                     className="w-[30px] h-[30px] border rounded-full object-cover"
                   />
@@ -643,12 +643,12 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                     />
                     <Box className="flex flex-col">
                       <Typography className="text-xs">
-                        {`${game.competitors[1].leaders[0].leaders[0].athlete.displayName} `}
-                        <span className="opacity-60">{`${game.competitors[1].leaders[0].leaders[0].athlete.position?.abbreviation} - ${game.competitors[1].team?.abbreviation}`}</span>
+                        {`${game?.competitors?.[1]?.leaders?.[0]?.leaders?.[0]?.athlete?.displayName} `}
+                        <span className="opacity-60">{`${game?.competitors[1]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game.competitors[1].team?.abbreviation}`}</span>
                       </Typography>
                       <Typography className="text-xs">
                         {`${Math.floor(game.competitors[1].leaders[0].leaders[0].value)}`}
-                        <span className="text-[10px] opacity-60">{` ${game.competitors[0].leaders[0].abbreviation}`}</span>
+                        <span className="text-[10px] opacity-60">{` ${game?.competitors?.[0]?.leaders?.[0]?.abbreviation}`}</span>
                       </Typography>
                     </Box>
                   </Box>
@@ -663,13 +663,13 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                     />
                     <Box className="flex flex-col">
                       <Typography className="text-xs">
-                        {`${game.competitors[0].leaders[0].leaders[0].athlete.displayName} `}
-                        <span className="opacity-60">{`${game.competitors[0].leaders[0].leaders[0].athlete.position.abbreviation} - ${game.competitors[0].team.abbreviation}`}</span>
+                        {`${game?.competitors[0]?.leaders[0]?.leaders[0]?.athlete?.displayName} `}
+                        <span className="opacity-60">{`${game?.competitors[0]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game?.competitors[0]?.team?.abbreviation}`}</span>
                       </Typography>
 
                       <Typography className="text-xs">
-                        {`${Math.floor(game.competitors[0].leaders[0].leaders[0].value)}`}
-                        <span className="text-[10px] opacity-60">{` ${game.competitors[0].leaders[0].abbreviation}`}</span>
+                        {`${Math?.floor(game?.competitors[0]?.leaders[0]?.leaders[0]?.value)}`}
+                        <span className="text-[10px] opacity-60">{` ${game?.competitors[0]?.leaders[0]?.abbreviation}`}</span>
                       </Typography>
                     </Box>
                   </Box>

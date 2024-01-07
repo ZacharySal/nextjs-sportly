@@ -111,8 +111,10 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
 
   function dateSelector() {
     return (
-      <Box className="w-full p-2 bg-white mb-3 rounded-xl">
-        <Typography className="mb-1 font-semibold text-xl opacity-80">MLB Scoreboard</Typography>
+      <Box className="w-full  p-2 md:p-4 bg-white mb-3 rounded-xl">
+        <Typography className="mb-1 font-semibold text-xl md:text-2xl opacity-80">
+          MLB Scoreboard
+        </Typography>
         <Box className="w-full flex gap-3 items-center">
           <Box
             id="style-1"
