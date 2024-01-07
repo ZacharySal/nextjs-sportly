@@ -1,9 +1,5 @@
-"use client";
-import Home from "./nba/page";
-import Navbar from "./_components/Navbar";
+import NBAHomePage from "./nba/page";
 
-function Page() {
-  return <Home />;
+export default function Page() {
+  return <NBAHomePage />;
 }
-
-export default Page;

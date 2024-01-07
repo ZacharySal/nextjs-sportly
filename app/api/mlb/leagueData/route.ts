@@ -14,7 +14,8 @@ export async function GET() {
   const newsData = await newsResponse.json();
 
   const mlbDaysResponse = await fetch(
-    "http://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/calendar/ondays?lang=en&region=us"
+    "http://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/calendar/ondays?lang=en&region=us",
+    { cache: "no-cache" }
   );
 
   if (!mlbDaysResponse.ok) {

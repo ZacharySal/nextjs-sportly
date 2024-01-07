@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 
-export const dynamic = "force-dynamic";
-
 export async function GET() {
   const nbaWeeksResponse = await fetch(
-    "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/calendar/ondays?lang=en&region=us"
+    "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/calendar/ondays?lang=en&region=us",
+    { cache: "no-cache" }
   );
 
   if (!nbaWeeksResponse.ok) {
