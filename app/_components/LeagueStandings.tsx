@@ -1,4 +1,3 @@
-import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -8,29 +7,22 @@ function getMLBDivisionName(divisionName: any) {
   return divisionName.substring(15, divisionName.length);
 }
 export default function LeagueStandings({ data, league }: { data: any; league: string }) {
-  if (league === "nba") {
-    console.log(data);
-  }
-  if (typeof data.standings.standings.groups[0].groups === "undefined") {
-    return (
-      <Typography className="mx-auto my-5">
-        No {league.toUpperCase()} standings available
-      </Typography>
-    );
+  if (typeof data.groups[0].groups === "undefined") {
+    return <p className="mx-auto my-5">No {league.toUpperCase()} standings available</p>;
   } else {
     return (
-      <Box className="p-3 bg-white rounded-xl w-full">
-        <Typography className="text-xl md:text-2xl font-bold opacity-80">
+      <div className="p-3 bg-white rounded-xl w-full">
+        <p className="text-xl md:text-2xl font-bold opacity-80">
           {league.toUpperCase()} 2023 Standings
-        </Typography>
-        <Box className="flex justify-center w-full overflow-hidden">
-          <Box className="w-full flex flex-col gap-2">
-            {data.standings.standings.groups.map((conference: any) => (
-              <Box className="w-full" key={uuidv4()}>
-                <Typography className="font-sm font-semibold opacity-80 capitalize my-2">
+        </p>
+        <div className="flex justify-center w-full overflow-hidden">
+          <div className="w-full flex flex-col gap-2">
+            {data.groups.map((conference: any) => (
+              <div className="w-full" key={uuidv4()}>
+                <p className="font-sm font-semibold opacity-80 capitalize my-2">
                   {conference.name}
-                </Typography>
-                <Box className="min-w-full flex flex-row items-start">
+                </p>
+                <div className="min-w-full flex flex-row items-start">
                   <table className="border-collapse">
                     <thead className="table-fixed-left-thead table-header">
                       {conference.groups.map((division: any) => (
@@ -44,7 +36,7 @@ export default function LeagueStandings({ data, league }: { data: any; league: s
                             <tr key={uuidv4()} className="team-info-cell">
                               <td className="text-xs name-col z-10" align="center">
                                 <Link href={`/${league}/team/${team.team.id}/home`}>
-                                  <Box className="flex items-center justify-start pl-1 gap-2 w-full">
+                                  <div className="flex items-center justify-start pl-1 gap-2 w-full">
                                     <Image
                                       src={team.team.logos[0].href}
                                       width={team.team.logos[0].width}
@@ -53,10 +45,10 @@ export default function LeagueStandings({ data, league }: { data: any; league: s
                                       alt="home team logo"
                                       className="w-6 object-contain"
                                     />
-                                    <Typography className="text-xs text-[#3e82d6]">
+                                    <p className="text-xs text-[#3e82d6]">
                                       {team.team.abbreviation}
-                                    </Typography>
-                                  </Box>
+                                    </p>
+                                  </div>
                                 </Link>
                               </td>
                             </tr>
@@ -65,7 +57,7 @@ export default function LeagueStandings({ data, league }: { data: any; league: s
                       ))}
                     </thead>
                   </table>
-                  <Box className="w-full overflow-x-auto">
+                  <div className="w-full overflow-x-auto">
                     <table className="table standings-table">
                       {conference.groups.map((division: any) => (
                         <React.Fragment key={uuidv4()}>
@@ -105,13 +97,13 @@ export default function LeagueStandings({ data, league }: { data: any; league: s
                         </React.Fragment>
                       ))}
                     </table>
-                  </Box>
-                </Box>
-              </Box>
+                  </div>
+                </div>
+              </div>
             ))}
-          </Box>
-        </Box>
-      </Box>
+          </div>
+        </div>
+      </div>
     );
   }
 }

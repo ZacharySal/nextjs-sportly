@@ -4,30 +4,30 @@ import Articles from "@/app/_components/Articles";
 import ContainerBox from "@/app/_components/ContainerBox";
 import DesktopTeamSchedule from "@/app/_components/DesktopTeamSchedule";
 import TeamNewsCards from "@/app/_components/TeamNewsCards";
-import { useMediaQuery, Typography, Box } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function Home({ data }: { data: any }) {
   const desktopView = () => (
     <ContainerBox isDesktopScreen={isDesktopScreen}>
-      <Box className="basis-1/4">
+      <div className="basis-1/4">
         <DesktopTeamSchedule data={data} league="mlb" isTeamView={false} />
-      </Box>
-      <Box className="basis-1/2">
+      </div>
+      <div className="basis-1/2">
         <TeamNewsCards data={data} league="mlb" />
-      </Box>
-      <Box className="basis-1/4">
+      </div>
+      <div className="basis-1/4">
         <Articles title={`${data.teamData.team.name} News`} teamNews={data.teamNews} limit={8} />
-      </Box>
+      </div>
     </ContainerBox>
   );
 
   const mobileView = () => (
     <>
       <ContainerBox isDesktopScreen={isDesktopScreen}>
-        <Box className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
           <DesktopTeamSchedule data={data} league="mlb" isTeamView={false} />
           <TeamNewsCards data={data} league="mlb" />
-        </Box>
+        </div>
       </ContainerBox>
     </>
   );

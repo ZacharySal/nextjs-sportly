@@ -1,4 +1,3 @@
-import { Box, Typography, Divider } from "@mui/material";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 
@@ -6,11 +5,11 @@ export default function NFLScoringPlays({ data }: { data: any }) {
   function scoringPlays(allScoringPlays: any) {
     const plays = allScoringPlays.map((play: any) => {
       return (
-        <Box
+        <div
           key={uuidv4()}
           className="w-full flex flex-row justify-between gap-2 items-center mb-2"
         >
-          <Box className="flex flex-row items-center gap-2">
+          <div className="flex flex-row items-center gap-2">
             <Image
               src={play.team.logo}
               width={100}
@@ -18,41 +17,35 @@ export default function NFLScoringPlays({ data }: { data: any }) {
               alt="team logo"
               className="w-8 object-contain"
             />
-            <Box className="flex flex-col">
-              <Box className="text-sm font-semibold">
+            <div className="flex flex-col">
+              <div className="text-sm font-semibold">
                 {play.type.text}
-                <span className="pl-1 text-xs opacity-70">
-                  {play.clock.displayValue}
-                </span>
-              </Box>
-              <Box className="text-sm opacity-70">{play.text}</Box>
-            </Box>
-          </Box>
-          <Box className="flex flex-row gap-6 pr-2">
-            <Typography
-              sx={{
+                <span className="pl-1 text-xs opacity-70">{play.clock.displayValue}</span>
+              </div>
+              <div className="text-sm opacity-70">{play.text}</div>
+            </div>
+          </div>
+          <div className="flex flex-row gap-6 pr-2">
+            <p
+              style={{
                 fontWeight:
-                  play.team.displayName === data.homeTeam.team.displayName
-                    ? "700"
-                    : "400",
+                  play.team.displayName === data.homeTeam.team.displayName ? "700" : "400",
               }}
               className="w-4 text-center"
             >
               {play.homeScore}
-            </Typography>
-            <Typography
-              sx={{
+            </p>
+            <p
+              style={{
                 fontWeight:
-                  play.team.displayName === data.awayTeam.team.displayName
-                    ? "700"
-                    : "400",
+                  play.team.displayName === data.awayTeam.team.displayName ? "700" : "400",
               }}
               className="w-4 text-center"
             >
               {play.awayScore}
-            </Typography>
-          </Box>
-        </Box>
+            </p>
+          </div>
+        </div>
       );
     });
     return plays;
@@ -60,37 +53,35 @@ export default function NFLScoringPlays({ data }: { data: any }) {
 
   function quarterHeader(text: string) {
     return (
-      <Box className="w-full flex flex-row justify-between items-center mb-2">
-        <Typography className="opacity-70 text-xs">{text}</Typography>
-      </Box>
+      <div className="w-full flex flex-row justify-between items-center mb-2">
+        <p className="opacity-70 text-xs">{text}</p>
+      </div>
     );
   }
 
   return (
-    <Box className="w-full bg-white rounded-xl flex flex-col justify-center items-center p-3">
-      <Typography className=" w-full text-left text-sm opacity-70 font-semibold">
-        Scoring Plays
-      </Typography>
-      <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
+    <div className="w-full bg-white rounded-xl flex flex-col justify-center items-center p-3">
+      <p className=" w-full text-left text-sm opacity-70 font-semibold">Scoring Plays</p>
+      <hr className="w-full color-[#edeef0] my-[0.5rem]" />
       {data.firstQuarterScoringPlays.length > 0 && (
         <>
           {quarterHeader("1ST QUARTER")}
           {scoringPlays(data.firstQuarterScoringPlays)}
-          <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
+          <hr className="w-full color-[#edeef0] my-[0.5rem]" />
         </>
       )}
       {data.secondQuarterScoringPlays.length > 0 && (
         <>
           {quarterHeader("2ND QUARTER")}
           {scoringPlays(data.secondQuarterScoringPlays)}
-          <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
+          <hr className="w-full color-[#edeef0] my-[0.5rem]" />
         </>
       )}
       {data.thirdQuarterScoringPlays.length > 0 && (
         <>
           {quarterHeader("3RD QUARTER")}
           {scoringPlays(data.thirdQuarterScoringPlays)}
-          <Divider className="w-full color-[#edeef0] my-[0.5rem]" />
+          <hr className="w-full color-[#edeef0] my-[0.5rem]" />
         </>
       )}
       {data.fourthQuarterScoringPlays.length > 0 && (
@@ -99,6 +90,6 @@ export default function NFLScoringPlays({ data }: { data: any }) {
           {scoringPlays(data.fourthQuarterScoringPlays)}
         </>
       )}
-    </Box>
+    </div>
   );
 }

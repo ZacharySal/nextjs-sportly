@@ -1,9 +1,7 @@
-import { Box, Typography, Divider } from "@mui/material";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 
 export default function NFLScoringPlays({ data }: { data: any }) {
-  console.log(data);
   function scoringPlays(allScoringPlays: any, quarter: string) {
     return (
       <table className="misc-table table min-w-full">
@@ -24,7 +22,7 @@ export default function NFLScoringPlays({ data }: { data: any }) {
           {allScoringPlays.map((play: any) => (
             <tr key={uuidv4()} className="w-full">
               <td className="text-xs  w-[80%] p-1" colSpan={2} align="left">
-                <Box className="flex flex-row gap-2 justify-start">
+                <div className="flex flex-row gap-2 justify-start">
                   <Image
                     src={play.team.logo}
                     width={100}
@@ -32,15 +30,13 @@ export default function NFLScoringPlays({ data }: { data: any }) {
                     alt="team logo"
                     className="w-6 object-contain"
                   />
-                  <Box className="flex flex-col justify-start wrap items-start gap-0 flex-wrap">
-                    <Typography className="text-[12px]">
+                  <div className="flex flex-col justify-start wrap items-start gap-0 flex-wrap">
+                    <p className="text-[12px]">
                       {play.type.abbreviation} {play.clock.displayValue}
-                    </Typography>
-                    <Typography className="text-[11px] max-w-full break-normal">
-                      {play.text}
-                    </Typography>
-                  </Box>
-                </Box>
+                    </p>
+                    <p className="text-[11px] max-w-full break-normal">{play.text}</p>
+                  </div>
+                </div>
               </td>
               <td className="text-xs table-cell w-6" align="right">
                 {play.awayScore}
@@ -56,16 +52,14 @@ export default function NFLScoringPlays({ data }: { data: any }) {
   }
 
   function quarterHeader(text: string) {
-    //   <Box className="w-full flex flex-row justify-between items-center mb-2">
-    //     <Typography className="opacity-70 text-xs">{text}</Typography>
-    //   </Box>
+    //   <div className="w-full flex flex-row justify-between items-center mb-2">
+    //     <p className="opacity-70 text-xs">{text}</p>
+    //   </div>
   }
 
   return (
-    <Box className="w-full bg-white rounded-xl flex flex-col justify-center items-center p-3">
-      <Typography className=" w-full text-left text-sm opacity-80 font-semibold mb-2">
-        Scoring Summary
-      </Typography>
+    <div className="w-full bg-white rounded-xl flex flex-col justify-center items-center p-3">
+      <p className=" w-full text-left text-sm opacity-80 font-semibold mb-2">Scoring Summary</p>
       {data.firstQuarterScoringPlays.length > 0 &&
         scoringPlays(data.firstQuarterScoringPlays, "1st Quarter")}
       {data.secondQuarterScoringPlays.length > 0 &&
@@ -74,6 +68,6 @@ export default function NFLScoringPlays({ data }: { data: any }) {
         scoringPlays(data.thirdQuarterScoringPlays, "3rd Quarter")}
       {data.fourthQuarterScoringPlays.length > 0 &&
         scoringPlays(data.fourthQuarterScoringPlays, "4th Quarter")}
-    </Box>
+    </div>
   );
 }

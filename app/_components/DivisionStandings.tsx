@@ -1,13 +1,3 @@
-import {
-  Box,
-  Typography,
-  TableRow,
-  TableCell,
-  TableHead,
-  TableContainer,
-  TableBody,
-  Table,
-} from "@mui/material";
 import Link from "next/link";
 import { v4 as uuidv4 } from "uuid";
 
@@ -22,8 +12,6 @@ export default function DivisionStandings({
   isNFL: boolean;
   league: string;
 }) {
-  console.log(data);
-
   function getWins(team: any) {
     return isNFL ? team.stats[5].displayValue : team.stats[4].displayValue;
   }
@@ -38,8 +26,8 @@ export default function DivisionStandings({
     data.homeTeam.team.location.includes(name) || data.awayTeam.team.location.includes(name);
 
   return data.gameData.standings.groups.map((group: any) => (
-    <Box key={uuidv4()} className="w-full bg-white rounded-xl p-3">
-      <Typography className="font-semibold opacity-70 text-sm mb-2">{group.header}</Typography>
+    <div key={uuidv4()} className="w-full bg-white rounded-xl p-3">
+      <p className="font-semibold text-sm mb-2">{group.header}</p>
 
       <table className="misc-table table min-w-full">
         <thead className="table-header">
@@ -114,7 +102,7 @@ export default function DivisionStandings({
       {/* <TableContainer style={{ maxWidth: "100%", marginTop: "0.5rem" }} component={Box}>
         <Table aria-label="simple table" size="small">
           <TableHead
-            sx={{
+            style={{
               borderTop: "1px solid rgba(224, 224, 224, 1)",
             }}
           >
@@ -152,7 +140,7 @@ export default function DivisionStandings({
                   className="text-xs"
                   component="th"
                   scope="row"
-                  sx={{
+                  style={{
                     fontWeight:
                       data.homeTeam.team.location.includes(team.team) ||
                       data.awayTeam.team.location.includes(team.team)
@@ -168,7 +156,7 @@ export default function DivisionStandings({
                 </TableCell>
 
                 <TableCell
-                  sx={{
+                  style={{
                     fontWeight:
                       data.homeTeam.team.location.includes(team.team) ||
                       data.awayTeam.team.location.includes(team.team)
@@ -180,7 +168,7 @@ export default function DivisionStandings({
                   {getWins(team)}
                 </TableCell>
                 <TableCell
-                  sx={{
+                  style={{
                     fontWeight:
                       data.homeTeam.team.location.includes(team.team) ||
                       data.awayTeam.team.location.includes(team.team)
@@ -192,7 +180,7 @@ export default function DivisionStandings({
                   {getLosses(team)}
                 </TableCell>
                 <TableCell
-                  sx={{
+                  style={{
                     fontWeight:
                       data.homeTeam.team.location.includes(team.team) ||
                       data.awayTeam.team.location.includes(team.team)
@@ -208,6 +196,6 @@ export default function DivisionStandings({
           </TableBody>
         </Table>
       </TableContainer> */}
-    </Box>
+    </div>
   ));
 }

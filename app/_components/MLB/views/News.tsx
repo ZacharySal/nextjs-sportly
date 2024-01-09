@@ -1,18 +1,17 @@
 "use client";
 
-import { useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import ContainerBox from "@/app/_components/ContainerBox";
 import Articles from "@/app/_components/Articles";
 import LeagueUserSelection from "@/app/_components/LeagueUserSelection";
-import { Box } from "@mui/material";
 
 export default function Home({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const desktopView = () => (
-    <Box className="basis-2/4">
+    <div className="basis-2/4">
       <Articles title={`MLB News`} teamNews={data.news} limit={20} />
-    </Box>
+    </div>
   );
 
   const mobileView = () => <Articles title={`MLB News`} teamNews={data.news} limit={20} />;

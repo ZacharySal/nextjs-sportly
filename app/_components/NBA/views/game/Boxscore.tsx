@@ -2,7 +2,7 @@
 
 import ContainerBox from "@/app/_components/ContainerBox";
 import Articles from "@/app/_components/Articles";
-import { Box, useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
@@ -17,14 +17,14 @@ export default function Boxscore({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <Box className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3">
         <NBAGameStats data={data} isDesktopScreen={isDesktopScreen} />
-      </Box>
-      <Box className="flex flex-col basis-1/4 gap-3">
+      </div>
+      <div className="flex flex-col basis-1/4 gap-3">
         {data.gameData.predictor && <MatchupPredictor data={data} league="nba" />}
         <DivisionStandings data={data} isNFL={false} league="nba" />
         <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
-      </Box>
+      </div>
     </>
   );
 

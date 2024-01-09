@@ -1,19 +1,15 @@
 "use client";
 
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faT, faTicket } from "@fortawesome/free-solid-svg-icons";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const game = gameInfo.competitions[0];
-
-  const i = Math.floor(Math.random() * 3);
 
   const homeTeamName: string = game.competitors[0].team.shortDisplayName;
   const awayTeamName: string = game.competitors[1].team.shortDisplayName;
@@ -38,7 +34,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
   const odds = typeof game?.odds == "undefined" ? "" : game.odds[0].details;
 
   const { data, isLoading } = useSWR(
-    `https://cdn.espn.com/core/${league}/game?xhr=1&gameId=${gameId}`,
+    isDesktopScreen ? `https://cdn.espn.com/core/${league}/game?xhr=1&gameId=${gameId}` : null,
     fetcher,
     { refreshInterval: 30000 }
   );
@@ -58,8 +54,8 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
   const getTopPerformersByLeague = () => {
     if (league === "NBA") {
       return (
-        <Box className="flex flex-col justify-start gap-3">
-          <Box className="flex flex-row items-center gap-2">
+        <div className="flex flex-col justify-start gap-3">
+          <div className="flex flex-row items-center gap-2">
             <Image
               src={
                 data.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
@@ -70,28 +66,28 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               alt="away team points leader"
               className="w-[35px] h-[35px] border rounded-full object-cover"
             />
-            <Box className="flex flex-col">
-              <Typography className="text-xs">
+            <div className="flex flex-col">
+              <p className="text-xs">
                 {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.displayName} `}
                 <span className="opacity-60">{`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game?.competitors[1]?.team?.abbreviation}`}</span>
-              </Typography>
-              <Box className="flex flex-row gap-2">
-                <Typography className="text-xs">
+              </p>
+              <div className="flex flex-row gap-2">
+                <p className="text-xs">
                   {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[0]?.displayValue}`}
                   <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[0]?.shortDisplayName}`}</span>
-                </Typography>
-                <Typography className="text-xs">
+                </p>
+                <p className="text-xs">
                   {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[1]?.displayValue}`}
                   <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[1]?.shortDisplayName}`}</span>
-                </Typography>
-                <Typography className="text-xs">
+                </p>
+                <p className="text-xs">
                   {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[2]?.displayValue}`}
                   <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[2]?.shortDisplayName}`}</span>
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-          <Box className="flex flex-row items-center gap-2">
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-row items-center gap-2">
             <Image
               src={
                 data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
@@ -102,34 +98,34 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               alt="away team points leader"
               className="w-[35px] h-[35px] border rounded-full object-cover"
             />
-            <Box className="flex flex-col">
-              <Typography className="text-xs">
+            <div className="flex flex-col">
+              <p className="text-xs">
                 {`${data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.athlete?.displayName} `}
                 <span className="opacity-60">{`${data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game?.competitors[0]?.team?.abbreviation}`}</span>
-              </Typography>
+              </p>
 
-              <Box className="flex flex-row gap-2">
-                <Typography className="text-xs">
+              <div className="flex flex-row gap-2">
+                <p className="text-xs">
                   {`${data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.statistics[0]?.displayValue}`}
                   <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.statistics[0]?.shortDisplayName}`}</span>
-                </Typography>
-                <Typography className="text-xs">
+                </p>
+                <p className="text-xs">
                   {`${data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.statistics[1]?.displayValue}`}
                   <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.statistics[1]?.shortDisplayName}`}</span>
-                </Typography>
-                <Typography className="text-xs">
+                </p>
+                <p className="text-xs">
                   {`${data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.statistics[2]?.displayValue}`}
                   <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.statistics[2]?.shortDisplayName}`}</span>
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       );
     } else if (league === "NFL") {
       return (
-        <Box className="flex flex-col justify-start gap-3">
-          <Box className="flex flex-row items-center gap-2">
+        <div className="flex flex-col justify-start gap-3">
+          <div className="flex flex-row items-center gap-2">
             <Image
               src={
                 data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
@@ -140,19 +136,19 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               alt="away team points leader"
               className="w-[35px] h-[35px] border rounded-full object-cover"
             />
-            <Box className="flex flex-col">
-              <Typography className="text-xs">
+            <div className="flex flex-col">
+              <p className="text-xs">
                 {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.displayName} `}
                 <span className="opacity-60">{`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game?.competitors[1]?.team?.abbreviation}`}</span>
-              </Typography>
-              <Box className="flex flex-row gap-2">
-                <Typography className="text-xs opacity-70">
+              </p>
+              <div className="flex flex-row gap-2">
+                <p className="text-xs opacity-70">
                   {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.displayValue}`}
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-          <Box className="flex flex-row items-center gap-2">
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-row items-center gap-2">
             <Image
               src={
                 data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
@@ -163,31 +159,31 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               alt="away team points leader"
               className="w-[35px] h-[35px] border rounded-full object-cover"
             />
-            <Box className="flex flex-col">
-              <Typography className="text-xs">
+            <div className="flex flex-col">
+              <p className="text-xs">
                 {`${data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.athlete?.displayName} `}
                 <span className="opacity-60">{`${data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game?.competitors[0]?.team?.abbreviation}`}</span>
-              </Typography>
+              </p>
 
-              <Box className="flex flex-row gap-2">
-                <Typography className="text-xs opacity-70">
+              <div className="flex flex-row gap-2">
+                <p className="text-xs opacity-70">
                   {`${data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.displayValue}`}
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       );
     } else if (league === "MLB") {
       return (
-        <Box className="flex flex-col justify-start items-start gap-1">
+        <div className="flex flex-col justify-start items-start gap-1">
           {typeof data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes !==
             "undefined" && (
             <>
               {typeof data?.gamepackageJSON?.header?.competitions[0]?.status
                 ?.featuredAthletes[0] !== "undefined" && (
-                <Box className="flex flex-row items-center gap-1">
-                  <Typography className="text-[10px] opacity-60 w-[30px]">WIN</Typography>
+                <div className="flex flex-row items-center gap-1">
+                  <p className="text-[10px] opacity-60 w-[30px]">WIN</p>
 
                   <Image
                     src={
@@ -203,21 +199,21 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                     }
                     className="w-[30px] h-[30px] border rounded-full object-cover"
                   />
-                  <Box className="flex flex-col">
-                    <Typography className="text-xs opacity-80">
+                  <div className="flex flex-col">
+                    <p className="text-xs opacity-80">
                       {`${data?.gamepackageJSON?.header?.competitions?.[0]?.status?.featuredAthletes[0]?.athlete?.shortName} `}
-                    </Typography>
-                    <Typography className="text-[11px]">
+                    </p>
+                    <p className="text-[11px]">
                       {`(${data?.gamepackageJSON?.header?.competitions?.[0]?.status?.featuredAthletes[0]?.athlete?.record})`}
-                    </Typography>
-                  </Box>
-                </Box>
+                    </p>
+                  </div>
+                </div>
               )}
 
               {typeof data?.gamepackageJSON?.header?.competitions[0]?.status
                 ?.featuredAthletes[1] !== "undefined" && (
-                <Box className="flex flex-row items-center gap-1">
-                  <Typography className="text-[10px] opacity-60 w-[30px]">LOSS</Typography>
+                <div className="flex flex-row items-center gap-1">
+                  <p className="text-[10px] opacity-60 w-[30px]">LOSS</p>
 
                   <Image
                     src={
@@ -233,21 +229,21 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                     }
                     className="w-[30px] h-[30px] border rounded-full object-cover"
                   />
-                  <Box className="flex flex-col">
-                    <Typography className="text-xs opacity-80">
+                  <div className="flex flex-col">
+                    <p className="text-xs opacity-80">
                       {`${data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes[1]?.athlete?.shortName} `}
-                    </Typography>
-                    <Typography className="text-[11px]">
+                    </p>
+                    <p className="text-[11px]">
                       {`(${data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes[1]?.athlete?.record})`}
-                    </Typography>
-                  </Box>
-                </Box>
+                    </p>
+                  </div>
+                </div>
               )}
 
               {typeof data?.gamepackageJSON?.header?.competitions[0]?.status
                 ?.featuredAthletes[2] !== "undefined" && (
-                <Box className="flex flex-row items-center gap-1">
-                  <Typography className="text-[10px] opacity-60 w-[30px]">SAVE</Typography>
+                <div className="flex flex-row items-center gap-1">
+                  <p className="text-[10px] opacity-60 w-[30px]">SAVE</p>
 
                   <Image
                     src={
@@ -263,19 +259,19 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                     }
                     className="w-[30px] h-[30px] border rounded-full object-cover"
                   />
-                  <Box className="flex flex-col">
-                    <Typography className="text-xs opacity-80">
+                  <div className="flex flex-col">
+                    <p className="text-xs opacity-80">
                       {`${data.gamepackageJSON.header.competitions[0].status.featuredAthletes[2].athlete.shortName} `}
-                    </Typography>
-                    <Typography className="text-[11px]">
+                    </p>
+                    <p className="text-[11px]">
                       {`(${data.gamepackageJSON.header.competitions[0].status.featuredAthletes[2].athlete.record})`}
-                    </Typography>
-                  </Box>
-                </Box>
+                    </p>
+                  </div>
+                </div>
               )}
             </>
           )}
-        </Box>
+        </div>
       );
     }
   };
@@ -283,37 +279,21 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
   const getLinescoreHeaderByLeague = () => {
     if (league === "nfl" || league === "NBA") {
       return (
-        <Box className="w-full flex justify-end pr-3">
-          <Typography className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">
-            1
-          </Typography>
-          <Typography className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">
-            2
-          </Typography>
-          <Typography className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">
-            3
-          </Typography>
-          <Typography className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">
-            4
-          </Typography>
-          <Typography className="justify-end flex pr-[2px] w-[50px] text-[12px] opacity-70 font-[600]">
-            T
-          </Typography>
-        </Box>
+        <div className="w-full flex justify-end pr-3">
+          <p className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">1</p>
+          <p className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">2</p>
+          <p className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">3</p>
+          <p className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">4</p>
+          <p className="justify-end flex pr-[2px] w-[50px] text-[12px] opacity-70 font-[600]">T</p>
+        </div>
       );
     } else if (league === "MLB") {
       return (
-        <Box className="w-full flex justify-end pr-3">
-          <Typography className="w-[40px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">
-            R
-          </Typography>
-          <Typography className="w-[40px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">
-            H
-          </Typography>
-          <Typography className="w-[40px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">
-            E
-          </Typography>
-        </Box>
+        <div className="w-full flex justify-end pr-3">
+          <p className="w-[40px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">R</p>
+          <p className="w-[40px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">H</p>
+          <p className="w-[40px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">E</p>
+        </div>
       );
     }
   };
@@ -321,54 +301,54 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
   const getLinescoreValuesByLeague = (team: any, teamWon: any) => {
     if (league === "NFL" || league === "NBA") {
       return (
-        <Box
-          sx={{ opacity: teamWon ? "0.8" : "0.4" }}
+        <div
+          style={{ opacity: teamWon ? "0.8" : "0.4" }}
           className={`w-full flex justify-end items-center pr-3 ${teamWon && "dt-team-won"}`}
         >
-          <Typography className="w-[20px] pl-2 flex justify-center text-[12px]">
+          <p className="w-[20px] pl-2 flex justify-center text-[12px]">
             {team.linescores[0]?.displayValue || "-"}
-          </Typography>
-          <Typography className="w-[20px] pl-2 flex justify-center text-[12px]">
+          </p>
+          <p className="w-[20px] pl-2 flex justify-center text-[12px]">
             {team.linescores[1]?.displayValue || "-"}
-          </Typography>
-          <Typography className="w-[20px] pl-2 flex justify-center text-[12px]">
+          </p>
+          <p className="w-[20px] pl-2 flex justify-center text-[12px]">
             {team.linescores[2]?.displayValue || "-"}
-          </Typography>
-          <Typography className="w-[20px] pl-2 flex justify-center text-[12px]">
+          </p>
+          <p className="w-[20px] pl-2 flex justify-center text-[12px]">
             {team.linescores[3]?.displayValue || "-"}
-          </Typography>
-          <Typography className="justify-end flex pl-[1rem] w-[50px] font-bold text-xl">
+          </p>
+          <p className="justify-end flex pl-[1rem] w-[50px] font-bold text-xl">
             {team?.score || "-"}
-          </Typography>
-        </Box>
+          </p>
+        </div>
       );
     } else if (league === "MLB") {
       return (
-        <Box
-          sx={{ opacity: teamWon ? "0.8" : "0.4" }}
+        <div
+          style={{ opacity: teamWon ? "0.8" : "0.4" }}
           className={`w-full flex justify-end items-center pr-3 ${teamWon && "dt-team-won"}`}
         >
-          <Typography className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
+          <p className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
             {team.score || "-"}
-          </Typography>
-          <Typography className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
+          </p>
+          <p className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
             {team.hits || "-"}
-          </Typography>
-          <Typography className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
+          </p>
+          <p className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
             {team.errors || "0"}
-          </Typography>
-        </Box>
+          </p>
+        </div>
       );
     }
   };
 
   const mobileView = () => (
     <Link href={isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""}>
-      <Box className="w-full grid grid-cols-[1fr_25%] gap-3 py-2">
+      <div className="w-full grid grid-cols-[1fr_25%] gap-3 py-2">
         {/* 1ST COLUMN: GAME INFO */}
-        <Box className="w-full grid grid-cols-[1fr_auto] items-center grid-rows-[1fr_1fr] score-cell relative">
+        <div className="w-full grid grid-cols-[1fr_auto] items-center grid-rows-[1fr_1fr] score-cell relative">
           {/* AWAY TEAM IMG AND NAME */}
-          <Box className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <Image
               src={game.competitors[1].team.logo ?? "/default.png"}
               width={500}
@@ -377,18 +357,18 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               alt="home team logo"
               className="w-6 object-contain"
             />
-            <Typography
-              sx={{
+            <p
+              style={{
                 opacity: awayTeamWon || isGameScheduled ? "1" : "0.6",
               }}
               className="text-sm font-semibold tracking-wide md:text-base"
             >
               {awayTeamName}
-            </Typography>
-          </Box>
+            </p>
+          </div>
           {/* AWAY TEAM SCORE */}
-          <Typography
-            sx={{
+          <p
+            style={{
               opacity: awayTeamWon || isGameScheduled ? "1" : "0.6",
             }}
             className={`${
@@ -396,10 +376,10 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
             } text-sm text-end font-semibold md:text-base md:font-bold`}
           >
             {getScoreOrRecord(1)}
-          </Typography>
+          </p>
 
           {/* HOME TEAM IMG AND NAME */}
-          <Box className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <Image
               src={game.competitors[0].team.logo ?? "/default.png"}
               width={500}
@@ -408,18 +388,18 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               alt="home team logo"
               className="w-6 object-contain"
             />
-            <Typography
-              sx={{
+            <p
+              style={{
                 opacity: homeTeamWon || isGameScheduled ? "1" : "0.6",
               }}
               className="text-sm md:text-base font-semibold tracking-wide"
             >
               {homeTeamName}
-            </Typography>
-          </Box>
+            </p>
+          </div>
           {/* HOME TEAM SCORE */}
-          <Typography
-            sx={{
+          <p
+            style={{
               opacity: homeTeamWon || isGameScheduled ? "1" : "0.6",
             }}
             className={`${
@@ -427,35 +407,35 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
             } text-sm text-end font-semibold md:text-base md:font-bold`}
           >
             {getScoreOrRecord(0)}
-          </Typography>
-        </Box>
+          </p>
+        </div>
 
         {isGameFinished || isGameInProgess ? (
-          <Typography
-            sx={{ color: isGameFinished ? "black" : "#d50a0a" }}
+          <p
+            style={{ color: isGameFinished ? "black" : "#d50a0a" }}
             className="flex w-full justify-start items-center text-xs opacity-80 font-semibold"
           >
             {game.status.type.shortDetail}
-          </Typography>
+          </p>
         ) : (
-          <Box className="flex w-full justify-start items-center">
-            <Box className="flex flex-col">
-              <Typography className="text-xs opacity-90 font-semibold">{gameTime}</Typography>
-              <Typography className="text-xs opacity-70">{channel}</Typography>
-              <Typography className="text-xs opacity-70">{odds}</Typography>
-            </Box>
-          </Box>
+          <div className="flex w-full justify-start items-center">
+            <div className="flex flex-col">
+              <p className="text-xs opacity-90 font-semibold">{gameTime}</p>
+              <p className="text-xs opacity-70">{channel}</p>
+              <p className="text-xs opacity-70">{odds}</p>
+            </div>
+          </div>
         )}
-      </Box>
+      </div>
     </Link>
   );
 
   const desktopView = () => (
-    <Box className="w-full grid grid-cols-[3fr,2fr,3fr] px-1 py-2 place-items-center">
+    <div className="w-full grid grid-cols-[3fr,2fr,3fr] px-1 py-2 place-items-center">
       {/* game date, network */}
-      <Box className="min-w-full h-full my-auto col-start-1 border-r border-[rgba(0,0,0,0.1)]">
-        <Box className="w-full h-full justify-center flex flex-col gap-1 ">
-          <Box className="w-full flex items-center">
+      <div className="min-w-full h-full my-auto col-start-1 border-r border-[rgba(0,0,0,0.1)]">
+        <div className="w-full h-full justify-center flex flex-col gap-1 ">
+          <div className="w-full flex items-center">
             <p
               style={{
                 color: isGameInProgess ? "#d50a0a" : "black",
@@ -466,9 +446,12 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               {isGameFinished || isGameInProgess ? game.status.type.shortDetail : gameTime}
             </p>
             {(isGameInProgess || isGameFinished) && getLinescoreHeaderByLeague()}
-          </Box>
+          </div>
           {/* away team*/}
-          <Box className="flex flex-row gap-2 items-center mb-2 relative">
+          <Link
+            href={`/${league.toLowerCase()}/team/${game.competitors[1].team.id}/home`}
+            className="flex flex-row gap-2 items-center mb-2 relative"
+          >
             <Image
               src={game.competitors[1].team.logo ?? "/default.png"}
               width={500}
@@ -477,28 +460,31 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               alt="home team logo"
               className="w-9 object-cover"
             />
-            <Box className="w-full flex flex-row">
-              <Box className="flex flex-col w-full">
-                <Typography
-                  sx={{ opacity: awayTeamWon ? "0.8" : "0.4" }}
+            <div className="w-full flex flex-row">
+              <div className="flex flex-col w-full">
+                <p
+                  style={{ opacity: awayTeamWon ? "0.8" : "0.4" }}
                   className="text-sm font-semibold whitespace-nowrap"
                 >
                   {awayTeamName}
-                </Typography>
+                </p>
                 {typeof game.competitors[0].records !== "undefined" && (
-                  <Typography className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${
+                  <p className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${
                     game.competitors[0].records[0].summary
                   }, ${data["__gamepackage__"].awayTeam?.record[1]?.displayValue || ""} ${
                     data["__gamepackage__"].awayTeam?.record[1]?.type || ""
-                  })`}</Typography>
+                  })`}</p>
                 )}
-              </Box>
+              </div>
               {(isGameInProgess || isGameFinished) && (
                 <>{getLinescoreValuesByLeague(data["__gamepackage__"].awayTeam, awayTeamWon)}</>
               )}
-            </Box>
-          </Box>
-          <Box className="flex flex-row gap-2 items-center relative">
+            </div>
+          </Link>
+          <Link
+            href={`/${league.toLowerCase()}/team/${game.competitors[0].team.id}/home`}
+            className="flex flex-row gap-2 items-center relative"
+          >
             <Image
               src={game.competitors[0].team.logo ?? "/default.png"}
               width={500}
@@ -507,70 +493,63 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               alt="home team logo"
               className="w-9 object-cover"
             />
-            <Box className="w-full flex flex-row">
-              <Box className="w-full flex flex-col">
-                <Typography
-                  sx={{ opacity: homeTeamWon ? "0.8" : "0.4" }}
+            <div className="w-full flex flex-row">
+              <div className="w-full flex flex-col">
+                <p
+                  style={{ opacity: homeTeamWon ? "0.8" : "0.4" }}
                   className="text-sm font-semibold"
                 >
                   {homeTeamName}
-                </Typography>
+                </p>
                 {typeof game.competitors[1].records !== "undefined" && (
-                  <Typography className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${
+                  <p className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${
                     game.competitors[1].records[0].summary
                   }, ${data["__gamepackage__"].homeTeam?.record[1]?.displayValue || ""} ${
                     data["__gamepackage__"].homeTeam?.record[1]?.type || ""
-                  })`}</Typography>
+                  })`}</p>
                 )}
-              </Box>
+              </div>
               {(isGameInProgess || isGameFinished) && (
                 <>{getLinescoreValuesByLeague(data["__gamepackage__"].homeTeam, homeTeamWon)}</>
               )}
-            </Box>
-          </Box>
-        </Box>
-      </Box>
+            </div>
+          </Link>
+        </div>
+      </div>
 
-      <Box className="min-w-full h-full w-full min-h-full col-start-2 px-3">
+      <div className="min-w-full h-full w-full min-h-full col-start-2 px-3">
         {/* IF GAME IS SCHEDULED WE SHOW VENUE INFO AND TICKETS */}
         {isGameScheduled && isGameDetailsFinalized && (
-          <Box className="h-full flex flex-col justify-evenly gap-2">
-            <Box className="">
-              <Typography className="text-[11px] opacity-70 font-[600]">{`${game.venue.fullName}`}</Typography>
-              <Typography className="text-[11px] opacity-60]">{`${game.venue.address.city}, ${game.venue.address.state}`}</Typography>
-            </Box>
+          <div className="h-full flex flex-col justify-evenly gap-2">
+            <div className="">
+              <p className="text-[11px] opacity-70 font-[600]">{`${game.venue.fullName}`}</p>
+              <p className="text-[11px] opacity-60]">{`${game.venue.address.city}, ${game.venue.address.state}`}</p>
+            </div>
 
             {typeof data.gamepackageJSON.ticketsInfo !== "undefined" && (
-              <Box className="border-b border-t border-[rgba(0,0,0,0.1)] py-2">
+              <div className="border-b border-t border-[rgba(0,0,0,0.1)] py-2">
                 <Link
                   target="_blank"
                   href={data.gamepackageJSON.ticketsInfo["seatSituation"].eventLink}
                 >
-                  <Box className="flex flex-row items-center gap-1">
-                    <FontAwesomeIcon
-                      icon={faTicket}
-                      style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
-                    />
-                    <Typography className="text-[12px] opacity-60] anchor-link">
+                  <div className="flex flex-row items-center gap-1">
+                    <Image src="/icons/credit-card.svg" width="20" height="20" alt="right icon" />
+                    <p className="text-[12px] opacity-60] anchor-link">
                       {data.gamepackageJSON.ticketsInfo["seatSituation"].summary}
-                    </Typography>
-                  </Box>
+                    </p>
+                  </div>
                 </Link>
-              </Box>
+              </div>
             )}
 
-            <Box>
-              {odds && (
-                <Typography className="text-[11px] opacity-60]">{`Line: ${odds}`}</Typography>
-              )}
-            </Box>
-          </Box>
+            <div>{odds && <p className="text-[11px] opacity-60]">{`Line: ${odds}`}</p>}</div>
+          </div>
         )}
         {/* IF GAME IS IN PROGRESS OR FINISHED WE SHOW A VIDEO OR ARTICLE */}
         {(isGameFinished || isGameInProgess) && (
           <>
             {data["gamepackageJSON"]["videos"].length > 0 && (
-              <Box className="w-full h-full relative cursor-pointer article-video-container overflow-hidden">
+              <div className="w-full h-full relative cursor-pointer article-video-container overflow-hidden">
                 <Image
                   width={576}
                   height={324}
@@ -589,50 +568,50 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                     ]["web"].href
                   }
                 >
-                  <Box className="gray-circle sm-circle"></Box>
+                  <div className="gray-circle sm-circle"></div>
                 </Link>
-                <Box className="arrow sm-arrow"></Box>
-                <Typography className="text-over-video">
+                <div className="arrow sm-arrow"></div>
+                <p className="text-over-video">
                   {data["gamepackageJSON"]["videos"][0].description.substring(0, 60)}
                   {data["gamepackageJSON"]["videos"][0].description.length > 60 && "..."}
-                </Typography>
-              </Box>
+                </p>
+              </div>
             )}
             {data["gamepackageJSON"]["videos"].length === 0 &&
               typeof data.gamepackageJSON.article !== "undefined" && (
                 <Link target="_blank" href={data.gamepackageJSON.article.links.web.href}>
-                  <Typography className="text-[12px] font-semibold opacity-80 mb-2">
+                  <p className="text-[12px] font-semibold opacity-80 mb-2">
                     {data.gamepackageJSON.article.headline}
-                  </Typography>
-                  <Typography className="text-xs opacity-70 overflow-hidden">
+                  </p>
+                  <p className="text-xs opacity-70 overflow-hidden">
                     {data.gamepackageJSON.article.description.substring(0, 80)}
                     {data.gamepackageJSON.article.description.length > 80 && "..."}
-                  </Typography>
+                  </p>
                 </Link>
               )}
             {data["gamepackageJSON"]["videos"].length === 0 &&
               typeof data.gamepackageJSON.article === "undefined" && (
-                <Box className="">
-                  <Typography className="text-[11px] opacity-70 font-[600]">{`${game.venue.fullName}`}</Typography>
-                  <Typography className="text-[11px] opacity-60]">{`${game.venue.address.city}, ${
+                <div className="">
+                  <p className="text-[11px] opacity-70 font-[600]">{`${game.venue.fullName}`}</p>
+                  <p className="text-[11px] opacity-60]">{`${game.venue.address.city}, ${
                     game.venue.address?.state || ""
-                  }`}</Typography>
-                </Box>
+                  }`}</p>
+                </div>
               )}
           </>
         )}
-      </Box>
+      </div>
 
       {/* IF GAME IS SCEHDULED WE SHOW PLAYERS TO WATCH */}
-      <Box className="min-w-full min-h-full h-full flex flex-col gap-3 col-start-3 border-l border-[rgba(0,0,0,0.1)] px-2">
+      <div className="min-w-full min-h-full h-full flex flex-col gap-3 col-start-3 border-l border-[rgba(0,0,0,0.1)] px-2">
         {isGameScheduled && isGameDetailsFinalized && (
-          <Box className="h-full flex flex-row gap-2 justify-between items-center">
+          <div className="h-full flex flex-row gap-2 justify-between items-center">
             {typeof game.competitors[1].leaders !== "undefined" &&
               typeof game.competitors[0].leaders !== "undefined" && (
-                <Box className="h-full flex flex-col justify-start gap-3">
-                  <Typography className="text-[12px] opacity-60">PLAYERS TO WATCH</Typography>
+                <div className="h-full flex flex-col justify-start gap-3">
+                  <p className="text-[12px] opacity-60">PLAYERS TO WATCH</p>
                   {/* away team point leader */}
-                  <Box className="flex flex-row items-center gap-2">
+                  <div className="flex flex-row items-center gap-2">
                     <Image
                       src={game?.competitors[1]?.leaders[0]?.leaders[0]?.athlete.headshot}
                       width={100}
@@ -641,18 +620,18 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                       alt="away team points leader"
                       className="w-[40px] h-[40px] border rounded-full object-cover"
                     />
-                    <Box className="flex flex-col">
-                      <Typography className="text-xs">
+                    <div className="flex flex-col">
+                      <p className="text-xs">
                         {`${game?.competitors?.[1]?.leaders?.[0]?.leaders?.[0]?.athlete?.displayName} `}
                         <span className="opacity-60">{`${game?.competitors[1]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game.competitors[1].team?.abbreviation}`}</span>
-                      </Typography>
-                      <Typography className="text-xs">
+                      </p>
+                      <p className="text-xs">
                         {`${Math.floor(game.competitors[1].leaders[0].leaders[0].value)}`}
                         <span className="text-[10px] opacity-60">{` ${game?.competitors?.[0]?.leaders?.[0]?.abbreviation}`}</span>
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Box className="flex flex-row items-center gap-2">
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center gap-2">
                     <Image
                       src={game?.competitors[0]?.leaders[0]?.leaders[0]?.athlete.headshot}
                       width={100}
@@ -661,70 +640,70 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                       alt="away team points leader"
                       className="w-[40px] h-[40px] border rounded-full object-cover"
                     />
-                    <Box className="flex flex-col">
-                      <Typography className="text-xs">
+                    <div className="flex flex-col">
+                      <p className="text-xs">
                         {`${game?.competitors[0]?.leaders[0]?.leaders[0]?.athlete?.displayName} `}
                         <span className="opacity-60">{`${game?.competitors[0]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game?.competitors[0]?.team?.abbreviation}`}</span>
-                      </Typography>
+                      </p>
 
-                      <Typography className="text-xs">
+                      <p className="text-xs">
                         {`${Math?.floor(game?.competitors[0]?.leaders[0]?.leaders[0]?.value)}`}
                         <span className="text-[10px] opacity-60">{` ${game?.competitors[0]?.leaders[0]?.abbreviation}`}</span>
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
+                      </p>
+                    </div>
+                  </div>
+                </div>
               )}
 
-            <Box className="flex flex-col items-start justify-start gap-3">
+            <div className="flex flex-col items-start justify-start gap-3">
               <Link
                 href={isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""}
               >
-                <Box className="dt-scorecard-button">GAMECAST</Box>
+                <div className="dt-scorecard-button">GAMECAST</div>
               </Link>
               {typeof data.gamepackageJSON.ticketsInfo !== "undefined" && (
                 <Link
                   target="_blank"
                   href={data.gamepackageJSON.ticketsInfo.seatSituation.eventLink}
                 >
-                  <Box className="dt-scorecard-button">TICKETS</Box>
+                  <div className="dt-scorecard-button">TICKETS</div>
                 </Link>
               )}
-            </Box>
-          </Box>
+            </div>
+          </div>
         )}
         {(isGameFinished || isGameInProgess) && (
-          <Box className="flex flex-row gap-2 justify-between items-center">
-            <Box className="h-full flex gap-2 flex-col justify-start">
-              <Typography className="text-[12px] opacity-60">TOP PERFORMERS</Typography>
+          <div className="flex flex-row gap-2 justify-between items-center">
+            <div className="h-full flex gap-2 flex-col justify-start">
+              <p className="text-[12px] opacity-60">TOP PERFORMERS</p>
               {getTopPerformersByLeague()}
-            </Box>
+            </div>
 
-            <Box className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3">
               <Link
                 href={isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""}
               >
-                <Box className="dt-scorecard-button">GAMECAST</Box>
+                <div className="dt-scorecard-button">GAMECAST</div>
               </Link>
               <Link
                 href={
                   isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/boxscore` : ""
                 }
               >
-                <Box className="dt-scorecard-button">BOX SCORE</Box>
+                <div className="dt-scorecard-button">BOX SCORE</div>
               </Link>
               <Link
                 href={
                   isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/playbyplay` : ""
                 }
               >
-                <Box className="dt-scorecard-button">PLAYBYPLAY</Box>
+                <div className="dt-scorecard-button">PLAYBYPLAY</div>
               </Link>
-            </Box>
-          </Box>
+            </div>
+          </div>
         )}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 
   if (typeof gameInfo.competitions === "undefined") {
@@ -735,15 +714,11 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     return (
       <>
         {isDesktopScreen ? (
-          <Box className="animate-pulse w-full rounded-xl h-[7.75rem] bg-gray-200 my-1"></Box>
+          <div className="animate-pulse w-full rounded-xl h-[7.75rem] bg-gray-200 my-1"></div>
         ) : (
           mobileView()
         )}
       </>
     );
-  }
-
-  if (!isLoading) {
-    return <>{isDesktopScreen ? desktopView() : mobileView()}</>;
-  }
+  } else return <>{isDesktopScreen ? desktopView() : mobileView()}</>;
 }

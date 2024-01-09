@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import ContainerBox from "@/app/_components/ContainerBox";
 import Articles from "@/app/_components/Articles";
 import TeamUserSelection from "@/app/_components/TeamUserSelection";
@@ -11,12 +11,12 @@ export default function Roster({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <Box className="basis-3/4">
+      <div className="basis-3/4">
         <TeamRoster data={data.teamRoster} />
-      </Box>
-      <Box className="basis-1/4 flex flex-col gap-3">
+      </div>
+      <div className="basis-1/4 flex flex-col gap-3">
         <Articles title="NBA News" limit={6} teamNews={data.teamNews} />
-      </Box>
+      </div>
     </>
   );
 

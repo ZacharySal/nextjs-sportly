@@ -1,6 +1,5 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
 import { nameExceptions } from "../_lib/constants";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,7 +16,10 @@ export default function TeamSideCard({ name, league }: { name: string; league: s
   }
 
   return (
-    <Box sx={{ cursor: "pointer" }} className="flex justify-start flex-row items-center gap-2 mt-4">
+    <div
+      style={{ cursor: "pointer" }}
+      className="flex justify-start flex-row items-center gap-2 mt-4"
+    >
       <Link href={`/${league}/team/${name[1]}/home`}>
         <Image
           src={`/${league}/${teamName?.replace(" ", "").toLowerCase()}.png`}
@@ -28,31 +30,29 @@ export default function TeamSideCard({ name, league }: { name: string; league: s
         />
       </Link>
 
-      <Box className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1">
         <Link href={`/${league}/team/${name[1]}/home`}>
-          <Typography className="text-sm md:text-base team-link">{name[0]}</Typography>
+          <p className="text-sm md:text-base team-link">{name[0]}</p>
         </Link>
-        <Box className="flex flex-row justify-start gap-1">
+        <div className="flex flex-row justify-start gap-1">
           <Link href={`/${league}/team/${name[1]}/stats`}>
-            <Typography className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
+            <p className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
               Statistics
-            </Typography>
+            </p>
           </Link>
           <Link href={`/${league}/team/${name[1]}/schedule`}>
-            <Typography className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
+            <p className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
               Schedule
-            </Typography>
+            </p>
           </Link>
           <Link href={`/${league}/team/${name[1]}/roster`}>
-            <Typography className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
-              Roster
-            </Typography>
+            <p className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">Roster</p>
           </Link>
           <Link href={`/${league}/team/${name[1]}/roster`}>
-            <Typography className="text-[11px] anchor-link">Depth Chart</Typography>
+            <p className="text-[11px] anchor-link">Depth Chart</p>
           </Link>
-        </Box>
-      </Box>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 }

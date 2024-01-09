@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Articles from "@/app/_components/Articles";
 import ContainerBox from "@/app/_components/ContainerBox";
 import LeagueUserSelection from "@/app/_components/LeagueUserSelection";
@@ -11,18 +11,18 @@ export default function Standings({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <Box className="basis-2/3">
-        <LeagueStandings data={data} league="nba" />
-      </Box>
-      <Box className="basis-1/4">
-        <Articles title={`NBA News`} teamNews={data.news} limit={5} />
-      </Box>
+      <div className="basis-2/3">
+        <LeagueStandings data={data.standingsData.content.standings} league="nba" />
+      </div>
+      <div className="basis-1/4">
+        <Articles title={`NBA News`} teamNews={data.scoreData.news} limit={5} />
+      </div>
     </>
   );
 
   const mobileView = () => (
     <>
-      <LeagueStandings data={data} league="nba" />
+      <LeagueStandings data={data.standingsData.content.standings} league="nba" />
     </>
   );
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMediaQuery, Box } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react";
 import Articles from "../../Articles";
 import ContainerBox from "../../ContainerBox";
@@ -22,19 +22,19 @@ export default function Home({ data }: { data: any }) {
           <>
             <LeagueUserSelection userSelection={userSelection} league="nfl" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <Box className="basis-3/4">
-                <NFLScoreboard seasonData={data} />
-              </Box>
-              <Box className="basis-1/4">
-                <Articles title={`NFL News`} teamNews={data.newsData} limit={10} />
-              </Box>
+              <div className="basis-3/4">
+                <NFLScoreboard initialScoreData={data.scoreData} />
+              </div>
+              <div className="basis-1/4">
+                <Articles title={`NFL News`} teamNews={data.scoreData.news} limit={10} />
+              </div>
             </ContainerBox>
           </>
         ) : (
           <>
             <LeagueUserSelection userSelection={userSelection} league="nfl" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <NFLScoreboard seasonData={data} />
+              <NFLScoreboard initialScoreData={data.scoreData} />
             </ContainerBox>
           </>
         )}

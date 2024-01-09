@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import ContainerBox from "@/app/_components/ContainerBox";
 import Articles from "@/app/_components/Articles";
 import StadiumInfo from "@/app/_components/StadiumInfo";
@@ -19,13 +19,13 @@ export default function Home({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <Box className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+      <div className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
         <NFLGameLeaders data={data} />
         <DivisionStandings data={data} isNFL={true} league="nfl" />
         <StadiumInfo data={data} />
-      </Box>
+      </div>
 
-      <Box className="flex flex-col gap-3 basis-1/2">
+      <div className="flex flex-col gap-3 basis-1/2">
         {data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
@@ -40,17 +40,17 @@ export default function Home({ data }: { data: any }) {
             <LastFive data={data} league="nfl" isDesktopScreen={isDesktopScreen} />
           </>
         )}
-      </Box>
+      </div>
 
-      <Box className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+      <div className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
         <MatchupPredictor data={data} league="nfl" />
         <Articles title="NFL News" teamNews={data.gameData.news} limit={6} />
-      </Box>
+      </div>
     </>
   );
 
   const mobileView = () => (
-    <Box className="w-full flex flex-col justify-center items-center gap-3">
+    <div className="w-full flex flex-col justify-center items-center gap-3">
       <GameRecapArticle data={data} />
       {data.isGameStarted ? (
         <>
@@ -69,7 +69,7 @@ export default function Home({ data }: { data: any }) {
       )}
       <DivisionStandings data={data} isNFL={true} league="nfl" />
       <StadiumInfo data={data} />
-    </Box>
+    </div>
   );
 
   return (

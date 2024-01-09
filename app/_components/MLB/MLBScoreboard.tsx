@@ -1,18 +1,15 @@
 "use client";
 
-import { Box, Typography, Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 import ScoreCard from "../ScoreCard";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
-import ButtonDatePicker from "../MLB/DatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import ButtonDatePicker from "../MLB/DatePicker";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import Loading from "../Loading";
+import Image from "next/image";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -111,80 +108,82 @@ function MLBScoreboard({ currentDate }: { currentDate: string }) {
 
   function dateSelector() {
     return (
-      <Box className="w-full  p-2 md:p-4 bg-white mb-3 rounded-xl">
-        <Typography className="mb-1 font-semibold text-xl md:text-2xl opacity-80">
-          MLB Scoreboard
-        </Typography>
-        <Box className="w-full flex gap-3 items-center">
-          <Box
+      <div className="w-full  p-2 md:p-4 bg-white mb-3 rounded-xl">
+        <p className="mb-1 font-semibold text-xl md:text-2xl opacity-80">MLB Scoreboard</p>
+        <div className="w-full flex gap-3 items-center">
+          <div
             id="style-1"
             className="pl-2 w-full flex flex-row overflow-x-auto justify-between items-center"
           >
-            <FontAwesomeIcon
-              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 365)}
-              icon={faAngleLeft}
-              style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
+            <Image
+              src="/icons/chevron-left.svg"
+              width="25"
+              height="25"
+              alt="left icon"
+              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 730)}
             />
             {getDateElements().map((date: string) => (
-              <Box
+              <div
                 key={uuidv4()}
                 onClick={() => setSelectedDate(date)}
                 style={{ opacity: date === selectedDate ? 1 : 0.5 }}
                 className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer p-2"
               >
-                <Typography className="text-sm font-semibold">{getWeekDay(date)}</Typography>
-                <Box className="flex flex-row gap-1 justify-center items-center">
-                  <Typography className="text-xs">{getMonthAndDate(date)}</Typography>
-                </Box>
-              </Box>
+                <p className="text-sm font-semibold">{getWeekDay(date)}</p>
+                <div className="flex flex-row gap-1 justify-center items-center">
+                  <p className="text-xs">{getMonthAndDate(date)}</p>
+                </div>
+              </div>
             ))}
-            <FontAwesomeIcon
-              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 365)}
-              icon={faAngleRight}
-              style={{ fontSize: "1rem", color: "#3e82d6", cursor: "pointer" }}
+            <Image
+              src="/icons/chevron-right.svg"
+              width="25"
+              height="25"
+              alt="right icon"
+              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 730)}
             />
-          </Box>
-          <ButtonDatePicker
+          </div>
+          {/* <ButtonDatePicker
             value={calendarValue}
             onChange={(newValue) => setNewCalendarDate(newValue["$d"])}
-          />
-        </Box>
-      </Box>
+          /> */}
+        </div>
+      </div>
     );
   }
 
   if (isLoading)
     return (
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Box className="w-full py-2 flex flex-col justify-center items-center md:justify-start mt-[-0.5rem]">
-          {dateSelector()}
-          <Loading />
-        </Box>
-      </LocalizationProvider>
+      // <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <div className="w-full py-2 flex flex-col justify-center items-center md:justify-start mt-[-0.5rem]">
+        {dateSelector()}
+        <Loading />
+      </div>
+      // </LocalizationProvider>
     );
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box className="w-full py-2 flex flex-col justify-center md:justify-start items-center mt-[-0.5rem]">
-        {dateSelector()}
-        {data.content.sbData.events.length !== 0 && (
-          <Box className="w-full grid bg-white p-2 pb-0 rounded-xl mb-2">
-            <Typography className="opacity-80 font-semibold mt-1 text-start text-sm md:text-base mb-2">
-              {getFullDate(selectedDate)}
-            </Typography>
-            <Divider />
-            {data.content.sbData.events.map((game: any, i: number) => (
-              <Box key={uuidv4()}>
-                <ScoreCard gameInfo={game} league={"MLB"} />
-                {i !== data.content.sbData.events.length - 1 && <Divider />}
-              </Box>
-            ))}
-          </Box>
-        )}
-        {data.content.sbData.events.length === 0 && (
-          <p className="w-full text-center mt-5">No games to display</p>
-        )}
-      </Box>
-    </LocalizationProvider>
+    // <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <div className="w-full py-2 flex flex-col justify-center md:justify-start items-center mt-[-0.5rem]">
+      {dateSelector()}
+      {data.content.sbData.events.length !== 0 && (
+        <div className="w-full grid bg-white p-2 pb-0 rounded-xl mb-2">
+          <p className="opacity-80 font-semibold mt-1 text-start text-sm md:text-base mb-2">
+            {getFullDate(selectedDate)}
+          </p>
+          <hr />
+          {data.content.sbData.events.map((game: any, i: number) => (
+            <div key={uuidv4()}>
+              <ScoreCard gameInfo={game} league={"MLB"} />
+              {i !== data.content.sbData.events.length - 1 && <hr />}
+            </div>
+          ))}
+        </div>
+      )}
+      {data.content.sbData.events.length === 0 && (
+        <p className="w-full text-center mt-5">No games to display</p>
+      )}
+    </div>
+    // </LocalizationProvider>
   );
 }
 

@@ -1,7 +1,4 @@
 import * as React from "react";
-import { Dayjs } from "dayjs";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import Button from "@mui/material/Button";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 import { UseDateFieldProps } from "@mui/x-date-pickers/DateField";
@@ -10,9 +7,8 @@ import {
   DateValidationError,
   FieldSection,
 } from "@mui/x-date-pickers/models";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import CalendarMonthOutlined from "@mui/icons-material/CalendarMonthOutlined";
-import { Paper } from "@mui/material";
+import Paper from "@mui/material/Paper";
 
 interface ButtonFieldProps
   extends UseDateFieldProps<any>,
@@ -39,7 +35,7 @@ function ButtonField(props: ButtonFieldProps) {
       onClick={() => setOpen?.((prev) => !prev)}
     >
       <Paper elevation={1} className="relative bg-white p-3">
-        <CalendarMonthOutlined sx={{ color: "black" }} />
+        <CalendarMonthOutlined style={{ color: "black" }} />
       </Paper>
     </Button>
   );

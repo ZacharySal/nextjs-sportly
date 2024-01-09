@@ -1,8 +1,6 @@
-import { Box } from "@mui/material";
-
 function Loading() {
   return (
-    <Box className="w-full h-80 flex justify-center items-center relative">
+    <div className="w-full h-80 flex justify-center items-center relative">
       <div className="loader">
         <svg className="circular">
           <circle
@@ -16,7 +14,7 @@ function Loading() {
           ></circle>
         </svg>
       </div>
-    </Box>
+    </div>
   );
 }
 

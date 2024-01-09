@@ -1,15 +1,13 @@
-import { Box, Typography } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 
 export default function NFLRoster({ data }: { data: any }) {
-  console.log(data);
   return (
-    <Box className="w-full bg-white p-3 rounded-xl">
-      <Typography className="text-xl md:text-2xl font-semibold mb-4 opacity-90">
+    <div className="w-full bg-white p-3 rounded-xl">
+      <p className="text-xl md:text-2xl font-semibold mb-4 opacity-90">
         {data.team.displayName} Team Roster 2023
-      </Typography>
+      </p>
       <>
-        <Box className="w-full flex justify-center overflow-hidden mb-2">
+        <div className="w-full flex justify-center overflow-hidden mb-2">
           <table className="border-collpase">
             <thead className="table-fixed-left-thead table-header">
               <tr className="table-header">
@@ -20,16 +18,14 @@ export default function NFLRoster({ data }: { data: any }) {
               {data.athletes.map((athlete: any) => (
                 <tr key={uuidv4()} className="team-info-cell">
                   <td className="flex flex-row items-center gap-1 pl-2">
-                    <Typography className="text-xs text-[#3e82d6]">{athlete.fullName}</Typography>
-                    <Typography className="text-[10px] text-black opacity-50">
-                      ({athlete.jersey})
-                    </Typography>
+                    <p className="text-xs text-[#3e82d6]">{athlete.fullName}</p>
+                    <p className="text-[10px] text-black opacity-50">({athlete.jersey})</p>
                   </td>
                 </tr>
               ))}
             </thead>
           </table>
-          <Box className="w-full overflow-x-auto">
+          <div className="w-full overflow-x-auto">
             <table className="table standings-table">
               <thead>
                 <tr className="table-header">
@@ -66,9 +62,9 @@ export default function NFLRoster({ data }: { data: any }) {
                 ))}
               </tbody>
             </table>
-          </Box>
-        </Box>
+          </div>
+        </div>
       </>
-    </Box>
+    </div>
   );
 }
