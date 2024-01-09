@@ -2,7 +2,7 @@
 
 import ContainerBox from "@/app/_components/ContainerBox";
 import Articles from "@/app/_components/Articles";
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
 import NBAPlaybyPlay from "@/app/_components/NBA/NBAPlaybyPlay";
@@ -12,13 +12,13 @@ export default function PlaybyPlay({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <Box className="flex flex-col gap-3 basis-3/4">
+      <div className="flex flex-col gap-3 basis-3/4">
         <NBAPlaybyPlay data={data} />
-      </Box>
-      <Box className="basis-1/4 flex flex-col gap-3">
+      </div>
+      <div className="basis-1/4 flex flex-col gap-3">
         {data.gameData.predictor && <MatchupPredictor data={data} league="nba" />}
         <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
-      </Box>
+      </div>
     </>
   );
 

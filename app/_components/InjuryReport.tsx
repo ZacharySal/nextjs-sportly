@@ -1,8 +1,8 @@
-import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 import { nameExceptions } from "../_lib/constants";
+import React from "react";
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("en-US", {
@@ -18,13 +18,15 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
   )
     return null;
   return (
-    <Box className="w-full bg-white p-3 flex flex-col gap-5 rounded-xl">
-      <Typography className="font-semibold opacity-70 text-sm">Injury Report</Typography>
+    <div className="w-full bg-white p-3 flex flex-col gap-3 rounded-xl">
+      <p className="font-semibold text-sm border-b border-dotted pb-3 border-b-[rgba(0,0,0,0.6)]">
+        Injury Report
+      </p>
       {data.gameData.injuries.map((team: any) => (
-        <>
+        <React.Fragment key={uuidv4()}>
           {team.injuries.length > 0 && (
-            <Box key={uuidv4()} className="flex flex-col gap-1">
-              <Box className="flex flex-row gap-1 items-center">
+            <div key={uuidv4()} className="flex flex-col gap-1">
+              <div className="flex flex-row gap-1 items-center">
                 <Image
                   width={team.team.logos[0].width}
                   height={team.team.logos[0].height}
@@ -33,10 +35,8 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
                   className="w-7 object-contain"
                   alt="team logo"
                 />
-                <Typography className="opacity-80 font-[600] text-sm">
-                  {team.team.displayName}
-                </Typography>
-              </Box>
+                <p className="opacity-80 font-[600] text-sm">{team.team.displayName}</p>
+              </div>
               <table className="table misc-table">
                 <thead>
                   <tr className="text-[11px] table-header">
@@ -63,9 +63,9 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
                   ))}
                 </tbody>
               </table>
-            </Box>
+            </div>
           )}
-        </>
+        </React.Fragment>
       ))}
       <Link
         href={""}
@@ -73,6 +73,6 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
       >
         Full Injury Report
       </Link>
-    </Box>
+    </div>
   );
 }

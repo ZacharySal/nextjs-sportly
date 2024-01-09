@@ -1,4 +1,3 @@
-import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 
 function getRGB(color: string) {
@@ -10,60 +9,80 @@ function getRGB(color: string) {
 }
 
 function isSimilar([r1, g1, b1]: any, [r2, g2, b2]: any) {
-  return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2) < 100;
+  return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2) < 80;
 }
 
 export default function MatchupPredictor({ data, league }: { data: any; league: string }) {
-  const awayTeamChance = (Number(data.gameData.predictor.awayTeam.gameProjection) * 360) / 100;
+  const awayTeamChance = Number(data.gameData.predictor.awayTeam.gameProjection).toFixed(1);
+  const homeTeamChance = Number(100 - Number(awayTeamChance)).toFixed(1);
 
-  const homeTeamColor = data.homeTeam.team.color;
-  let awayTeamColor = isSimilar(getRGB(`#${homeTeamColor}`), getRGB(`#${data.awayTeam.team.color}`))
-    ? data.awayTeam.team.alternateColor
-    : data.awayTeam.team.color;
+  const potentialColorCombos = [
+    {
+      homeTeamColor: data.homeTeam.team.color,
+      awayTeamColor: data.awayTeam.team.color,
+    },
+    {
+      homeTeamColor: data.homeTeam.team.color,
+      awayTeamColor: data.awayTeam.team.alternateColor,
+    },
+    {
+      homeTeamColor: data.homeTeam.team.alternateColor,
+      awayTeamColor: data.awayTeam.team.color,
+    },
+    {
+      homeTeamColor: data.homeTeam.team.alternateColor,
+      awayTeamColor: data.awayTeam.team.alternateColor,
+    },
+  ];
 
-  const [losingTeamColor, winningTeamColor] =
-    awayTeamChance > 180 ? [awayTeamColor, homeTeamColor] : [homeTeamColor, awayTeamColor];
-
-  isSimilar(getRGB(`#${losingTeamColor}`), getRGB(`#${winningTeamColor}`));
+  const { homeTeamColor, awayTeamColor } = potentialColorCombos
+    .map((el: any) => el)
+    .find((combo: any) => !isSimilar(getRGB(combo.homeTeamColor), getRGB(combo.awayTeamColor)));
 
   if (typeof data.gameData.predictor === "undefined") return null;
   return (
-    <Box className="w-full bg-white rounded-xl p-3">
-      <Typography className="font-semibold opacity-70 text-sm">Matchup Predictor</Typography>
-      <Box
-        className="matchup-predictor w-full bg-white rounded-xl p-2 flex justify-center items-center"
-        data-awayteamchance={Math.floor(data.gameData.predictor.awayTeam.gameProjection) + "%"}
-        data-hometeamchance={
-          Math.floor(100 - data.gameData.predictor.awayTeam.gameProjection) + "%"
-        }
+    <div className="w-full bg-white rounded-xl p-3 flex flex-col gap-4">
+      <p className="font-semibold text-sm border-b border-dotted pb-3 border-b-[rgba(0,0,0,0.6)]">
+        Matchup Predictor
+      </p>
+      <div
+        data-awayteamchance={awayTeamChance + "%"}
+        data-hometeamchance={homeTeamChance + "%"}
+        className="matchup-predictor relative w-full flex items-center justify-center"
       >
-        <div
-          style={{
-            backgroundColor: `#${winningTeamColor}`,
-            backgroundImage: `linear-gradient(${
-              360 - awayTeamChance
-            }deg, transparent 50%, #${losingTeamColor} 50%), linear-gradient(0deg, #${losingTeamColor} 50%, transparent 50%)`,
-          }}
-          className="circle-border"
-        >
-          <div className="circle">
-            <Image
-              width={data.homeTeam.team.logos[0].width}
-              height={data.homeTeam.team.logos[0].height}
-              alt="home team"
-              className="matchup-image-home w-9 object-contain"
-              src={data.homeTeam.team.logos[0].href}
-            />
+        <svg height="200" width="200" viewBox="0 0 200 200">
+          <circle r="100" cx="100" cy="100" fill={`#${awayTeamColor}`} />
+          <circle
+            r="50"
+            cx="100"
+            cy="100"
+            stroke={`#${homeTeamColor}`}
+            strokeWidth="100"
+            strokeDasharray={`calc(${homeTeamChance} * 314.16 / 100) 314.16`}
+            transform="rotate(-90) translate(-200)"
+          />
+          <circle r="80" cx="100" cy="100" fill="white" />
+        </svg>
+        <div className="bg-white p-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="flex gap-5 matchup-predictor-teams-container">
             <Image
               width={data.awayTeam.team.logos[0].width}
               height={data.awayTeam.team.logos[0].height}
               alt="away team"
-              className="matchup-image-away w-9 object-contain"
+              className="w-11 object-contain"
               src={data.awayTeam.team.logos[0].href}
+            />
+            <Image
+              width={data.homeTeam.team.logos[0].width}
+              height={data.homeTeam.team.logos[0].height}
+              alt="home team"
+              className="w-11 object-contain"
+              src={data.homeTeam.team.logos[0].href}
             />
           </div>
         </div>
-      </Box>
-    </Box>
+      </div>
+      <p className="text-center text-xs opacity-60 italic mt-2">According to ESPN Analytics</p>
+    </div>
   );
 }

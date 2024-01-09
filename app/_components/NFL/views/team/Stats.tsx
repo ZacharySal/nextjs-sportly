@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import ContainerBox from "@/app/_components/ContainerBox";
 import FullTeamStats from "@/app/_components/FullTeamStats";
 import Articles from "@/app/_components/Articles";
@@ -11,12 +11,12 @@ export default function Stats({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <Box className="basis-3/4">
+      <div className="basis-3/4">
         <FullTeamStats data={data} />
-      </Box>
-      <Box className="basis-1/4 flex flex-col gap-3">
+      </div>
+      <div className="basis-1/4 flex flex-col gap-3">
         <Articles title="NFL News" limit={6} teamNews={data.teamNews} />
-      </Box>
+      </div>
     </>
   );
 

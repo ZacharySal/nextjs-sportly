@@ -1,4 +1,3 @@
-import { Box, FormControlLabel, Switch, Typography } from "@mui/material";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
@@ -7,8 +6,6 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
   const [selectedTeam, setSelectedTeam] = useState(1);
   const awayTeamName = data.gameData.boxscore.teams[0].team.shortDisplayName;
   const homeTeamName = data.gameData.boxscore.teams[1].team.shortDisplayName;
-
-  console.log(data);
 
   const tableHeader = (statType: any, teamOption: number) => {
     if (league == "nfl") {
@@ -27,8 +24,8 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
   const teamBoxScore = (teamOption: number) => (
     <>
       {data.gameData.boxscore.players[teamOption].statistics.map((statType: any) => (
-        <Box key={uuidv4()} className="bg-white rounded-xl w-full h-auto mb-3">
-          <Box className="flex items-center justify-start gap-2 mb-2">
+        <div key={uuidv4()} className="bg-white rounded-xl w-full h-auto mb-3">
+          <div className="flex items-center justify-start gap-2 mb-2">
             <Image
               width={data.gameInfo.competitors[teamOption === 0 ? 1 : 0].team.logos[0].width}
               height={data.gameInfo.competitors[teamOption === 0 ? 1 : 0].team.logos[0].height}
@@ -36,14 +33,14 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
               className="w-6 object-contain"
               src={data.gameInfo.competitors[teamOption === 0 ? 1 : 0].team.logos[0].href}
             />
-            <Box className="w-full flex flex-row items-center justify-between">
-              <Typography className="text-[13px] font-[600] tracking-wide opacity-80 capitalize">
+            <div className="w-full flex flex-row items-center justify-between">
+              <p className="text-[13px] font-[600] tracking-wide opacity-80 capitalize">
                 {tableHeader(statType, teamOption)}
-              </Typography>
-            </Box>
-          </Box>
-          <Box className="w-full">
-            <Box className="min-w-full flex flex-row items-start">
+              </p>
+            </div>
+          </div>
+          <div className="w-full">
+            <div className="min-w-full flex flex-row items-start">
               <table className="border-collapse">
                 <thead className="table-fixed-left-thead table-header">
                   <tr>
@@ -66,7 +63,7 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
                   </tr>
                 </thead>
               </table>
-              <Box className="w-full overflow-x-auto">
+              <div className="w-full overflow-x-auto">
                 <table className="table stat-table">
                   <thead>
                     <tr className="table-header">
@@ -96,35 +93,35 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
                     </tr>
                   </tbody>
                 </table>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+              </div>
+            </div>
+          </div>
+        </div>
       ))}
     </>
   );
 
   return (
-    <Box className="bg-white rounded-xl w-full px-2">
-      <Box className="flex w-full justify-around gap-3 my-5 rounded-2xl p-2 bg-[#edeef09c] text-center">
-        <Box
+    <div className="bg-white rounded-xl w-full px-2">
+      <div className="flex w-full justify-around gap-3 my-5 rounded-2xl p-2 bg-[#edeef09c] text-center">
+        <div
           onClick={() => setSelectedTeam(0)}
           className={`${
             selectedTeam === 0 && "button-active"
           } flex-grow h-full text-xs cursor-pointer font-semibold`}
         >
           {awayTeamName}
-        </Box>
-        <Box
+        </div>
+        <div
           onClick={() => setSelectedTeam(1)}
           className={`${
             selectedTeam === 1 && "button-active"
           } flex-grow h-full text-xs cursor-pointer font-semibold`}
         >
           {homeTeamName}
-        </Box>
-      </Box>
+        </div>
+      </div>
       {teamBoxScore(selectedTeam)}
-    </Box>
+    </div>
   );
 }

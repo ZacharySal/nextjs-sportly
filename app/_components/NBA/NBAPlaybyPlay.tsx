@@ -1,11 +1,10 @@
-import { Box, Typography } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import Image from "next/image";
 
 const setTeamImageSrc = (teamName: string) => {
   try {
-    const src = require(`public/nba/${teamName.replace(" ", "").toLowerCase()}.png`);
+    const src = require(`/public/nba/${teamName.replace(" ", "").toLowerCase()}.png`);
     return src;
   } catch {
     return `/default.png`;
@@ -13,7 +12,6 @@ const setTeamImageSrc = (teamName: string) => {
 };
 
 export default function NBAPlaybyPlay({ data }: { data: any }) {
-  console.log(data);
   const [selectedQuarter, setSelectedQuarter] = useState(1);
   const homeTeamName = data.homeTeam.team.name;
   const homeTeamId = data.homeTeam.team.id;
@@ -25,41 +23,41 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
 
   const getTeamName = (teamId: string) => (teamId === homeTeamId ? homeTeamName : awayTeamName);
   return (
-    <Box className="w-full bg-white rounded-xl p-3 max-w-full overflow-hidden">
-      <Box className="flex w-full justify-around items-center h-8 mb-3 text-center testing sub-selector">
-        <Box
+    <div className="w-full bg-white rounded-xl p-3 max-w-full overflow-hidden">
+      <div className="flex w-full justify-around items-center h-8 mb-3 text-center testing sub-selector">
+        <div
           onClick={() => setSelectedQuarter(1)}
           className={`${
             selectedQuarter === 1 && "selection-active"
           } nav-selection flex-grow sub-selection font-bold`}
         >
           1st
-        </Box>
-        <Box
+        </div>
+        <div
           onClick={() => setSelectedQuarter(2)}
           className={`${
             selectedQuarter === 2 && "selection-active"
           } nav-selection flex-grow sub-selection font-bold`}
         >
           2nd
-        </Box>
-        <Box
+        </div>
+        <div
           onClick={() => setSelectedQuarter(3)}
           className={`${
             selectedQuarter === 3 && "selection-active"
           } nav-selection flex-grow sub-selection font-bold`}
         >
           3rd
-        </Box>
-        <Box
+        </div>
+        <div
           onClick={() => setSelectedQuarter(4)}
           className={`${
             selectedQuarter === 4 && "selection-active"
           } nav-selection flex-grow sub-selection font-bold`}
         >
           4th
-        </Box>
-      </Box>
+        </div>
+      </div>
       <table className="w-full text-left table stat-table">
         <thead className="justify-left items-left border-t border-b border-[rgba(0,0,0,0.1)]">
           <tr className="table-header">
@@ -77,7 +75,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
               <td className="text-xs text-left pl-1 table-cell">{play.clock.displayValue}</td>
               <td className="text-xs text-left p-2 pl-0" align="left" colSpan={2}>
                 {typeof play.team !== "undefined" ? (
-                  <Box className="w-full flex flex-row items-center justify-start gap-1">
+                  <div className="w-full flex flex-row items-center justify-start gap-1">
                     <Image
                       width={100}
                       height={100}
@@ -86,8 +84,8 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
                       src={setTeamImageSrc(getTeamName(play.team.id))}
                     />
 
-                    <Typography
-                      sx={{
+                    <p
+                      style={{
                         fontWeight: play.scoringPlay ? "600" : "400",
                         whiteSpace: "normal",
                         color: play.scoringPlay ? "black" : "#6c6d6f",
@@ -95,10 +93,10 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
                       className="text-xs text-left w-full"
                     >
                       {play.text}
-                    </Typography>
-                  </Box>
+                    </p>
+                  </div>
                 ) : (
-                  <Typography className="text-xs text-left w-full">{play.text}</Typography>
+                  <p className="text-xs text-left w-full">{play.text}</p>
                 )}
               </td>
               <td
@@ -121,6 +119,6 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
           ))}
         </tbody>
       </table>
-    </Box>
+    </div>
   );
 }

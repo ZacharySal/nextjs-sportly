@@ -1,16 +1,13 @@
-import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 
 export default function StadiumInfo({ data }: { data: any }) {
   if (typeof data.gameData.gameInfo.venue.images[0] === "undefined") return null;
   return (
     <>
-      <Box className="w-full flex flex-col bg-white rounded-xl gap-2 p-3">
-        <Typography className="text-sm opacity-70 font-semibold text-start">
-          Stadium Information
-        </Typography>
+      <div className="w-full flex flex-col bg-white rounded-xl gap-2 p-3">
+        <p className="text-sm font-semibold text-start">Stadium Information</p>
 
-        <Box className="w-auto h-48 relative">
+        <div className="w-auto h-48 relative">
           <Image
             src={data.gameData.gameInfo.venue.images[0]?.href}
             fill
@@ -18,15 +15,13 @@ export default function StadiumInfo({ data }: { data: any }) {
             className="object-cover rounded"
             alt="Stadium"
           />
-        </Box>
+        </div>
 
-        <Typography className="opacity-80 font-bold">
-          {data.gameData.gameInfo.venue.fullName}
-        </Typography>
-        <Typography className="opacity-80 text-sm mt-[-0.5rem]">
+        <p className="opacity-80 font-bold">{data.gameData.gameInfo.venue.fullName}</p>
+        <p className="opacity-80 text-sm mt-[-0.5rem]">
           {data.gameData.gameInfo.venue.address.city}, {data.gameData.gameInfo.venue.address.state}
-        </Typography>
-      </Box>
+        </p>
+      </div>
     </>
   );
 }

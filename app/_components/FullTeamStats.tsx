@@ -1,4 +1,3 @@
-import { Box, Typography, Divider, TableFooter } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import { JSX } from "react";
@@ -15,7 +14,7 @@ export default function FullTeamStats({ data }: { data: any }) {
                 {key}
               </th>
               <th className="table-header w-[5rem]" align="right">
-                <Box className="flex flex-row items-center gap-1 justify-end">
+                <div className="flex flex-row items-center gap-1 justify-end">
                   <Image
                     src={data.teamData.team.logos[0].href}
                     width={data.teamData.team.logos[0].width}
@@ -24,7 +23,7 @@ export default function FullTeamStats({ data }: { data: any }) {
                     className="w-5 object-contain"
                   />
                   {data.teamData.team.abbreviation}
-                </Box>
+                </div>
               </th>
               <th className="table-header w-[6rem]" align="right">
                 Rank
@@ -52,11 +51,11 @@ export default function FullTeamStats({ data }: { data: any }) {
     return els;
   };
   return (
-    <Box className="w-full bg-white rounded-xl p-3">
-      <Typography className="text-xl md:text-2xl font-semibold mb-4 opacity-90">
+    <div className="w-full bg-white rounded-xl p-3">
+      <p className="text-xl md:text-2xl font-semibold mb-4 opacity-90">
         {data.teamData.team.displayName} 2023 Statistics
-      </Typography>
+      </p>
       {view()}
-    </Box>
+    </div>
   );
 }

@@ -3,7 +3,7 @@
 import ContainerBox from "@/app/_components/ContainerBox";
 import GameRecapArticle from "@/app/_components/GameRecapArticle";
 import Articles from "@/app/_components/Articles";
-import { Box, useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import React from "react";
 import StadiumInfo from "@/app/_components/StadiumInfo";
 import MLBBoxscore from "@/app/_components/MLB/MLBBoxscore";
@@ -18,12 +18,12 @@ export default function Home({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <Box className="flex self-start basis-1/4  flex-col justify-center items-center gap-3">
+      <div className="flex self-start basis-1/4  flex-col justify-center items-center gap-3">
         <StadiumInfo data={data} />
         <DivisionStandings data={data} isNFL={false} league="mlb" />
-      </Box>
+      </div>
 
-      <Box className="flex flex-col basis-1/2 gap-5">
+      <div className="flex flex-col basis-1/2 gap-5">
         {data.isGameStarted && data.homeTeam.linescores && (
           <>
             <GameRecapArticle data={data} />
@@ -35,18 +35,18 @@ export default function Home({ data }: { data: any }) {
             <MLBScoringPlays data={data} />
           </>
         )}
-      </Box>
+      </div>
 
-      <Box className="basis-1/4 flex flex-col gap-3">
+      <div className="basis-1/4 flex flex-col gap-3">
         {data.gameData.predictor && <MatchupPredictor data={data} league="mlb" />}
         <Articles title="MLB News" teamNews={data.gameData.news} limit={6} />
-      </Box>
+      </div>
     </>
   );
 
   const mobileView = () => (
     <>
-      <Box className="w-full flex flex-col gap-3">
+      <div className="w-full flex flex-col gap-3">
         {data.isGameStarted && data.homeTeam.linescores && (
           <>
             <GameRecapArticle data={data} />
@@ -61,7 +61,7 @@ export default function Home({ data }: { data: any }) {
         {data.gameData.predictor && <MatchupPredictor data={data} league="mlb" />}
         <DivisionStandings data={data} isNFL={false} league="mlb" />
         <StadiumInfo data={data} />
-      </Box>
+      </div>
     </>
   );
 

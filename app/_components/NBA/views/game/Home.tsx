@@ -3,7 +3,7 @@
 import ContainerBox from "@/app/_components/ContainerBox";
 import Articles from "@/app/_components/Articles";
 import StadiumInfo from "@/app/_components/StadiumInfo";
-import { Box, useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import NBABoxscore from "@/app/_components/NBA/NBABoxscore";
 import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
@@ -17,7 +17,7 @@ export default function Home({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   const mobileView = () => (
-    <Box className="w-full flex flex-col justify-center items-center gap-3">
+    <div className="w-full flex flex-col justify-center items-center gap-3">
       <GameRecapArticle data={data} />
       {data.isGameStarted ? (
         <>
@@ -35,18 +35,18 @@ export default function Home({ data }: { data: any }) {
       )}
       <DivisionStandings data={data} isNFL={false} league="nba" />
       <StadiumInfo data={data} />
-    </Box>
+    </div>
   );
 
   const desktopView = () => (
     <>
-      <Box className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+      <div className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
         <MatchupPredictor data={data} league="nba" />
         <DivisionStandings data={data} isNFL={false} league="nba" />
         <StadiumInfo data={data} />
-      </Box>
+      </div>
 
-      <Box className="flex flex-col gap-3 basis-1/2">
+      <div className="flex flex-col gap-3 basis-1/2">
         {!data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
@@ -62,11 +62,11 @@ export default function Home({ data }: { data: any }) {
             <NBABoxscore data={data} />
           </>
         )}
-      </Box>
+      </div>
 
-      <Box className="flex flex-col gap-3 basis-1/4">
+      <div className="flex flex-col gap-3 basis-1/4">
         <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
-      </Box>
+      </div>
     </>
   );
 

@@ -1,5 +1,3 @@
-import { Box } from "@mui/material";
-
 function ContainerBox({
   isDesktopScreen,
   children,
@@ -9,17 +7,17 @@ function ContainerBox({
 }) {
   return isDesktopScreen ? (
     <>
-      <Box className="max-w-full 2xl:w-5/6 3xl:w-3/5 2xl:px-20 flex flex-row justify-center px-20 mx-auto gap-8 gap-x-5 my-3">
+      <div className="max-w-full 2xl:w-5/6 3xl:w-3/5 2xl:px-20 flex flex-row justify-center px-20 mx-auto gap-8 gap-x-5 my-3">
         {children}
-      </Box>
+      </div>
     </>
   ) : (
     <>
-      <Box className="w-full flex justify-center items-center">
-        <Box className="w-full h-full flex flex-col justify-center items-start my-3">
+      <div className="w-full flex justify-center items-center">
+        <div className="w-full h-full flex flex-col justify-center items-start my-3">
           {children}
-        </Box>
-      </Box>
+        </div>
+      </div>
     </>
   );
 }

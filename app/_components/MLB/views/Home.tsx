@@ -1,6 +1,6 @@
 "use client";
 
-import { useMediaQuery, Box } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Articles from "../../Articles";
 import ContainerBox from "../../ContainerBox";
 import LeagueUserSelection from "../../LeagueUserSelection";
@@ -14,12 +14,12 @@ export default function Home({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <Box className="basis-3/4">
+      <div className="basis-3/4">
         <MLBScoreboard currentDate={data.currentDate} />
-      </Box>
-      <Box className="basis-1/4">
+      </div>
+      <div className="basis-1/4">
         <Articles title={`MLB News`} teamNews={data.news} limit={10} />
-      </Box>
+      </div>
     </>
   );
 

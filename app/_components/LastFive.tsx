@@ -1,4 +1,3 @@
-import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
@@ -28,7 +27,7 @@ export default function LastFive({
   const awayTeamName = data.gameData.boxscore.teams[1].team.shortDisplayName;
 
   const teamLastFive = (teamId: number) => (
-    <Box>
+    <div>
       <table className="min-w-full table misc-table">
         <thead>
           <tr className="text-[11px] table-header">
@@ -49,8 +48,8 @@ export default function LastFive({
               </td>
 
               <td align="center">
-                <Box className="grid grid-cols-[15px_auto_20px] gap-x-1 justify-center items-center">
-                  <Typography className="text-xs opacity-60 pr-2">{event.atVs}</Typography>
+                <div className="grid grid-cols-[15px_auto_20px] gap-x-1 justify-center items-center">
+                  <p className="text-xs opacity-60 pr-2">{event.atVs}</p>
                   <Image
                     width={500}
                     height={500}
@@ -60,45 +59,43 @@ export default function LastFive({
                     alt="team logo"
                   />
                   <Link href={`/${league}/team/${event.opponent.id}/home`}>
-                    <Typography className="text-xs anchor-link">
-                      {event.opponent.abbreviation}
-                    </Typography>
+                    <p className="text-xs anchor-link">{event.opponent.abbreviation}</p>
                   </Link>
-                </Box>
+                </div>
               </td>
 
               <td className="pr-1 injury-date" align="right">
-                <Box className="flex justify-end pr-1">
-                  <Typography
+                <div className="flex justify-end pr-1">
+                  <p
                     style={{ opacity: "1", color: event.gameResult === "W" ? "#094" : "#d00" }}
                     className="font-semibold text-[12px] w-7 text-center"
                   >
                     {event.gameResult}
-                  </Typography>
+                  </p>
                   <Link href={`/${league}/game/${event.id}/home`}>
-                    <Typography className="w-10 text-right basis-1/3 text-sm text-xs text-black font-[400] anchor-link">
+                    <p className="w-10 text-right basis-1/3 text-sm text-xs text-black font-[400] anchor-link">
                       {event.score}
-                    </Typography>
+                    </p>
                   </Link>
-                </Box>
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-    </Box>
+    </div>
   );
 
   const mobileView = () => (
-    <Box className="bg-white rounded-xl w-full px-2 pb-4">
-      <Box className="flex w-full justify-around gap-3 my-5 rounded-2xl p-2 bg-[#edeef09c] text-center">
-        <Box
+    <div className="bg-white rounded-xl w-full px-2 pb-4">
+      <div className="flex w-full justify-around gap-3 my-5 rounded-2xl p-2 bg-[#edeef09c] text-center">
+        <div
           onClick={() => setSelectedTeam(0)}
           className={`${
             selectedTeam === 0 && "button-active"
           } flex-grow h-full text-xs cursor-pointer font-semibold`}
         >
-          <Box className="flex flex-row gap-1 items-center justify-center">
+          <div className="flex flex-row gap-1 items-center justify-center">
             <Image
               width={500}
               height={500}
@@ -107,21 +104,18 @@ export default function LastFive({
               className="w-6 object-contain"
               alt="team logo"
             />
-            <Typography
-              style={{ color: selectedTeam === 0 ? "black" : "#6c6d6f" }}
-              className="text-sm"
-            >
+            <p style={{ color: selectedTeam === 0 ? "black" : "#6c6d6f" }} className="text-sm">
               {awayTeamName} Last Five
-            </Typography>
-          </Box>
-        </Box>
-        <Box
+            </p>
+          </div>
+        </div>
+        <div
           onClick={() => setSelectedTeam(1)}
           className={`${
             selectedTeam === 1 && "button-active"
           } flex-grow h-full text-xs cursor-pointer font-semibold`}
         >
-          <Box className="flex flex-row gap-1 items-center justify-center">
+          <div className="flex flex-row gap-1 items-center justify-center">
             <Image
               width={500}
               height={500}
@@ -130,17 +124,17 @@ export default function LastFive({
               className="w-6 object-contain"
               alt="team logo"
             />
-            <Typography
+            <p
               style={{ color: selectedTeam === 1 ? "black" : "#6c6d6f" }}
               className="text-sm text-gray-500"
             >
               {homeTeamName} Last Five
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
+            </p>
+          </div>
+        </div>
+      </div>
       {teamLastFive(selectedTeam)}
-    </Box>
+    </div>
   );
 
   const desktopView = () => <></>;

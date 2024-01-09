@@ -1,4 +1,3 @@
-import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 
 export default function TeamHeader({ data = null, league }: { data: any; league: string }) {
@@ -10,8 +9,8 @@ export default function TeamHeader({ data = null, league }: { data: any; league:
   }
 
   return (
-    <Box className="bg-white w-full flex justify-center border-b border-[rgba(0,0,0,0.2)] z-40 sticky top-[2.75rem]">
-      <Box className="ml-5 md:ml-10 w-full 2xl:w-2/5 h-20 md:h-24 flex-row flex justify-start items-center gap-3 relative">
+    <div className="bg-white w-full flex justify-center border-b border-[rgba(0,0,0,0.2)] z-40 sticky top-[2.75rem]">
+      <div className="ml-5 md:ml-10 w-full 2xl:w-2/5 h-20 md:h-24 flex-row flex justify-start items-center gap-3 relative">
         <Image
           src={data.team.logos[0].href}
           width={data.team.logos[0].width}
@@ -19,15 +18,13 @@ export default function TeamHeader({ data = null, league }: { data: any; league:
           alt="team logo"
           className="w-14 md:w-18 object-contain"
         />
-        <Box className="flex flex-col">
-          <Typography className="text-xl md:text-2xl opacity-80 uppercase">
+        <div className="flex flex-col">
+          <p className="text-xl md:text-2xl opacity-80 uppercase">
             {data.team.location + " "} <span className="font-bold">{data.team.name}</span>
-          </Typography>
-          <Typography className="text-sm opacity-60">
-            {record + " • " + data.team.standingSummary}
-          </Typography>
-        </Box>
-      </Box>
-    </Box>
+          </p>
+          <p className="text-sm opacity-60">{record + " • " + data.team.standingSummary}</p>
+        </div>
+      </div>
+    </div>
   );
 }

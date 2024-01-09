@@ -1,8 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Box, Typography } from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesRight, faAnglesLeft } from "@fortawesome/free-solid-svg-icons";
+
 import { v4 as uuidv4 } from "uuid";
 import { allNFLDates } from "@/app/_lib/constants";
 
@@ -27,37 +25,47 @@ export default function NFLCalendar({
   const calendarSelectedYear = allNFLDates[currentCalendarYearIndex].year;
 
   return (
-    <Box className="p-4 date-selector flex flex-col justify-center gap-1">
-      <Box className="w-full flex justify-between items-center mb-2">
-        <FontAwesomeIcon
-          onClick={() => setCurrentCalendarYearIndex(mod(currentCalendarYearIndex - 1, allNFLDates.length))}
+    <div className="p-4 date-selector flex flex-col justify-center gap-1">
+      <div className="w-full flex justify-between items-center mb-2">
+        <p
+          onClick={() =>
+            setCurrentCalendarYearIndex(mod(currentCalendarYearIndex - 1, allNFLDates.length))
+          }
           className="cursor-pointer"
-          icon={faAnglesLeft}
           style={{ fontSize: "0.75rem", color: "#3e82d6", cursor: "pointer" }}
-        />
-        <Typography className="text-lg">{calendarSelectedYear}</Typography>
-        <FontAwesomeIcon
-          onClick={() => setCurrentCalendarYearIndex(mod(currentCalendarYearIndex + 1, allNFLDates.length))}
+        >
+          left angle icon
+        </p>
+        <p className="text-lg">{calendarSelectedYear}</p>
+        <p
+          onClick={() =>
+            setCurrentCalendarYearIndex(mod(currentCalendarYearIndex + 1, allNFLDates.length))
+          }
           className="cursor-pointer"
-          icon={faAnglesRight}
           style={{ fontSize: "0.75rem", color: "#3e82d6", cursor: "pointer" }}
-        />
-      </Box>
+        >
+          right angle icon
+        </p>
+      </div>
 
       {allNFLDates.map((year: any) => (
-        <Box key={uuidv4()} className="flex flex-col gap-3 max-h-[20rem] overflow-y-scroll">
+        <div key={uuidv4()} className="flex flex-col gap-3 max-h-[20rem] overflow-y-scroll">
           {year.year == calendarSelectedYear &&
             year.weeksInYear.map((seasonType: any) => (
               <React.Fragment key={uuidv4()}>
                 {seasonType.weeks.map((week: any) => (
-                  <Box
+                  <div
                     key={uuidv4()}
                     onClick={() => {
-                      setSelectedWeekInfo({ year: year.year, week: week.value, type: seasonType.seasonType });
+                      setSelectedWeekInfo({
+                        year: year.year,
+                        week: week.value,
+                        type: seasonType.seasonType,
+                      });
                       setShowDateSelector(false);
                       setCurrentYearIndex(currentCalendarYearIndex);
                     }}
-                    sx={{
+                    style={{
                       opacity:
                         week.value == selectedWeekInfo.week &&
                         year.year == selectedWeekInfo.year &&
@@ -67,20 +75,20 @@ export default function NFLCalendar({
                     }}
                     className="flex gap-5 justify-between cursor-pointer"
                   >
-                    <Typography className="text-sm">{week.label}</Typography>
-                    <Typography className="text-sm">{week.dateRange}</Typography>
-                  </Box>
+                    <p className="text-sm">{week.label}</p>
+                    <p className="text-sm">{week.dateRange}</p>
+                  </div>
                 ))}
               </React.Fragment>
             ))}
-        </Box>
+        </div>
       ))}
-      <Typography
+      <p
         onClick={() => setShowDateSelector(false)}
         className="text-xs text-left w-full items-start justify-start flex text-blue-400 cursor-pointer"
       >
         CLOSE
-      </Typography>
-    </Box>
+      </p>
+    </div>
   );
 }

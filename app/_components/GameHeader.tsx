@@ -1,4 +1,5 @@
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 import Image from "next/image";
 import { mlbDivisonTeams, nbaDivisionTeams, nflDivisonTeams } from "../_lib/constants";
 import Link from "next/link";
@@ -31,12 +32,12 @@ export default function GameHeader({ league, data }: { league: string; data: any
   return (
     <>
       {isDesktopScreen ? (
-        <Box className="bg-white w-full flex justify-center border-b border-[rgba(0,0,0,0.2)] z-40 sticky top-[2.75rem]">
-          <Box className="w-full 2xl:w-2/5 h-28 flex-row flex justify-center items-center gap-10 relative">
-            <Box className="flex flex-row justify-center items-center gap-3">
-              <Box className="flex flex-col text-black">
-                <Box
-                  sx={{ backgroundColor: "#" + awayTeam.team.color }}
+        <div className="bg-white w-full flex justify-center border-b border-[rgba(0,0,0,0.2)] z-40 sticky top-[2.75rem]">
+          <div className="w-full 2xl:w-2/5 h-28 flex-row flex justify-center items-center gap-10 relative">
+            <div className="flex flex-row justify-center items-center gap-3">
+              <div className="flex flex-col text-black">
+                <div
+                  style={{ backgroundColor: "#" + awayTeam.team.color }}
                   className="mr-10 game-header-logo-wrapper game-header-logo-wrapper--left md:left-0 xl:left-[150px] 2xl:left-[-150px]"
                 >
                   <Image
@@ -46,17 +47,17 @@ export default function GameHeader({ league, data }: { league: string; data: any
                     alt="away team logo"
                     className="w-44 object-cover game-header-logo--left"
                   />
-                </Box>
+                </div>
                 <Link className="w-full " href={`/${league}/team/${awayTeam.team.id}/home`}>
-                  <Typography className="text font-bold whitespace-nowrap">
+                  <p className="text font-bold whitespace-nowrap">
                     {awayTeam.team.location + " " + awayTeam.team.name}
-                  </Typography>
-                  <Typography className="text-xs opacity-70 text-right">
+                  </p>
+                  <p className="text-xs opacity-70 text-right">
                     {findTeamDivison(awayTeam.team.displayName)},{" "}
                     {typeof awayTeam.record !== "undefined" && awayTeam.record[0].displayValue}
-                  </Typography>
+                  </p>
                 </Link>
-              </Box>
+              </div>
               <Link className="w-full " href={`/${league}/team/${awayTeam.team.id}/home`}>
                 <Image
                   src={awayTeam.team.logos[0].href}
@@ -67,41 +68,41 @@ export default function GameHeader({ league, data }: { league: string; data: any
                 />
               </Link>
 
-              <Typography
-                sx={{
+              <p
+                style={{
                   fontWeight: "700",
                   opacity: Number(awayTeam.score) > Number(homeTeam.score) ? "0.8" : "0.5",
                 }}
                 className="w-full text-black text-4xl ml-4"
               >
                 {awayTeam.score}
-              </Typography>
-            </Box>
+              </p>
+            </div>
             {isGameStarted ? (
               <>
-                <Typography className="text-sm text-[rgba(0,0,0,0.6)] font-semibold">
+                <p className="text-sm text-[rgba(0,0,0,0.6)] font-semibold">
                   {gameInfo.status.type.shortDetail}
-                </Typography>
+                </p>
               </>
             ) : (
-              <Box>
-                <Typography className="text-black text-center text-2xl opacity-70 max-w-[20rem]">
+              <div>
+                <p className="text-black text-center text-2xl opacity-70 max-w-[20rem]">
                   <span className="font-bold opacity-100">Scheduled</span> <br />
                   {gameInfo.status.type.shortDetail}
-                </Typography>
-              </Box>
+                </p>
+              </div>
             )}
 
-            <Box className="flex flex-row justify-center items-center gap-3">
-              <Typography
-                sx={{
+            <div className="flex flex-row justify-center items-center gap-3">
+              <p
+                style={{
                   fontWeight: "700",
                   opacity: Number(homeTeam.score) > Number(awayTeam.score) ? "0.8" : "0.5",
                 }}
                 className="w-full text-black text-4xl mr-4"
               >
                 {homeTeam.score}
-              </Typography>
+              </p>
               <Link className="w-full " href={`/${league}/team/${homeTeam.team.id}/home`}>
                 <Image
                   src={homeTeam.team.logos[0].href}
@@ -112,18 +113,18 @@ export default function GameHeader({ league, data }: { league: string; data: any
                 />
               </Link>
               <Link className="w-full " href={`/${league}/team/${homeTeam.team.id}/home`}>
-                <Box className="flex flex-col text-black opacity-80">
-                  <Typography className="font-bold whitespace-nowrap">
+                <div className="flex flex-col text-black opacity-80">
+                  <p className="font-bold whitespace-nowrap">
                     {homeTeam.team.location + " " + homeTeam.team.name}
-                  </Typography>
-                  <Typography className="text-xs opacity-70 text-left">
+                  </p>
+                  <p className="text-xs opacity-70 text-left">
                     {findTeamDivison(homeTeam.team.displayName)},{" "}
                     {typeof homeTeam.record !== "undefined" && homeTeam.record[0].displayValue}
-                  </Typography>
-                </Box>
+                  </p>
+                </div>
               </Link>
-              <Box
-                sx={{ backgroundColor: "#" + homeTeam.team.color }}
+              <div
+                style={{ backgroundColor: "#" + homeTeam.team.color }}
                 className="ml-10 game-header-logo-wrapper game-header-logo-wrapper--right md:right-0 xl:right-[150px]  2xl:right-[-150px]"
               >
                 <Image
@@ -133,16 +134,16 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   alt="away team logo"
                   className="w-44 object-cover game-header-logo--right"
                 />
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+              </div>
+            </div>
+          </div>
+        </div>
       ) : (
         <>
           {gameInfo.status.type.description === "Scheduled" ? (
             <>
-              <Box
-                sx={{
+              <div
+                style={{
                   backgroundColor: "white",
                 }}
                 className="w-full h-20 border-b border-[rgba(0,0,0,0.2)] place-items-center justify-center gap-x-6 text-center text-black px-3 grid grid-rows-1 drop-shadow-sm sticky top-[2.5rem] z-40"
@@ -152,15 +153,15 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   className="w-full col-start-1"
                   href={`/${league}/team/${awayTeam.team.id}/home`}
                 >
-                  <Box className="flex flex-row gap-1 justify-center items-center">
-                    <Box className="flex flex-col gap-1">
-                      <Typography className="text-sm opacity-80 font-semibold">
+                  <div className="flex flex-row gap-1 justify-center items-center">
+                    <div className="flex flex-col gap-1">
+                      <p className="text-sm opacity-80 font-semibold">
                         {awayTeam.team.abbreviation}
-                      </Typography>
-                      <Typography className="text-xs opacity-80 whitespace-nowrap">
+                      </p>
+                      <p className="text-xs opacity-80 whitespace-nowrap">
                         {awayTeam.record[0]?.displayValue || "0-0"}
-                      </Typography>
-                    </Box>
+                      </p>
+                    </div>
                     <Image
                       src={awayTeam.team.logos[0].href}
                       width={awayTeam.team.logos[0].width}
@@ -168,29 +169,29 @@ export default function GameHeader({ league, data }: { league: string; data: any
                       alt="away team logo"
                       className="w-8 object-contain"
                     />
-                  </Box>
+                  </div>
                 </Link>
 
-                <Box className="flex flex-col justify-center items-center col-start-2 text-black">
-                  <Typography className="text-xs opacity-70">
+                <div className="flex flex-col justify-center items-center col-start-2 text-black">
+                  <p className="text-xs opacity-70">
                     {gameInfo.broadcasts[0]?.media?.shortName || ""}
-                  </Typography>
-                  <Typography className="text-xs opacity-80">
-                    {gameDate.getMonth()}/{gameDate.getDate()}
-                  </Typography>
-                  <Typography className="text-xs opacity-80">
+                  </p>
+                  <p className="text-xs opacity-80">
+                    {gameDate.getMonth() + 1}/{gameDate.getDate()}
+                  </p>
+                  <p className="text-xs opacity-80">
                     {gameDate.toLocaleTimeString("en-us", {
                       timeStyle: "short",
                     })}
-                  </Typography>
-                </Box>
+                  </p>
+                </div>
 
                 {/*Home Team Logo, abv, and record*/}
                 <Link
                   className="w-full col-start-3 "
                   href={`/${league}/team/${homeTeam.team.id}/home`}
                 >
-                  <Box className="flex flex-row gap-1 justify-center items-center">
+                  <div className="flex flex-row gap-1 justify-center items-center">
                     <Image
                       src={homeTeam.team.logos[0].href}
                       width={homeTeam.team.logos[0].width}
@@ -198,22 +199,22 @@ export default function GameHeader({ league, data }: { league: string; data: any
                       alt="home team logo"
                       className="w-8 object-contain"
                     />
-                    <Box className="flex flex-col gap-1">
-                      <Typography className="text-sm opacity-80 font-semibold">
+                    <div className="flex flex-col gap-1">
+                      <p className="text-sm opacity-80 font-semibold">
                         {homeTeam.team.abbreviation}
-                      </Typography>
-                      <Typography className="text-xs opacity-80 whitespace-nowrap">
+                      </p>
+                      <p className="text-xs opacity-80 whitespace-nowrap">
                         {homeTeam.record[0]?.displayValue || "0-0"}
-                      </Typography>
-                    </Box>
-                  </Box>
+                      </p>
+                    </div>
+                  </div>
                 </Link>
-              </Box>
+              </div>
             </>
           ) : (
             <>
-              <Box
-                sx={{
+              <div
+                style={{
                   backgroundColor: "white",
                 }}
                 className="w-full h-20 px-3 py-10 border-b border-[rgba(0,0,0,0.2)] place-items-center text-center text-black grid grid-cols-5 grid-rows-1 drop-shadow-sm sticky top-[2.5rem] z-40"
@@ -223,15 +224,15 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   className="w-full col-start-1"
                   href={`/${league}/team/${awayTeam.team.id}/home`}
                 >
-                  <Box className="flex flex-row gap-1 items-center justify-end">
-                    <Box className="flex flex-col">
-                      <Typography className="text-xs opacity-70 font-semibold">
+                  <div className="flex flex-row gap-1 items-center justify-end">
+                    <div className="flex flex-col">
+                      <p className="text-xs opacity-70 font-semibold">
                         {awayTeam.team.abbreviation}
-                      </Typography>
-                      <Typography className="text-xs opacity-70 whitespace-nowrap">
+                      </p>
+                      <p className="text-xs opacity-70 whitespace-nowrap">
                         {typeof awayTeam.record !== "undefined" && awayTeam.record[0].displayValue}
-                      </Typography>
-                    </Box>
+                      </p>
+                    </div>
                     <Image
                       src={awayTeam.team.logos[0].href}
                       width={awayTeam.team.logos[0].width}
@@ -239,11 +240,11 @@ export default function GameHeader({ league, data }: { league: string; data: any
                       alt="away team logo"
                       className="w-8 object-contain"
                     />
-                  </Box>
+                  </div>
                 </Link>
 
-                <Typography
-                  sx={{
+                <p
+                  style={{
                     fontWeight: "700",
                     opacity: Number(awayTeam.score) > Number(homeTeam.score) ? "1" : "0.5",
                   }}
@@ -254,19 +255,19 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   } pr-4 relative text-2xl col-start-2`}
                 >
                   {awayTeam.score}
-                </Typography>
+                </p>
 
-                <Typography
-                  sx={{
+                <p
+                  style={{
                     color: gameInfo.status.type.shortDetail == "Final" ? "black" : "#d50a0a",
                   }}
                   className="opacity-90 whitespace-nowrap text-sm font-semibold col-start-3"
                 >
                   {gameInfo.status.type.shortDetail}
-                </Typography>
+                </p>
 
-                <Typography
-                  sx={{
+                <p
+                  style={{
                     fontWeight: "700",
                     opacity: Number(homeTeam.score) > Number(awayTeam.score) ? "1" : "0.5",
                   }}
@@ -277,10 +278,10 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   } relative pl-4 text-2xl col-start-4`}
                 >
                   {homeTeam.score}
-                </Typography>
+                </p>
 
                 <Link className="w-full " href={`/${league}/team/${homeTeam.team.id}/home`}>
-                  <Box className="flex flex-row gap-1 items-center col-start-5 text-black">
+                  <div className="flex flex-row gap-1 items-center col-start-5 text-black">
                     <Image
                       src={homeTeam.team.logos[0].href}
                       width={homeTeam.team.logos[0].width}
@@ -288,17 +289,17 @@ export default function GameHeader({ league, data }: { league: string; data: any
                       alt="home team logo"
                       className="w-8 object-contain"
                     />
-                    <Box className="flex flex-col">
-                      <Typography className="text-xs opacity-80 font-semibold">
+                    <div className="flex flex-col">
+                      <p className="text-xs opacity-80 font-semibold">
                         {homeTeam.team.abbreviation}
-                      </Typography>
-                      <Typography className="text-xs opacity-80  whitespace-nowrap">
+                      </p>
+                      <p className="text-xs opacity-80  whitespace-nowrap">
                         {typeof homeTeam.record !== "undefined" && homeTeam.record[0].displayValue}
-                      </Typography>
-                    </Box>
-                  </Box>
+                      </p>
+                    </div>
+                  </div>
                 </Link>
-              </Box>
+              </div>
             </>
           )}
         </>

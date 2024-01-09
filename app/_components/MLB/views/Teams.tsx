@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { mlbDivisonTeams } from "@/app/_lib/constants";
 import Articles from "@/app/_components/Articles";
 import ContainerBox from "@/app/_components/ContainerBox";
@@ -12,12 +12,12 @@ export default function Home({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <Box className="basis-2/3">
+      <div className="basis-2/3">
         <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
-      </Box>
-      <Box className="basis-1/4">
+      </div>
+      <div className="basis-1/4">
         <Articles title={`MLB News`} teamNews={data.news} limit={10} />
-      </Box>
+      </div>
     </>
   );
 

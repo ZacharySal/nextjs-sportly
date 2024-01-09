@@ -1,4 +1,3 @@
-import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
@@ -15,8 +14,8 @@ export default function MLBScoringPlays({ data }: { data: any }) {
   }
 
   return (
-    <Box className="w-full grid grid-cols-[25px_5px_20px_auto_15px_15px] grid-rows-[20px_auto] gap-x-3 gap-y-2 bg-white p-3 drop-shadow-md items-center rounded-xl">
-      <Typography className="text-sm opacity-70 font-semibold row-1 col-span-6">Scoring Plays</Typography>
+    <div className="w-full grid grid-cols-[25px_5px_20px_auto_15px_15px] grid-rows-[20px_auto] gap-x-3 gap-y-2 bg-white p-3 drop-shadow-md items-center rounded-xl">
+      <p className="text-sm  font-semibold row-1 col-span-6">Scoring Plays</p>
       {finalScoringPlays.map((play: any) => (
         <React.Fragment key={uuidv4()}>
           <Image
@@ -27,44 +26,36 @@ export default function MLBScoringPlays({ data }: { data: any }) {
             style={{ width: "25px" }}
             className="object-contain col-start-1"
           />
-          <Typography
+          <p
             style={{
               paddingBottom: play.period.type === "Top" ? "15px" : "5px",
+              borderColor:
+                play.period.type === "Top"
+                  ? "transparent transparent gray"
+                  : "gray transparent transparent transparent",
             }}
-            sx={{
-              "&::before": {
-                content: `" "`,
-                borderColor:
-                  play.period.type === "Top"
-                    ? "transparent transparent gray"
-                    : "gray transparent transparent transparent",
-                borderStyle: "solid",
-                borderWidth: "5px",
-                position: "absolute",
-              },
-            }}
-            className="col-start-2 opacity-70 text-xs"
-          ></Typography>
-          <Typography className="col-start-3 opacity-70 text-xs">{play.period.displayValue.slice(0, 3)}</Typography>
-          <Typography className="col-start-4 opacity-70 text-xs">{play.text}</Typography>
-          <Typography
-            sx={{
+            className="col-start-2 opacity-70 text-xs mlb-scoring-plays-p"
+          ></p>
+          <p className="col-start-3 opacity-70 text-xs">{play.period.displayValue.slice(0, 3)}</p>
+          <p className="col-start-4 opacity-70 text-xs">{play.text}</p>
+          <p
+            style={{
               fontWeight: play.team.id === data.awayTeam.id ? "700" : "400",
             }}
             className="col-start-5 opacity-70 text-xs"
           >
             {play.awayScore}
-          </Typography>
-          <Typography
-            sx={{
+          </p>
+          <p
+            style={{
               fontWeight: play.team.id === data.homeTeam.id ? "700" : "400",
             }}
             className="col-start-6 opacity-70 text-xs"
           >
             {play.homeScore}
-          </Typography>
+          </p>
         </React.Fragment>
       ))}
-    </Box>
+    </div>
   );
 }

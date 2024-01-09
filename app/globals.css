@@ -19,6 +19,12 @@ main {
   height: 100%;
 }
 
+.nav-svg {
+  width: 20px;
+  height: 20px;
+  fill: #ffff;
+}
+
 .main-logo {
   background: linear-gradient(120deg,
       #d00 0%,
@@ -30,7 +36,7 @@ main {
 }
 
 .rr {
-  font-size: 1.25rem !important;
+  font-size: 1.4rem !important;
   letter-spacing: 0.05em !important;
   width: 80% !important;
   height: 100% !important;
@@ -38,6 +44,7 @@ main {
   justify-content: center !important;
   align-items: center !important;
   color: white !important;
+  font-weight: 900;
 }
 
 .stat-table {
@@ -176,6 +183,17 @@ main {
   color: red;
 }
 
+.matchup-predictor-teams-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 1px;
+  height: 130px;
+  background-color: rgba(0, 0, 0, 0.176);
+}
+
 .circle {
   position: relative;
   top: 15px;
@@ -215,19 +233,21 @@ main {
 .matchup-predictor::before {
   position: absolute;
   content: attr(data-awayteamchance);
-  font-weight: 900;
-  font-size: 1.15rem;
-  top: 5%;
-  left: 2%;
+  font-weight: 700;
+  font-size: 1.25rem;
+  top: 0%;
+  left: 1%;
+  transform: translateX(-10%);
 }
 
 .matchup-predictor::after {
   position: absolute;
   content: attr(data-hometeamchance);
-  font-size: 1.15rem;
-  font-weight: 900;
-  bottom: 5%;
-  right: 2%;
+  font-size: 1.25rem;
+  font-weight: 700;
+  bottom: 0%;
+  right: 1%;
+  transform: translateX(10%);
 }
 
 .circle-border {
@@ -614,17 +634,17 @@ main {
   cursor: pointer;
 }
 
-.menu-dropdown-option::before {
+.league-open::after {
   position: absolute;
   content: "";
+  bottom: 0;
+  left: 50%;
   width: 10px;
   height: 20px;
-  top: 0;
-  transform: translateY(-100%);
+  transform: translateY(50%) translateX(-50%);
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 10px solid white;
-  left: 15px;
   background-color: transparent;
   opacity: 1;
   color: white;
@@ -677,11 +697,7 @@ main {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-svg {
-  fill: #fff;
-  height: 20px;
-  width: 20px;
-}
+
 
 .loader {
   position: absolute;
@@ -705,6 +721,13 @@ svg {
   stroke: #3772df;
   animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
   stroke-linecap: round;
+}
+
+.mlb-scoring-plays-p::before {
+  content: " ";
+  border-style: "solid";
+  border-width: "5px";
+  position: "absolute";
 }
 
 @keyframes rotate {
