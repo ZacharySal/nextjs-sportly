@@ -1,23 +1,13 @@
+import { getLeagueNewsData } from "@/app/_lib/utils";
 import View from "../../_components/NFL/views/Teams";
+import { Metadata } from "next";
 
-async function getScoreData() {
-  const scoreData = await fetch(`https://cdn.espn.com/core/nfl/scoreboard?xhr=1`, {
-    cache: "no-cache",
-  });
-
-  if (!scoreData.ok) {
-    throw new Error("Failed to fetch NBA score data");
-  }
-
-  const scoreDataResponse = await scoreData.json();
-
-  return {
-    scoreData: scoreDataResponse,
-  };
-}
+export const metadata: Metadata = {
+  title: "NFL Scores 2023-24 Teams - Sportly",
+};
 
 export default async function Page() {
-  const data = await getScoreData();
+  const data = await getLeagueNewsData("nfl");
 
   return <View data={data} />;
 }

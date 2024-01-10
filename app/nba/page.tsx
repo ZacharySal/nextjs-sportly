@@ -1,22 +1,12 @@
+import { Metadata } from "next";
 import View from "../_components/NBA/views/Home";
+import { getLeagueScoreData } from "../_lib/utils";
 
-async function getScoreData() {
-  const scoreData = await fetch(`https://cdn.espn.com/core/nba/scoreboard?xhr=1`, {
-    next: { revalidate: 30 },
-  });
-
-  if (!scoreData.ok) {
-    throw new Error("Failed to fetch NBA score data");
-  }
-
-  const scoreDataResponse = await scoreData.json();
-
-  return {
-    scoreData: scoreDataResponse,
-  };
-}
+export const metadata: Metadata = {
+  title: "NBA Scores 2023-24 Season - Sportly",
+};
 
 export default async function Page() {
-  const data = await getScoreData();
+  const data = await getLeagueScoreData("nba");
   return <View data={data} />;
 }

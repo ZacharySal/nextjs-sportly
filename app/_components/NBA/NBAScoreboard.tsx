@@ -37,7 +37,7 @@ function NBAScoreboard({ initialScoreData }: { initialScoreData: any }) {
       ? null
       : baseFetchUrl + selectedDate.replaceAll("-", "");
 
-  const { data: newScoreData, isLoading } = useSwr(fetchKey, fetcher, { refreshInterval: 5 });
+  const { data: newScoreData, isLoading } = useSwr(fetchKey, fetcher);
 
   const data = newScoreData ?? initialScoreData;
 

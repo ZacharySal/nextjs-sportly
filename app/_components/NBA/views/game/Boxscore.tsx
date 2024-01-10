@@ -5,10 +5,8 @@ import Articles from "@/app/_components/Articles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
-import Loading from "@/app/_components/Loading";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
 import NBAGameStats from "@/app/_components/NBA/NBAGameStats";
-import useHasHydrated from "@/app/_components/hooks/useHasHyrdated";
 
 export default function Boxscore({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");

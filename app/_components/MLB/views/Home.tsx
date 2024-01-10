@@ -15,15 +15,15 @@ export default function Home({ data }: { data: any }) {
   const desktopView = () => (
     <>
       <div className="basis-3/4">
-        <MLBScoreboard currentDate={data.currentDate} />
+        <MLBScoreboard initialScoreData={data.scoreData} />
       </div>
       <div className="basis-1/4">
-        <Articles title={`MLB News`} teamNews={data.news} limit={10} />
+        <Articles title={`MLB News`} teamNews={data.scoreData.news} limit={10} />
       </div>
     </>
   );
 
-  const mobileView = () => <MLBScoreboard currentDate={data.currentDate} />;
+  const mobileView = () => <MLBScoreboard initialScoreData={data.scoreData} />;
 
   if (!pageHydrated) return <Loading />;
   else

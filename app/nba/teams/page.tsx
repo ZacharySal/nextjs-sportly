@@ -1,21 +1,12 @@
 import View from "@/app/_components/NBA/views/Teams";
+import { getLeagueNewsData } from "@/app/_lib/utils";
+import { Metadata } from "next";
 
-async function getScoreData() {
-  const scoreData = await fetch(`https://cdn.espn.com/core/nba/scoreboard?xhr=1`);
+export const metadata: Metadata = {
+  title: "2023-24 NBA Teams",
+};
 
-  if (!scoreData.ok) {
-    throw new Error("Failed to fetch NBA score data");
-  }
-
-  const scoreDataResponse = await scoreData.json();
-
-  return {
-    scoreData: scoreDataResponse,
-  };
-}
-
-export default async function Page({ params }: { params: { teamId: string } }) {
-  const data = await getScoreData();
-
+export default async function Page() {
+  const data = await getLeagueNewsData("nba");
   return <View data={data} />;
 }

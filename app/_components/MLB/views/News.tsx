@@ -10,11 +10,13 @@ export default function Home({ data }: { data: any }) {
 
   const desktopView = () => (
     <div className="basis-2/4">
-      <Articles title={`MLB News`} teamNews={data.news} limit={20} />
+      <Articles title={`MLB News`} teamNews={data.scoreData.news} limit={20} />
     </div>
   );
 
-  const mobileView = () => <Articles title={`MLB News`} teamNews={data.news} limit={20} />;
+  const mobileView = () => (
+    <Articles title={`MLB News`} teamNews={data.scoreData.news} limit={20} />
+  );
 
   return (
     <>

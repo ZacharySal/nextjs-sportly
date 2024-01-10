@@ -18,7 +18,6 @@ export default function TeamPage({ data }: { data: any }) {
       </div>
 
       <div className="basis-1/2">
-        {/* <TeamSchedule teamSchedule={data.teamSchedule} league="nfl" /> */}
         <TeamNewsCards league="nba" data={data} />
       </div>
 
