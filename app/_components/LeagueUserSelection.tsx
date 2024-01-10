@@ -12,7 +12,7 @@ export default function LeagueUserSelection({
     selection === userSelection ? "selection-active nav-selection" : "nav-selection";
 
   return (
-    <div className="w-full bg-white sticky top-[2.75rem] z-20 drop-shadow-lg">
+    <div className="w-full bg-white sticky top-[2.75rem] z-20 shadow-lg">
       <div className="testing w-full 2xl:w-1/2 max-w-full overflow-x-auto overflow-y-hidden h-10 md:h-11 flex justify-start 2xl:justify-center items-center gap-3 px-2 md:pl-10">
         <div className="relative flex-shrink-0 flex flex-row items-center gap-2 leage-logo">
           <Image

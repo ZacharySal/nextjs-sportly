@@ -15,7 +15,7 @@ export default function Roster({ data }: { data: any }) {
         <TeamRoster data={data.teamRoster} />
       </div>
       <div className="basis-1/4 flex flex-col gap-3">
-        <Articles title="NBA News" limit={6} teamNews={data.teamNews} />
+        <Articles title={`${data.teamData.team.name} News`} limit={6} teamNews={data.teamNews} />
       </div>
     </>
   );

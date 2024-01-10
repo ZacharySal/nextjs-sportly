@@ -57,34 +57,42 @@ function getFullDate(date: string) {
   return newDate;
 }
 
-function MLBScoreboard({ currentDate }: { currentDate: string }) {
+const baseFetchUrl = "https://cdn.espn.com/core/mlb/scoreboard?xhr=1&limit=50&date=";
+
+function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
   const { height, width } = useWindowDimensions();
 
-  const [selectedYear, setSelectedYear] = useState("2023");
-
-  const daysInYear = getDaysArray(
-    new Date(`${selectedYear}-01-01`),
-    new Date(`${selectedYear}-12-31`)
+  const [selectedYear, setSelectedYear] = useState(
+    initialScoreData?.content?.dateParams?.date.substring(0, 4)
   );
+
+  const pastYear = Number(selectedYear) - 1;
+
+  const daysInYear = getDaysArray(new Date(`${pastYear}-01-01`), new Date(`${selectedYear}-12-31`));
   const formattedDaysInYear = daysInYear.map((v: any) => {
     return v.toISOString().slice(0, 10);
   });
 
-  const [selectedDate, setSelectedDate] = useState(formatDate(currentDate));
+  const [selectedDate, setSelectedDate] = useState(
+    formatDate(initialScoreData?.content?.dateParams?.date)
+  );
   const [calendarValue, setCalendarValue] = useState("");
   const [currentIndex, setCurrentIndex] = useState(
-    formattedDaysInYear.indexOf(formatDate(currentDate))
+    formattedDaysInYear.indexOf(formatDate(initialScoreData?.content?.dateParams?.date))
   );
 
   useEffect(() => {
     setCurrentIndex(formattedDaysInYear.indexOf(selectedDate));
   }, [selectedDate]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  let key = `https://cdn.espn.com/core/mlb/scoreboard?xhr=1&limit=50&date=${selectedDate.replaceAll(
-    "-",
-    ""
-  )}`;
-  const { data, isLoading } = useSwr(key, fetcher, { refreshInterval: 30000 });
+  const fetchKey =
+    selectedDate == formatDate(initialScoreData?.content?.dateParams?.date)
+      ? null
+      : baseFetchUrl + selectedDate.replaceAll("-", "");
+
+  const { data: newScoreData, isLoading } = useSwr(fetchKey, fetcher);
+
+  const data = newScoreData ?? initialScoreData;
 
   function getDateElements() {
     const dateElements = [];

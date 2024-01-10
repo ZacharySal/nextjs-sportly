@@ -15,7 +15,7 @@ export default function Standings({ data }: { data: any }) {
         <LeagueStandings data={data.standingsData.content.standings} league="nba" />
       </div>
       <div className="basis-1/4">
-        <Articles title={`NBA News`} teamNews={data.scoreData.news} limit={5} />
+        <Articles title={`NBA News`} teamNews={data.newsData} limit={5} />
       </div>
     </>
   );

@@ -79,11 +79,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
               </p>
             </div>
             {isGameStarted ? (
-              <>
-                <p className="text-sm text-[rgba(0,0,0,0.6)] font-semibold">
-                  {gameInfo.status.type.shortDetail}
-                </p>
-              </>
+              <p className="text-sm font-semibold">{gameInfo.status.type.shortDetail}</p>
             ) : (
               <div>
                 <p className="text-black text-center text-2xl opacity-70 max-w-[20rem]">

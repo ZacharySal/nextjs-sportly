@@ -1,31 +1,12 @@
 import View from "@/app/_components/NBA/views/Standings";
+import { getLeagueStandingsData } from "@/app/_lib/utils";
+import { Metadata } from "next";
 
-async function getStandingsData() {
-  const scoreData = await fetch(`https://cdn.espn.com/core/nba/scoreboard?xhr=1`);
-
-  if (!scoreData.ok) {
-    throw new Error("Failed to fetch NBA score data");
-  }
-
-  const scoreDataResponse = await scoreData.json();
-
-  const standingsData = await fetch("https://cdn.espn.com/core/nba/standings?xhr=1", {
-    cache: "no-cache",
-  });
-
-  if (!standingsData.ok) {
-    throw new Error("Failed to fetch NFL standings data");
-  }
-
-  const standingsDataResponse = await standingsData.json();
-
-  return {
-    scoreData: scoreDataResponse,
-    standingsData: standingsDataResponse,
-  };
-}
+export const metadata: Metadata = {
+  title: "2023-24 NBA Standings",
+};
 
 export default async function Page() {
-  const data = await getStandingsData();
+  const data = await getLeagueStandingsData("nba");
   return <View data={data} />;
 }
