@@ -1,6 +1,8 @@
 import View from "@/app/_components/NBA/views/game/Boxscore";
 import { getNBAGameData } from "@/app/_lib/utils";
 
+export const revalidate = 10;
+
 export async function generateMetadata({ params }: { params: { gameId: string } }) {
   const gameData = await getNBAGameData(params.gameId);
 

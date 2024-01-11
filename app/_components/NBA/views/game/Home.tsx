@@ -12,15 +12,19 @@ import GameRecapArticle from "@/app/_components/GameRecapArticle";
 import NBAGameLeaders from "@/app/_components/NBA/NBAGameLeaders";
 import InjuryReport from "@/app/_components/InjuryReport";
 import LastFive from "@/app/_components/LastFive";
+import RecentPlays from "@/app/_components/RecentPlays";
 
 export default function Home({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+
+  console.log(data.gameInfo.status.type.state === "in");
 
   const mobileView = () => (
     <div className="w-full flex flex-col justify-center items-center gap-3">
       <GameRecapArticle data={data} />
       {data.isGameStarted ? (
         <>
+          {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
           <NBABoxscore data={data} />
           <NBAGameLeaders data={data} />
           <MatchupPredictor data={data} league={"nba"} />
@@ -58,6 +62,7 @@ export default function Home({ data }: { data: any }) {
         {data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
+            {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
             <NBAGameLeaders data={data} />
             <NBABoxscore data={data} />
           </>

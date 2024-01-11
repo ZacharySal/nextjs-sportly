@@ -5,7 +5,7 @@ export async function getNBAGameData(gameId: string) {
     `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${gameId}`,
     {
       next: {
-        revalidate: 30,
+        revalidate: 10,
       },
     }
   );
@@ -32,7 +32,7 @@ export async function getNFLGameData(gameId: string) {
     `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${gameId}`,
     {
       next: {
-        revalidate: 30,
+        revalidate: 10,
       },
     }
   );
