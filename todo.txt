@@ -1,4 +1,3 @@
-Fix Game Leaders in NFL Game Page
-Add Click Functionality to All Teams
-Add One More Stat to NFL Game Page
-Add Four More Stats to NBA Game Page
+Skeleton loading for desktop score cards
+Add new page for selected calendar date instead of changing state
+change isgamefinished to game state "in" "pre" "post"

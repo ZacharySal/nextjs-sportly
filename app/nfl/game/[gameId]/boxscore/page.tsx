@@ -1,4 +1,4 @@
-import { getNFLGameData } from "@/app/_lib/utils";
+import { getLeagueScoreData, getNFLGameData } from "@/app/_lib/utils";
 import View from "../../../../_components/NFL/views/game/Boxscore";
 
 export async function generateMetadata({ params }: { params: { gameId: string } }) {
@@ -18,4 +18,12 @@ export async function generateMetadata({ params }: { params: { gameId: string } 
 export default async function Page({ params }: { params: { gameId: string } }) {
   const data = await getNFLGameData(params.gameId);
   return <View data={data} />;
+}
+
+export async function generateStaticParams() {
+  const data = await getLeagueScoreData("nfl");
+
+  return data.scoreData.content.sbData.events.map((event: any) => ({
+    gameId: String(event.id),
+  }));
 }

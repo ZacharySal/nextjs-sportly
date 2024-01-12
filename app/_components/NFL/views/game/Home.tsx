@@ -13,6 +13,7 @@ import GameRecapArticle from "@/app/_components/GameRecapArticle";
 import NFLGameLeaders from "@/app/_components/NFL/NFLGameLeaders";
 import InjuryReport from "@/app/_components/InjuryReport";
 import LastFive from "@/app/_components/LastFive";
+import RecentPlays from "@/app/_components/RecentPlays";
 
 export default function Home({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");

@@ -10,8 +10,9 @@ import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import Loading from "../Loading";
+import { ScoreData } from "@/types";
 
-function NBAScoreboard({ initialScoreData }: { initialScoreData: any }) {
+function NBAScoreboard({ initialScoreData }: { initialScoreData: ScoreData }) {
   const { height, width } = useWindowDimensions();
 
   const [selectedYear, setSelectedYear] = useState(
@@ -42,11 +43,8 @@ function NBAScoreboard({ initialScoreData }: { initialScoreData: any }) {
   const data = newScoreData ?? initialScoreData;
 
   const sortedGames = data.content.sbData.events.sort((a: any, b: any) => {
-    if (a.status.type.name == "STATUS_IN_PROGRESS" && b.status.type.name == "STATUS_FINAL") {
+    if (a.status.type.state == "in") {
       return -1;
-    }
-    if (b.status.type.name == "STATUS_IN_PROGRESS" && a.status.type.name == "STATUS_FINAL") {
-      return 1;
     }
   });
 
