@@ -1,4 +1,3 @@
 Skeleton loading for desktop score cards
 Add new page for selected calendar date instead of changing state
-preload current game data
 change isgamefinished to game state "in" "pre" "post"

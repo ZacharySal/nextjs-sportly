@@ -1,8 +1,6 @@
 import View from "../../../../_components/NFL/views/game/Home";
 import { getLeagueScoreData, getNFLGameData } from "@/app/_lib/utils";
 
-export const revalidate = 10;
-
 export async function generateMetadata({ params }: { params: { gameId: string } }) {
   const gameData = await getNFLGameData(params.gameId);
 
