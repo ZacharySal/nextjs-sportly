@@ -1,4 +1,7 @@
+"use server";
+
 type League = "nba" | "nfl" | "mlb";
+import type { ScoreData } from "@/types";
 
 export async function getNBAGameData(gameId: string) {
   const gameDataResponse = await fetch(
@@ -80,14 +83,14 @@ export async function getNFLGameData(gameId: string) {
 
 export async function getLeagueScoreData(league: League) {
   const scoreData = await fetch(`https://cdn.espn.com/core/${league}/scoreboard?xhr=1`, {
-    next: { revalidate: 30 },
+    next: { revalidate: 10 },
   });
 
   if (!scoreData.ok) {
     throw new Error("Failed to fetch NBA score data");
   }
 
-  const scoreDataResponse = await scoreData.json();
+  const scoreDataResponse: ScoreData = await scoreData.json();
 
   return {
     scoreData: scoreDataResponse,

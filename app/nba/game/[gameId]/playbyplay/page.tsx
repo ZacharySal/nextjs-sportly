@@ -1,5 +1,5 @@
 import View from "@/app/_components/NBA/views/game/PlaybyPlay";
-import { getNBAGameData } from "@/app/_lib/utils";
+import { getLeagueScoreData, getNBAGameData } from "@/app/_lib/utils";
 
 export const revalidate = 10;
 
@@ -20,4 +20,12 @@ export async function generateMetadata({ params }: { params: { gameId: string } 
 export default async function Page({ params }: { params: { gameId: string } }) {
   const data = await getNBAGameData(params.gameId);
   return <View data={data} />;
+}
+
+export async function generateStaticParams() {
+  const data = await getLeagueScoreData("nba");
+
+  return data.scoreData.content.sbData.events.map((event: any) => ({
+    gameId: String(event.id),
+  }));
 }

@@ -72,7 +72,7 @@ export default function RecentPlays({ data }: { data: any }) {
   }
   return (
     <div className="w-full bg-white p-3 rounded-md">
-      <h1 className="font-semibold text-sm pb-2 border-b border-[rgba(0,0,0,0.3)] border-dashed">
+      <h1 className="font-semibold text-sm pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dashed">
         Recent Plays
       </h1>
       <div className="flex-col mt-1">
@@ -109,7 +109,10 @@ export default function RecentPlays({ data }: { data: any }) {
                     )}
                   </div>
 
-                  <div className="text-left text-xs my-auto row-span-full">
+                  <div
+                    style={{ fontWeight: isScoringOrShootingPlay ? "600" : "400" }}
+                    className="text-left text-xs my-auto row-span-full"
+                  >
                     <p className="font-[300]">
                       {play.clock.displayValue} - {play.period.displayValue}
                     </p>
@@ -124,7 +127,9 @@ export default function RecentPlays({ data }: { data: any }) {
                       height={winProbability?.team?.team?.logos[0].height}
                       className="w-[20px] object-contain rounded-full"
                     />
-                    <p className="text-[12px]">{winProbability?.chance * 100}%</p>
+                    <p className="text-[12px]">
+                      {Number(winProbability?.chance * 100).toFixed(1)}%
+                    </p>
                   </div>
 
                   <p className="text-[12px] row-span-full row-start-2 col-start-3 flex justify-end items-end font-[400]">
@@ -138,7 +143,7 @@ export default function RecentPlays({ data }: { data: any }) {
                   key={play.id}
                   style={{
                     fontWeight: isScoringOrShootingPlay ? "600" : "400",
-                    backgroundColor: index % 2 !== 0 ? "hsl(0, 0%, 96%)" : "white",
+                    backgroundColor: index % 2 !== 0 ? "hsl(0, 0%, 98%)" : "white",
                   }}
                   className="grid grid-cols-[25px_7fr_2fr] gap-x-3 py-2 px-1 border-b  border-[rgba(0,0,0,0.2)]"
                 >
@@ -150,7 +155,7 @@ export default function RecentPlays({ data }: { data: any }) {
                         alt="team logo"
                         width={team.team.logos[0].width}
                         height={team.team.logos[0].height}
-                        className="w-6 object-contain"
+                        className="w-5 object-contain"
                       />
                     )}
 

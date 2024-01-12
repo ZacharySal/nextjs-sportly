@@ -1,16 +1,17 @@
-import useMediaQuery from "@mui/material/useMediaQuery";
+"use client";
 
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
 import { mlbDivisonTeams, nbaDivisionTeams, nflDivisonTeams } from "../_lib/constants";
 import Link from "next/link";
 
 export default function GameHeader({ league, data }: { league: string; data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
-  const homeTeam = data.header.competitions[0].competitors[0];
-  const awayTeam = data.header.competitions[0].competitors[1];
-  const gameInfo = data.header.competitions[0];
-  const isGameStarted =
-    league === "nfl" ? (data.drives ? true : false) : data.plays?.length > 0 ? true : false;
+  const homeTeam = data.gameData.header.competitions[0].competitors[0];
+  const awayTeam = data.gameData.header.competitions[0].competitors[1];
+  const gameInfo = data.gameData.header.competitions[0];
+
+  const isGameStarted = data.gameInfo.status.type.state !== "pre";
   const gameDate = new Date(gameInfo.date);
 
   function findTeamDivison(teamName: string) {
@@ -79,7 +80,12 @@ export default function GameHeader({ league, data }: { league: string; data: any
               </p>
             </div>
             {isGameStarted ? (
-              <p className="text-sm font-semibold">{gameInfo.status.type.shortDetail}</p>
+              <p
+                style={{ color: gameInfo.status.type.state == "in" ? "#d00" : "black" }}
+                className="text-sm font-semibold"
+              >
+                {gameInfo.status.type.shortDetail}
+              </p>
             ) : (
               <div>
                 <p className="text-black text-center text-2xl opacity-70 max-w-[20rem]">

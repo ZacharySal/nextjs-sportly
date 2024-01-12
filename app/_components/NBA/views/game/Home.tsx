@@ -17,16 +17,14 @@ import RecentPlays from "@/app/_components/RecentPlays";
 export default function Home({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  console.log(data.gameInfo.status.type.state === "in");
-
   const mobileView = () => (
     <div className="w-full flex flex-col justify-center items-center gap-3">
       <GameRecapArticle data={data} />
       {data.isGameStarted ? (
         <>
-          {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
           <NBABoxscore data={data} />
           <NBAGameLeaders data={data} />
+          {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
           <MatchupPredictor data={data} league={"nba"} />
         </>
       ) : (
