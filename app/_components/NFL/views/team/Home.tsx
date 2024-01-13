@@ -51,7 +51,7 @@ export default function Home({ data }: { data: any }) {
           </p>
           {/* </Link> */}
         </div>
-        <Articles title="NFL News" limit={6} teamNews={data.teamNews} />
+        <Articles title="NFL News" limit={6} news={data.teamNews.articles} />
       </div>
     </>
   );

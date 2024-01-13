@@ -55,7 +55,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   </p>
                   <p className="text-xs opacity-70 text-right">
                     {findTeamDivison(awayTeam.team.displayName)},{" "}
-                    {typeof awayTeam.record !== "undefined" && awayTeam.record[0].displayValue}
+                    {typeof awayTeam.record !== "undefined" && awayTeam.record?.[0]?.displayValue}
                   </p>
                 </Link>
               </div>
@@ -121,7 +121,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   </p>
                   <p className="text-xs opacity-70 text-left">
                     {findTeamDivison(homeTeam.team.displayName)},{" "}
-                    {typeof homeTeam.record !== "undefined" && homeTeam.record[0].displayValue}
+                    {typeof homeTeam.record !== "undefined" && homeTeam.record?.[0]?.displayValue}
                   </p>
                 </div>
               </Link>
@@ -161,7 +161,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
                         {awayTeam.team.abbreviation}
                       </p>
                       <p className="text-xs opacity-80 whitespace-nowrap">
-                        {awayTeam.record[0]?.displayValue || "0-0"}
+                        {awayTeam.record?.[0]?.displayValue || "0-0"}
                       </p>
                     </div>
                     <Image
@@ -206,7 +206,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
                         {homeTeam.team.abbreviation}
                       </p>
                       <p className="text-xs opacity-80 whitespace-nowrap">
-                        {homeTeam.record[0]?.displayValue || "0-0"}
+                        {homeTeam.record?.[0]?.displayValue || "0-0"}
                       </p>
                     </div>
                   </div>
@@ -232,7 +232,8 @@ export default function GameHeader({ league, data }: { league: string; data: any
                         {awayTeam.team.abbreviation}
                       </p>
                       <p className="text-xs opacity-70 whitespace-nowrap">
-                        {typeof awayTeam.record !== "undefined" && awayTeam.record[0].displayValue}
+                        {typeof awayTeam.record !== "undefined" &&
+                          awayTeam.record?.[0]?.displayValue}
                       </p>
                     </div>
                     <Image
@@ -296,7 +297,8 @@ export default function GameHeader({ league, data }: { league: string; data: any
                         {homeTeam.team.abbreviation}
                       </p>
                       <p className="text-xs opacity-80  whitespace-nowrap">
-                        {typeof homeTeam.record !== "undefined" && homeTeam.record[0].displayValue}
+                        {typeof homeTeam.record !== "undefined" &&
+                          homeTeam.record?.[0]?.displayValue}
                       </p>
                     </div>
                   </div>

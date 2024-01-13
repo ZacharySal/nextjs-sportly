@@ -43,16 +43,18 @@ export default function NBAGameStats({
               <p className="text-[16px] font-[600] tracking-wide opacity-80 capitalize">
                 {tableHeader(statType, teamOption)}
               </p>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={showAllStats}
-                    onClick={() => setShowAllStats((show) => !show)}
-                    size="small"
-                  />
-                }
-                label={<p className="text-xs font-[500] opacity-70 uppercase">All stats</p>}
-              />
+              {!isDesktopScreen && (
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={showAllStats}
+                      onClick={() => setShowAllStats((show) => !show)}
+                      size="small"
+                    />
+                  }
+                  label={<p className="text-xs font-[500] opacity-70 uppercase">All stats</p>}
+                />
+              )}
             </div>
           </div>
           <div className="w-full">

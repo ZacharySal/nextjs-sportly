@@ -15,7 +15,7 @@ export default function News({ data }: { data: any }) {
           <LeagueUserSelection userSelection={"news"} league="nba" />
           <ContainerBox isDesktopScreen={isDesktopScreen}>
             <div className="basis-3/4">
-              <Articles title={`NBA News`} teamNews={data} limit={20} />
+              <Articles title={`NBA News`} news={data.articles} limit={20} />
             </div>
           </ContainerBox>
         </>
@@ -23,7 +23,7 @@ export default function News({ data }: { data: any }) {
         <>
           <LeagueUserSelection userSelection={"news"} league="nba" />
           <ContainerBox isDesktopScreen={isDesktopScreen}>
-            <Articles title={`NBA News`} teamNews={data} limit={20} />
+            <Articles title={`NBA News`} news={data.articles} limit={20} />
           </ContainerBox>
         </>
       )}

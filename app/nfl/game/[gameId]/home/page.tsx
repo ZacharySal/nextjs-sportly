@@ -1,6 +1,8 @@
 import View from "../../../../_components/NFL/views/game/Home";
 import { getLeagueScoreData, getNFLGameData } from "@/app/_lib/utils";
 
+export const revalidate = 15;
+
 export async function generateMetadata({ params }: { params: { gameId: string } }) {
   const gameData = await getNFLGameData(params.gameId);
 
@@ -21,10 +23,10 @@ export default async function Page({ params }: { params: { gameId: string } }) {
   return <View data={data} />;
 }
 
-export async function generateStaticParams() {
-  const data = await getLeagueScoreData("nfl");
+// export async function generateStaticParams() {
+//   const data = await getLeagueScoreData("nfl");
 
-  return data.scoreData.content.sbData.events.map((event: any) => ({
-    gameId: String(event.id),
-  }));
-}
+//   return data.scoreData.content.sbData.events.map((event: any) => ({
+//     gameId: String(event.id),
+//   }));
+// }

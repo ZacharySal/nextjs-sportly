@@ -4,6 +4,7 @@ import Image from "next/image";
 
 export default function NFLGameStats({ data, league }: { data: any; league: string }) {
   const [selectedTeam, setSelectedTeam] = useState(1);
+  console.log(data);
   const awayTeamName = data.gameData.boxscore.teams[0].team.shortDisplayName;
   const homeTeamName = data.gameData.boxscore.teams[1].team.shortDisplayName;
 
@@ -23,7 +24,7 @@ export default function NFLGameStats({ data, league }: { data: any; league: stri
 
   const teamBoxScore = (teamOption: number) => (
     <>
-      {data.gameData.boxscore.players[teamOption].statistics.map((statType: any) => (
+      {data?.gameData?.boxscore?.players?.[teamOption].statistics.map((statType: any) => (
         <div key={uuidv4()} className="bg-white rounded-xl w-full h-auto mb-3">
           <div className="flex items-center justify-start gap-2 mb-2">
             <Image

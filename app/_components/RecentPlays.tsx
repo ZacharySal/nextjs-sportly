@@ -80,7 +80,6 @@ export default function RecentPlays({ data }: { data: any }) {
           .slice(plays.length - 6, plays.length - 1)
           .reverse()
           .map((play: Play, index: number) => {
-            const isScoringOrShootingPlay = play.scoringPlay || play.shootingPlay;
             const winProbability = getWinProbabilityByPlayId(play.id);
             const team = getTeamById(play?.team?.id);
 
@@ -110,7 +109,7 @@ export default function RecentPlays({ data }: { data: any }) {
                   </div>
 
                   <div
-                    style={{ fontWeight: isScoringOrShootingPlay ? "600" : "400" }}
+                    style={{ fontWeight: play.scoringPlay ? "600" : "400" }}
                     className="text-left text-xs my-auto row-span-full"
                   >
                     <p className="font-[300]">
@@ -142,7 +141,7 @@ export default function RecentPlays({ data }: { data: any }) {
                 <div
                   key={play.id}
                   style={{
-                    fontWeight: isScoringOrShootingPlay ? "600" : "400",
+                    fontWeight: play.scoringPlay ? "600" : "400",
                     backgroundColor: index % 2 !== 0 ? "hsl(0, 0%, 98%)" : "white",
                   }}
                   className="grid grid-cols-[25px_7fr_2fr] gap-x-3 py-2 px-1 border-b  border-[rgba(0,0,0,0.2)]"

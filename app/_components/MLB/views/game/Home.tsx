@@ -39,7 +39,7 @@ export default function Home({ data }: { data: any }) {
 
       <div className="basis-1/4 flex flex-col gap-3">
         {data.gameData.predictor && <MatchupPredictor data={data} league="mlb" />}
-        <Articles title="MLB News" teamNews={data.gameData.news} limit={6} />
+        <Articles title="MLB News" news={data.gameData.news.articles} limit={6} />
       </div>
     </>
   );

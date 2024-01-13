@@ -6,6 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
 import NBAPlaybyPlay from "@/app/_components/NBA/NBAPlaybyPlay";
+import SeasonSeries from "@/app/_components/SeasonSeries";
 
 export default function PlaybyPlay({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
@@ -17,7 +18,8 @@ export default function PlaybyPlay({ data }: { data: any }) {
       </div>
       <div className="basis-1/4 flex flex-col gap-3">
         {data.gameData.predictor && <MatchupPredictor data={data} league="nba" />}
-        <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
+        <SeasonSeries data={data} league="nba" />
+        <Articles title="NBA News" news={data.gameData.news.articles} limit={6} />
       </div>
     </>
   );

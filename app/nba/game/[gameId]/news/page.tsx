@@ -1,6 +1,8 @@
 import View from "@/app/_components/NBA/views/game/News";
 import { getLeagueScoreData, getNBAGameData } from "@/app/_lib/utils";
 
+export const revalidate = 15;
+
 export default async function Page({ params }: { params: { gameId: string } }) {
   const data = await getNBAGameData(params.gameId);
   return <View data={data} />;
@@ -20,10 +22,10 @@ export async function generateMetadata({ params }: { params: { gameId: string } 
   };
 }
 
-export async function generateStaticParams() {
-  const data = await getLeagueScoreData("nba");
+// export async function generateStaticParams() {
+//   const data = await getLeagueScoreData("nba");
 
-  return data.scoreData.content.sbData.events.map((event: any) => ({
-    gameId: String(event.id),
-  }));
-}
+//   return data.scoreData.content.sbData.events.map((event: any) => ({
+//     gameId: String(event.id),
+//   }));
+// }

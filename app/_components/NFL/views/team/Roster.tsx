@@ -15,7 +15,7 @@ export default function TeamPage({ data }: { data: any }) {
         <Roster data={data.teamRoster} />
       </div>
       <div className="basis-1/4 flex flex-col gap-3">
-        <Articles title="Team News" limit={6} teamNews={data.teamNews} />
+        <Articles title="Team News" limit={6} news={data.teamNews.articles} />
       </div>
     </>
   );

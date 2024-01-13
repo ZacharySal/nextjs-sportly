@@ -24,7 +24,7 @@ export default function Home({ data }: { data: any }) {
                 <NBAScoreboard initialScoreData={data.scoreData} />
               </div>
               <div className="basis-1/4">
-                <Articles title={`NBA News`} teamNews={data.scoreData.news} limit={10} />
+                <Articles title={`NBA News`} news={data.scoreData.news.articles} limit={10} />
               </div>
             </ContainerBox>
           </>
