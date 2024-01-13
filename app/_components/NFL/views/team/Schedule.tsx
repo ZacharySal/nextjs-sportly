@@ -47,7 +47,11 @@ export default function Schedule({ data }: { data: any }) {
             </p>
           </Link>
         </div>
-        <Articles title={`${data.teamData.team.name} News`} teamNews={data.teamNews} limit={8} />
+        <Articles
+          title={`${data.teamData.team.name} News`}
+          news={data.teamNews.articles}
+          limit={8}
+        />
       </div>
     </>
   );

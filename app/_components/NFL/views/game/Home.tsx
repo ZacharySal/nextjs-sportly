@@ -45,7 +45,7 @@ export default function Home({ data }: { data: any }) {
 
       <div className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
         <MatchupPredictor data={data} league="nfl" />
-        <Articles title="NFL News" teamNews={data.gameData.news} limit={6} />
+        <Articles title="NFL News" news={data.gameData.news.articles} limit={6} />
       </div>
     </>
   );

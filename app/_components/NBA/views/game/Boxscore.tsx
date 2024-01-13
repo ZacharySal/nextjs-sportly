@@ -7,6 +7,7 @@ import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
 import NBAGameStats from "@/app/_components/NBA/NBAGameStats";
+import SeasonSeries from "@/app/_components/SeasonSeries";
 
 export default function Boxscore({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
@@ -19,9 +20,7 @@ export default function Boxscore({ data }: { data: any }) {
         <NBAGameStats data={data} isDesktopScreen={isDesktopScreen} />
       </div>
       <div className="flex flex-col basis-1/4 gap-3">
-        {data.gameData.predictor && <MatchupPredictor data={data} league="nba" />}
         <DivisionStandings data={data} isNFL={false} league="nba" />
-        <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
       </div>
     </>
   );

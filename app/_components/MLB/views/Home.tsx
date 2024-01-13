@@ -18,7 +18,7 @@ export default function Home({ data }: { data: any }) {
         <MLBScoreboard initialScoreData={data.scoreData} />
       </div>
       <div className="basis-1/4">
-        <Articles title={`MLB News`} teamNews={data.scoreData.news} limit={10} />
+        <Articles title={`MLB News`} news={data.scoreData.news.articles} limit={10} />
       </div>
     </>
   );

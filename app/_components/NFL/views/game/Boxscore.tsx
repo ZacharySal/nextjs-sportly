@@ -9,7 +9,7 @@ import GameUserSelection from "@/app/_components/GameUserSelection";
 import NFLGameStats from "@/app/_components/NFL/NFLGameStats";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
 
-export default function TeamPage({ data }: { data: any }) {
+export default function View({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
   function gameLeaders() {
@@ -173,7 +173,7 @@ export default function TeamPage({ data }: { data: any }) {
           gameLeaders()}
         {data.gameData.predictor && <MatchupPredictor data={data} league={"nfl"} />}
         <DivisionStandings data={data} isNFL={true} league="nfl" />
-        <Articles title="NFL News" teamNews={data.gameData.news} limit={6} />
+        <Articles title="NFL News" news={data.gameData.news.articles} limit={6} />
       </div>
     </>
   );

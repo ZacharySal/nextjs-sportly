@@ -13,6 +13,7 @@ import NBAGameLeaders from "@/app/_components/NBA/NBAGameLeaders";
 import InjuryReport from "@/app/_components/InjuryReport";
 import LastFive from "@/app/_components/LastFive";
 import RecentPlays from "@/app/_components/RecentPlays";
+import SeasonSeries from "@/app/_components/SeasonSeries";
 
 export default function Home({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
@@ -35,6 +36,7 @@ export default function Home({ data }: { data: any }) {
           <LastFive data={data} league="nba" isDesktopScreen={isDesktopScreen} />
         </>
       )}
+      <SeasonSeries data={data} league="nba" />
       <DivisionStandings data={data} isNFL={false} league="nba" />
       <StadiumInfo data={data} />
     </div>
@@ -68,7 +70,8 @@ export default function Home({ data }: { data: any }) {
       </div>
 
       <div className="flex flex-col gap-3 basis-1/4">
-        <Articles title="NBA News" teamNews={data.gameData.news} limit={6} />
+        <SeasonSeries data={data} league="nba" />
+        <Articles title="NBA News" news={data.gameData.news.articles} limit={6} />
       </div>
     </>
   );

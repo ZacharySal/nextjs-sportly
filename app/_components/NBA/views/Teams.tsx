@@ -16,7 +16,7 @@ export default function Teams({ data }: { data: any }) {
         <AllTeams allTeams={nbaDivisionTeams} league="nba" />
       </div>
       <div className="basis-1/4">
-        <Articles title={`NBA News`} teamNews={data} limit={10} />
+        <Articles title={`NBA News`} news={data.articles} limit={10} />
       </div>
     </>
   );

@@ -14,7 +14,7 @@ export default function Page({ data }: { data: any }) {
   const desktopView = () => (
     <>
       <div className="flex flex-col basis-1/2 gap-3">
-        <Articles title="NFL News" teamNews={data.gameData.news} limit={6} />
+        <Articles title="NFL News" news={data.gameData.news.articles} limit={6} />
       </div>
 
       <div className="basis-1/4 flex flex-col gap-3">
@@ -24,7 +24,9 @@ export default function Page({ data }: { data: any }) {
     </>
   );
 
-  const mobileView = () => <Articles title="NFL News" teamNews={data.gameData.news} limit={6} />;
+  const mobileView = () => (
+    <Articles title="NFL News" news={data.gameData.news.articles} limit={6} />
+  );
 
   return (
     <>
