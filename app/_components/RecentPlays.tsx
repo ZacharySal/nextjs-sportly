@@ -72,7 +72,7 @@ export default function RecentPlays({ data }: { data: any }) {
   }
   return (
     <div className="w-full bg-white p-3 rounded-md">
-      <h1 className="font-semibold text-sm pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dashed">
+      <h1 className="font-semibold text-sm pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dotted">
         Recent Plays
       </h1>
       <div className="flex-col mt-1">

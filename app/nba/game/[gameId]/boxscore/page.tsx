@@ -21,11 +21,3 @@ export async function generateMetadata({ params }: { params: { gameId: string } 
     })}) Boxscore - Sportly`,
   };
 }
-
-// export async function generateStaticParams() {
-//   const data = await getLeagueScoreData("nba");
-
-//   return data.scoreData.content.sbData.events.map((event: any) => ({
-//     gameId: String(event.id),
-//   }));
-// }

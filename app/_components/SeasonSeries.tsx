@@ -8,12 +8,20 @@ export default function SeasonSeries({ data, league }: { data: any; league: stri
   return (
     <div className="bg-white min-w-full p-3 rounded-md">
       <p className="font-semibold text-sm">{data.gameData.seasonseries[0].description}</p>
-      <p className="opacity-60 font-semibold text-xs pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dashed">
+      <p className="opacity-60 font-semibold text-xs pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dotted">
         {data.gameData.seasonseries[0].summary.replaceAll("series", "")}
       </p>
       {data.gameData.seasonseries[0].events.map((event: any, i: number) => (
         <Link key={event.id} href={`/${league}/game/${event.id}/home`}>
-          <div className="w-full grid grid-cols-[1fr_25%] gap-3 py-2">
+          <div
+            style={{
+              borderBottom:
+                i !== data.gameData.seasonseries[0].events.length - 1
+                  ? "1px dotted rgba(0,0,0,0.2)"
+                  : "none",
+            }}
+            className="w-full grid grid-cols-[1fr_25%] gap-3 py-2"
+          >
             {/* 1ST COLUMN: GAME INFO */}
             <div className="w-full grid grid-cols-[1fr_auto] items-center grid-rows-[1fr_1fr] score-cell relative">
               {/* AWAY TEAM IMG AND NAME */}

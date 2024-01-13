@@ -26,7 +26,7 @@ export default function TeamSideCard({ name, league }: { name: string; league: s
           width={100}
           height={100}
           alt="team logo"
-          className="w-8 md:w-12 object-contain"
+          className="w-10 md:w-12 object-contain"
         />
       </Link>
 

@@ -63,7 +63,7 @@ export default function NBAGameLeaders({ data }: { data: any }) {
         {getLeaderCategory().map((leader: any) => (
           <div
             key={uuidv4()}
-            className="flex flex-row gap-2 pb-3 w-full items-center border-b border-[rgba(0,0,0,0.4)] border-dotted"
+            className="flex flex-row gap-2 pb-3 w-full items-center border-b border-[rgba(0,0,0,0.2)] border-dotted"
           >
             <Image
               width={100}
