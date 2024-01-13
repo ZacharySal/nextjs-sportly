@@ -14,6 +14,7 @@ import InjuryReport from "@/app/_components/InjuryReport";
 import LastFive from "@/app/_components/LastFive";
 import RecentPlays from "@/app/_components/RecentPlays";
 import SeasonSeries from "@/app/_components/SeasonSeries";
+import NBATeamStats from "../../NBATeamStats";
 
 export default function Home({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
@@ -26,6 +27,7 @@ export default function Home({ data }: { data: any }) {
           <NBABoxscore data={data} />
           <NBAGameLeaders data={data} />
           {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
+          {data.isGameStarted && <NBATeamStats data={data} />}
           <MatchupPredictor data={data} league={"nba"} />
         </>
       ) : (
@@ -70,8 +72,9 @@ export default function Home({ data }: { data: any }) {
       </div>
 
       <div className="flex flex-col gap-3 basis-1/4">
+        {data.isGameStarted && <NBATeamStats data={data} />}
         <SeasonSeries data={data} league="nba" />
-        <Articles title="NBA News" news={data.gameData.news.articles} limit={6} />
+        <Articles title="NBA News" news={data.gameData.news.articles} limit={3} />
       </div>
     </>
   );

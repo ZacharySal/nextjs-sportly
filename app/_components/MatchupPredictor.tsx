@@ -42,7 +42,7 @@ export default function MatchupPredictor({ data, league }: { data: any; league: 
   if (typeof data.gameData.predictor === "undefined") return null;
   return (
     <div className="w-full bg-white rounded-xl p-3 flex flex-col gap-4">
-      <p className="font-semibold text-sm border-b border-dashed pb-3 border-b-[rgba(0,0,0,0.2)]">
+      <p className="font-semibold text-sm border-b border-dotted pb-3 border-b-[rgba(0,0,0,0.2)]">
         Matchup Predictor
       </p>
       <div

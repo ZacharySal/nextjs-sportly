@@ -21,11 +21,3 @@ export default async function Page({ params }: { params: { gameId: string } }) {
   const data = await getNBAGameData(params.gameId);
   return <View data={data} />;
 }
-
-// export async function generateStaticParams() {
-//   const data = await getLeagueScoreData("nba");
-
-//   return data.scoreData.content.sbData.events.map((event: any) => ({
-//     gameId: String(event.id),
-//   }));
-// }

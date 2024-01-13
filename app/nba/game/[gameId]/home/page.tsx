@@ -1,5 +1,5 @@
 import View from "@/app/_components/NBA/views/game/Home";
-import { getLeagueScoreData, getNBAGameData } from "@/app/_lib/utils";
+import { getNBAGameData } from "@/app/_lib/utils";
 
 export const revalidate = 15;
 
@@ -21,11 +21,3 @@ export async function generateMetadata({ params }: { params: { gameId: string } 
     })}) - Sportly`,
   };
 }
-
-// export async function generateStaticParams() {
-//   const data = await getLeagueScoreData("nba");
-
-//   return data.scoreData.content.sbData.events.map((event: any) => ({
-//     gameId: String(event.id),
-//   }));
-// }
