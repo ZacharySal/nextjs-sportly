@@ -1,3 +1,11 @@
-Skeleton loading for desktop score cards
-Add new page for selected calendar date instead of changing state
+todo: 
+
+skeleton loading for desktop score cards
+add new page for selected calendar date instead of changing state
 change isgamefinished to game state "in" "pre" "post"
+can we make generateStaticParams revalidate fetch call?
+
+
+notes: 
+
+generateStaticParams builds pages at BUILD TIME not when the page is requested

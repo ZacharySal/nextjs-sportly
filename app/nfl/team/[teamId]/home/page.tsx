@@ -1,6 +1,8 @@
 import { getNFLTeamStats, getTeamData, getTeamNews, getTeamSchedule } from "@/app/_lib/utils";
 import View from "../../../../_components/NFL/views/team/Home";
 
+export const revalidate = 600;
+
 export async function generateMetadata({ params }: { params: { teamId: string } }) {
   const teamData = await getTeamData("nfl", params.teamId);
 
@@ -27,14 +29,14 @@ export default async function Page({ params }: { params: { teamId: string } }) {
   );
 }
 
-export async function generateStaticParams() {
-  const teamIds = new Array(30);
+// export async function generateStaticParams() {
+//   const teamIds = new Array(30);
 
-  for (let i = 1; i < 31; i++) {
-    teamIds[i] = i;
-  }
+//   for (let i = 1; i < 31; i++) {
+//     teamIds[i] = i;
+//   }
 
-  return teamIds.map((teamId: string) => ({
-    teamId: String(teamId),
-  }));
-}
+//   return teamIds.map((teamId: string) => ({
+//     teamId: String(teamId),
+//   }));
+// }

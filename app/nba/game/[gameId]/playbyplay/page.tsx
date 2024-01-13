@@ -1,6 +1,8 @@
 import View from "@/app/_components/NBA/views/game/PlaybyPlay";
 import { getLeagueScoreData, getNBAGameData } from "@/app/_lib/utils";
 
+export const revalidate = 15;
+
 export async function generateMetadata({ params }: { params: { gameId: string } }) {
   const gameData = await getNBAGameData(params.gameId);
 
