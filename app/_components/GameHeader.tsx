@@ -251,7 +251,11 @@ export default function GameHeader({ league, data }: { league: string; data: any
                     fontWeight: "700",
                     opacity: Number(awayTeam.score) > Number(homeTeam.score) ? "1" : "0.5",
                   }}
-                  className={`pr-2 relative text-2xl col-start-2`}
+                  className={`${
+                    Number(awayTeam.score) > Number(homeTeam.score)
+                      ? "away-winning-score-header"
+                      : ""
+                  } pr-2 relative text-2xl col-start-2`}
                 >
                   {awayTeam.score}
                 </p>
@@ -270,7 +274,11 @@ export default function GameHeader({ league, data }: { league: string; data: any
                     fontWeight: "700",
                     opacity: Number(homeTeam.score) > Number(awayTeam.score) ? "1" : "0.5",
                   }}
-                  className={`relative pl-2 text-2xl col-start-4`}
+                  className={`${
+                    Number(homeTeam.score) > Number(awayTeam.score)
+                      ? "home-winning-score-header"
+                      : ""
+                  } relative pl-2 text-2xl col-start-4`}
                 >
                   {homeTeam.score}
                 </p>

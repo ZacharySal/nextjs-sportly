@@ -4,6 +4,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
+import { v4 } from "uuid";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league: string }) {
@@ -39,6 +40,10 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     { refreshInterval: 30000 }
   );
 
+  if (!isLoading) {
+    console.log(data);
+    console.log(data?.gamepackageJSON);
+  }
   /* FEATURED ATHLETES FOR MLB TOP PERFORMERS */
 
   const getScoreOrRecord = (teamIndex: number) => {
@@ -603,17 +608,20 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
       </div>
 
       {/* IF GAME IS SCEHDULED WE SHOW PLAYERS TO WATCH */}
-      <div className="min-w-full min-h-full h-full flex flex-col gap-3 col-start-3 border-l border-[rgba(0,0,0,0.1)] px-2">
+      <div className="min-w-full min-h-full h-full flex flex-col gap-1 col-start-3 border-l border-[rgba(0,0,0,0.1)] px-2">
         {isGameScheduled && isGameDetailsFinalized && (
           <div className="h-full flex flex-row gap-2 justify-between items-center">
             {typeof game.competitors[1].leaders !== "undefined" &&
               typeof game.competitors[0].leaders !== "undefined" && (
-                <div className="h-full flex flex-col justify-start gap-3">
+                <div className="h-full flex flex-col justify-start gap-1">
                   <p className="text-[12px] opacity-60">PLAYERS TO WATCH</p>
                   {/* away team point leader */}
                   <div className="flex flex-row items-center gap-2">
                     <Image
-                      src={game?.competitors[1]?.leaders[0]?.leaders[0]?.athlete.headshot}
+                      src={
+                        data?.gamepackageJSON?.leaders?.[1].leaders?.[0].leaders?.[0]?.athlete
+                          ?.headshot.href
+                      }
                       width={100}
                       height={100}
                       priority={true}
@@ -622,18 +630,35 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                     />
                     <div className="flex flex-col">
                       <p className="text-xs">
-                        {`${game?.competitors?.[1]?.leaders?.[0]?.leaders?.[0]?.athlete?.displayName} `}
-                        <span className="opacity-60">{`${game?.competitors[1]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game.competitors[1].team?.abbreviation}`}</span>
+                        {`${data?.gamepackageJSON?.leaders?.[1].leaders?.[0].leaders?.[0]?.athlete?.fullName} `}
+                        <span className="opacity-60">{`${data?.gamepackageJSON?.leaders?.[1]?.leaders?.[0].leaders?.[0]?.athlete?.position?.abbreviation} - ${game?.competitors[1]?.team?.abbreviation}`}</span>
                       </p>
-                      <p className="text-xs">
-                        {`${Math.floor(game.competitors[1].leaders[0].leaders[0].value)}`}
-                        <span className="text-[10px] opacity-60">{` ${game?.competitors?.[0]?.leaders?.[0]?.abbreviation}`}</span>
-                      </p>
+
+                      <div className="flex gap-1">
+                        {data?.gamepackageJSON?.leaders?.[1].leaders?.[0].leaders?.[0].statistics?.map(
+                          (stat: any) => (
+                            <p key={v4()} className="text-xs">
+                              {stat.displayValue}
+                              <span className="text-[10px] opacity-60">{` ${stat.abbreviation}`}</span>
+                            </p>
+                          )
+                        ) ?? (
+                          <p className="text-[11px] opacity-70">
+                            {
+                              data?.gamepackageJSON?.leaders?.[1].leaders?.[0].leaders?.[0]
+                                .displayValue
+                            }
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <div className="flex flex-row items-center gap-2">
                     <Image
-                      src={game?.competitors[0]?.leaders[0]?.leaders[0]?.athlete.headshot}
+                      src={
+                        data?.gamepackageJSON?.leaders?.[0].leaders?.[0].leaders?.[0]?.athlete
+                          ?.headshot.href
+                      }
                       width={100}
                       height={100}
                       priority={true}
@@ -642,14 +667,27 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                     />
                     <div className="flex flex-col">
                       <p className="text-xs">
-                        {`${game?.competitors[0]?.leaders[0]?.leaders[0]?.athlete?.displayName} `}
-                        <span className="opacity-60">{`${game?.competitors[0]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game?.competitors[0]?.team?.abbreviation}`}</span>
+                        {`${data?.gamepackageJSON?.leaders?.[0].leaders?.[0]?.leaders?.[0]?.athlete?.fullName} `}
+                        <span className="opacity-60">{`${data?.gamepackageJSON?.leaders?.[0]?.leaders?.[0].leaders?.[0]?.athlete?.position?.abbreviation} - ${game?.competitors[0]?.team?.abbreviation}`}</span>
                       </p>
 
-                      <p className="text-xs">
-                        {`${Math?.floor(game?.competitors[0]?.leaders[0]?.leaders[0]?.value)}`}
-                        <span className="text-[10px] opacity-60">{` ${game?.competitors[0]?.leaders[0]?.abbreviation}`}</span>
-                      </p>
+                      <div className="flex gap-2">
+                        {data?.gamepackageJSON?.leaders?.[0].leaders?.[0].leaders?.[0].statistics?.map(
+                          (stat: any) => (
+                            <p key={v4()} className="text-xs">
+                              {stat.displayValue}
+                              <span className="text-[10px] opacity-60">{` ${stat.abbreviation}`}</span>
+                            </p>
+                          )
+                        ) ?? (
+                          <p className="text-[11px] opacity-70">
+                            {
+                              data?.gamepackageJSON?.leaders?.[0].leaders?.[0].leaders?.[0]
+                                .displayValue
+                            }
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -714,7 +752,62 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     return (
       <>
         {isDesktopScreen ? (
-          <div className="animate-pulse w-full rounded-xl h-[7.75rem] bg-gray-200 my-1"></div>
+          <div className="w-full grid grid-cols-[3fr,2fr,3fr] px-1 py-2 place-items-center">
+            {/* game date, network */}
+            <div className="min-w-full h-full my-auto col-start-1 border-r border-[rgba(0,0,0,0.1)]">
+              <div className="w-full h-full justify-center flex flex-col gap-3">
+                <div className="w-[40px] h-[10px] bg-gray-200 animate-pulse"></div>
+                {/* away team*/}
+                <div className="flex flex-row gap-2 items-center mb-2">
+                  <div className="w-9 h-9 rounded-full bg-gray-200 animate-pulse"></div>
+                  <div className="w-full flex flex-row">
+                    <div className="flex flex-col w-full gap-2">
+                      <div className="w-[60px] h-[10px] bg-gray-200 animate-pulse"></div>
+                      <div className="w-[100px] h-[10px] bg-gray-200 animate-pulse"></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-row gap-2 items-center mb-2">
+                  <div className="w-9 h-9 rounded-full bg-gray-200 animate-pulse"></div>
+                  <div className="w-full flex flex-row">
+                    <div className="flex flex-col w-full gap-2">
+                      <div className="w-[60px] h-[10px] bg-gray-200 animate-pulse"></div>
+                      <div className="w-[100px] h-[10px] bg-gray-200 animate-pulse"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="min-w-full h-full w-full min-h-full col-start-2 px-3">
+              <div className="flex flex-col gap-3">
+                <div className="w-[60px] h-[10px] bg-gray-200 animate-pulse"></div>
+                <div className="w-[80px] h-[10px] bg-gray-200 animate-pulse"></div>
+                <div className="w-[60px] h-[10px] bg-gray-200 animate-pulse mt-4"></div>
+                <div className="w-[40px] h-[10px] bg-gray-200 animate-pulse"></div>
+              </div>
+            </div>
+
+            {/* IF GAME IS SCEHDULED WE SHOW PLAYERS TO WATCH */}
+            <div className="min-w-full min-h-full h-full flex flex-col gap-3 col-start-3 border-l border-[rgba(0,0,0,0.1)] px-2">
+              <div className="w-[110px] h-[10px] bg-gray-200 animate-pulse"></div>
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-gray-200"></div>
+                <div className="flex flex-col gap-2">
+                  <div className="w-[100px] h-[10px] bg-gray-200 animate-pulse"></div>
+                  <div className="w-[50px] h-[10px] bg-gray-200 animate-pulse"></div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-gray-200"></div>
+                <div className="flex flex-col gap-2">
+                  <div className="w-[100px] h-[10px] bg-gray-200 animate-pulse"></div>
+                  <div className="w-[50px] h-[10px] bg-gray-200 animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         ) : (
           mobileView()
         )}
