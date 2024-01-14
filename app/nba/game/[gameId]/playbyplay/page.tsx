@@ -1,9 +1,9 @@
 import View from "@/app/_components/NBA/views/game/PlaybyPlay";
 
 export async function generateMetadata({ params }: { params: { gameId: string } }) {
-  const gameData = await fetch(`http://localhost:3000/api/nba/gameData/${params.gameId}`).then(
-    (res) => res.json()
-  );
+  const gameData = await fetch(
+    `https://nextjs-sportly.vercel.app/api/nba/gameData/${params.gameId}`
+  ).then((res) => res.json());
 
   return {
     title: `${gameData.awayTeam.team.name} vs ${gameData.homeTeam.team.name} (${new Date(

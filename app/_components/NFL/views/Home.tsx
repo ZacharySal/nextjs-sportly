@@ -12,9 +12,13 @@ import useSWR from "swr";
 export default function Home() {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  const { data, isLoading } = useSWR("http://localhost:3000/api/leagueData/nfl", fetcher, {
-    refreshInterval: 5000,
-  });
+  const { data, isLoading } = useSWR(
+    "https://nextjs-sportly.vercel.app/api/leagueData/nfl",
+    fetcher,
+    {
+      refreshInterval: 5000,
+    }
+  );
 
   if (isLoading) return <Loading />;
   else {

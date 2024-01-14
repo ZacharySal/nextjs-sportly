@@ -14,9 +14,13 @@ import Loading from "@/app/loading";
 export default function PlaybyPlay({ gameId }: { gameId: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  const { data, isLoading } = useSWR(`http://localhost:3000/api/nba/gameData/${gameId}`, fetcher, {
-    refreshInterval: 5000,
-  });
+  const { data, isLoading } = useSWR(
+    `https://nextjs-sportly.vercel.app/api/nba/gameData/${gameId}`,
+    fetcher,
+    {
+      refreshInterval: 5000,
+    }
+  );
 
   const desktopView = () => (
     <>

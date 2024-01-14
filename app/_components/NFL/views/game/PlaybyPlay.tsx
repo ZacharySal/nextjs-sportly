@@ -15,9 +15,13 @@ import Loading from "@/app/_components/Loading";
 export default function PlaybyPlay({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
 
-  const { data, isLoading } = useSWR(`http://localhost:3000/api/nfl/gameData/${gameId}`, fetcher, {
-    refreshInterval: 5000,
-  });
+  const { data, isLoading } = useSWR(
+    `https://nextjs-sportly.vercel.app/api/nfl/gameData/${gameId}`,
+    fetcher,
+    {
+      refreshInterval: 5000,
+    }
+  );
 
   function gameLeaders() {
     return (
