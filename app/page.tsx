@@ -1,12 +1,10 @@
 import { Metadata } from "next";
-import View from "./_components/NBA/views/Home";
-import { getLeagueScoreData } from "./_lib/utils";
+import NBAPage from "./nba/page";
 
 export const metadata: Metadata = {
   title: "NBA Scores 2023-24 Season - Sportly",
 };
 
 export default async function Page() {
-  const data = await getLeagueScoreData("nba");
-  return <View data={data} />;
+  return <NBAPage />;
 }

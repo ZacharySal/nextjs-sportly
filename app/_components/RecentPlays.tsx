@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { v4 } from "uuid";
 
 type Play = {
   id: string;
@@ -92,53 +93,48 @@ export default function RecentPlays({ data }: { data: any }) {
                 ? team.team.logos[0].href
                 : null;
               return (
-                <div className="flex flex-col">
-                  <div
-                    key={play.id}
-                    className="grid py-2 px-1 gap-x-3 grid-rows-2 grid-cols-[auto_4fr_2fr] border-b border-[rgba(0,0,0,0.2)]"
-                  >
-                    <div className="row-span-full flex items-center justify-center">
-                      {displayedPicture && (
-                        <Image
-                          src={displayedPicture}
-                          alt="player or team logo"
-                          width={50}
-                          height={50}
-                          className="w-[50px] h-[50px] object-cover rounded-full"
-                        />
-                      )}
-                    </div>
-
-                    <div
-                      style={{ fontWeight: play.scoringPlay ? "600" : "400" }}
-                      className="text-left text-xs my-auto row-span-full"
-                    >
-                      <p className="font-[300]">
-                        {play.clock.displayValue} - {play.period.displayValue}
-                      </p>
-                      <p>{play.text}</p>
-                    </div>
-
-                    <div className="row-start-1 col-start-3 flex gap-1 justify-end items-center">
+                <div
+                  key={play.id}
+                  className="grid py-2 px-1 gap-x-3 grid-rows-2 grid-cols-[auto_4fr_2fr] border-b border-[rgba(0,0,0,0.2)]"
+                >
+                  <div className="row-span-full flex items-center justify-center">
+                    {displayedPicture && (
                       <Image
-                        src={winProbability?.team?.team?.logos[0].href}
+                        src={displayedPicture}
                         alt="player or team logo"
-                        width={winProbability?.team?.team?.logos[0].width}
-                        height={winProbability?.team?.team?.logos[0].height}
-                        className="w-[20px] object-contain rounded-full"
+                        width={50}
+                        height={50}
+                        className="w-[50px] h-[50px] object-cover rounded-full"
                       />
-                      <p className="text-[12px]">
-                        {Number(winProbability?.chance * 100).toFixed(1)}%
-                      </p>
-                    </div>
+                    )}
+                  </div>
 
-                    <p className="text-[12px] row-span-full row-start-2 col-start-3 flex justify-end items-end font-[400]">
-                      {play.awayScore} - {play.homeScore}
+                  <div
+                    style={{ fontWeight: play.scoringPlay ? "600" : "400" }}
+                    className="text-left text-xs my-auto row-span-full"
+                  >
+                    <p className="font-[300]">
+                      {play.clock.displayValue} - {play.period.displayValue}
+                    </p>
+                    <p>{play.text}</p>
+                  </div>
+
+                  <div className="row-start-1 col-start-3 flex gap-1 justify-end items-center">
+                    <Image
+                      src={winProbability?.team?.team?.logos[0].href}
+                      alt="player or team logo"
+                      width={winProbability?.team?.team?.logos[0].width}
+                      height={winProbability?.team?.team?.logos[0].height}
+                      className="w-[20px] object-contain rounded-full"
+                    />
+                    <p className="text-[12px]">
+                      {Number(winProbability?.chance * 100).toFixed(1)}%
                     </p>
                   </div>
-                  {/* <div className="flex w-full justify-center items-center">
-                    <BasketballCourtSVG />
-                  </div> */}
+
+                  <p className="text-[12px] row-span-full row-start-2 col-start-3 flex justify-end items-end font-[400]">
+                    {play.awayScore} - {play.homeScore}
+                  </p>
                 </div>
               );
             } else {
