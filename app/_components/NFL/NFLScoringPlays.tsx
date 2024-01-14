@@ -63,31 +63,31 @@ export default function NFLScoringPlays({ data }: { data: any }) {
     <div className="w-full bg-white rounded-xl flex flex-col justify-center items-center p-3">
       <p className=" w-full text-left text-sm opacity-70 font-semibold">Scoring Plays</p>
       <hr className="w-full color-[#edeef0] my-[0.5rem]" />
-      {data.firstQuarterScoringPlays.length > 0 && (
+      {data.scoringPlays.firstQuarterScoringPlays.length > 0 && (
         <>
           {quarterHeader("1ST QUARTER")}
-          {scoringPlays(data.firstQuarterScoringPlays)}
+          {scoringPlays(data.scoringPlays.firstQuarterScoringPlays)}
           <hr className="w-full color-[#edeef0] my-[0.5rem]" />
         </>
       )}
-      {data.secondQuarterScoringPlays.length > 0 && (
+      {data.scoringPlays.secondQuarterScoringPlays.length > 0 && (
         <>
           {quarterHeader("2ND QUARTER")}
-          {scoringPlays(data.secondQuarterScoringPlays)}
+          {scoringPlays(data.scoringPlays.secondQuarterScoringPlays)}
           <hr className="w-full color-[#edeef0] my-[0.5rem]" />
         </>
       )}
-      {data.thirdQuarterScoringPlays.length > 0 && (
+      {data.scoringPlays.thirdQuarterScoringPlays.length > 0 && (
         <>
           {quarterHeader("3RD QUARTER")}
-          {scoringPlays(data.thirdQuarterScoringPlays)}
+          {scoringPlays(data.scoringPlays.thirdQuarterScoringPlays)}
           <hr className="w-full color-[#edeef0] my-[0.5rem]" />
         </>
       )}
-      {data.fourthQuarterScoringPlays.length > 0 && (
+      {data.scoringPlays.fourthQuarterScoringPlays.length > 0 && (
         <>
           {quarterHeader("4TH QUARTER")}
-          {scoringPlays(data.fourthQuarterScoringPlays)}
+          {scoringPlays(data.scoringPlays.fourthQuarterScoringPlays)}
         </>
       )}
     </div>

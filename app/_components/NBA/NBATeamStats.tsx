@@ -32,8 +32,6 @@ export default function NBATeamStats({ data }: { data: any }) {
     },
   ];
 
-  console.log(data);
-
   const { homeTeamColor, awayTeamColor } = potentialColorCombos
     .map((el: any) => el)
     .find((combo: any) => !isSimilar(getRGB(combo.homeTeamColor), getRGB(combo.awayTeamColor)));

@@ -4,7 +4,6 @@ import Image from "next/image";
 
 export default function NFLGameStats({ data, league }: { data: any; league: string }) {
   const [selectedTeam, setSelectedTeam] = useState(1);
-  console.log(data);
   const awayTeamName = data.gameData.boxscore.teams[0].team.shortDisplayName;
   const homeTeamName = data.gameData.boxscore.teams[1].team.shortDisplayName;
 

@@ -1,11 +1,9 @@
 import View from "../../../../_components/NFL/views/game/Home";
-import { getLeagueScoreData, getNFLGameData } from "@/app/_lib/utils";
-
-export const revalidate = 15;
 
 export async function generateMetadata({ params }: { params: { gameId: string } }) {
-  const gameData = await getNFLGameData(params.gameId);
-
+  const gameData = await fetch(`http://localhost:3000/api/nfl/gameData/${params.gameId}`).then(
+    (res) => res.json()
+  );
   return {
     title: `${gameData.awayTeam.team.name} vs ${gameData.homeTeam.team.name} (${new Date(
       gameData.gameInfo.date
@@ -18,15 +16,5 @@ export async function generateMetadata({ params }: { params: { gameId: string } 
 }
 
 export default async function Page({ params }: { params: { gameId: string } }) {
-  const data = await getNFLGameData(params.gameId);
-
-  return <View data={data} />;
+  return <View gameId={params.gameId} />;
 }
-
-// export async function generateStaticParams() {
-//   const data = await getLeagueScoreData("nfl");
-
-//   return data.scoreData.content.sbData.events.map((event: any) => ({
-//     gameId: String(event.id),
-//   }));
-// }

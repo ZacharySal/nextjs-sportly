@@ -1,16 +1,20 @@
 "use client";
 
 import ContainerBox from "@/app/_components/ContainerBox";
-import Articles from "@/app/_components/Articles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
-import MatchupPredictor from "@/app/_components/MatchupPredictor";
 import NBAGameStats from "@/app/_components/NBA/NBAGameStats";
-import SeasonSeries from "@/app/_components/SeasonSeries";
+import useSWR from "swr";
+import { fetcher } from "@/app/_lib/utils";
+import Loading from "@/app/_components/Loading";
 
-export default function Boxscore({ data }: { data: any }) {
+export default function Boxscore({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+
+  const { data, isLoading } = useSWR(`http://localhost:3000/api/nba/gameData/${gameId}`, fetcher, {
+    refreshInterval: 5000,
+  });
 
   const mobileView = () => <NBAGameStats data={data} isDesktopScreen={isDesktopScreen} />;
 
@@ -25,6 +29,7 @@ export default function Boxscore({ data }: { data: any }) {
     </>
   );
 
+  if (isLoading) return <Loading />;
   return (
     <>
       <GameUserSelection userSelection={"boxscore"} data={data} />

@@ -1,10 +1,9 @@
 import View from "@/app/_components/NBA/views/game/PlaybyPlay";
-import { getLeagueScoreData, getNBAGameData } from "@/app/_lib/utils";
-
-export const revalidate = 15;
 
 export async function generateMetadata({ params }: { params: { gameId: string } }) {
-  const gameData = await getNBAGameData(params.gameId);
+  const gameData = await fetch(`http://localhost:3000/api/nba/gameData/${params.gameId}`).then(
+    (res) => res.json()
+  );
 
   return {
     title: `${gameData.awayTeam.team.name} vs ${gameData.homeTeam.team.name} (${new Date(
@@ -18,6 +17,5 @@ export async function generateMetadata({ params }: { params: { gameId: string } 
 }
 
 export default async function Page({ params }: { params: { gameId: string } }) {
-  const data = await getNBAGameData(params.gameId);
-  return <View data={data} />;
+  return <View gameId={params.gameId} />;
 }

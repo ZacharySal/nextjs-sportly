@@ -14,9 +14,16 @@ import NFLGameLeaders from "@/app/_components/NFL/NFLGameLeaders";
 import InjuryReport from "@/app/_components/InjuryReport";
 import LastFive from "@/app/_components/LastFive";
 import RecentPlays from "@/app/_components/RecentPlays";
+import useSWR from "swr";
+import { fetcher } from "@/app/_lib/utils";
+import Loading from "@/app/_components/Loading";
 
-export default function Home({ data }: { data: any }) {
+export default function Home({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+
+  const { data, isLoading } = useSWR(`http://localhost:3000/api/nfl/gameData/${gameId}`, fetcher, {
+    refreshInterval: 5000,
+  });
 
   const desktopView = () => (
     <>
@@ -73,6 +80,7 @@ export default function Home({ data }: { data: any }) {
     </div>
   );
 
+  if (isLoading) return <Loading />;
   return (
     <>
       <GameUserSelection userSelection={"gamecast"} data={data} />

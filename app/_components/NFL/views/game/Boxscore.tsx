@@ -8,9 +8,16 @@ import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import NFLGameStats from "@/app/_components/NFL/NFLGameStats";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
+import useSWR from "swr";
+import { fetcher } from "@/app/_lib/utils";
+import Loading from "@/app/loading";
 
-export default function View({ data }: { data: any }) {
+export default function View({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+
+  const { data, isLoading } = useSWR(`http://localhost:3000/api/nfl/gameData/${gameId}`, fetcher, {
+    refreshInterval: 5000,
+  });
 
   function gameLeaders() {
     return (
@@ -180,6 +187,7 @@ export default function View({ data }: { data: any }) {
 
   const mobileView = () => <NFLGameStats data={data} league="nfl" />;
 
+  if (isLoading) return <Loading />;
   return (
     <>
       <GameUserSelection userSelection={"boxscore"} data={data} />

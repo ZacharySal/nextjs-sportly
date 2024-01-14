@@ -5,7 +5,10 @@ import type { ScoreData } from "@/types";
 
 export async function getNBAGameData(gameId: string) {
   const gameDataResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${gameId}`
+    `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${gameId}`,
+    {
+      cache: "no-cache",
+    }
   );
 
   if (!gameDataResponse.ok) {
@@ -27,7 +30,10 @@ export async function getNBAGameData(gameId: string) {
 
 export async function getMLBGameData(gameId: string) {
   const gameDataResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${gameId}`
+    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${gameId}`,
+    {
+      cache: "no-cache",
+    }
   );
 
   if (!gameDataResponse.ok) {
@@ -105,7 +111,10 @@ export async function getMLBGameData(gameId: string) {
 
 export async function getNFLGameData(gameId: string) {
   const gameDataResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${gameId}`
+    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${gameId}`,
+    {
+      cache: "no-cache",
+    }
   );
 
   if (!gameDataResponse.ok) {
@@ -150,7 +159,9 @@ export async function getNFLGameData(gameId: string) {
 }
 
 export async function getLeagueScoreData(league: League) {
-  const scoreData = await fetch(`https://cdn.espn.com/core/${league}/scoreboard?xhr=1`);
+  const scoreData = await fetch(`https://cdn.espn.com/core/${league}/scoreboard?xhr=1`, {
+    cache: "no-cache",
+  });
 
   if (!scoreData.ok) {
     throw new Error("Failed to fetch NBA score data");
@@ -406,3 +417,5 @@ export async function getTeamData(league: League, teamId: string) {
   const teamData = await teamDataResponse.json();
   return teamData;
 }
+
+export const fetcher = (url: string) => fetch(url).then((res) => res.json());

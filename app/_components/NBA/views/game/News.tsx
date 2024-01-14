@@ -8,9 +8,15 @@ import DivisionStandings from "@/app/_components/DivisionStandings";
 import GameUserSelection from "@/app/_components/GameUserSelection";
 import Loading from "@/app/_components/Loading";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
+import useSWR from "swr";
+import { fetcher } from "@/app/_lib/utils";
 
-export default function Page({ data }: { data: any }) {
+export default function Page({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+
+  const { data, isLoading } = useSWR(`http://localhost:3000/api/nba/gameData/${gameId}`, fetcher, {
+    refreshInterval: 5000,
+  });
 
   const desktopView = () => (
     <>
@@ -29,6 +35,7 @@ export default function Page({ data }: { data: any }) {
     <Articles title="NBA News" news={data.gameData.news.articles} limit={6} />
   );
 
+  if (isLoading) return <Loading />;
   return (
     <>
       <GameUserSelection userSelection={"news"} data={data} />

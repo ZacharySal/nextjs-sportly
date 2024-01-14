@@ -1,0 +1,52 @@
+import { NextResponse } from "next/server";
+
+export async function GET(request: Request, { params }: { params: { gameId: string } }) {
+  const gameDataResponse = await fetch(
+    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${params.gameId}`,
+    {
+      cache: "no-cache",
+    }
+  );
+
+  if (!gameDataResponse.ok) {
+    throw new Error("Failed to fetch game data");
+  }
+
+  const gameData = await gameDataResponse.json();
+
+  const gameInfo = gameData.header.competitions[0];
+
+  let firstQuarterScoringPlays: any[] = [];
+  let secondQuarterScoringPlays: any[] = [];
+  let thirdQuarterScoringPlays: any[] = [];
+  let fourthQuarterScoringPlays: any[] = [];
+  const isGameStarted = gameData.drives ? true : false;
+
+  if (isGameStarted && gameData.scoringPlays?.length > 0) {
+    gameData.scoringPlays.map((play: any) => {
+      if (play.period.number === 1) {
+        firstQuarterScoringPlays.push(play);
+      } else if (play.period.number === 2) {
+        secondQuarterScoringPlays.push(play);
+      } else if (play.period.number === 3) {
+        thirdQuarterScoringPlays.push(play);
+      } else if (play.period.number === 4) {
+        fourthQuarterScoringPlays.push(play);
+      }
+    });
+  }
+
+  return NextResponse.json({
+    gameData: gameData,
+    homeTeam: gameData.header.competitions[0].competitors[0],
+    awayTeam: gameData.header.competitions[0].competitors[1],
+    isGameStarted: gameData.lastFiveGames ? false : true,
+    gameInfo: gameInfo,
+    scoringPlays: {
+      firstQuarterScoringPlays,
+      secondQuarterScoringPlays,
+      thirdQuarterScoringPlays,
+      fourthQuarterScoringPlays,
+    },
+  });
+}

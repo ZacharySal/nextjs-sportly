@@ -8,9 +8,16 @@ import GameUserSelection from "@/app/_components/GameUserSelection";
 import NFLPlayByPlay from "@/app/_components/NFL/NFLPlayByPlay";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
 import Link from "next/link";
+import useSWR from "swr";
+import { fetcher } from "@/app/_lib/utils";
+import Loading from "@/app/_components/Loading";
 
-export default function PlaybyPlay({ data }: { data: any }) {
+export default function PlaybyPlay({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+
+  const { data, isLoading } = useSWR(`http://localhost:3000/api/nfl/gameData/${gameId}`, fetcher, {
+    refreshInterval: 5000,
+  });
 
   function gameLeaders() {
     return (
@@ -184,6 +191,7 @@ export default function PlaybyPlay({ data }: { data: any }) {
 
   const mobileView = () => <NFLPlayByPlay data={data} />;
 
+  if (isLoading) return <Loading />;
   return (
     <>
       <GameUserSelection userSelection={"playbyplay"} data={data} />

@@ -8,7 +8,9 @@ export default async function Layout({
   params: { gameId: string };
   children: React.ReactNode;
 }) {
-  const data = await getNFLGameData(params.gameId);
+  const data = await fetch(`http://localhost:3000/api/nfl/gameData/${params.gameId}`).then((res) =>
+    res.json()
+  );
   return (
     <>
       <GameHeader data={data} league="nfl" />

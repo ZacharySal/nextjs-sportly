@@ -15,9 +15,16 @@ import LastFive from "@/app/_components/LastFive";
 import RecentPlays from "@/app/_components/RecentPlays";
 import SeasonSeries from "@/app/_components/SeasonSeries";
 import NBATeamStats from "../../NBATeamStats";
+import useSWR from "swr";
+import Loading from "@/app/loading";
+import { fetcher } from "@/app/_lib/utils";
 
-export default function Home({ data }: { data: any }) {
+export default function Home({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+
+  const { data, isLoading } = useSWR(`http://localhost:3000/api/nba/gameData/${gameId}`, fetcher, {
+    refreshInterval: 5000,
+  });
 
   const mobileView = () => (
     <div className="w-full flex flex-col justify-center items-center gap-3">
@@ -79,6 +86,7 @@ export default function Home({ data }: { data: any }) {
     </>
   );
 
+  if (isLoading) return <Loading />;
   return (
     <>
       <GameUserSelection userSelection={"gamecast"} data={data} />

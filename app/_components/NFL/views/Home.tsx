@@ -1,40 +1,42 @@
 "use client";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useState } from "react";
 import Articles from "../../Articles";
 import ContainerBox from "../../ContainerBox";
 import LeagueUserSelection from "../../LeagueUserSelection";
 import Loading from "../../Loading";
 import NFLScoreboard from "../NFLScoreboard";
-import useHasHydrated from "../../hooks/useHasHyrdated";
+import { fetcher } from "@/app/_lib/utils";
+import useSWR from "swr";
 
-export default function Home({ data }: { data: any }) {
-  const [userSelection, setUserSelection] = useState("scoreboard");
+export default function Home() {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
-  const pageHydrated = useHasHydrated();
 
-  if (!pageHydrated) return <Loading />;
+  const { data, isLoading } = useSWR("http://localhost:3000/api/leagueData/nfl", fetcher, {
+    refreshInterval: 5000,
+  });
+
+  if (isLoading) return <Loading />;
   else {
     return (
       <main>
         {isDesktopScreen ? (
           <>
-            <LeagueUserSelection userSelection={userSelection} league="nfl" />
+            <LeagueUserSelection userSelection={"scoreboard"} league="nfl" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
               <div className="basis-3/4">
-                <NFLScoreboard initialScoreData={data.scoreData} />
+                <NFLScoreboard initialScoreData={data} />
               </div>
               <div className="basis-1/4">
-                <Articles title={`NFL News`} news={data.scoreData.news.articles} limit={10} />
+                <Articles title={`NFL News`} news={data.news.articles} limit={10} />
               </div>
             </ContainerBox>
           </>
         ) : (
           <>
-            <LeagueUserSelection userSelection={userSelection} league="nfl" />
+            <LeagueUserSelection userSelection={"scoreboard"} league="nfl" />
             <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <NFLScoreboard initialScoreData={data.scoreData} />
+              <NFLScoreboard initialScoreData={data} />
             </ContainerBox>
           </>
         )}

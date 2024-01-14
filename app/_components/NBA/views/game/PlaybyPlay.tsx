@@ -7,9 +7,16 @@ import GameUserSelection from "@/app/_components/GameUserSelection";
 import MatchupPredictor from "@/app/_components/MatchupPredictor";
 import NBAPlaybyPlay from "@/app/_components/NBA/NBAPlaybyPlay";
 import SeasonSeries from "@/app/_components/SeasonSeries";
+import useSWR from "swr";
+import { fetcher } from "@/app/_lib/utils";
+import Loading from "@/app/loading";
 
-export default function PlaybyPlay({ data }: { data: any }) {
+export default function PlaybyPlay({ gameId }: { gameId: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+
+  const { data, isLoading } = useSWR(`http://localhost:3000/api/nba/gameData/${gameId}`, fetcher, {
+    refreshInterval: 5000,
+  });
 
   const desktopView = () => (
     <>
@@ -26,6 +33,7 @@ export default function PlaybyPlay({ data }: { data: any }) {
 
   const mobileView = () => <NBAPlaybyPlay data={data} />;
 
+  if (isLoading) return <Loading />;
   return (
     <>
       <GameUserSelection userSelection={"playbyplay"} data={data} />
