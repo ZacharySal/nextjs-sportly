@@ -33,12 +33,12 @@ export default function NBAGameStats({
     <>
       {data.gameData.boxscore.players[teamOption].statistics.map((statType: any) => (
         <div key={uuidv4()} className="bg-white rounded-xl w-full h-auto mb-3">
-          <div className="flex items-center justify-start gap-1 mb-2">
+          <div className="flex items-center justify-start gap-2 mb-2">
             <Image
               width={data.gameInfo.competitors[teamOption === 0 ? 1 : 0].team.logos[0].width}
               height={data.gameInfo.competitors[teamOption === 0 ? 1 : 0].team.logos[0].height}
               alt="team"
-              className="w-7 object-contain"
+              className="w-6 object-contain"
               src={data.gameInfo.competitors[teamOption === 0 ? 1 : 0].team.logos[0].href}
             />
             <div className="w-full flex flex-row items-center justify-between">

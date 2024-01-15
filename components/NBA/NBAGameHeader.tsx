@@ -338,10 +338,10 @@ export default function NBAGameHeader({ league, data }: { league: string; data: 
                 >
                   <div className="flex flex-col-reverse xs:flex-row gap-1 items-center justify-end">
                     <div className="flex flex-col">
-                      <p className="text-xs opacity-70 font-semibold">
+                      <p className="text-[10px] opacity-70 font-semibold">
                         {awayTeam.team.abbreviation}
                       </p>
-                      <p className="text-xs opacity-70 whitespace-nowrap">
+                      <p className="text-[10px] opacity-70 whitespace-nowrap">
                         {typeof awayTeam.record !== "undefined" &&
                           awayTeam.record?.[0]?.displayValue}
                       </p>
@@ -486,11 +486,9 @@ export default function NBAGameHeader({ league, data }: { league: string; data: 
                       alt="home team logo"
                       className="w-6 xs:w-8 object-contain"
                     />
-                    <div className="flex flex-col">
-                      <p className="text-xs opacity-80 font-semibold">
-                        {homeTeam.team.abbreviation}
-                      </p>
-                      <p className="text-xs opacity-80  whitespace-nowrap">
+                    <div className="flex flex-col text-[10px]">
+                      <p className="opacity-80 font-semibold">{homeTeam.team.abbreviation}</p>
+                      <p className="opacity-80  whitespace-nowrap">
                         {typeof homeTeam.record !== "undefined" &&
                           homeTeam.record?.[0]?.displayValue}
                       </p>

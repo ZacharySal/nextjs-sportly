@@ -16,6 +16,7 @@ import LastFive from "@/components/LastFive";
 import RecentPlays from "@/components/RecentPlays";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
+import Linescores from "@/components/Linescores";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -42,7 +43,6 @@ export default function Home({ gameId }: { gameId: string }) {
         {data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
-            <NFLBoxscore data={data} />
             <NFLScoringPlays data={data} />
           </>
         )}
@@ -67,7 +67,7 @@ export default function Home({ gameId }: { gameId: string }) {
       <GameRecapArticle data={data} />
       {data.isGameStarted ? (
         <>
-          <NFLBoxscore data={data} />
+          <Linescores data={data} />
           <NFLGameLeaders data={data} />
           <NFLScoringPlays data={data} />
           <MatchupPredictor data={data} league={"nfl"} />

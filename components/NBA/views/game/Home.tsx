@@ -17,6 +17,7 @@ import SeasonSeries from "@/components/SeasonSeries";
 import NBATeamStats from "../../NBATeamStats";
 import useSWR from "swr";
 import Loading from "@/app/loading";
+import Linescores from "@/components/Linescores";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -36,7 +37,7 @@ export default function Home({ gameId }: { gameId: string }) {
       <GameRecapArticle data={data} />
       {data.isGameStarted ? (
         <>
-          <NBABoxscore data={data} />
+          <Linescores data={data} />
           {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
           <NBAGameLeaders data={data} />
           {data.isGameStarted && <NBATeamStats data={data} />}
@@ -78,7 +79,6 @@ export default function Home({ gameId }: { gameId: string }) {
             <GameRecapArticle data={data} />
             {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
             <NBAGameLeaders data={data} />
-            <NBABoxscore data={data} />
           </>
         )}
       </div>

@@ -19,20 +19,20 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
     return null;
   return (
     <div className="w-full bg-white p-3 flex flex-col gap-3 rounded-xl">
-      <p className="font-semibold text-[14px] border-b border-dotted pb-3 border-b-[rgba(0,0,0,0.6)]">
+      <p className="font-semibold text-[14px] border-b border-dotted pb-3 border-b-[rgba(0,0,0,0.2)]">
         Injury Report
       </p>
       {data.gameData.injuries.map((team: any) => (
         <React.Fragment key={uuidv4()}>
           {team.injuries.length > 0 && (
             <div key={uuidv4()} className="flex flex-col gap-1">
-              <div className="flex flex-row gap-1 items-center">
+              <div className="flex flex-row gap-1 items-center mb-1">
                 <Image
                   width={team.team.logos[0].width}
                   height={team.team.logos[0].height}
                   priority={true}
                   src={team.team.logos[0].href}
-                  className="w-7 object-contain"
+                  className="w-6 object-contain"
                   alt="team logo"
                 />
                 <p className="opacity-80 font-[600] text-sm">{team.team.displayName}</p>
@@ -40,23 +40,32 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
               <table className="table misc-table">
                 <thead>
                   <tr className="text-[11px] table-header">
-                    <th className="pl-1" colSpan={2} align="left">
+                    <th className="pl-1 text-[11px]" colSpan={2} align="left">
                       NAME, POS
                     </th>
-                    <th align="right">STATUS</th>
-                    <th className="pr-1" align="right">
+                    <th align="right" className="text-[11px]">
+                      STATUS
+                    </th>
+                    <th className="pr-1 text-[11px]" align="right">
                       DATE
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {team.injuries.map((player: any) => (
-                    <tr key={uuidv4()} className="text-xs opacity-60">
+                    <tr key={uuidv4()} className="text-[12px]">
                       <td className="pl-1 injury-name" align="left" colSpan={2}>
-                        {`${player.athlete.displayName} - ${player.athlete.position.abbreviation}`}
+                        <span className="text-[#06c] font-[300]">
+                          {player.athlete.displayName}{" "}
+                        </span>
+                        <span className="text-[#6c6d6f]">
+                          {player.athlete.position.abbreviation}
+                        </span>
                       </td>
-                      <td align="right">{player.status}</td>
-                      <td className="pr-1 injury-date" align="right">
+                      <td align="right" className="text-[#6c6d6f] uppercase pr-1">
+                        {player.status}
+                      </td>
+                      <td className="pr-1 injury-date text-[#6c6d6f]" align="right">
                         {formatDate(player.date)}
                       </td>
                     </tr>
@@ -65,6 +74,22 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
               </table>
             </div>
           )}
+          {/* {team.injuries.length === 0 && (
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-row gap-1 items-center">
+                <Image
+                  width={team.team.logos[0].width}
+                  height={team.team.logos[0].height}
+                  priority={true}
+                  src={team.team.logos[0].href}
+                  className="w-6 object-contain"
+                  alt="team logo"
+                />
+                <p className="opacity-80 font-[600] text-sm">{team.team.displayName}</p>
+              </div>
+              <p className="text-sm opacity-60">No injured players</p>
+            </div>
+          )} */}
         </React.Fragment>
       ))}
       <Link

@@ -58,22 +58,22 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
           4th
         </div>
       </div>
-      <table className="w-full text-left table stat-table">
+      <table className="max-w-full text-left table stat-table">
         <thead className="justify-left items-left border-t border-b border-[rgba(0,0,0,0.1)]">
           <tr className="table-header">
             <th className="text-xs text-left px-0 w-[4rem]">TIME</th>
-            <th className="text-xs text-left w-[10rem]" colSpan={2}>
-              PLAY
-            </th>
+            <th className="text-xs text-left">PLAY</th>
             <th className="text-xs text-center">{data.awayTeam.team.abbreviation}</th>
             <th className="text-xs text-center">{data.homeTeam.team.abbreviation}</th>
           </tr>
         </thead>
         <tbody>
           {selectedPlays.map((play: any) => (
-            <tr key={uuidv4()} className="border-t border-b border-[rgba(0,0,0,0.1)]">
-              <td className="text-xs text-left pl-1 table-cell">{play.clock.displayValue}</td>
-              <td className="text-xs text-left p-2 pl-0" align="left" colSpan={2}>
+            <tr key={uuidv4()} className="w-full border-t border-b border-[rgba(0,0,0,0.1)]">
+              <td className="text-xs text-left pl-1 table-cell opacity-80 pr-5">
+                {play.clock.displayValue}
+              </td>
+              <td className="text-xs text-left p-1 pl-0 w-full" align="left">
                 {typeof play.team !== "undefined" ? (
                   <div className="w-full flex flex-row items-center justify-start gap-1">
                     <Image
@@ -89,14 +89,17 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
                         fontWeight: play.scoringPlay ? "600" : "400",
                         whiteSpace: "normal",
                         color: play.scoringPlay ? "black" : "#6c6d6f",
+                        opacity: "0.8",
                       }}
-                      className="text-xs text-left w-full"
+                      className="text-xs text-left max-w-full"
                     >
                       {play.text}
                     </p>
                   </div>
                 ) : (
-                  <p className="text-xs text-left w-full">{play.text}</p>
+                  <p className="text-xs text-left max-w-full opacity-80 whitespace-break-spaces">
+                    {play.text}
+                  </p>
                 )}
               </td>
               <td
