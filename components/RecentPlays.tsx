@@ -120,10 +120,10 @@ export default function RecentPlays({ data }: { data: any }) {
                     <div className="flex gap-1 items-center">
                       <Image
                         priority={true}
-                        src={team.team.logos[0].href}
+                        src={team?.team?.logos?.[0]?.href ?? "/default.png"}
                         alt="player or team logo"
-                        width={team.team.logos[0].width}
-                        height={team.team.logos[0].height}
+                        width={team?.team?.logos?.[0]?.width ?? 100}
+                        height={team?.team?.logos?.[0]?.width ?? 100}
                         className="w-[20px] object-contain rounded-full"
                       />
                       <p className="font-[300]">
@@ -169,10 +169,10 @@ export default function RecentPlays({ data }: { data: any }) {
                     {team && (
                       <Image
                         priority={true}
-                        src={team.team.logos[0].href}
+                        src={team?.team?.logos?.[0]?.href ?? "/default.png"}
                         alt="team logo"
-                        width={team.team.logos[0].width}
-                        height={team.team.logos[0].height}
+                        width={team?.team?.logos?.[0]?.width ?? 100}
+                        height={team?.team?.logos?.[0]?.height ?? 100}
                         className="w-5 object-contain"
                       />
                     )}
