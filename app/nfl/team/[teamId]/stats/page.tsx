@@ -1,5 +1,5 @@
-import { getTeamData, getTeamNews, getNFLTeamStats } from "@/app/_lib/utils";
-import View from "../../../../_components/NFL/views/team/Stats";
+import { getTeamData, getTeamNews, getNFLTeamStats } from "@/lib/utils";
+import View from "../../../../../components/NFL/views/team/Stats";
 
 export const revalidate = 600;
 

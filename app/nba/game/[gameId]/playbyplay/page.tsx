@@ -1,4 +1,4 @@
-import View from "@/app/_components/NBA/views/game/PlaybyPlay";
+import View from "@/components/NBA/views/game/PlaybyPlay";
 
 export async function generateMetadata({ params }: { params: { gameId: string } }) {
   const gameData = await fetch(

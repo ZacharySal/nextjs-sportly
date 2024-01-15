@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import View from "../_components/NBA/views/Home";
+import View from "../../components/NBA/views/Home";
 
 export const metadata: Metadata = {
   title: "NBA Scores 2023-24 Season - Sportly",

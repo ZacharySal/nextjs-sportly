@@ -1,4 +1,4 @@
-import View from "@/app/_components/NBA/views/game/Home";
+import View from "@/components/NBA/views/game/Home";
 
 export default async function Page({ params }: { params: { gameId: string } }) {
   return <View gameId={params.gameId} />;

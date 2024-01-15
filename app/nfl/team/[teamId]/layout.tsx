@@ -1,6 +1,6 @@
 "use client";
 
-import TeamHeader from "@/app/_components/TeamHeader";
+import TeamHeader from "@/components/TeamHeader";
 import useSwr from "swr";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());

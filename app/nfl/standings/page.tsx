@@ -1,5 +1,5 @@
-import { getLeagueStandingsData } from "@/app/_lib/utils";
-import View from "../../_components/NFL/views/Standings";
+import { getLeagueStandingsData } from "@/lib/utils";
+import View from "../../../components/NFL/views/Standings";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

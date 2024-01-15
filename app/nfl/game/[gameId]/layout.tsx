@@ -1,5 +1,5 @@
-import GameHeader from "@/app/_components/GameHeader";
-import { getNFLGameData } from "@/app/_lib/utils";
+import GameHeader from "@/components/GameHeader";
+import { getNFLGameData } from "@/lib/utils";
 
 export default async function Layout({
   children,

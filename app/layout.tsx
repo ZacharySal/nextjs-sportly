@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Russo_One } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
-import Navbar from "./_components/Navbar/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 
 const inter = Inter({
   weight: "variable",

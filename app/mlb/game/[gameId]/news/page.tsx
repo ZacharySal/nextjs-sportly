@@ -1,4 +1,4 @@
-import View from "@/app/_components/MLB/views/game/News";
+import View from "@/components/MLB/views/game/News";
 
 export default async function Page({ params }: { params: { gameId: string } }) {
   const data = await fetch(`https://nextjs-sportly.vercel.app/api/mlb/gameData/${params.gameId}`, {

@@ -1,5 +1,5 @@
-import View from "@/app/_components/NBA/views/team/Schedule";
-import { getNBATeamStats, getTeamData, getTeamNews, getTeamSchedule } from "@/app/_lib/utils";
+import View from "@/components/NBA/views/team/Schedule";
+import { getNBATeamStats, getTeamData, getTeamNews, getTeamSchedule } from "@/lib/utils";
 
 export const revalidate = 600;
 

@@ -1,4 +1,4 @@
-import View from "../../../../_components/NFL/views/game/Home";
+import View from "../../../../../components/NFL/views/game/Home";
 
 export async function generateMetadata({ params }: { params: { gameId: string } }) {
   const gameData = await fetch(

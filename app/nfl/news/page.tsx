@@ -1,5 +1,5 @@
-import { getLeagueNewsData } from "@/app/_lib/utils";
-import View from "../../_components/NFL/views/News";
+import { getLeagueNewsData } from "@/lib/utils";
+import View from "../../../components/NFL/views/News";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

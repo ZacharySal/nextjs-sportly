@@ -1,5 +1,5 @@
-import { getLeagueScoreData, getNFLGameData } from "@/app/_lib/utils";
-import View from "../../../../_components/NFL/views/game/Boxscore";
+import { getLeagueScoreData, getNFLGameData } from "@/lib/utils";
+import View from "../../../../../components/NFL/views/game/Boxscore";
 
 export async function generateMetadata({ params }: { params: { gameId: string } }) {
   const gameData = await fetch(

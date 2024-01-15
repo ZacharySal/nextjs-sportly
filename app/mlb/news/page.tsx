@@ -1,4 +1,4 @@
-import View from "../../_components/MLB/views/News";
+import View from "../../../components/MLB/views/News";
 
 async function getScoreData() {
   const scoreData = await fetch(`https://cdn.espn.com/core/mlb/scoreboard?xhr=1`);
