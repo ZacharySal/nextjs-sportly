@@ -8,8 +8,9 @@ import DivisionStandings from "@/components/DivisionStandings";
 import GameUserSelection from "@/components/GameUserSelection";
 import MatchupPredictor from "@/components/MatchupPredictor";
 import useSWR from "swr";
-import { fetcher } from "@/lib/utils";
 import Loading from "@/app/loading";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Page({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");

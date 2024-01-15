@@ -95,11 +95,12 @@ export default function RecentPlays({ data }: { data: any }) {
               return (
                 <div
                   key={play.id}
-                  className="grid py-2 px-1 gap-x-3 grid-rows-2 grid-cols-[auto_4fr_2fr] border-b border-[rgba(0,0,0,0.2)]"
+                  className="grid py-2 md:py-3 px-1 gap-x-3 grid-rows-2 grid-cols-[auto_4fr_2fr] border-b border-[rgba(0,0,0,0.2)]"
                 >
                   <div className="row-span-full flex items-center justify-center">
                     {displayedPicture && (
                       <Image
+                        priority={true}
                         src={displayedPicture}
                         alt="player or team logo"
                         width={50}
@@ -110,17 +111,32 @@ export default function RecentPlays({ data }: { data: any }) {
                   </div>
 
                   <div
-                    style={{ fontWeight: play.scoringPlay ? "600" : "400" }}
-                    className="text-left text-xs my-auto row-span-full"
+                    style={{
+                      fontWeight: play.scoringPlay ? "600" : "400",
+                      color: play.scoringPlay ? "black" : "rgba(0,0,0,0.7)",
+                    }}
+                    className="flex flex-col gap-1 text-left text-xs my-auto row-span-full"
                   >
-                    <p className="font-[300]">
-                      {play.clock.displayValue} - {play.period.displayValue}
-                    </p>
-                    <p>{play.text}</p>
+                    <div className="flex gap-1 items-center">
+                      <Image
+                        priority={true}
+                        src={team.team.logos[0].href}
+                        alt="player or team logo"
+                        width={team.team.logos[0].width}
+                        height={team.team.logos[0].height}
+                        className="w-[20px] object-contain rounded-full"
+                      />
+                      <p className="font-[300]">
+                        {play.clock.displayValue} - {play.period.displayValue}
+                      </p>
+                    </div>
+
+                    <p className="text-[12px]">{play.text}</p>
                   </div>
 
                   <div className="row-start-1 col-start-3 flex gap-1 justify-end items-center">
                     <Image
+                      priority={true}
                       src={winProbability?.team?.team?.logos[0].href}
                       alt="player or team logo"
                       width={winProbability?.team?.team?.logos[0].width}
@@ -144,13 +160,15 @@ export default function RecentPlays({ data }: { data: any }) {
                   style={{
                     fontWeight: play.scoringPlay ? "600" : "400",
                     backgroundColor: index % 2 !== 0 ? "hsl(0, 0%, 98%)" : "white",
+                    color: play.scoringPlay ? "black" : "rgba(0,0,0,0.7)",
                   }}
-                  className="grid grid-cols-[25px_7fr_2fr] gap-x-3 py-2 px-1 border-b  border-[rgba(0,0,0,0.2)]"
+                  className="grid grid-cols-[25px_7fr_2fr] gap-x-3 py-1 md:py-3 px-1 border-b  border-[rgba(0,0,0,0.2)]"
                 >
-                  <p className="text-[11px] text-start my-auto">{play.clock.displayValue}</p>
+                  <p className="text-[12px] text-start my-auto">{play.clock.displayValue}</p>
                   <div className="flex gap-2">
                     {team && (
                       <Image
+                        priority={true}
                         src={team.team.logos[0].href}
                         alt="team logo"
                         width={team.team.logos[0].width}
@@ -159,9 +177,9 @@ export default function RecentPlays({ data }: { data: any }) {
                       />
                     )}
 
-                    <p className="text-[11px] text-start my-auto">{play.text}</p>
+                    <p className="text-[12px] text-start my-auto">{play.text}</p>
                   </div>
-                  <p className="text-[12px] text-end my-auto">
+                  <p className="text-[12px] md:text-[13px] text-end my-auto">
                     {play.awayScore} - {play.homeScore}
                   </p>
                 </div>

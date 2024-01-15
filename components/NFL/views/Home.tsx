@@ -6,8 +6,9 @@ import ContainerBox from "../../ContainerBox";
 import LeagueUserSelection from "../../LeagueUserSelection";
 import Loading from "../../Loading";
 import NFLScoreboard from "../NFLScoreboard";
-import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home() {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");

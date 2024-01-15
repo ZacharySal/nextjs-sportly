@@ -8,7 +8,9 @@ import MatchupPredictor from "@/components/MatchupPredictor";
 import NBAPlaybyPlay from "@/components/NBA/NBAPlaybyPlay";
 import SeasonSeries from "@/components/SeasonSeries";
 import useSWR from "swr";
-import { fetcher } from "@/lib/utils";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 import Loading from "@/app/loading";
 
 export default function PlaybyPlay({ gameId }: { gameId: any }) {

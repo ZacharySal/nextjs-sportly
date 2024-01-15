@@ -9,8 +9,9 @@ import GameUserSelection from "@/components/GameUserSelection";
 import NFLGameStats from "@/components/NFL/NFLGameStats";
 import MatchupPredictor from "@/components/MatchupPredictor";
 import useSWR from "swr";
-import { fetcher } from "@/lib/utils";
 import Loading from "@/app/loading";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function View({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");

@@ -2,7 +2,7 @@
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
-import { mlbDivisonTeams, nbaDivisionTeams, nflDivisonTeams } from "../lib/constants";
+import { mlbDivisonTeams, nbaDivisionTeams, nflDivisonTeams } from "@/lib/constants";
 import Link from "next/link";
 
 export default function GameHeader({ league, data }: { league: string; data: any }) {
@@ -25,16 +25,11 @@ export default function GameHeader({ league, data }: { league: string; data: any
       }
     }
   }
-
-  function isDefined(value: any) {
-    return typeof value !== "undefined";
-  }
-
   return (
     <>
       {isDesktopScreen ? (
         <div className="bg-white w-full flex justify-center border-b border-[rgba(0,0,0,0.2)] z-40 sticky top-[2.75rem]">
-          <div className="w-full 2xl:w-2/5 h-28 flex-row flex justify-center items-center gap-10 relative">
+          <div className="w-full 2xl:w-2/5 h-24 flex-row flex justify-center items-center gap-10 relative">
             <div className="flex flex-row justify-center items-center gap-3">
               <div className="flex flex-col text-black">
                 <div
@@ -69,10 +64,16 @@ export default function GameHeader({ league, data }: { league: string; data: any
                 />
               </Link>
 
+              <div></div>
               <p
+                key={awayTeam.score}
                 style={{
                   fontWeight: "700",
-                  opacity: Number(awayTeam.score) > Number(homeTeam.score) ? "0.8" : "0.5",
+                  opacity:
+                    Number(awayTeam.score) < Number(homeTeam.score) &&
+                    data.gameInfo.status.type.state == "post"
+                      ? "0.5"
+                      : "1",
                 }}
                 className="w-full text-black text-4xl ml-4"
               >
@@ -97,9 +98,14 @@ export default function GameHeader({ league, data }: { league: string; data: any
 
             <div className="flex flex-row justify-center items-center gap-3">
               <p
+                key={homeTeam.score}
                 style={{
                   fontWeight: "700",
-                  opacity: Number(homeTeam.score) > Number(awayTeam.score) ? "0.8" : "0.5",
+                  opacity:
+                    Number(homeTeam.score) < Number(awayTeam.score) &&
+                    data.gameInfo.status.type.state == "post"
+                      ? "0.5"
+                      : "1",
                 }}
                 className="w-full text-black text-4xl mr-4"
               >
@@ -226,7 +232,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   className="w-full col-start-1"
                   href={`/${league}/team/${awayTeam.team.id}/home`}
                 >
-                  <div className="flex flex-row gap-1 items-center justify-end">
+                  <div className="flex flex-col-reverse xs:flex-row gap-1 items-center justify-end">
                     <div className="flex flex-col">
                       <p className="text-xs opacity-70 font-semibold">
                         {awayTeam.team.abbreviation}
@@ -249,10 +255,15 @@ export default function GameHeader({ league, data }: { league: string; data: any
                 <p
                   style={{
                     fontWeight: "700",
-                    opacity: Number(awayTeam.score) > Number(homeTeam.score) ? "1" : "0.5",
+                    opacity:
+                      Number(awayTeam.score) < Number(homeTeam.score) &&
+                      data.gameInfo.status.type.state == "post"
+                        ? "0.5"
+                        : "1",
                   }}
                   className={`${
-                    Number(awayTeam.score) > Number(homeTeam.score)
+                    Number(awayTeam.score) > Number(homeTeam.score) &&
+                    data.gameInfo.status.type.state == "post"
                       ? "away-winning-score-header"
                       : ""
                   } pr-2 relative text-2xl col-start-2`}
@@ -272,10 +283,15 @@ export default function GameHeader({ league, data }: { league: string; data: any
                 <p
                   style={{
                     fontWeight: "700",
-                    opacity: Number(homeTeam.score) > Number(awayTeam.score) ? "1" : "0.5",
+                    opacity:
+                      Number(homeTeam.score) < Number(awayTeam.score) &&
+                      data.gameInfo.status.type.state == "post"
+                        ? "0.5"
+                        : "1",
                   }}
                   className={`${
-                    Number(homeTeam.score) > Number(awayTeam.score)
+                    Number(homeTeam.score) > Number(awayTeam.score) &&
+                    data.gameInfo.status.type.state == "post"
                       ? "home-winning-score-header"
                       : ""
                   } relative pl-2 text-2xl col-start-4`}
@@ -284,7 +300,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
                 </p>
 
                 <Link className="w-full " href={`/${league}/team/${homeTeam.team.id}/home`}>
-                  <div className="flex flex-row gap-1 items-center col-start-5 text-black">
+                  <div className="flex flex-col xs:flex-row gap-1 items-center col-start-5 text-black">
                     <Image
                       src={homeTeam.team.logos[0].href}
                       width={homeTeam.team.logos[0].width}

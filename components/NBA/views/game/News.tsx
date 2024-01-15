@@ -9,7 +9,8 @@ import GameUserSelection from "@/components/GameUserSelection";
 import Loading from "@/components/Loading";
 import MatchupPredictor from "@/components/MatchupPredictor";
 import useSWR from "swr";
-import { fetcher } from "@/lib/utils";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Page({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");

@@ -15,8 +15,9 @@ import InjuryReport from "@/components/InjuryReport";
 import LastFive from "@/components/LastFive";
 import RecentPlays from "@/components/RecentPlays";
 import useSWR from "swr";
-import { fetcher } from "@/lib/utils";
 import Loading from "@/components/Loading";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");
@@ -28,10 +29,6 @@ export default function Home({ gameId }: { gameId: string }) {
       refreshInterval: 5000,
     }
   );
-
-  if (!isLoading) {
-    console.log(data);
-  }
 
   const desktopView = () => (
     <>

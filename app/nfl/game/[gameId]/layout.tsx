@@ -1,20 +1,30 @@
-import GameHeader from "@/components/GameHeader";
-import { getNFLGameData } from "@/lib/utils";
+"use client";
 
-export default async function Layout({
+import GameHeader from "@/components/GameHeader";
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default function Layout({
   children,
   params,
 }: {
   params: { gameId: string };
   children: React.ReactNode;
 }) {
-  const data = await fetch(
-    `https://nextjs-sportly.vercel.app/api/nfl/gameData/${params.gameId}`
-  ).then((res) => res.json());
-  return (
-    <>
-      <GameHeader data={data} league="nfl" />
-      {children}
-    </>
+  const { data, isLoading } = useSWR(
+    `https://nextjs-sportly.vercel.app/api/nfl/gameData/${params.gameId}`,
+    fetcher,
+    {
+      refreshInterval: 5000,
+    }
   );
+
+  if (!isLoading)
+    return (
+      <>
+        <GameHeader data={data} league="nfl" />
+        {children}
+      </>
+    );
 }

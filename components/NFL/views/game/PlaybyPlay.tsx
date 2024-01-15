@@ -9,8 +9,9 @@ import NFLPlayByPlay from "@/components/NFL/NFLPlayByPlay";
 import MatchupPredictor from "@/components/MatchupPredictor";
 import Link from "next/link";
 import useSWR from "swr";
-import { fetcher } from "@/lib/utils";
 import Loading from "@/components/Loading";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function PlaybyPlay({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");

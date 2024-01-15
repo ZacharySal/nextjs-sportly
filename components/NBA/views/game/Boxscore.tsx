@@ -6,8 +6,10 @@ import DivisionStandings from "@/components/DivisionStandings";
 import GameUserSelection from "@/components/GameUserSelection";
 import NBAGameStats from "@/components/NBA/NBAGameStats";
 import useSWR from "swr";
-import { fetcher } from "@/lib/utils";
+
 import Loading from "@/components/Loading";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Boxscore({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:1000px)");

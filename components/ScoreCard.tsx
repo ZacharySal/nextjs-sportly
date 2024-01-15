@@ -299,12 +299,14 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     }
   };
 
-  const getLinescoreValuesByLeague = (team: any, teamWon: any) => {
+  const getLinescoreValuesByLeague = (team: any, teamWon: boolean) => {
     if (league === "NFL" || league === "NBA") {
       return (
         <div
-          style={{ opacity: teamWon ? "0.8" : "0.4" }}
-          className={`w-full flex justify-end items-center pr-3 ${teamWon && "dt-team-won"}`}
+          style={{ opacity: isGameFinished ? (teamWon ? "0.8" : "0.4") : "0.8" }}
+          className={`w-full flex justify-end items-center pr-3 ${
+            isGameFinished && teamWon && "dt-team-won"
+          }`}
         >
           <p className="w-[20px] pl-2 flex justify-center text-[12px]">
             {team.linescores[0]?.displayValue || "-"}
@@ -318,7 +320,10 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           <p className="w-[20px] pl-2 flex justify-center text-[12px]">
             {team.linescores[3]?.displayValue || "-"}
           </p>
-          <p className="justify-end flex pl-[1rem] w-[50px] font-bold text-xl">
+          <p
+            style={{ transition: "all 0.5s ease-in" }}
+            className="justify-end flex pl-[1rem] w-[50px] font-bold text-xl"
+          >
             {team?.score || "-"}
           </p>
         </div>

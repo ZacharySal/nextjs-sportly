@@ -418,4 +418,4 @@ export async function getTeamData(league: League, teamId: string) {
   return teamData;
 }
 
-export const fetcher = (url: string) => fetch(url).then((res) => res.json());
+export const fetcher: Function = (url: string) => fetch(url).then((res) => res.json());

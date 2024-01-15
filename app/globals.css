@@ -359,7 +359,7 @@ main {
 
 .game-header-logo-wrapper {
   width: 120px;
-  height: 7rem;
+  height: 6rem;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -750,6 +750,16 @@ main {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -124;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 
