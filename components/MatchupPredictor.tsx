@@ -13,6 +13,7 @@ function isSimilar([r1, g1, b1]: any, [r2, g2, b2]: any) {
 }
 
 export default function MatchupPredictor({ data, league }: { data: any; league: string }) {
+  if (typeof data?.gameData?.predictor?.awayTeam?.gameProjection === "undefined") return null;
   const awayTeamChance = Number(data.gameData.predictor.awayTeam.gameProjection).toFixed(1);
   const homeTeamChance = Number(100 - Number(awayTeamChance)).toFixed(1);
 
@@ -42,7 +43,7 @@ export default function MatchupPredictor({ data, league }: { data: any; league: 
   if (typeof data.gameData.predictor === "undefined") return null;
   return (
     <div className="w-full bg-white rounded-xl p-3 flex flex-col gap-4">
-      <p className="font-semibold text-sm border-b border-dotted pb-3 border-b-[rgba(0,0,0,0.2)]">
+      <p className="font-semibold text-[14px] border-b border-dotted pb-3 border-b-[rgba(0,0,0,0.2)]">
         Matchup Predictor
       </p>
       <div

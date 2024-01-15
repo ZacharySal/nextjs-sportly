@@ -35,7 +35,7 @@ export default function GameRecapArticle({ data }: { data: any }) {
           </div>
           <Link target="_blank" href={data.gameData.article.links["web"].href}>
             <div className="article-container w-full bg-white rounded-xl p-3 mt-3 cursor-pointer custom-shadow">
-              <p className="text-sm opacity-80 font-semibold article-headline">
+              <p className="text-[14px] opacity-80 font-semibold article-headline">
                 {data.gameData.article.headline}
               </p>
               <p className="text-sm opacity-70">{data.gameData.article.description}</p>
@@ -49,7 +49,7 @@ export default function GameRecapArticle({ data }: { data: any }) {
       {hasArticle && !hasVideo && (
         <Link target="_blank" href={data.gameData.article.links["web"].href}>
           <div className="article-container w-full bg-white p-3 rounded-xl cursor-pointer color-red">
-            <p className="text-sm opacity-80 font-[600] article-headline">
+            <p className="text-[14px] opacity-80 font-[600] article-headline">
               {data.gameData.article.headline}
             </p>
             <p className="text-sm opacity-60">{data.gameData.article.description}</p>

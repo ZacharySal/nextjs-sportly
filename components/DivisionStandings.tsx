@@ -27,7 +27,7 @@ export default function DivisionStandings({
 
   return data.gameData.standings.groups.map((group: any) => (
     <div key={uuidv4()} className="w-full bg-white rounded-xl p-3">
-      <p className="font-semibold text-sm mb-2">{group.header}</p>
+      <p className="font-semibold text-[14px] mb-2">{group.header}</p>
 
       <table className="misc-table table min-w-full">
         <thead className="table-header">

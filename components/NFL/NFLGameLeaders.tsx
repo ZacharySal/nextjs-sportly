@@ -8,7 +8,7 @@ export default function NFLGameLeaders({ data }: { data: any }) {
     return null;
   return (
     <div className="w-full bg-white rounded-xl p-3">
-      <p className="text-sm font-semibold text-start mb-1">
+      <p className="text-[14px] font-semibold text-start mb-1">
         {data.isGameStarted ? "Game Leaders" : "Season Leaders"}
       </p>
 

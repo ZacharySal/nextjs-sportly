@@ -16,6 +16,8 @@ export default function NBAGameLeaders({ data }: { data: any }) {
   const assistsLeaders = [awayAssistsLeader, homeAssistsLeader];
   const reboundsLeaders = [awayReboundsLeader, homeReboundsLeader];
 
+  console.log(homePointsLeader);
+
   const getLeaderCategory = () => {
     if (selectedStat === "points") {
       return pointsLeaders;
@@ -29,7 +31,7 @@ export default function NBAGameLeaders({ data }: { data: any }) {
   if (data.gameData.leaders[0].leaders.length === 0) return null;
   return (
     <div className="w-full bg-white rounded-xl p-3 pb-1">
-      <p className="font-semibold text-sm">
+      <p className="font-semibold text-[14px]">
         {data.isGameStarted ? "Game Leaders" : "Season Leaders"}
       </p>
       <div className="flex w-full justify-around items-center rounded-2xl h-8 mt-2 bg-white text-center testing sub-selector">
@@ -60,7 +62,7 @@ export default function NBAGameLeaders({ data }: { data: any }) {
       </div>
       <hr />
       <div className="w-full flex flex-col py-3 px-0 gap-3 items-center">
-        {getLeaderCategory().map((leader: any) => (
+        {getLeaderCategory().map((leader: any, i: number) => (
           <div
             key={uuidv4()}
             className="flex flex-row gap-2 pb-3 w-full items-center border-b border-[rgba(0,0,0,0.2)] border-dotted"
@@ -71,15 +73,20 @@ export default function NBAGameLeaders({ data }: { data: any }) {
               src={leader.athlete.headshot.href}
               priority={true}
               alt={"player picture"}
-              className="w-12 h-12 md:w-[40px] md:h-[40px] border rounded-full object-cover"
+              className="w-10 h-10 md:w-[40px] md:h-[40px] border rounded-full object-cover"
             />
-            <div className="flex flex-col px-3 w-full justify-start gap-1">
-              <p className="text-xs font-semibold opacity-70">{leader.athlete.fullName}</p>
+            <div className="flex flex-col px-1 w-full justify-start gap-1">
+              <p className="text-[11px]">
+                {`${leader.athlete.fullName},`}
+                <span className="opacity-60">{` ${leader.athlete.position.abbreviation} - ${
+                  i === 0 ? data.awayTeam.team.abbreviation : data.homeTeam.team.abbreviation
+                }`}</span>
+              </p>
               <div className="flex flex-row w-full justify-between pr-3">
                 {leader.statistics.map((stat: any, i: number) => (
                   <div key={uuidv4()} className="flex flex-col text-center">
-                    <p className="text-xs font-semibold opacity-80">{stat.displayValue}</p>
-                    <p className="text-xs opacity-60">{stat.shortDisplayName}</p>
+                    <p className="text-sm font-semibold opacity-80">{stat.displayValue}</p>
+                    <p className="text-xs opacity-60 mt-[-3px]">{stat.shortDisplayName}</p>
                   </div>
                 ))}
               </div>

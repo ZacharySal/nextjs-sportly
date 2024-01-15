@@ -23,7 +23,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     minute: "2-digit",
   });
 
-  const isGameDetailsFinalized = awayTeamName !== "TBD" || homeTeamName !== "TBD";
+  const isGameDetailsFinalized = awayTeamName !== "TBD" && homeTeamName !== "TBD";
   const isGameScheduled = game.status.type.state === "pre";
   const isGameInProgess = game.status.type.state === "in";
   const isGameFinished = game.status.type.state === "post";
@@ -367,7 +367,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               style={{
                 opacity: awayTeamWon || isGameScheduled ? "1" : "0.6",
               }}
-              className="text-sm font-semibold tracking-wide md:text-base"
+              className="text-[14px] font-semibold tracking-wide md:text-base"
             >
               {awayTeamName}
             </p>
@@ -379,7 +379,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
             }}
             className={`${
               awayTeamScore > homeTeamScore && "winning-score"
-            } text-sm text-end font-semibold md:text-base md:font-bold`}
+            } text-[14px] text-end font-semibold md:text-base md:font-bold`}
           >
             {getScoreOrRecord(1)}
           </p>
@@ -398,7 +398,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               style={{
                 opacity: homeTeamWon || isGameScheduled ? "1" : "0.6",
               }}
-              className="text-sm md:text-base font-semibold tracking-wide"
+              className="text-[14px] md:text-base font-semibold tracking-wide"
             >
               {homeTeamName}
             </p>
@@ -410,7 +410,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
             }}
             className={`${
               homeTeamScore > awayTeamScore && "winning-score"
-            } text-sm text-end font-semibold md:text-base md:font-bold`}
+            } text-[14px] text-end font-semibold md:text-base md:font-bold`}
           >
             {getScoreOrRecord(0)}
           </p>
@@ -440,7 +440,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     <div className="w-full grid grid-cols-[3fr,2fr,3fr] px-1 py-2 place-items-center">
       {/* game date, network */}
       <div className="min-w-full h-full my-auto col-start-1 border-r border-[rgba(0,0,0,0.1)]">
-        <div className="w-full h-full justify-center flex flex-col gap-1 ">
+        <div className="w-full h-full justify-center flex flex-col gap-[1px] ">
           <div className="w-full flex items-center">
             <p
               style={{
@@ -470,13 +470,13 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               <div className="flex flex-col w-full">
                 <p
                   style={{ opacity: awayTeamWon ? "0.8" : "0.4" }}
-                  className="text-sm font-semibold whitespace-nowrap"
+                  className="text-[14px] font-semibold whitespace-nowrap"
                 >
                   {awayTeamName}
                 </p>
-                {typeof game.competitors[0].records !== "undefined" && (
+                {typeof game.competitors[1].records !== "undefined" && (
                   <p className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${
-                    game.competitors[0].records[0].summary
+                    game.competitors[1].records[0].summary
                   }, ${data["__gamepackage__"].awayTeam?.record[1]?.displayValue || ""} ${
                     data["__gamepackage__"].awayTeam?.record[1]?.type || ""
                   })`}</p>
@@ -503,13 +503,13 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               <div className="w-full flex flex-col">
                 <p
                   style={{ opacity: homeTeamWon ? "0.8" : "0.4" }}
-                  className="text-sm font-semibold"
+                  className="text-[14px] font-semibold"
                 >
                   {homeTeamName}
                 </p>
-                {typeof game.competitors[1].records !== "undefined" && (
+                {typeof game.competitors[0].records !== "undefined" && (
                   <p className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${
-                    game.competitors[1].records[0].summary
+                    game.competitors[0].records[0].summary
                   }, ${data["__gamepackage__"].homeTeam?.record[1]?.displayValue || ""} ${
                     data["__gamepackage__"].homeTeam?.record[1]?.type || ""
                   })`}</p>
@@ -528,8 +528,12 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
         {isGameScheduled && isGameDetailsFinalized && (
           <div className="h-full flex flex-col justify-evenly gap-2">
             <div className="">
-              <p className="text-[11px] opacity-70 font-[600]">{`${game.venue.fullName}`}</p>
-              <p className="text-[11px] opacity-60]">{`${game.venue.address.city}, ${game.venue.address.state}`}</p>
+              <p className="text-[11px] opacity-70 font-[600]">{`${
+                game?.venue?.fullName ?? ""
+              }`}</p>
+              <p className="text-[11px] opacity-60]">{`${game?.venue?.address.city ?? ""}, ${
+                game?.venue?.address.state ?? ""
+              }`}</p>
             </div>
 
             {typeof data.gamepackageJSON.ticketsInfo !== "undefined" && (
@@ -694,24 +698,28 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                 </div>
               )}
 
-            <div className="flex flex-col items-start justify-start gap-3">
-              <Link
-                href={isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""}
-              >
-                <div className="dt-scorecard-button">GAMECAST</div>
-              </Link>
-              {typeof data.gamepackageJSON.ticketsInfo !== "undefined" && (
+            {isGameDetailsFinalized && (
+              <div className="flex flex-col items-start justify-start gap-3">
                 <Link
-                  target="_blank"
-                  href={data.gamepackageJSON.ticketsInfo.seatSituation.eventLink}
+                  href={
+                    isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""
+                  }
                 >
-                  <div className="dt-scorecard-button">TICKETS</div>
+                  <div className="dt-scorecard-button">GAMECAST</div>
                 </Link>
-              )}
-            </div>
+                {typeof data.gamepackageJSON.ticketsInfo !== "undefined" && (
+                  <Link
+                    target="_blank"
+                    href={data.gamepackageJSON.ticketsInfo.seatSituation.eventLink}
+                  >
+                    <div className="dt-scorecard-button">TICKETS</div>
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         )}
-        {(isGameFinished || isGameInProgess) && (
+        {(isGameFinished || isGameInProgess) && isGameDetailsFinalized && (
           <div className="flex flex-row gap-2 justify-between items-center">
             <div className="h-full flex gap-2 flex-col justify-start">
               <p className="text-[12px] opacity-60">TOP PERFORMERS</p>

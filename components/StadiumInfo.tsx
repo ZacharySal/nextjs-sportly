@@ -5,7 +5,7 @@ export default function StadiumInfo({ data }: { data: any }) {
   return (
     <>
       <div className="w-full flex flex-col bg-white rounded-xl gap-2 p-3">
-        <p className="text-sm font-semibold text-start">Stadium Information</p>
+        <p className="text-[14px] font-semibold text-start">Stadium Information</p>
 
         <div className="w-auto h-48 relative">
           <Image

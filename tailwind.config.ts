@@ -20,6 +20,10 @@ const config: Config = {
         md: "1000px",
         "3xl": "2200px",
       },
+      fontSize: {
+        sm: "12px",
+        xs: "11px",
+      },
     },
   },
   plugins: [],

@@ -26,13 +26,13 @@ export default function TeamSideCard({ name, league }: { name: string; league: s
           width={100}
           height={100}
           alt="team logo"
-          className="w-10 md:w-12 object-contain"
+          className="w-11 md:w-12 object-contain"
         />
       </Link>
 
       <div className="flex flex-col gap-1">
         <Link href={`/${league}/team/${name[1]}/home`}>
-          <p className="text-sm md:text-base team-link">{name[0]}</p>
+          <p className="text-[14px] font-[400] md:text-base team-link">{name[0]}</p>
         </Link>
         <div className="flex flex-row justify-start gap-1">
           <Link href={`/${league}/team/${name[1]}/stats`}>

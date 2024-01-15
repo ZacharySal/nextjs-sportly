@@ -19,7 +19,7 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
     return null;
   return (
     <div className="w-full bg-white p-3 flex flex-col gap-3 rounded-xl">
-      <p className="font-semibold text-sm border-b border-dotted pb-3 border-b-[rgba(0,0,0,0.6)]">
+      <p className="font-semibold text-[14px] border-b border-dotted pb-3 border-b-[rgba(0,0,0,0.6)]">
         Injury Report
       </p>
       {data.gameData.injuries.map((team: any) => (

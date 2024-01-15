@@ -158,10 +158,19 @@ export default function NBAGameHeader({ league, data }: { league: string; data: 
               </div>
             ) : (
               <div>
-                <p className="text-black text-center text-2xl opacity-70 max-w-[20rem]">
-                  <span className="font-bold opacity-100">Scheduled</span> <br />
-                  {gameInfo.status.type.shortDetail}
-                </p>
+                <div className="flex flex-col justify-center items-center col-start-2 text-black">
+                  <p className="text-sm opacity-70">
+                    {gameInfo.broadcasts[0]?.media?.shortName || ""}
+                  </p>
+                  <p className="text-sm font-[500] opacity-80">
+                    {gameDate.getMonth() + 1}/{gameDate.getDate()}
+                  </p>
+                  <p className="text-sm font-[500] opacity-80">
+                    {gameDate.toLocaleTimeString("en-us", {
+                      timeStyle: "short",
+                    })}
+                  </p>
+                </div>
               </div>
             )}
 
@@ -249,15 +258,15 @@ export default function NBAGameHeader({ league, data }: { league: string; data: 
                 style={{
                   backgroundColor: "white",
                 }}
-                className="w-full h-20 border-b border-[rgba(0,0,0,0.2)] place-items-center justify-center gap-x-6 text-center text-black px-3 grid grid-rows-1 drop-shadow-sm sticky top-[2.5rem] z-40"
+                className="w-full h-[55px] py-8 border-b border-[rgba(0,0,0,0.2)] place-items-center justify-center gap-x-6 text-center text-black px-3 grid grid-rows-1 shadow-sm sticky top-[2.75rem] z-40"
               >
                 {/*Away Team Logo, abv, and record*/}
                 <Link
                   className="w-full col-start-1"
                   href={`/${league}/team/${awayTeam.team.id}/home`}
                 >
-                  <div className="flex flex-row gap-1 justify-center items-center">
-                    <div className="flex flex-col gap-1">
+                  <div className="flex flex-row gap-2 justify-center items-center">
+                    <div className="flex flex-col">
                       <p className="text-sm opacity-80 font-semibold">
                         {awayTeam.team.abbreviation}
                       </p>
@@ -282,7 +291,7 @@ export default function NBAGameHeader({ league, data }: { league: string; data: 
                   <p className="text-xs opacity-80">
                     {gameDate.getMonth() + 1}/{gameDate.getDate()}
                   </p>
-                  <p className="text-xs opacity-80">
+                  <p className="text-xs opacity-80 font-[500]">
                     {gameDate.toLocaleTimeString("en-us", {
                       timeStyle: "short",
                     })}
@@ -294,7 +303,7 @@ export default function NBAGameHeader({ league, data }: { league: string; data: 
                   className="w-full col-start-3 "
                   href={`/${league}/team/${homeTeam.team.id}/home`}
                 >
-                  <div className="flex flex-row gap-1 justify-center items-center">
+                  <div className="flex flex-row gap-2 justify-center items-center">
                     <Image
                       src={homeTeam.team.logos[0].href}
                       width={homeTeam.team.logos[0].width}
@@ -302,7 +311,7 @@ export default function NBAGameHeader({ league, data }: { league: string; data: 
                       alt="home team logo"
                       className="w-8 object-contain"
                     />
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col">
                       <p className="text-sm opacity-80 font-semibold">
                         {homeTeam.team.abbreviation}
                       </p>
@@ -320,7 +329,7 @@ export default function NBAGameHeader({ league, data }: { league: string; data: 
                 style={{
                   backgroundColor: "white",
                 }}
-                className="w-full h-20 px-3 py-10 border-b border-[rgba(0,0,0,0.2)] place-items-center text-center text-black grid grid-cols-5 grid-rows-1 drop-shadow-sm sticky top-[2.5rem] z-40"
+                className="w-full h-[55px] px-3 py-8 border-b border-[rgba(0,0,0,0.2)] place-items-center text-center text-black grid grid-cols-5 grid-rows-1 shadow-sm sticky top-[2.75rem] z-40"
               >
                 {/*Home Team Logo, abv, and record*/}
                 <Link
@@ -342,7 +351,7 @@ export default function NBAGameHeader({ league, data }: { league: string; data: 
                       width={awayTeam.team.logos[0].width}
                       height={awayTeam.team.logos[0].height}
                       alt="away team logo"
-                      className="w-8 object-contain"
+                      className="w-6 xs:w-8 object-contain"
                     />
                   </div>
                 </Link>
@@ -407,7 +416,7 @@ export default function NBAGameHeader({ league, data }: { league: string; data: 
                   style={{
                     color: gameInfo.status.type.shortDetail == "Final" ? "black" : "#d50a0a",
                   }}
-                  className="whitespace-nowrap text-[12px] font-[500] col-start-3"
+                  className="whitespace-nowrap text-[12px] font-[500] col-start-3 pt-[5px]"
                 >
                   {gameInfo.status.type.shortDetail}
                 </p>
@@ -475,7 +484,7 @@ export default function NBAGameHeader({ league, data }: { league: string; data: 
                       width={homeTeam.team.logos[0].width}
                       height={homeTeam.team.logos[0].height}
                       alt="home team logo"
-                      className="w-8 object-contain"
+                      className="w-6 xs:w-8 object-contain"
                     />
                     <div className="flex flex-col">
                       <p className="text-xs opacity-80 font-semibold">

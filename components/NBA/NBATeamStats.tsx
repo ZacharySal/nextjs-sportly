@@ -80,7 +80,7 @@ export default function NBATeamStats({ data }: { data: any }) {
   }
   return (
     <div className="min-w-full bg-white p-3 rounded-md">
-      <h3 className="font-semibold text-sm pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dotted">
+      <h3 className="font-semibold text-[14px] pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dotted">
         Team Stats
       </h3>
       <div className="grid grid-cols-[2fr_1fr_2fr] py-2 border-b border-b-[rgba(0,0,0,0.2)] border-dotted">

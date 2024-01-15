@@ -45,13 +45,15 @@ export default function NavbarOptions() {
         <div className="flex flex-row gap-5">
           <div className="flex flex-col gap-1 text-black pt-3 w-2/7 justify-start">
             <Link href={`/${league}`} className="no-underline text-black">
-              <p className="rounded-md opacity-60 p-2 text-sm menu-dropdown-option">Scores</p>
+              <p className="rounded-md opacity-60 p-2 text-[14px] menu-dropdown-option">Scores</p>
             </Link>
             <Link href={`/${league}/standings`} className="no-underline text-black">
-              <p className="rounded-md opacity-60 p-2 text-sm menu-dropdown-option">Standings</p>
+              <p className="rounded-md opacity-60 p-2 text-[14px] menu-dropdown-option">
+                Standings
+              </p>
             </Link>
             <Link href={`/${league}/teams`} className="no-underline text-black">
-              <p className="rounded-md opacity-60 p-2 text-sm menu-dropdown-option">Teams</p>
+              <p className="rounded-md opacity-60 p-2 text-[14px] menu-dropdown-option">Teams</p>
             </Link>
           </div>
 
@@ -71,7 +73,7 @@ export default function NavbarOptions() {
                     href={`/${league}/team/${team[1]}/home`}
                     key={uuidv4()}
                   >
-                    <div className="flex flex-row justify-start items-center w-full gap-1 p-1 rounded-md menu-dropdown-team">
+                    <div className="flex flex-row justify-start items-center w-full gap-2 p-1 rounded-md menu-dropdown-team">
                       <Image
                         width={100}
                         height={100}
@@ -79,7 +81,7 @@ export default function NavbarOptions() {
                         src={setTeamImageSrc(team[0], league)}
                         className="w-7 object-contain"
                       />
-                      <p className="text-xs whitespace-nowrap opacity-60">{team[0]}</p>
+                      <p className="text-[12px] whitespace-nowrap opacity-60">{team[0]}</p>
                     </div>
                   </Link>
                 ))}

@@ -146,8 +146,8 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
                   }}
                   className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer p-2"
                 >
-                  <p className="text-sm font-semibold">{week.label}</p>
-                  <p className="text-xs">{week.dateRange}</p>
+                  <p className="text-[13px] font-semibold">{week.label}</p>
+                  <p className="text-[11px]">{week.dateRange}</p>
                 </div>
               );
             })}
@@ -184,7 +184,7 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
     groupedGames.forEach((gamesOnDate: any, i: any) => {
       els.push(
         <div key={uuidv4()} className="w-full grid bg-white p-2 pb-0 rounded-xl mb-2">
-          <p className="opacity-80 font-semibold mt-1 text-start text-sm md:text-base mb-2">{i}</p>
+          <p className="font-[500] mt-1 text-start text-[14px] md:text-base mb-2">{i}</p>
           <hr />
           {gamesOnDate.map((game: any, i: number) => (
             <div key={uuidv4()}>

@@ -7,8 +7,8 @@ import Image from "next/image";
 export default function SeasonSeries({ data, league }: { data: any; league: string }) {
   return (
     <div className="bg-white min-w-full p-3 rounded-md">
-      <p className="font-semibold text-sm">{data.gameData.seasonseries[0].description}</p>
-      <p className="opacity-60 font-semibold text-xs pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dotted">
+      <p className="font-semibold text-[14px]">{data.gameData.seasonseries[0].description}</p>
+      <p className="opacity-60 font-semibold text-[12px] pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dotted">
         {data.gameData.seasonseries[0].summary.replaceAll("series", "")}
       </p>
       {data.gameData.seasonseries[0].events.map((event: any, i: number) => (
@@ -38,7 +38,7 @@ export default function SeasonSeries({ data, league }: { data: any; league: stri
                   style={{
                     opacity: event.competitors[1].winner || event.status === "pre" ? "1" : "0.6",
                   }}
-                  className="text-sm font-semibold"
+                  className="text-[14px] font-semibold"
                 >
                   {
                     event.competitors[1].team.displayName.split(" ")[
@@ -54,7 +54,7 @@ export default function SeasonSeries({ data, league }: { data: any; league: stri
                 }}
                 className={`${
                   event.competitors[1].winner && "winning-score"
-                } text-sm text-end font-semibold`}
+                } text-[14px] text-end font-semibold`}
               >
                 {event.status !== "pre" && event.competitors[1].score}
               </p>
@@ -73,7 +73,7 @@ export default function SeasonSeries({ data, league }: { data: any; league: stri
                   style={{
                     opacity: event.competitors[0].winner || event.status === "pre" ? "1" : "0.6",
                   }}
-                  className="text-sm font-semibold tracking-wide"
+                  className="text-[14px] font-semibold tracking-wide"
                 >
                   {
                     event.competitors[0].team.displayName.split(" ")[
@@ -89,7 +89,7 @@ export default function SeasonSeries({ data, league }: { data: any; league: stri
                 }}
                 className={`${
                   event.competitors[0].winner && "winning-score"
-                } text-sm text-end font-semibold`}
+                } text-[14px] text-end font-semibold`}
               >
                 {event.status !== "pre" && event.competitors[0].score}
               </p>

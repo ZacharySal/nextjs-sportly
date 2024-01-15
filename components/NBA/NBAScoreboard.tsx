@@ -95,9 +95,9 @@ function NBAScoreboard({ initialScoreData }: { initialScoreData: ScoreData }) {
                 style={{ opacity: date === selectedDate ? 1 : 0.5 }}
                 className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer p-2"
               >
-                <p className="text-sm font-semibold">{getWeekDay(date)}</p>
+                <p className="text-[13px] md:text-[14px] font-semibold">{getWeekDay(date)}</p>
                 <div className="flex flex-row gap-1 justify-center items-center">
-                  <p className="text-xs">{getMonthAndDate(date)}</p>
+                  <p className="text-[11px]">{getMonthAndDate(date)}</p>
                 </div>
               </div>
             ))}
@@ -134,7 +134,7 @@ function NBAScoreboard({ initialScoreData }: { initialScoreData: ScoreData }) {
 
       {sortedGames.length !== 0 && (
         <div className="w-full grid bg-white p-2 pb-0 rounded-xl mb-2">
-          <p className="opacity-80 font-semibold mt-1 text-start text-sm md:text-base mb-2">
+          <p className="font-[500] mt-1 text-start text-[14px] md:text-base mb-2">
             {getFullDate(selectedDate)}
           </p>
           <hr />
