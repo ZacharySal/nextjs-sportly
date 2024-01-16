@@ -9,7 +9,7 @@ import Link from "next/link";
 import TeamUserSelection from "@/components/TeamUserSelection";
 
 export default function TeamPage({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const desktopView = () => (
     <>

@@ -5,9 +5,10 @@ import ContainerBox from "@/components/ContainerBox";
 import Articles from "@/components/Articles";
 import TeamUserSelection from "@/components/TeamUserSelection";
 import Roster from "@/components/NFL/NFLRoster";
+import LeagueContainerBox from "@/components/LeagueContainerBox";
 
 export default function TeamPage({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const desktopView = () => (
     <>
@@ -29,9 +30,9 @@ export default function TeamPage({ data }: { data: any }) {
   return (
     <>
       <TeamUserSelection userSelection={"roster"} />
-      <ContainerBox isDesktopScreen={isDesktopScreen}>
+      <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
         {isDesktopScreen ? desktopView() : mobileView()}
-      </ContainerBox>
+      </LeagueContainerBox>
     </>
   );
 }

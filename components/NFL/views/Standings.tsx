@@ -2,22 +2,17 @@
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Articles from "@/components/Articles";
-import ContainerBox from "@/components/ContainerBox";
 import LeagueUserSelection from "@/components/LeagueUserSelection";
 import LeagueStandings from "@/components/LeagueStandings";
-import Loading from "@/components/Loading";
+import LeagueContainerBox from "@/components/LeagueContainerBox";
 
 export default function Standings({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const desktopView = () => (
     <>
-      <div className="basis-2/3">
-        <LeagueStandings data={data.standingsData.content.standings} league="nfl" />
-      </div>
-      <div className="basis-1/4">
-        <Articles title={`NFL News`} news={data.scoreData.news.articles} limit={5} />
-      </div>
+      <LeagueStandings data={data.standingsData.content.standings} league="nfl" />
+      <Articles title={`NFL News`} news={data.scoreData.news.articles} limit={5} />
     </>
   );
 
@@ -28,9 +23,9 @@ export default function Standings({ data }: { data: any }) {
   return (
     <>
       <LeagueUserSelection userSelection={"standings"} league="nfl" />
-      <ContainerBox isDesktopScreen={isDesktopScreen}>
+      <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
         {isDesktopScreen ? desktopView() : mobileView()}
-      </ContainerBox>
+      </LeagueContainerBox>
     </>
   );
 }

@@ -10,7 +10,7 @@ import MatchupPredictor from "@/components/MatchupPredictor";
 import Articles from "@/components/Articles";
 
 export default function Page({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const desktopView = () => (
     <>

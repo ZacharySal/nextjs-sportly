@@ -16,13 +16,16 @@ import RecentPlays from "@/components/RecentPlays";
 import SeasonSeries from "@/components/SeasonSeries";
 import NBATeamStats from "../../NBATeamStats";
 import useSWR from "swr";
+import Image from "next/image";
 import Loading from "@/app/loading";
 import Linescores from "@/components/Linescores";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Label } from "recharts";
+import GameFlow from "@/components/GameFlow";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home({ gameId }: { gameId: string }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const { data, isLoading } = useSWR(
     `https://nextjs-sportly.vercel.app/api/nba/gameData/${gameId}`,
@@ -37,10 +40,11 @@ export default function Home({ gameId }: { gameId: string }) {
       <GameRecapArticle data={data} />
       {data.isGameStarted ? (
         <>
-          <Linescores data={data} />
           {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
+          <Linescores data={data} />
           <NBAGameLeaders data={data} />
           {data.isGameStarted && <NBATeamStats data={data} />}
+          <GameFlow data={data} isDesktopScreen={isDesktopScreen} />
           <MatchupPredictor data={data} league={"nba"} />
         </>
       ) : (
@@ -79,6 +83,7 @@ export default function Home({ gameId }: { gameId: string }) {
             <GameRecapArticle data={data} />
             {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
             <NBAGameLeaders data={data} />
+            <GameFlow data={data} isDesktopScreen={isDesktopScreen} />
           </>
         )}
       </div>

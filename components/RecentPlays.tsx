@@ -58,7 +58,9 @@ export default function RecentPlays({ data }: { data: any }) {
   function getWinProbabilityByPlayId(id: string) {
     if (!id) return undefined;
 
-    const prob = data.gameData.winprobability.find((probability: any) => probability.playId == id);
+    const prob = data?.gameData?.winprobability?.find(
+      (probability: any) => probability.playId == id
+    );
 
     if (prob.homeWinPercentage > 0.5) {
       return {
@@ -73,12 +75,12 @@ export default function RecentPlays({ data }: { data: any }) {
   }
   return (
     <div className="w-full bg-white p-3 rounded-md">
-      <h1 className="font-semibold text-sm pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dotted">
+      <h1 className="font-semibold text-[14px] pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dotted">
         Recent Plays
       </h1>
       <div className="flex-col mt-1">
         {plays
-          .slice(plays.length - 6, plays.length - 1)
+          .slice(plays.length - 5, plays.length - 1)
           .reverse()
           .map((play: Play, index: number) => {
             const winProbability = getWinProbabilityByPlayId(play.id);
@@ -95,7 +97,7 @@ export default function RecentPlays({ data }: { data: any }) {
               return (
                 <div
                   key={play.id}
-                  className="grid py-2 md:py-3 px-1 gap-x-3 grid-rows-2 grid-cols-[auto_4fr_2fr] border-b border-[rgba(0,0,0,0.2)]"
+                  className="grid py-2 md:py-3 px-1 gap-x-4 grid-rows-2 grid-cols-[auto_4fr_2fr] border-b border-[rgba(0,0,0,0.2)]"
                 >
                   <div className="row-span-full flex items-center justify-center">
                     {displayedPicture && (
@@ -113,7 +115,7 @@ export default function RecentPlays({ data }: { data: any }) {
                   <div
                     style={{
                       fontWeight: play.scoringPlay ? "600" : "400",
-                      color: play.scoringPlay ? "black" : "rgba(0,0,0,0.7)",
+                      color: "#2B2C2D",
                     }}
                     className="flex flex-col gap-1 text-left text-xs my-auto row-span-full"
                   >
@@ -160,12 +162,12 @@ export default function RecentPlays({ data }: { data: any }) {
                   style={{
                     fontWeight: play.scoringPlay ? "600" : "400",
                     backgroundColor: index % 2 !== 0 ? "hsl(0, 0%, 98%)" : "white",
-                    color: play.scoringPlay ? "black" : "rgba(0,0,0,0.7)",
+                    color: "#2B2C2D",
                   }}
-                  className="grid grid-cols-[25px_7fr_2fr] gap-x-3 py-1 md:py-3 px-1 border-b  border-[rgba(0,0,0,0.2)]"
+                  className="grid grid-cols-[25px_7fr_2fr] gap-x-4 py-2 md:py-3 px-1 border-b border-[rgba(0,0,0,0.2)]"
                 >
-                  <p className="text-[12px] text-start my-auto">{play.clock.displayValue}</p>
-                  <div className="flex gap-2">
+                  <p className="text-[11px] text-start my-auto">{play.clock.displayValue}</p>
+                  <div className="flex gap-3">
                     {team && (
                       <Image
                         priority={true}
@@ -177,9 +179,9 @@ export default function RecentPlays({ data }: { data: any }) {
                       />
                     )}
 
-                    <p className="text-[12px] text-start my-auto">{play.text}</p>
+                    <p className="text-[11px] text-start my-auto">{play.text}</p>
                   </div>
-                  <p className="text-[12px] md:text-[13px] text-end my-auto">
+                  <p className="text-[11px] md:text-[13px] text-end my-auto">
                     {play.awayScore} - {play.homeScore}
                   </p>
                 </div>

@@ -35,7 +35,7 @@ export default function Home({ data }: { data: any }) {
       </ContainerBox>
     </>
   );
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   return isDesktopScreen ? desktopView() : mobileView();
 }

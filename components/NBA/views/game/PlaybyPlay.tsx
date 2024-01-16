@@ -12,9 +12,10 @@ import useSWR from "swr";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 import Loading from "@/app/loading";
+import LeagueContainerBox from "@/components/LeagueContainerBox";
 
 export default function PlaybyPlay({ gameId }: { gameId: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const { data, isLoading } = useSWR(
     `https://nextjs-sportly.vercel.app/api/nba/gameData/${gameId}`,
@@ -43,9 +44,9 @@ export default function PlaybyPlay({ gameId }: { gameId: any }) {
   return (
     <>
       <GameUserSelection userSelection={"playbyplay"} data={data} />
-      <ContainerBox isDesktopScreen={isDesktopScreen}>
+      <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
         {isDesktopScreen ? desktopView() : mobileView()}
-      </ContainerBox>
+      </LeagueContainerBox>
     </>
   );
 }

@@ -2,16 +2,16 @@
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Articles from "../../Articles";
-import ContainerBox from "../../ContainerBox";
 import LeagueUserSelection from "../../LeagueUserSelection";
 import Loading from "../../Loading";
 import NFLScoreboard from "../NFLScoreboard";
 import useSWR from "swr";
+import LeagueContainerBox from "@/components/LeagueContainerBox";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home() {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const { data, isLoading } = useSWR(
     "https://nextjs-sportly.vercel.app/api/leagueData/nfl",
@@ -28,21 +28,17 @@ export default function Home() {
         {isDesktopScreen ? (
           <>
             <LeagueUserSelection userSelection={"scoreboard"} league="nfl" />
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <div className="basis-3/4">
-                <NFLScoreboard initialScoreData={data} />
-              </div>
-              <div className="basis-1/4">
-                <Articles title={`NFL News`} news={data.news.articles} limit={10} />
-              </div>
-            </ContainerBox>
+            <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
+              <NFLScoreboard initialScoreData={data} />
+              <Articles title={`NFL News`} news={data.news.articles} limit={10} />
+            </LeagueContainerBox>
           </>
         ) : (
           <>
             <LeagueUserSelection userSelection={"scoreboard"} league="nfl" />
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
+            <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
               <NFLScoreboard initialScoreData={data} />
-            </ContainerBox>
+            </LeagueContainerBox>
           </>
         )}
       </main>

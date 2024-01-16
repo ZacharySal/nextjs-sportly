@@ -17,7 +17,5 @@ export async function GET(request: Request, { params }: { params: { league: stri
 
   const scoreboardDataResponse: ScoreData = await scoreboardData.json();
 
-  console.log(scoreboardDataResponse);
-
   return NextResponse.json(scoreboardDataResponse);
 }

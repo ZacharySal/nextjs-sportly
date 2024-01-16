@@ -6,9 +6,10 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import DesktopTeamSchedule from "@/components/DesktopTeamSchedule";
 import Link from "next/link";
 import TeamUserSelection from "@/components/TeamUserSelection";
+import LeagueContainerBox from "@/components/LeagueContainerBox";
 
 export default function Schedule({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const desktopView = () => (
     <>
@@ -65,9 +66,9 @@ export default function Schedule({ data }: { data: any }) {
   return (
     <>
       <TeamUserSelection userSelection={"schedule"} />
-      <ContainerBox isDesktopScreen={isDesktopScreen}>
+      <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
         {isDesktopScreen ? desktopView() : mobileView()}
-      </ContainerBox>
+      </LeagueContainerBox>
     </>
   );
 }

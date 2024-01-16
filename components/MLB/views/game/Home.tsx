@@ -14,7 +14,7 @@ import Loading from "@/components/Loading";
 import MatchupPredictor from "@/components/MatchupPredictor";
 
 export default function Home({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const desktopView = () => (
     <>

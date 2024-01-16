@@ -6,7 +6,7 @@ import { mlbDivisonTeams, nbaDivisionTeams, nflDivisonTeams } from "@/lib/consta
 import Link from "next/link";
 
 export default function GameHeader({ league, data }: { league: string; data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
   const homeTeam = data.gameData.header.competitions[0].competitors[0];
   const awayTeam = data.gameData.header.competitions[0].competitors[1];
   const gameInfo = data.gameData.header.competitions[0];

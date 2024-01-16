@@ -10,11 +10,12 @@ import MatchupPredictor from "@/components/MatchupPredictor";
 import Link from "next/link";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
+import LeagueContainerBox from "@/components/LeagueContainerBox";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function PlaybyPlay({ gameId }: { gameId: string }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const { data, isLoading } = useSWR(
     `https://nextjs-sportly.vercel.app/api/nfl/gameData/${gameId}`,
@@ -181,9 +182,8 @@ export default function PlaybyPlay({ gameId }: { gameId: string }) {
 
   const desktopView = () => (
     <>
-      <div className="flex flex-col gap-5 basis-2/3">
-        <NFLPlayByPlay data={data} />
-      </div>
+      <NFLPlayByPlay data={data} />
+
       <div className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
         {data.gameData.predictor && <MatchupPredictor data={data} league={"nfl"} />}
         {data.gameData.leaders[0].leaders.length > 0 &&
@@ -200,9 +200,9 @@ export default function PlaybyPlay({ gameId }: { gameId: string }) {
   return (
     <>
       <GameUserSelection userSelection={"playbyplay"} data={data} />
-      <ContainerBox isDesktopScreen={isDesktopScreen}>
+      <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
         {isDesktopScreen ? desktopView() : mobileView()}
-      </ContainerBox>
+      </LeagueContainerBox>
     </>
   );
 }

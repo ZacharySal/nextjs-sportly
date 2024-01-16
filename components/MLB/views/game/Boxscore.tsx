@@ -10,7 +10,7 @@ import NFLGameStats from "@/components/NFL/NFLGameStats";
 import MatchupPredictor from "@/components/MatchupPredictor";
 
 export default function Boxscore({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const desktopView = () => (
     <>

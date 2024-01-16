@@ -2,24 +2,20 @@
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Articles from "../../Articles";
-import ContainerBox from "../../ContainerBox";
 import LeagueUserSelection from "../../LeagueUserSelection";
 import Loading from "../../Loading";
 import MLBScoreboard from "../MLBScoreboard";
 import useHasHydrated from "../../hooks/useHasHyrdated";
+import LeagueContainerBox from "@/components/LeagueContainerBox";
 
 export default function Home({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
   const pageHydrated = useHasHydrated();
 
   const desktopView = () => (
     <>
-      <div className="basis-3/4">
-        <MLBScoreboard initialScoreData={data.scoreData} />
-      </div>
-      <div className="basis-1/4">
-        <Articles title={`MLB News`} news={data.scoreData.news.articles} limit={10} />
-      </div>
+      <MLBScoreboard initialScoreData={data.scoreData} />
+      <Articles title={`MLB News`} news={data.scoreData.news.articles} limit={10} />
     </>
   );
 
@@ -30,9 +26,9 @@ export default function Home({ data }: { data: any }) {
     return (
       <>
         <LeagueUserSelection userSelection="scoreboard" league="mlb" />
-        <ContainerBox isDesktopScreen={isDesktopScreen}>
+        <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
           {isDesktopScreen ? desktopView() : mobileView()}
-        </ContainerBox>
+        </LeagueContainerBox>
       </>
     );
 }

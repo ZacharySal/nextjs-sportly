@@ -8,7 +8,7 @@ import TeamNewsCards from "@/components/TeamNewsCards";
 import TeamUserSelection from "@/components/TeamUserSelection";
 
 export default function Home({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const desktopView = () => (
     <>

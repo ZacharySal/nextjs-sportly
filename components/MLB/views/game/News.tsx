@@ -9,7 +9,7 @@ import GameUserSelection from "@/components/GameUserSelection";
 import MatchupPredictor from "@/components/MatchupPredictor";
 
 export default function Page({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const desktopView = () => (
     <>

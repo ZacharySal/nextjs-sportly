@@ -8,7 +8,7 @@ import { v4 } from "uuid";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league: string }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const game = gameInfo.competitions[0];
 

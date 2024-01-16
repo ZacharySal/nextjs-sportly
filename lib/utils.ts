@@ -1,7 +1,7 @@
-"use server";
-
 type League = "nba" | "nfl" | "mlb";
 import type { ScoreData } from "@/types";
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export async function getNBAGameData(gameId: string) {
   const gameDataResponse = await fetch(
@@ -418,4 +418,6 @@ export async function getTeamData(league: League, teamId: string) {
   return teamData;
 }
 
-export const fetcher: Function = (url: string) => fetch(url).then((res) => res.json());
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}

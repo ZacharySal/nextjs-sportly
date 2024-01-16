@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { v4 } from "uuid";
 
-export default function NBAGameHeader({ league, data }: { league: string; data: any }) {
+export default function NFLGameHeader({ league, data }: { league: string; data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
   const homeTeam = data.gameData.header.competitions[0].competitors[0];
   const awayTeam = data.gameData.header.competitions[0].competitors[1];

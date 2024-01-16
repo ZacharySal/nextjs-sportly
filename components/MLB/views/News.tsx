@@ -6,7 +6,7 @@ import Articles from "@/components/Articles";
 import LeagueUserSelection from "@/components/LeagueUserSelection";
 
 export default function Home({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const desktopView = () => (
     <div className="basis-2/4">

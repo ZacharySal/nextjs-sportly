@@ -2,7 +2,7 @@
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Articles from "../../Articles";
-import ContainerBox from "../../ContainerBox";
+import LeagueContainerBox from "@/components/LeagueContainerBox";
 import LeagueUserSelection from "../../LeagueUserSelection";
 import Loading from "../../Loading";
 import NBAScoreboard from "../NBAScoreboard";
@@ -28,21 +28,17 @@ export default function Home() {
         {isDesktopScreen ? (
           <>
             <LeagueUserSelection userSelection={"scoreboard"} league="nba" />
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
-              <div className="basis-3/4">
-                <NBAScoreboard initialScoreData={data} />
-              </div>
-              <div className="basis-1/4">
-                <Articles title={`NBA News`} news={data.news.articles} limit={10} />
-              </div>
-            </ContainerBox>
+            <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
+              <NBAScoreboard initialScoreData={data} />
+              <Articles title={`NBA News`} news={data.news.articles} limit={10} />
+            </LeagueContainerBox>
           </>
         ) : (
           <>
             <LeagueUserSelection userSelection={"scoreboard"} league="nba" />
-            <ContainerBox isDesktopScreen={isDesktopScreen}>
+            <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
               <NBAScoreboard initialScoreData={data} />
-            </ContainerBox>
+            </LeagueContainerBox>
           </>
         )}
       </main>

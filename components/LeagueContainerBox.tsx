@@ -1,4 +1,4 @@
-function ContainerBox({
+export default function LeagueContainerBox({
   isDesktopScreen,
   children,
 }: {
@@ -7,7 +7,7 @@ function ContainerBox({
 }) {
   return isDesktopScreen ? (
     <>
-      <div className="max-w-full grid w-[600px] grid-cols-1 gap-y-2  my-3 mx-auto gap-x-6 lg:w-[1000px] lg:grid-cols-[1fr_600px] xl:w-[1280px] xl:grid-cols-[1fr_600px_1fr]">
+      <div className="max-w-full grid w-[800px] grid-cols-1 gap-y-2  my-3 mx-auto gap-x-6 lg:w-[1000px] lg:grid-cols-[800px_1fr] xl:w-[1280px] xl:grid-cols-[950px_1fr]">
         {children}
       </div>
     </>
@@ -21,5 +21,3 @@ function ContainerBox({
     </>
   );
 }
-
-export default ContainerBox;

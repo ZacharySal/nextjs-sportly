@@ -33,30 +33,37 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
         >
           1st
         </div>
-        <div
-          onClick={() => setSelectedQuarter(2)}
-          className={`${
-            selectedQuarter === 2 && "selection-active"
-          } nav-selection flex-grow sub-selection font-bold`}
-        >
-          2nd
-        </div>
-        <div
-          onClick={() => setSelectedQuarter(3)}
-          className={`${
-            selectedQuarter === 3 && "selection-active"
-          } nav-selection flex-grow sub-selection font-bold`}
-        >
-          3rd
-        </div>
-        <div
-          onClick={() => setSelectedQuarter(4)}
-          className={`${
-            selectedQuarter === 4 && "selection-active"
-          } nav-selection flex-grow sub-selection font-bold`}
-        >
-          4th
-        </div>
+        {data.gameInfo.status.period >= 2 && (
+          <div
+            onClick={() => setSelectedQuarter(2)}
+            className={`${
+              selectedQuarter === 2 && "selection-active"
+            } nav-selection flex-grow sub-selection font-bold`}
+          >
+            2nd
+          </div>
+        )}
+
+        {data.gameInfo.status.period >= 3 && (
+          <div
+            onClick={() => setSelectedQuarter(3)}
+            className={`${
+              selectedQuarter === 2 && "selection-active"
+            } nav-selection flex-grow sub-selection font-bold`}
+          >
+            3rd
+          </div>
+        )}
+        {data.gameInfo.status.period >= 4 && (
+          <div
+            onClick={() => setSelectedQuarter(4)}
+            className={`${
+              selectedQuarter === 2 && "selection-active"
+            } nav-selection flex-grow sub-selection font-bold`}
+          >
+            4th
+          </div>
+        )}
       </div>
       <table className="max-w-full text-left table stat-table">
         <thead className="justify-left items-left border-t border-b border-[rgba(0,0,0,0.1)]">
@@ -73,7 +80,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
               <td className="text-xs text-left pl-1 table-cell opacity-80 pr-5">
                 {play.clock.displayValue}
               </td>
-              <td className="text-xs text-left p-1 pl-0 w-full" align="left">
+              <td className="text-xs text-left p-2 items-center pl-0 w-full" align="left">
                 {typeof play.team !== "undefined" ? (
                   <div className="w-full flex flex-row items-center justify-start gap-1">
                     <Image

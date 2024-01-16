@@ -21,7 +21,7 @@ import Linescores from "@/components/Linescores";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home({ gameId }: { gameId: string }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const { data, isLoading } = useSWR(
     `https://nextjs-sportly.vercel.app/api/nfl/gameData/${gameId}`,

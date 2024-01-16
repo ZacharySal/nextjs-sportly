@@ -6,7 +6,7 @@ import LeagueUserSelection from "@/components/LeagueUserSelection";
 import ContainerBox from "@/components/ContainerBox";
 
 export default function News({ data }: { data: any }) {
-  const isDesktopScreen = useMediaQuery("(min-width:1000px)");
+  const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   return (
     <main>
