@@ -12,6 +12,10 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
 
   const game = gameInfo.competitions[0];
 
+  if (game.status.type.state !== "pre") {
+    console.log(game);
+  }
+
   const homeTeamName: string = game.competitors[0].team.shortDisplayName;
   const awayTeamName: string = game.competitors[1].team.shortDisplayName;
   const homeTeamScore = Number(game.competitors[0].score);
@@ -309,16 +313,16 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           }`}
         >
           <p className="w-[20px] pl-2 flex justify-center text-[12px]">
-            {team.linescores[0]?.displayValue || "-"}
+            {team.linescores?.[0]?.displayValue || "-"}
           </p>
           <p className="w-[20px] pl-2 flex justify-center text-[12px]">
-            {team.linescores[1]?.displayValue || "-"}
+            {team.linescores?.[1]?.displayValue || "-"}
           </p>
           <p className="w-[20px] pl-2 flex justify-center text-[12px]">
-            {team.linescores[2]?.displayValue || "-"}
+            {team.linescores?.[2]?.displayValue || "-"}
           </p>
           <p className="w-[20px] pl-2 flex justify-center text-[12px]">
-            {team.linescores[3]?.displayValue || "-"}
+            {team.linescores?.[3]?.displayValue || "-"}
           </p>
           <p
             style={{ transition: "all 0.5s ease-in" }}
@@ -335,13 +339,13 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           className={`w-full flex justify-end items-center pr-3 ${teamWon && "dt-team-won"}`}
         >
           <p className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
-            {team.score || "-"}
+            {team?.score || "-"}
           </p>
           <p className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
-            {team.hits || "-"}
+            {team?.hits || "-"}
           </p>
           <p className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
-            {team.errors || "0"}
+            {team?.errors || "0"}
           </p>
         </div>
       );
@@ -449,9 +453,11 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               }}
               className="whitespace-nowrap text-[12px] mb-1 font-[600] uppercase"
             >
-              {isGameFinished || isGameInProgess ? game.status.type.shortDetail : gameTime}
+              {game.status.type.state !== "pre" ? game.status.type.shortDetail : gameTime}
             </p>
-            {(isGameInProgess || isGameFinished) && getLinescoreHeaderByLeague()}
+            {(game.status.type.state === "in" || game.status.type.state === "post") &&
+              game.status.type.detail != "Postponed" &&
+              getLinescoreHeaderByLeague()}
           </div>
           {/* away team*/}
           <Link
@@ -482,9 +488,10 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                   })`}</p>
                 )}
               </div>
-              {(isGameInProgess || isGameFinished) && (
-                <>{getLinescoreValuesByLeague(data["__gamepackage__"].awayTeam, awayTeamWon)}</>
-              )}
+              {(game.status.type.state !== "pre" || game.status.type.state === "post") &&
+                game.status.type.detail != "Postponed" && (
+                  <>{getLinescoreValuesByLeague(data["__gamepackage__"].awayTeam, awayTeamWon)}</>
+                )}
             </div>
           </Link>
           <Link
@@ -515,9 +522,10 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                   })`}</p>
                 )}
               </div>
-              {(isGameInProgess || isGameFinished) && (
-                <>{getLinescoreValuesByLeague(data["__gamepackage__"].homeTeam, homeTeamWon)}</>
-              )}
+              {(game.status.type.state !== "pre" || game.status.type.state === "post") &&
+                game.status.type.detail != "Postponed" && (
+                  <>{getLinescoreValuesByLeague(data["__gamepackage__"].homeTeam, homeTeamWon)}</>
+                )}
             </div>
           </Link>
         </div>
@@ -614,7 +622,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
 
       {/* IF GAME IS SCEHDULED WE SHOW PLAYERS TO WATCH */}
       <div className="min-w-full min-h-full h-full flex flex-col gap-1 col-start-3 border-l border-[rgba(0,0,0,0.1)] px-2">
-        {isGameScheduled && isGameDetailsFinalized && (
+        {game.status.type.state === "pre" && (
           <div className="h-full flex flex-row gap-2 justify-between items-center">
             {typeof game.competitors[1].leaders !== "undefined" &&
               typeof game.competitors[0].leaders !== "undefined" && (
@@ -719,36 +727,42 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
             )}
           </div>
         )}
-        {(isGameFinished || isGameInProgess) && isGameDetailsFinalized && (
-          <div className="flex flex-row gap-2 justify-between items-center">
-            <div className="h-full flex gap-2 flex-col justify-start">
-              <p className="text-[12px] opacity-60">TOP PERFORMERS</p>
-              {getTopPerformersByLeague()}
-            </div>
+        {game.status.type.detail != "Postponed" &&
+          isGameDetailsFinalized &&
+          (game.status.type.state === "post" || game.status.type.state === "in") && (
+            <div className="flex flex-row gap-2 justify-between items-center">
+              <div className="h-full flex gap-2 flex-col justify-start">
+                <p className="text-[12px] opacity-60">TOP PERFORMERS</p>
+                {getTopPerformersByLeague()}
+              </div>
 
-            <div className="flex flex-col gap-3">
-              <Link
-                href={isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""}
-              >
-                <div className="dt-scorecard-button">GAMECAST</div>
-              </Link>
-              <Link
-                href={
-                  isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/boxscore` : ""
-                }
-              >
-                <div className="dt-scorecard-button">BOX SCORE</div>
-              </Link>
-              <Link
-                href={
-                  isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/playbyplay` : ""
-                }
-              >
-                <div className="dt-scorecard-button">PLAYBYPLAY</div>
-              </Link>
+              <div className="flex flex-col gap-3">
+                <Link
+                  href={
+                    isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""
+                  }
+                >
+                  <div className="dt-scorecard-button">GAMECAST</div>
+                </Link>
+                <Link
+                  href={
+                    isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/boxscore` : ""
+                  }
+                >
+                  <div className="dt-scorecard-button">BOX SCORE</div>
+                </Link>
+                <Link
+                  href={
+                    isGameDetailsFinalized
+                      ? `/${league.toLowerCase()}/game/${gameId}/playbyplay`
+                      : ""
+                  }
+                >
+                  <div className="dt-scorecard-button">PLAYBYPLAY</div>
+                </Link>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

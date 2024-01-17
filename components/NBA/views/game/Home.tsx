@@ -21,6 +21,7 @@ import Loading from "@/app/loading";
 import Linescores from "@/components/Linescores";
 import GameFlow from "@/components/GameFlow";
 import ShotChart from "../../ShotChart";
+import WinProbability from "@/components/WinProbability";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -85,7 +86,7 @@ export default function Home({ gameId }: { gameId: string }) {
           <>
             <GameRecapArticle data={data} />
             {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
-            {/* <WinProbability data={data} isDesktopScreen={isDesktopScreen} /> */}
+            <WinProbability data={data} isDesktopScreen={isDesktopScreen} />
             <GameFlow data={data} isDesktopScreen={isDesktopScreen} />
             <ShotChart data={data} />
             {data.gameInfo.status.type.state === "in" && <InjuryReport data={data} league="nba" />}
