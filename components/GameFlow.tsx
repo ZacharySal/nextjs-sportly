@@ -113,7 +113,7 @@ export default function GameFlow({
             allowEscapeViewBox={{ x: true, y: true }}
             position={isDesktopScreen ? { x: 380, y: 0 } : {}}
             content={(content) => (
-              <div className="bg-white absolute top-[261px] min-w-[93vw] md:min-w-0 md:h-[210px] md:w-[190px] md:left-[380px] md:top-[8px] left-[13px] p-2 md:p-4 rounded-md z-10">
+              <div className="bg-white absolute top-[261px] min-w-[93vw] md:min-w-0 md:h-[210px] md:w-[190px] md:left-[380px] md:top-[8px] left-[1px] p-2 md:p-4 rounded-md z-10">
                 <div className="flex justify-between w-full border-b pb-2 mb-2 md:block md:pb-0 md:mb-0 md:border-none">
                   {content.payload?.[0]?.payload?.homeTeamWinChance >= 0.5 ? (
                     <div className="flex gap-1 font-[500] md:font-semibold">
@@ -153,7 +153,7 @@ export default function GameFlow({
       </ResponsiveContainer>
       <div
         style={{ boxShadow: "2px 1px 10px 3px rgba(0,0,0,0.125)" }}
-        className="absolute md:h-[210px] min-w-[94.35%] md:min-w-0  mx-auto md:mx-0 md:w-[190px] md:right-[18px] md:top-[98px] bottom-[21px] right-[13px] bg-white p-2 md:p-4 rounded-md"
+        className="absolute md:h-[210px] min-w-[93%] md:min-w-0  mx-auto md:mx-0 md:w-[190px] md:right-[18px] md:top-[98px] bottom-[21px] left-[13px] bg-white p-2 md:p-4 rounded-md"
       >
         <div className="flex justify-between w-full border-b pb-2 mb-2 md:block md:pb-0 md:mb-0 md:border-none">
           {finalDataPoint.homeTeamWinChance >= 0.5 ? (

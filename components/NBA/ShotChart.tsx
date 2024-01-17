@@ -38,7 +38,6 @@ export default function ShotChart({ data }: { data: any }) {
     data.awayTeam.team.id
   );
 
-  console.log(awayTeamShots);
   return (
     <div className="flex flex-col p-3 min-w-full rounded-md bg-white relative">
       <h2 className="text-[14px] font-semibold border-b border-[rgba(0,0,0,0.2]) border-dotted pb-2 mb-2">
