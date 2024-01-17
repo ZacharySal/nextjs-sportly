@@ -1,46 +1,15 @@
 import Image from "next/image";
-
-function getRGB(color: string) {
-  let parsedColor = parseInt(color.substring(1), 16);
-  let r = parsedColor >> 16;
-  let g = (parsedColor - (r << 16)) >> 8;
-  let b = parsedColor - (r << 16) - (g << 8);
-  return [r, g, b];
-}
-
-function isSimilar([r1, g1, b1]: any, [r2, g2, b2]: any) {
-  return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2) < 80;
-}
+import usePreferredColor from "./hooks/usePreferredColor";
 
 export default function MatchupPredictor({ data, league }: { data: any; league: string }) {
-  if (typeof data?.gameData?.predictor?.awayTeam?.gameProjection === "undefined") return null;
-  const awayTeamChance = Number(data.gameData.predictor.awayTeam.gameProjection).toFixed(1);
+  const awayTeamChance = Number(data?.gameData?.predictor?.awayTeam?.gameProjection).toFixed(1);
   const homeTeamChance = Number(100 - Number(awayTeamChance)).toFixed(1);
 
-  const potentialColorCombos = [
-    {
-      homeTeamColor: data.homeTeam.team.color,
-      awayTeamColor: data.awayTeam.team.color,
-    },
-    {
-      homeTeamColor: data.homeTeam.team.color,
-      awayTeamColor: data.awayTeam.team.alternateColor,
-    },
-    {
-      homeTeamColor: data.homeTeam.team.alternateColor,
-      awayTeamColor: data.awayTeam.team.color,
-    },
-    {
-      homeTeamColor: data.homeTeam.team.alternateColor,
-      awayTeamColor: data.awayTeam.team.alternateColor,
-    },
-  ];
+  const { homeTeamColor, awayTeamColor } = usePreferredColor(data);
 
-  const { homeTeamColor, awayTeamColor } = potentialColorCombos
-    .map((el: any) => el)
-    .find((combo: any) => !isSimilar(getRGB(combo.homeTeamColor), getRGB(combo.awayTeamColor)));
-
+  if (typeof data?.gameData?.predictor?.awayTeam?.gameProjection === "undefined") return null;
   if (typeof data.gameData.predictor === "undefined") return null;
+
   return (
     <div className="w-full bg-white rounded-xl p-3 flex flex-col gap-4">
       <p className="font-semibold text-[14px] border-b border-dotted pb-3 border-b-[rgba(0,0,0,0.2)]">

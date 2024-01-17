@@ -421,3 +421,29 @@ export async function getTeamData(league: League, teamId: string) {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function getFilteredTeamShots(plays: any, filterOptions: any, teamId: string) {
+  let filteredPlays = plays.filter(
+    (play: any) => play.shootingPlay === true && play.team.id === teamId
+  );
+  if (filterOptions.selectedQuarter !== "All Quarters") {
+    filteredPlays = filteredPlays.filter(
+      (play: any) => play.period.displayValue === filterOptions.selectedQuarter
+    );
+  }
+  if (!filterOptions.showMadeShots) {
+    filteredPlays = filteredPlays.filter((play: any) => play.scoringPlay !== true);
+  }
+  if (!filterOptions.showMissedShots) {
+    filteredPlays = filteredPlays.filter((play: any) => play.scoringPlay === true);
+  }
+  if (filterOptions.selectedPlayer !== "All Players") {
+    filteredPlays = filteredPlays.filter(
+      (play: any) => play.participants?.[0]?.athlete?.id === filterOptions.selectedPlayer
+    );
+  }
+  filteredPlays = filteredPlays.filter(
+    (play: any) => play.coordinate.x > 0 && play.coordinate.y > 0
+  );
+  return filteredPlays;
+}

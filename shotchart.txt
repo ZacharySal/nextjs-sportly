@@ -1,0 +1,93 @@
+import Image from "next/image";
+
+function getRGB(color: string) {
+  let parsedColor = parseInt(color.substring(1), 16);
+  let r = parsedColor >> 16;
+  let g = (parsedColor - (r << 16)) >> 8;
+  let b = parsedColor - (r << 16) - (g << 8);
+  return [r, g, b];
+}
+
+function isSimilar([r1, g1, b1]: any, [r2, g2, b2]: any) {
+  return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2) < 80;
+}
+
+export default function ShotChart({ data }: { data: any }) {
+  console.log(data);
+
+  const potentialColorCombos = [
+    {
+      homeTeamColor: data.homeTeam.team.color,
+      awayTeamColor: data.awayTeam.team.color,
+    },
+    {
+      homeTeamColor: data.homeTeam.team.color,
+      awayTeamColor: data.awayTeam.team.alternateColor,
+    },
+    {
+      homeTeamColor: data.homeTeam.team.alternateColor,
+      awayTeamColor: data.awayTeam.team.color,
+    },
+    {
+      homeTeamColor: data.homeTeam.team.alternateColor,
+      awayTeamColor: data.awayTeam.team.alternateColor,
+    },
+  ];
+
+  const { homeTeamColor, awayTeamColor } = potentialColorCombos
+    .map((el: any) => el)
+    .find((combo: any) => !isSimilar(getRGB(combo.homeTeamColor), getRGB(combo.awayTeamColor)));
+
+  const homeTeamShootingPlays = data.gameData.plays
+    .filter((play: any) => play.shootingPlay === true && play.scoringPlay === true)
+    .filter((play: any) => play.team.id === data.homeTeam.team.id);
+
+  const awayTeamShootingPlays = data.gameData.plays
+    .filter((play: any) => play.shootingPlay === true && play.scoringPlay === true)
+    .filter((play: any) => play.team.id === data.awayTeam.team.id);
+
+  return (
+    <div className="flex flex-col p-3 min-w-full rounded-md bg-white relative">
+      <h2 className="text-[14px] font-semibold border-b border-[rgba(0,0,0,0.2]) border-dotted pb-2 mb-2">
+        Shot Chart
+      </h2>
+
+      <div className="relative w-full">
+        <img src="/svgs/court.svg" />
+        <Image
+          src={data.homeTeam.team.logos[0].href}
+          alt=""
+          width={data.homeTeam.team.logos[0].width}
+          height={data.homeTeam.team.logos[0].height}
+          className="absolute top-[90px] left-1/2 -translate-x-1/2 w-[110px]"
+        />
+        <div className="w-full h-full absolute left-0 top-0">
+          <div className="relative w-full h-full translate-x-1/4 top-[124px] right-[5px] rotate-90">
+            {homeTeamShootingPlays.map((play: any) => (
+              <div
+                style={{
+                  top: play.coordinate.y * 6.5 + 15 + "px",
+                  left: play.coordinate.x * 6.5 + "px",
+                  backgroundColor: "#" + homeTeamColor,
+                }}
+                className="w-[15px] h-[15px] rounded-full rotate-90 border-2 left-0 border-white absolute"
+              ></div>
+            ))}
+          </div>
+          <div className="relative w-full h-full -translate-x-1/4 top-[-430px] left-[5px] -rotate-90">
+            {awayTeamShootingPlays.map((play: any) => (
+              <div
+                style={{
+                  top: play.coordinate.y * 6.5 + 15 + "px",
+                  left: play.coordinate.x * 6.5 + "px",
+                  backgroundColor: "#" + awayTeamColor,
+                }}
+                className="w-[15px] h-[15px] rounded-full rotate-90 border-2 left-0 border-white absolute"
+              ></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -33,7 +33,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
         >
           1st
         </div>
-        {data.gameInfo.status.period >= 2 && (
+        {(data.gameInfo.status.period >= 2 || data.gameInfo.status.type.state === "post") && (
           <div
             onClick={() => setSelectedQuarter(2)}
             className={`${
@@ -44,7 +44,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
           </div>
         )}
 
-        {data.gameInfo.status.period >= 3 && (
+        {(data.gameInfo.status.period >= 3 || data.gameInfo.status.type.state === "post") && (
           <div
             onClick={() => setSelectedQuarter(3)}
             className={`${
@@ -54,7 +54,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
             3rd
           </div>
         )}
-        {data.gameInfo.status.period >= 4 && (
+        {(data.gameInfo.status.period >= 4 || data.gameInfo.status.type.state === "post") && (
           <div
             onClick={() => setSelectedQuarter(4)}
             className={`${
@@ -82,7 +82,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
               </td>
               <td className="text-xs text-left p-2 items-center pl-0 w-full" align="left">
                 {typeof play.team !== "undefined" ? (
-                  <div className="w-full flex flex-row items-center justify-start gap-1">
+                  <div className="w-full flex flex-row items-center justify-start gap-3">
                     <Image
                       width={100}
                       height={100}

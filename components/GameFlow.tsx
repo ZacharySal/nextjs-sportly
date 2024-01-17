@@ -9,19 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useState } from "react";
-
-function getRGB(color: string) {
-  let parsedColor = parseInt(color.substring(1), 16);
-  let r = parsedColor >> 16;
-  let g = (parsedColor - (r << 16)) >> 8;
-  let b = parsedColor - (r << 16) - (g << 8);
-  return [r, g, b];
-}
-
-function isSimilar([r1, g1, b1]: any, [r2, g2, b2]: any) {
-  return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2) < 80;
-}
+import usePreferredColor from "./hooks/usePreferredColor";
 
 export default function GameFlow({
   data,
@@ -30,28 +18,7 @@ export default function GameFlow({
   data: any;
   isDesktopScreen: boolean;
 }) {
-  const potentialColorCombos = [
-    {
-      homeTeamColor: data.homeTeam.team.color,
-      awayTeamColor: data.awayTeam.team.color,
-    },
-    {
-      homeTeamColor: data.homeTeam.team.color,
-      awayTeamColor: data.awayTeam.team.alternateColor,
-    },
-    {
-      homeTeamColor: data.homeTeam.team.alternateColor,
-      awayTeamColor: data.awayTeam.team.color,
-    },
-    {
-      homeTeamColor: data.homeTeam.team.alternateColor,
-      awayTeamColor: data.awayTeam.team.alternateColor,
-    },
-  ];
-
-  const { homeTeamColor, awayTeamColor } = potentialColorCombos
-    .map((el: any) => el)
-    .find((combo: any) => !isSimilar(getRGB(combo.homeTeamColor), getRGB(combo.awayTeamColor)));
+  const { homeTeamColor, awayTeamColor } = usePreferredColor(data);
 
   const dataPoints = data.gameData.plays
     .filter((play: any) => play.scoringPlay)
@@ -67,19 +34,7 @@ export default function GameFlow({
       };
     });
 
-  const finalDataPoint = data.gameData.plays.map((play: any) => {
-    return {
-      quarter: play.period.displayValue.split(" ")[0],
-      homeScore: play.homeScore,
-      awayScore: play.awayScore,
-      gameClock: play.clock.displayValue,
-      playText: play.text,
-      homeTeamWinChance: data.gameData.winprobability.find((obj: any) => obj.playId === play.id)
-        ?.homeWinPercentage,
-    };
-  })[data.gameData.plays.length - 1];
-
-  console.log(finalDataPoint);
+  const finalDataPoint = dataPoints.slice(-1)[0];
 
   return (
     <div className="rounded-md text-[10px] w-full bg-white p-3 flex flex-col gap-3 relative pb-[120px] md:pb-3">
@@ -158,7 +113,7 @@ export default function GameFlow({
             allowEscapeViewBox={{ x: true, y: true }}
             position={isDesktopScreen ? { x: 380, y: 0 } : {}}
             content={(content) => (
-              <div className="bg-white absolute top-[261px] min-w-[93vw] md:min-w-0 md:h-[210px] md:w-[190px] md:left-[380px] md:top-[8px] left-[5px] p-2 md:p-4 rounded-md z-40">
+              <div className="bg-white absolute top-[261px] min-w-[93vw] md:min-w-0 md:h-[210px] md:w-[190px] md:left-[380px] md:top-[8px] left-[13px] p-2 md:p-4 rounded-md z-10">
                 <div className="flex justify-between w-full border-b pb-2 mb-2 md:block md:pb-0 md:mb-0 md:border-none">
                   {content.payload?.[0]?.payload?.homeTeamWinChance >= 0.5 ? (
                     <div className="flex gap-1 font-[500] md:font-semibold">

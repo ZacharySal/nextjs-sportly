@@ -6,8 +6,6 @@ import Link from "next/link";
 export default function NBAGameLeaders({ data }: { data: any }) {
   const [selectedStat, setSelectedStat] = useState("points");
 
-  console.log(data);
-
   const homePointsLeader = data?.gameData?.leaders?.[0]?.leaders?.[0]?.leaders?.[0];
   const homeAssistsLeader = data?.gameData?.leaders?.[0]?.leaders?.[1]?.leaders?.[0];
   const homeReboundsLeader = data?.gameData?.leaders?.[0]?.leaders?.[2]?.leaders?.[0];

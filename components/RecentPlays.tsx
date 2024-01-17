@@ -80,7 +80,7 @@ export default function RecentPlays({ data }: { data: any }) {
       </h1>
       <div className="flex-col mt-1">
         {plays
-          .slice(plays.length - 5, plays.length - 1)
+          .slice(plays.length - 4, plays.length)
           .reverse()
           .map((play: Play, index: number) => {
             const winProbability = getWinProbabilityByPlayId(play.id);
@@ -90,10 +90,11 @@ export default function RecentPlays({ data }: { data: any }) {
               // if play is shooting or scoring play we show athletes name, otherwise team logo
               const athlete = getAthleteById(play.participants?.[0]?.athlete.id);
               const displayedPicture = athlete
-                ? athlete.headshot.href
+                ? athlete?.headshot?.href
                 : team
-                ? team.team.logos[0].href
+                ? team?.team?.logos?.[0]?.href
                 : null;
+
               return (
                 <div
                   key={play.id}
@@ -120,14 +121,17 @@ export default function RecentPlays({ data }: { data: any }) {
                     className="flex flex-col gap-1 text-left text-xs my-auto row-span-full"
                   >
                     <div className="flex gap-1 items-center">
-                      <Image
-                        priority={true}
-                        src={team?.team?.logos?.[0]?.href ?? "/default.png"}
-                        alt="player or team logo"
-                        width={team?.team?.logos?.[0]?.width ?? 100}
-                        height={team?.team?.logos?.[0]?.width ?? 100}
-                        className="w-[20px] object-contain rounded-full"
-                      />
+                      {displayedPicture && (
+                        <Image
+                          priority={true}
+                          src={team?.team?.logos?.[0]?.href ?? "/default.png"}
+                          alt="player or team logo"
+                          width={team?.team?.logos?.[0]?.width ?? 100}
+                          height={team?.team?.logos?.[0]?.width ?? 100}
+                          className="w-[20px] object-contain rounded-full"
+                        />
+                      )}
+
                       <p className="font-[300]">
                         {play.clock.displayValue} - {play.period.displayValue}
                       </p>

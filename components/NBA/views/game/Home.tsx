@@ -19,8 +19,8 @@ import useSWR from "swr";
 import Image from "next/image";
 import Loading from "@/app/loading";
 import Linescores from "@/components/Linescores";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Label } from "recharts";
 import GameFlow from "@/components/GameFlow";
+import ShotChart from "../../ShotChart";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -45,7 +45,8 @@ export default function Home({ gameId }: { gameId: string }) {
           <NBAGameLeaders data={data} />
           {data.isGameStarted && <NBATeamStats data={data} />}
           <GameFlow data={data} isDesktopScreen={isDesktopScreen} />
-          <MatchupPredictor data={data} league={"nba"} />
+          <ShotChart data={data} />
+          {data.gameInfo.status.type.state === "in" && <InjuryReport data={data} league="nba" />}
         </>
       ) : (
         <>
@@ -64,6 +65,8 @@ export default function Home({ gameId }: { gameId: string }) {
   const desktopView = () => (
     <>
       <div className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+        {data.gameInfo.status.type.state !== "pre" && <NBAGameLeaders data={data} />}
+
         <MatchupPredictor data={data} league="nba" />
         <DivisionStandings data={data} isNFL={false} league="nba" />
         <StadiumInfo data={data} />
@@ -82,8 +85,10 @@ export default function Home({ gameId }: { gameId: string }) {
           <>
             <GameRecapArticle data={data} />
             {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
-            <NBAGameLeaders data={data} />
+
             <GameFlow data={data} isDesktopScreen={isDesktopScreen} />
+            <ShotChart data={data} />
+            {data.gameInfo.status.type.state === "in" && <InjuryReport data={data} league="nba" />}
           </>
         )}
       </div>
