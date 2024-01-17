@@ -34,7 +34,7 @@ export default function GameFlow({
       };
     });
 
-  const finalDataPoint = dataPoints.slice(-1)[0];
+  const finalDataPoint = dataPoints?.slice(-1)[0];
 
   return (
     <div className="rounded-md text-[10px] w-full bg-white p-3 flex flex-col gap-3 relative pb-[120px] md:pb-3">
@@ -156,11 +156,11 @@ export default function GameFlow({
         className="absolute md:h-[210px] min-w-[93%] md:min-w-0  mx-auto md:mx-0 md:w-[190px] md:left-[392px] md:top-[98px] bottom-[21px] left-[13px] bg-white p-2 md:p-4 rounded-md"
       >
         <div className="flex justify-between w-full border-b pb-2 mb-2 md:block md:pb-0 md:mb-0 md:border-none">
-          {finalDataPoint.homeTeamWinChance >= 0.5 ? (
+          {finalDataPoint?.homeTeamWinChance >= 0.5 ? (
             <div className="flex gap-1 font-[500] md:font-semibold">
               <h3 className="text-[12px] md:text-[16px]">{data.homeTeam.team.abbreviation}</h3>
               <h3 className="text-[12px] md:text-[16px]">{`${Number(
-                finalDataPoint.homeTeamWinChance * 100
+                finalDataPoint?.homeTeamWinChance * 100
               ).toFixed(1)}%`}</h3>
             </div>
           ) : (
@@ -168,20 +168,20 @@ export default function GameFlow({
               <div className="flex gap-1 font-[500] md:font-semibold">
                 <h3 className="text-[12px] md:text-[16px]">{data.awayTeam.team.abbreviation}</h3>
                 <h3 className="text-[12px] md:text-[16px]">{`${Number(
-                  100 - finalDataPoint.homeTeamWinChance * 100
+                  100 - finalDataPoint?.homeTeamWinChance * 100
                 ).toFixed(1)}%`}</h3>
               </div>
             </>
           )}
 
-          <h3 className="text-[11px] font-[500] md:mt-2 md:pb-2 md:mb-2 md:border-b border-[rgba(0,0,0,0.2)]">{`${data.awayTeam.team.abbreviation} ${finalDataPoint.awayScore} - ${data.homeTeam.team.abbreviation} ${finalDataPoint.homeScore}`}</h3>
+          <h3 className="text-[11px] font-[500] md:mt-2 md:pb-2 md:mb-2 md:border-b border-[rgba(0,0,0,0.2)]">{`${data.awayTeam.team.abbreviation} ${finalDataPoint?.awayScore} - ${data.homeTeam.team.abbreviation} ${finalDataPoint?.homeScore}`}</h3>
         </div>
 
         <p className="text-[11px] opacity-80 font-[500]">
-          {finalDataPoint.gameClock} - {finalDataPoint.quarter}
+          {finalDataPoint?.gameClock} - {finalDataPoint?.quarter}
         </p>
         <p className="text-[11px] opacity-60 max-w-full overflow-hidden mt-1">
-          {finalDataPoint.playText}
+          {finalDataPoint?.playText}
         </p>
       </div>
     </div>
