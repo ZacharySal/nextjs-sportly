@@ -21,7 +21,7 @@ export default function GameFlow({
   const { homeTeamColor, awayTeamColor } = usePreferredColor(data);
 
   const dataPoints = data.gameData.plays
-    .filter((play: any) => play.scoringPlay)
+    .filter((play: any, i: number) => play.scoringPlay || i == data.gameData.plays.length - 1)
     .map((play: any) => {
       return {
         quarter: play.period.displayValue.split(" ")[0],
@@ -153,7 +153,7 @@ export default function GameFlow({
       </ResponsiveContainer>
       <div
         style={{ boxShadow: "2px 1px 10px 3px rgba(0,0,0,0.125)" }}
-        className="absolute md:h-[210px] min-w-[93%] md:min-w-0  mx-auto md:mx-0 md:w-[190px] md:right-[18px] md:top-[98px] bottom-[21px] left-[13px] bg-white p-2 md:p-4 rounded-md"
+        className="absolute md:h-[210px] min-w-[93%] md:min-w-0  mx-auto md:mx-0 md:w-[190px] md:left-[392px] md:top-[98px] bottom-[21px] left-[13px] bg-white p-2 md:p-4 rounded-md"
       >
         <div className="flex justify-between w-full border-b pb-2 mb-2 md:block md:pb-0 md:mb-0 md:border-none">
           {finalDataPoint.homeTeamWinChance >= 0.5 ? (
