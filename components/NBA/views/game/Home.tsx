@@ -86,7 +86,7 @@ export default function Home({ gameId }: { gameId: string }) {
           <>
             <GameRecapArticle data={data} />
             {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
-            <WinProbability data={data} isDesktopScreen={isDesktopScreen} />
+            {/* <WinProbability data={data} isDesktopScreen={isDesktopScreen} /> */}
             <GameFlow data={data} isDesktopScreen={isDesktopScreen} />
             <ShotChart data={data} />
             {data.gameInfo.status.type.state === "in" && <InjuryReport data={data} league="nba" />}
