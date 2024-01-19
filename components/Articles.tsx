@@ -1,8 +1,9 @@
 import ArticleCard from "./ArticleCard";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
+import { Article } from "@/types";
 
-function Articles({ title, news, limit }: { title: string; news: any; limit: number }) {
+function Articles({ title, news, limit }: { title: string; news: Array<Article>; limit: number }) {
   const articleLimit = limit > news.length ? news.length : limit;
   return (
     <div className="self-start p-3 flex flex-col rounded-xl bg-white">

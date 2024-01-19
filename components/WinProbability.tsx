@@ -1,9 +1,7 @@
 "use client";
 import Image from "next/image";
 import {
-  LineChart,
   CartesianGrid,
-  Line,
   XAxis,
   YAxis,
   Tooltip,
@@ -45,21 +43,13 @@ export default function WinProbability({
   const dataMax = Math.max(...dataPoints.map((i: any) => i.homeTeamWinChance));
   const dataMin = Math.min(...dataPoints.map((i: any) => i.homeTeamWinChance));
 
-  const gradientOffset = () => {
-    if (dataMax <= 0) {
-      return 0;
-    }
-    if (dataMin >= 0) {
-      return 1;
-    }
+  const awayTeamWinChanceAvg = Number(
+    dataPoints.reduce((a: any, b: any) => a + b.awayTeamWinChance)
+  );
 
-    return dataMax / (dataMax - dataMin);
-  };
-
-  const off = gradientOffset();
+  console.log(awayTeamWinChanceAvg);
 
   const finalDataPoint = dataPoints.slice(-1)[0];
-  console.log(dataPoints);
 
   return (
     <div className="rounded-md text-[10px] w-full bg-white p-3 flex flex-col gap-3 relative pb-[120px] md:pb-3">
@@ -101,12 +91,6 @@ export default function WinProbability({
           margin={{ left: 10, right: isDesktopScreen ? 0 : -20, top: 5 }}
         >
           <CartesianGrid stroke="#ccc" strokeDasharray="1 4" />
-          <defs>
-            <linearGradient id="splitColor" x1="" y1="100" x2="0" y2="50">
-              <stop offset={50} stopColor={homeTeamColor} stopOpacity={1} />
-              <stop offset={50} stopColor={homeTeamColor} stopOpacity={0.5} />
-            </linearGradient>
-          </defs>
           <Area
             type="monotone"
             dataKey="awayTeamWinChance"
@@ -114,16 +98,14 @@ export default function WinProbability({
             fill="url(#splitColor)"
             baseValue={50}
           />
-          {/* <XAxis
-            dataKey="quarter"
-            ticks={["1st", "2nd", "3rd", "4th"]}
-            tickLine={false} 
-            tickSize={1}
-            tickMargin={10}
-            tick={true}
-            interval={0}
-            hide={true}
-          /> */}
+          <defs>
+            <linearGradient id="splitColor" x1="0" y1="0%" x2="0" y2="100%">
+              <stop offset={"0%"} stopColor={`#${awayTeamColor}`} />
+              <stop offset={"50%"} stopColor={`white`} />
+              <stop offset={"50%"} stopColor={`white`} />
+              <stop offset={"100%"} stopColor={`#${homeTeamColor}`} />
+            </linearGradient>
+          </defs>
           <XAxis
             dataKey="quarter"
             ticks={["1st", "2nd", "3rd", "4th"]}
@@ -135,13 +117,14 @@ export default function WinProbability({
             interval={0}
           />
           <YAxis
-            ticks={["100", "50", "100"]}
+            ticks={[100, 50, 100]}
             interval={0}
             orientation="right"
             tick={true}
             tickSize={1}
-            tickLine={false}
+            tickLine={true}
             tickMargin={10}
+            type="number"
           />
           <Tooltip
             allowEscapeViewBox={{ x: true, y: true }}

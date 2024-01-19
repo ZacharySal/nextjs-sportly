@@ -1,7 +1,8 @@
 import { v4 } from "uuid";
 import Image from "next/image";
+import { GameData } from "@/types";
 
-export default function Linescores({ data }: { data: any }) {
+export default function Linescores({ data }: { data: GameData }) {
   return (
     <div className="w-full bg-white p-3 rounded-md">
       <div className="w-full grid grid-cols-[100px_1fr_1fr_1fr_1fr_1fr] border-b gap-x-2 gap-2">

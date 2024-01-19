@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 import { nameExceptions } from "../lib/constants";
 import React from "react";
+import { GameData } from "@/types";
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("en-US", {
@@ -11,7 +12,7 @@ const formatDate = (date: string) => {
   });
 };
 
-export default function InjuryReport({ data, league }: { data: any; league: string }) {
+export default function InjuryReport({ data, league }: { data: GameData; league: string }) {
   if (
     data.gameData.injuries[0].injuries.length === 0 &&
     data.gameData.injuries[1].injuries.length === 0

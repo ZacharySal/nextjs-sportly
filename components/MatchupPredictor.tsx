@@ -1,7 +1,8 @@
 import Image from "next/image";
 import usePreferredColor from "./hooks/usePreferredColor";
+import { GameData } from "@/types";
 
-export default function MatchupPredictor({ data, league }: { data: any; league: string }) {
+export default function MatchupPredictor({ data, league }: { data: GameData; league: string }) {
   const awayTeamChance = Number(data?.gameData?.predictor?.awayTeam?.gameProjection).toFixed(1);
   const homeTeamChance = Number(100 - Number(awayTeamChance)).toFixed(1);
 

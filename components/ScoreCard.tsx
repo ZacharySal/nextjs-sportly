@@ -69,7 +69,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               height={100}
               priority={true}
               alt="away team points leader"
-              className="w-[35px] h-[35px] border rounded-full object-cover"
+              className="w-[40px] h-[40px] border rounded-full object-cover"
             />
             <div className="flex flex-col">
               <p className="text-xs">
@@ -101,7 +101,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               height={100}
               priority={true}
               alt="away team points leader"
-              className="w-[35px] h-[35px] border rounded-full object-cover"
+              className="w-[40px] h-[40px] border rounded-full object-cover"
             />
             <div className="flex flex-col">
               <p className="text-xs">
@@ -139,7 +139,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               height={100}
               priority={true}
               alt="away team points leader"
-              className="w-[35px] h-[35px] border rounded-full object-cover"
+              className="w-[40px] h-[40px] border rounded-full object-cover"
             />
             <div className="flex flex-col">
               <p className="text-xs">
@@ -162,7 +162,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               height={100}
               priority={true}
               alt="away team points leader"
-              className="w-[35px] h-[35px] border rounded-full object-cover"
+              className="w-[40px] h-[40px] border rounded-full object-cover"
             />
             <div className="flex flex-col">
               <p className="text-xs">

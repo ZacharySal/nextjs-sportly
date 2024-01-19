@@ -4,7 +4,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import ContainerBox from "@/components/ContainerBox";
 import Articles from "@/components/Articles";
 import StadiumInfo from "@/components/StadiumInfo";
-import NFLBoxscore from "@/components/NFL/NFLBoxscore";
+import NFLTeamStats from "../../NFLTeamStats";
 import DivisionStandings from "@/components/DivisionStandings";
 import NFLScoringPlays from "@/components/NFL/NFLScoringPlays";
 import GameUserSelection from "@/components/GameUserSelection";
@@ -17,13 +17,14 @@ import RecentPlays from "@/components/RecentPlays";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
 import Linescores from "@/components/Linescores";
+import { NFLGameData } from "@/types";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
-  const { data, isLoading } = useSWR(
+  const { data, isLoading }: { data: NFLGameData; isLoading: boolean } = useSWR(
     `https://nextjs-sportly.vercel.app/api/nfl/gameData/${gameId}`,
     fetcher,
     {
@@ -31,15 +32,19 @@ export default function Home({ gameId }: { gameId: string }) {
     }
   );
 
+  if (!isLoading) {
+    console.log(data);
+  }
+
   const desktopView = () => (
     <>
-      <div className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+      <div className="flex self-start flex-col justify-center items-center gap-3">
         <NFLGameLeaders data={data} />
         <DivisionStandings data={data} isNFL={true} league="nfl" />
         <StadiumInfo data={data} />
       </div>
 
-      <div className="flex flex-col gap-3 basis-1/2">
+      <div className="flex flex-col gap-3">
         {data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
@@ -55,7 +60,8 @@ export default function Home({ gameId }: { gameId: string }) {
         )}
       </div>
 
-      <div className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+      <div className="flex self-start flex-col justify-center items-center gap-3">
+        {data.gameInfo.status.type.state !== "pre" && <NFLTeamStats data={data} />}
         <MatchupPredictor data={data} league="nfl" />
         <Articles title="NFL News" news={data.gameData.news.articles} limit={6} />
       </div>
@@ -70,7 +76,7 @@ export default function Home({ gameId }: { gameId: string }) {
           <Linescores data={data} />
           <NFLGameLeaders data={data} />
           <NFLScoringPlays data={data} />
-          <MatchupPredictor data={data} league={"nfl"} />
+          <NFLTeamStats data={data} />
         </>
       ) : (
         <>

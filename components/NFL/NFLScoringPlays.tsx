@@ -15,7 +15,7 @@ export default function NFLScoringPlays({ data }: { data: any }) {
               width={100}
               height={100}
               alt="team logo"
-              className="w-8 object-contain"
+              className="w-6 md:w-8 object-contain"
             />
             <div className="flex flex-col">
               <div className="text-sm font-semibold">
@@ -26,24 +26,8 @@ export default function NFLScoringPlays({ data }: { data: any }) {
             </div>
           </div>
           <div className="flex flex-row gap-6 pr-2">
-            <p
-              style={{
-                fontWeight:
-                  play.team.displayName === data.homeTeam.team.displayName ? "700" : "400",
-              }}
-              className="w-4 text-center"
-            >
-              {play.homeScore}
-            </p>
-            <p
-              style={{
-                fontWeight:
-                  play.team.displayName === data.awayTeam.team.displayName ? "700" : "400",
-              }}
-              className="w-4 text-center"
-            >
-              {play.awayScore}
-            </p>
+            <p className="w-4 text-[12px] text-center">{play.homeScore}</p>
+            <p className="w-4 text-[12px] text-center">{play.awayScore}</p>
           </div>
         </div>
       );
@@ -61,8 +45,9 @@ export default function NFLScoringPlays({ data }: { data: any }) {
 
   return (
     <div className="w-full bg-white rounded-xl flex flex-col justify-center items-center p-3">
-      <p className=" w-full text-left text-sm opacity-70 font-semibold">Scoring Plays</p>
-      <hr className="w-full color-[#edeef0] my-[0.5rem]" />
+      <p className=" w-full text-left text-[14px] pb-2 mb-2 border-b border-[rgba(0,0,0,0.2)] border-dotted font-semibold">
+        Scoring Summary
+      </p>
       {data.scoringPlays.firstQuarterScoringPlays.length > 0 && (
         <>
           {quarterHeader("1ST QUARTER")}

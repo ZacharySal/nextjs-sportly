@@ -1,3 +1,4 @@
+import { NFLPlay } from "@/types";
 import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
@@ -17,10 +18,11 @@ export async function GET(request: Request, { params }: { params: { gameId: stri
 
   const gameInfo = gameData.header.competitions[0];
 
-  let firstQuarterScoringPlays: any[] = [];
-  let secondQuarterScoringPlays: any[] = [];
-  let thirdQuarterScoringPlays: any[] = [];
-  let fourthQuarterScoringPlays: any[] = [];
+  let firstQuarterScoringPlays: Array<NFLPlay>;
+  let secondQuarterScoringPlays: Array<NFLPlay>;
+  let thirdQuarterScoringPlays: Array<NFLPlay>;
+  let fourthQuarterScoringPlays: Array<NFLPlay>;
+
   const isGameStarted = gameData.drives ? true : false;
 
   if (isGameStarted && gameData.scoringPlays?.length > 0) {
@@ -44,10 +46,10 @@ export async function GET(request: Request, { params }: { params: { gameId: stri
     isGameStarted: gameData.lastFiveGames ? false : true,
     gameInfo: gameInfo,
     scoringPlays: {
-      firstQuarterScoringPlays,
-      secondQuarterScoringPlays,
-      thirdQuarterScoringPlays,
-      fourthQuarterScoringPlays,
+      firstQuarterScoringPlays: Array<NFLPlay>,
+      secondQuarterScoringPlays: Array<NFLPlay>,
+      thirdQuarterScoringPlays: Array<NFLPlay>,
+      fourthQuarterScoringPlays: Array<NFLPlay>,
     },
   });
 }

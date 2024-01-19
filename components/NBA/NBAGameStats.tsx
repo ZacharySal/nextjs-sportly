@@ -42,7 +42,7 @@ export default function NBAGameStats({
               src={data.gameInfo.competitors[teamOption === 0 ? 1 : 0].team.logos[0].href}
             />
             <div className="w-full flex flex-row items-center justify-between">
-              <p className="text-[16px] font-[600] tracking-wide opacity-80 capitalize">
+              <p className="text-[16px] font-[500] capitalize">
                 {tableHeader(statType, teamOption)}
               </p>
               {!isDesktopScreen && (
@@ -150,26 +150,35 @@ export default function NBAGameStats({
   );
 
   return (
-    <div className="bg-white rounded-xl w-full px-2">
-      <div className="flex w-full justify-around gap-3 my-5 rounded-2xl p-2 bg-[#edeef09c] text-center">
-        <div
-          onClick={() => setSelectedTeam(0)}
-          className={`${
-            selectedTeam === 0 && "button-active"
-          } flex-grow h-full text-xs cursor-pointer font-semibold`}
-        >
-          {awayTeamName}
+    <>
+      {isDesktopScreen ? (
+        <div className="bg-white rounded-xl w-full px-3 py-5">
+          {teamBoxScore(0)}
+          {teamBoxScore(1)}
         </div>
-        <div
-          onClick={() => setSelectedTeam(1)}
-          className={`${
-            selectedTeam === 1 && "button-active"
-          } flex-grow h-full text-xs cursor-pointer font-semibold`}
-        >
-          {homeTeamName}
+      ) : (
+        <div className="bg-white rounded-xl w-full px-2">
+          <div className="flex w-full justify-around gap-3 my-5 rounded-2xl p-2 bg-[#edeef09c] text-center">
+            <div
+              onClick={() => setSelectedTeam(0)}
+              className={`${
+                selectedTeam === 0 && "button-active"
+              } flex-grow h-full text-xs cursor-pointer font-semibold`}
+            >
+              {awayTeamName}
+            </div>
+            <div
+              onClick={() => setSelectedTeam(1)}
+              className={`${
+                selectedTeam === 1 && "button-active"
+              } flex-grow h-full text-xs cursor-pointer font-semibold`}
+            >
+              {homeTeamName}
+            </div>
+          </div>
+          {teamBoxScore(selectedTeam)}
         </div>
-      </div>
-      {teamBoxScore(selectedTeam)}
-    </div>
+      )}
+    </>
   );
 }

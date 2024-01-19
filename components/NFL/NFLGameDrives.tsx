@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function NFLGameDrives({ data }: { data: any }) {
   return (
     <div className="w-full bg-white rounded-xl p-3">
-      <p className="text-sm font-semibold mb-2">Game Drives</p>
+      <p className="text-[14px] font-semibold mb-2">Game Drives</p>
       <hr className="w-full color-[#edeef0]" />
       <div id="style-1" className="w-full md:max-h-full overflow-y-auto ">
         {data.gameData.drives.previous.map((drive: any) => (

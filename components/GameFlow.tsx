@@ -21,7 +21,7 @@ export default function GameFlow({
   const { homeTeamColor, awayTeamColor } = usePreferredColor(data);
 
   const dataPoints = data.gameData.plays
-    .filter((play: any, i: number) => play.scoringPlay || i == data.gameData.plays.length - 1)
+    .filter((play: any, i: number) => play?.scoringPlay || i == data.gameData.plays.length - 1)
     .map((play: any) => {
       return {
         quarter: play.period.displayValue.split(" ")[0],
@@ -73,7 +73,7 @@ export default function GameFlow({
       >
         <LineChart
           data={dataPoints as any[]}
-          margin={{ left: 10, right: isDesktopScreen ? 0 : -20 }}
+          margin={{ left: 10, right: isDesktopScreen ? 0 : -20, top: 5 }}
         >
           <CartesianGrid stroke="#ccc" strokeDasharray="1 4" />
           <Line

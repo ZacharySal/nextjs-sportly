@@ -1,3 +1,4 @@
+import { GameData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,7 +12,7 @@ function convertDate(date: string) {
   });
 }
 
-export default function GameRecapArticle({ data }: { data: any }) {
+export default function GameRecapArticle({ data }: { data: GameData }) {
   if (typeof data.gameData.article == "undefined") return null;
   const hasVideo = data.gameData.article.images.length > 0;
   const hasArticle = typeof data.gameData.article !== "undefined";

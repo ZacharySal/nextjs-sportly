@@ -1,7 +1,8 @@
 import Image from "next/image";
 import usePreferredColor from "../hooks/usePreferredColor";
+import { GameData, NFLGameData } from "@/types";
 
-export default function NBATeamStats({ data }: { data: any }) {
+export default function NFLTeamStats({ data }: { data: NFLGameData }) {
   const { homeTeamColor, awayTeamColor } = usePreferredColor(data);
   function getTeamStatDisplay(
     teamOption: number,
@@ -10,6 +11,7 @@ export default function NBATeamStats({ data }: { data: any }) {
     homeTeam: boolean
   ) {
     const statName = data.gameData?.boxscore?.teams?.[teamOption].statistics?.[statOption]?.name;
+    console.log(data);
     return (
       <div
         style={{ paddingRight: homeTeam ? "0px" : "10px", paddingLeft: homeTeam ? "10px" : "0px" }}
@@ -24,19 +26,22 @@ export default function NBATeamStats({ data }: { data: any }) {
           <div className="absolute w-[1px] opacity-40 h-[10px] bg-gray-100 left-[75%] z-20"></div>
           <div
             style={{
-              width:
-                statName === "turnovers" || statName === "totalRebounds"
-                  ? `${
-                      (data.gameData?.boxscore?.teams?.[teamOption]?.statistics?.[statOption]
-                        ?.displayValue /
-                        Math.max(
-                          data.gameData?.boxscore?.teams?.[0].statistics?.[statOption]
-                            ?.displayValue,
-                          data.gameData?.boxscore?.teams?.[1].statistics?.[statOption]?.displayValue
-                        )) *
-                      100
-                    }%`
-                  : `${data.gameData?.boxscore?.teams?.[teamOption]?.statistics?.[statOption]?.displayValue}%`,
+              width: `${
+                (Number(
+                  data.gameData?.boxscore?.teams?.[teamOption]?.statistics?.[statOption]
+                    ?.displayValue
+                ) /
+                  Math.max(
+                    Number(
+                      data.gameData?.boxscore?.teams?.[0].statistics?.[statOption]?.displayValue
+                    ),
+                    Number(
+                      data.gameData?.boxscore?.teams?.[1].statistics?.[statOption]?.displayValue
+                    )
+                  )) *
+                100
+              }%`,
+
               backgroundColor: `#${color}`,
             }}
             className="absolute left-0  h-[10px] rounded-3xl"
@@ -72,27 +77,27 @@ export default function NBATeamStats({ data }: { data: any }) {
           <h4 className="text-[12px] font-semibold">{data.homeTeam.team.abbreviation}</h4>
         </div>
       </div>
-      <div className="grid grid-cols-[2fr_65px_2fr] grid-rows-[55px_55px_55px_55px]">
-        {getTeamStatDisplay(0, 1, awayTeamColor, false)}
+      <div className="grid grid-cols-[2fr_65px_2fr] grid-rows-[55px_55px_55px]">
+        {getTeamStatDisplay(0, 7, awayTeamColor, false)}
         <p className="text-[10px] text-[rgba(0,0,0,0.6)] font-semibold w-full text-center border-l border-r border-dotted border-b p-2 border-[rgba(0,0,0,0.2)] flex justify-center items-center">
-          Field Goal %
+          Total Yards
         </p>
-        {getTeamStatDisplay(1, 1, homeTeamColor, true)}
-        {getTeamStatDisplay(0, 3, awayTeamColor, false)}
+        {getTeamStatDisplay(1, 7, homeTeamColor, true)}
+        {getTeamStatDisplay(0, 20, awayTeamColor, false)}
         <p className="text-[10px] text-[rgba(0,0,0,0.6)] font-semibold w-full text-center border-l border-r border-dotted border-b  p-2 border-[rgba(0,0,0,0.2)] flex justify-center items-center">
-          Three Point %
-        </p>
-        {getTeamStatDisplay(1, 3, homeTeamColor, true)}
-        {getTeamStatDisplay(0, 12, awayTeamColor, false)}
-        <p className="text-[10px] text-[rgba(0,0,0,0.6)] font-semibold w-full text-center border-l border-r border-dotted border-b p-2 border-[rgba(0,0,0,0.2)] flex justify-center items-center">
           Turnovers
         </p>
-        {getTeamStatDisplay(1, 12, homeTeamColor, true)}
-        {getTeamStatDisplay(0, 6, awayTeamColor, false)}
-        <p className="text-[10px] text-[rgba(0,0,0,0.6)] font-semibold w-full text-center border-l border-r border-dotted p-2 border-b border-[rgba(0,0,0,0.2)] flex justify-center items-center">
-          Rebounds
+        {getTeamStatDisplay(1, 20, homeTeamColor, true)}
+        {getTeamStatDisplay(0, 0, awayTeamColor, false)}
+        <p className="text-[10px] text-[rgba(0,0,0,0.6)] font-semibold w-full text-center border-l border-r border-dotted border-b p-2 border-[rgba(0,0,0,0.2)] flex justify-center items-center">
+          First Downs
         </p>
-        {getTeamStatDisplay(1, 6, homeTeamColor, true)}
+        {getTeamStatDisplay(1, 0, homeTeamColor, true)}
+        {/* {getTeamStatDisplay(0, 24, awayTeamColor, false)}
+        <p className="text-[10px] text-[rgba(0,0,0,0.6)] font-semibold w-full text-center border-l border-r border-dotted p-2 border-b border-[rgba(0,0,0,0.2)] flex justify-center items-center">
+          Possession Time
+        </p>
+        {getTeamStatDisplay(1, 24, homeTeamColor, true)} */}
       </div>
     </div>
   );

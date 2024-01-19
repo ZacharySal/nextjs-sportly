@@ -42,6 +42,7 @@ export default function Home({ gameId }: { gameId: string }) {
       {data.isGameStarted ? (
         <>
           {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
+          {data.gameInfo.status.type.state === "post" && <RecentPlays data={data} />}
           <Linescores data={data} />
           <NBAGameLeaders data={data} />
           {data.isGameStarted && <NBATeamStats data={data} />}
@@ -86,6 +87,7 @@ export default function Home({ gameId }: { gameId: string }) {
           <>
             <GameRecapArticle data={data} />
             {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
+            {data.gameInfo.status.type.state === "post" && <RecentPlays data={data} />}
             {/* <WinProbability data={data} isDesktopScreen={isDesktopScreen} /> */}
             <GameFlow data={data} isDesktopScreen={isDesktopScreen} />
             <ShotChart data={data} />

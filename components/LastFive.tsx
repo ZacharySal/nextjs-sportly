@@ -3,6 +3,7 @@ import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 import { nameExceptions } from "../lib/constants";
+import { GameData } from "@/types";
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("en-US", {
@@ -17,7 +18,7 @@ export default function LastFive({
   league,
   isDesktopScreen,
 }: {
-  data: any;
+  data: GameData;
   league: string;
   isDesktopScreen: any;
 }) {

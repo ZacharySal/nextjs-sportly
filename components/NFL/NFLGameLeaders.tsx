@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-export default function NFLGameLeaders({ data }: { data: any }) {
+import { NFLGameData } from "@/types";
+export default function NFLGameLeaders({ data }: { data: NFLGameData }) {
   if (
     data.gameData.leaders[0].leaders.length === 0 ||
     data.gameData.leaders[1].leaders.length === 0
@@ -20,7 +21,7 @@ export default function NFLGameLeaders({ data }: { data: any }) {
         <div className="grid place-items-end justify-center gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between relative my-2">
           <div className="flex col-start-1 flex-col row-span-2 justify-center items-center gap-1 player-divider">
             <Image
-              src={data.gameData.leaders[1].leaders[0].leaders[0].athlete.headshot.href}
+              src={data.gameData.leaders[1].leaders[0].leaders[0].athlete.headshot?.href}
               width={100}
               height={100}
               alt="player"

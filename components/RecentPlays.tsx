@@ -1,40 +1,26 @@
 import Image from "next/image";
 import { v4 } from "uuid";
-
-type Play = {
-  id: string;
-  awayScore: number;
-  homeScore: number;
-  clock: {
-    displayValue: string;
-  };
-  coordinate: {
-    x: 31;
-    y: 9;
-  };
-  participants: Array<any>;
-  period: {
-    number: 2;
-    displayValue: string;
-  };
-  scoreValue: number;
-  scoringPlay: false;
-  sequenceNumber: string;
-  shootingPlay: boolean;
-  team: {
-    id: string;
-  };
-  text: string;
-  type: {
-    id: string;
-    text: string;
-  };
-  wallclock: string;
-};
+import NBA3DCourtSVG from "./NBA3DCourtSVG";
+import usePreferredColor from "./hooks/usePreferredColor";
+import { NBAPlay } from "@/types";
 
 export default function RecentPlays({ data }: { data: any }) {
-  const plays = data.gameData.plays;
+  const plays: Array<NBAPlay> = data.gameData.plays;
 
+  let shootingPlays = plays.filter(
+    (play) => play.shootingPlay && play.coordinate.x >= 0 && play.coordinate
+  );
+
+  shootingPlays = shootingPlays.slice(shootingPlays.length - 50, shootingPlays.length);
+
+  console.log(plays);
+
+  // x range: 0 - 50?
+  // y range: 0 - 30?
+
+  // shooting dots need to go inside svg as g paths
+
+  const { homeTeamColor, awayTeamColor } = usePreferredColor(data);
   function getAthleteById(id: string) {
     let selectedAthlete: any = undefined;
     data.gameData.boxscore.players.map((team: any) => {
@@ -82,7 +68,7 @@ export default function RecentPlays({ data }: { data: any }) {
         {plays
           .slice(plays.length - 4, plays.length)
           .reverse()
-          .map((play: Play, index: number) => {
+          .map((play: NBAPlay, index: number) => {
             const winProbability = getWinProbabilityByPlayId(play.id);
             const team = getTeamById(play?.team?.id);
 
@@ -96,68 +82,86 @@ export default function RecentPlays({ data }: { data: any }) {
                 : null;
 
               return (
-                <div
-                  key={play.id}
-                  className="grid py-2 md:py-3 px-1 gap-x-4 grid-rows-2 grid-cols-[auto_4fr_2fr] border-b border-[rgba(0,0,0,0.2)]"
-                >
-                  <div className="row-span-full flex items-center justify-center">
-                    {displayedPicture && (
-                      <Image
-                        priority={true}
-                        src={displayedPicture}
-                        alt="player or team logo"
-                        width={50}
-                        height={50}
-                        className="w-[50px] h-[50px] object-cover rounded-full"
-                      />
-                    )}
-                  </div>
-
+                <>
                   <div
-                    style={{
-                      fontWeight: play.scoringPlay ? "600" : "400",
-                      color: "#2B2C2D",
-                    }}
-                    className="flex flex-col gap-1 text-left text-xs my-auto row-span-full"
+                    key={play.id}
+                    className="grid py-2 md:py-3 px-1 gap-x-4 grid-rows-2 grid-cols-[auto_4fr_2fr] border-[rgba(0,0,0,0.2)]"
                   >
-                    <div className="flex gap-1 items-center">
+                    <div className="row-span-full flex items-center justify-center">
                       {displayedPicture && (
                         <Image
                           priority={true}
-                          src={team?.team?.logos?.[0]?.href ?? "/default.png"}
+                          src={displayedPicture}
                           alt="player or team logo"
-                          width={team?.team?.logos?.[0]?.width ?? 100}
-                          height={team?.team?.logos?.[0]?.width ?? 100}
-                          className="w-[20px] object-contain rounded-full"
+                          width={50}
+                          height={50}
+                          className="w-[50px] h-[50px] object-cover rounded-full"
                         />
                       )}
+                    </div>
 
-                      <p className="font-[300]">
-                        {play.clock.displayValue} - {play.period.displayValue}
+                    <div
+                      style={{
+                        fontWeight: play.scoringPlay ? "600" : "400",
+                        color: "#2B2C2D",
+                      }}
+                      className="flex flex-col gap-1 text-left text-xs my-auto row-span-full"
+                    >
+                      <div className="flex gap-1 items-center">
+                        {displayedPicture && (
+                          <Image
+                            priority={true}
+                            src={team?.team?.logos?.[0]?.href ?? "/default.png"}
+                            alt="player or team logo"
+                            width={team?.team?.logos?.[0]?.width ?? 100}
+                            height={team?.team?.logos?.[0]?.width ?? 100}
+                            className="w-[20px] object-contain rounded-full"
+                          />
+                        )}
+
+                        <p className="font-[300]">
+                          {play.clock.displayValue} - {play.period.displayValue}
+                        </p>
+                      </div>
+
+                      <p className="text-[12px]">{play.text}</p>
+                    </div>
+
+                    <div className="row-start-1 col-start-3 flex gap-1 justify-end items-center">
+                      <Image
+                        priority={true}
+                        src={winProbability?.team?.team?.logos[0].href}
+                        alt="player or team logo"
+                        width={winProbability?.team?.team?.logos[0].width}
+                        height={winProbability?.team?.team?.logos[0].height}
+                        className="w-[20px] object-contain rounded-full"
+                      />
+                      <p className="text-[12px]">
+                        {Number(winProbability?.chance * 100).toFixed(1)}%
                       </p>
                     </div>
 
-                    <p className="text-[12px]">{play.text}</p>
-                  </div>
-
-                  <div className="row-start-1 col-start-3 flex gap-1 justify-end items-center">
-                    <Image
-                      priority={true}
-                      src={winProbability?.team?.team?.logos[0].href}
-                      alt="player or team logo"
-                      width={winProbability?.team?.team?.logos[0].width}
-                      height={winProbability?.team?.team?.logos[0].height}
-                      className="w-[20px] object-contain rounded-full"
-                    />
-                    <p className="text-[12px]">
-                      {Number(winProbability?.chance * 100).toFixed(1)}%
+                    <p className="text-[12px] row-span-full row-start-2 col-start-3 flex justify-end items-end font-[400]">
+                      {play.awayScore} - {play.homeScore}
                     </p>
                   </div>
-
-                  <p className="text-[12px] row-span-full row-start-2 col-start-3 flex justify-end items-end font-[400]">
-                    {play.awayScore} - {play.homeScore}
-                  </p>
-                </div>
+                  {/* <div className="relative w-full my-5 border-red-500 ">
+                    <NBA3DCourtSVG goalColor={`#${homeTeamColor}`} />
+                    <Image
+                      priority={true}
+                      src={data.homeTeam?.team?.logos?.[0]?.href ?? "/default.png"}
+                      alt="team logo"
+                      width={data.homeTeam?.team?.logos?.[0]?.width ?? 100}
+                      height={data.homeTeam?.team?.logos?.[0]?.height ?? 100}
+                      style={{
+                        top: "50%",
+                        left: "50%",
+                        transform: "translateY(-50%) translateX(-50%) rotateX(40deg)",
+                      }}
+                      className="w-[63px] object-contain absolute"
+                    />
+                  </div> */}
+                </>
               );
             } else {
               return (
@@ -167,6 +171,7 @@ export default function RecentPlays({ data }: { data: any }) {
                     fontWeight: play.scoringPlay ? "600" : "400",
                     backgroundColor: index % 2 !== 0 ? "hsl(0, 0%, 98%)" : "white",
                     color: "#2B2C2D",
+                    borderTop: index === 1 ? "1px solid rgba(0,0,0,0.2)" : "",
                   }}
                   className="grid grid-cols-[25px_7fr_2fr] gap-x-4 py-2 md:py-3 px-1 border-b border-[rgba(0,0,0,0.2)]"
                 >
@@ -194,36 +199,5 @@ export default function RecentPlays({ data }: { data: any }) {
           })}
       </div>
     </div>
-  );
-}
-
-function BasketballCourtSVG() {
-  return (
-    <svg
-      fill="#000000"
-      height="200px"
-      width="200px"
-      version="1.1"
-      id="Layer_1"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-      viewBox="0 0 512 512"
-      xmlSpace="preserve"
-    >
-      <g>
-        <g>
-          <path
-            d="M0,79.175v353.65h512V79.175H0z M263.918,190.513c32.659,3.926,58.062,31.787,58.062,65.487
-			c0,33.7-25.403,61.561-58.062,65.487V190.513z M15.835,148.085C71.817,152.154,116.124,198.998,116.124,256
-			S71.817,359.847,15.835,363.915V148.085z M248.082,321.487c-32.659-3.926-58.062-31.787-58.062-65.487
-			c0-33.7,25.403-61.561,58.062-65.487V321.487z M248.082,174.575c-41.411,3.996-73.897,38.984-73.897,81.425
-			s32.486,77.428,73.897,81.425v79.565H15.835v-37.208c64.72-4.098,116.124-58.045,116.124-123.782S80.555,136.317,15.835,132.218
-			V95.01h232.247V174.575z M496.165,363.916c-55.982-4.069-100.289-50.913-100.289-107.915c0-57.002,44.307-103.848,100.289-107.916
-			V363.916z M496.165,132.218c-64.72,4.098-116.124,58.045-116.124,123.782s51.404,119.683,116.124,123.782v37.208H263.918v-79.565
-			c41.411-3.996,73.897-38.984,73.897-81.425s-32.486-77.428-73.897-81.425V95.01h232.247V132.218z"
-          />
-        </g>
-      </g>
-    </svg>
   );
 }
