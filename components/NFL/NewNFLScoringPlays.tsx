@@ -21,8 +21,8 @@ export default function NFLScoringPlays({ data }: { data: any }) {
         <tbody>
           {allScoringPlays.map((play: any) => (
             <tr key={uuidv4()} className="w-full">
-              <td className="text-xs  w-[80%] p-1" colSpan={2} align="left">
-                <div className="flex flex-row gap-2 justify-start">
+              <td className="w-[80%]  p-1 text-xs" colSpan={2} align="left">
+                <div className="flex flex-row justify-start gap-2">
                   <Image
                     src={play.team.logo}
                     width={100}
@@ -30,18 +30,20 @@ export default function NFLScoringPlays({ data }: { data: any }) {
                     alt="team logo"
                     className="w-6 object-contain"
                   />
-                  <div className="flex flex-col justify-start wrap items-start gap-0 flex-wrap">
+                  <div className="wrap flex flex-col flex-wrap items-start justify-start gap-0">
                     <p className="text-[12px]">
                       {play.type.abbreviation} {play.clock.displayValue}
                     </p>
-                    <p className="text-[11px] max-w-full break-normal">{play.text}</p>
+                    <p className="max-w-full break-normal text-[11px]">
+                      {play.text}
+                    </p>
                   </div>
                 </div>
               </td>
-              <td className="text-xs table-cell w-6" align="right">
+              <td className="table-cell w-6 text-xs" align="right">
                 {play.awayScore}
               </td>
-              <td className="text-xs table-cell w-6" align="right">
+              <td className="table-cell w-6 text-xs" align="right">
                 {play.homeScore}
               </td>
             </tr>
@@ -58,8 +60,10 @@ export default function NFLScoringPlays({ data }: { data: any }) {
   }
 
   return (
-    <div className="w-full bg-white rounded-xl flex flex-col justify-center items-center p-3">
-      <p className=" w-full text-left text-sm opacity-80 font-semibold mb-2">Scoring Summary</p>
+    <div className="flex w-full flex-col items-center justify-center rounded-xl bg-white p-3">
+      <p className=" mb-2 w-full text-left text-sm font-semibold opacity-80">
+        Scoring Summary
+      </p>
       {data.firstQuarterScoringPlays.length > 0 &&
         scoringPlays(data.firstQuarterScoringPlays, "1st Quarter")}
       {data.secondQuarterScoringPlays.length > 0 &&

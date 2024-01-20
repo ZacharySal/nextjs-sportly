@@ -14,7 +14,11 @@ import Image from "next/image";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const getDaysArray = function (start: any, end: any) {
-  for (var arr = [], dt = new Date(start); dt <= new Date(end); dt.setDate(dt.getDate() + 1)) {
+  for (
+    var arr = [], dt = new Date(start);
+    dt <= new Date(end);
+    dt.setDate(dt.getDate() + 1)
+  ) {
     arr.push(new Date(dt));
   }
   return arr;
@@ -57,28 +61,34 @@ function getFullDate(date: string) {
   return newDate;
 }
 
-const baseFetchUrl = "https://cdn.espn.com/core/mlb/scoreboard?xhr=1&limit=50&date=";
+const baseFetchUrl =
+  "https://cdn.espn.com/core/mlb/scoreboard?xhr=1&limit=50&date=";
 
 function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
   const { height, width } = useWindowDimensions();
 
   const [selectedYear, setSelectedYear] = useState(
-    initialScoreData?.content?.dateParams?.date.substring(0, 4)
+    initialScoreData?.content?.dateParams?.date.substring(0, 4),
   );
 
   const pastYear = Number(selectedYear) - 1;
 
-  const daysInYear = getDaysArray(new Date(`${pastYear}-01-01`), new Date(`${selectedYear}-12-31`));
+  const daysInYear = getDaysArray(
+    new Date(`${pastYear}-01-01`),
+    new Date(`${selectedYear}-12-31`),
+  );
   const formattedDaysInYear = daysInYear.map((v: any) => {
     return v.toISOString().slice(0, 10);
   });
 
   const [selectedDate, setSelectedDate] = useState(
-    formatDate(initialScoreData?.content?.dateParams?.date)
+    formatDate(initialScoreData?.content?.dateParams?.date),
   );
   const [calendarValue, setCalendarValue] = useState("");
   const [currentIndex, setCurrentIndex] = useState(
-    formattedDaysInYear.indexOf(formatDate(initialScoreData?.content?.dateParams?.date))
+    formattedDaysInYear.indexOf(
+      formatDate(initialScoreData?.content?.dateParams?.date),
+    ),
   );
 
   useEffect(() => {
@@ -116,29 +126,35 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
 
   function dateSelector() {
     return (
-      <div className="w-full  p-2 md:p-4 bg-white mb-3 rounded-xl">
-        <p className="mb-1 font-semibold text-xl md:text-2xl opacity-80">MLB Scoreboard</p>
-        <div className="w-full flex gap-3 items-center">
+      <div className="mb-3  w-full rounded-xl bg-white p-2 md:p-4">
+        <p className="mb-1 text-xl font-semibold opacity-80 md:text-2xl">
+          MLB Scoreboard
+        </p>
+        <div className="flex w-full items-center gap-3">
           <div
             id="style-1"
-            className="pl-2 w-full flex flex-row overflow-x-auto justify-between items-center"
+            className="flex w-full flex-row items-center justify-between overflow-x-auto pl-2"
           >
             <Image
               src="/icons/chevron-left.svg"
               width="25"
               height="25"
               alt="left icon"
-              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex - 4) % 730)}
+              onClick={() =>
+                setCurrentIndex(
+                  (currentIndex: number) => (currentIndex - 4) % 730,
+                )
+              }
             />
             {getDateElements().map((date: string) => (
               <div
                 key={uuidv4()}
                 onClick={() => setSelectedDate(date)}
                 style={{ opacity: date === selectedDate ? 1 : 0.5 }}
-                className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer p-2"
+                className="jusitfy-center flex flex-shrink-0 cursor-pointer flex-col items-center p-2 font-semibold"
               >
                 <p className="text-sm font-semibold">{getWeekDay(date)}</p>
-                <div className="flex flex-row gap-1 justify-center items-center">
+                <div className="flex flex-row items-center justify-center gap-1">
                   <p className="text-xs">{getMonthAndDate(date)}</p>
                 </div>
               </div>
@@ -148,7 +164,11 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
               width="25"
               height="25"
               alt="right icon"
-              onClick={() => setCurrentIndex((currentIndex: number) => (currentIndex + 4) % 730)}
+              onClick={() =>
+                setCurrentIndex(
+                  (currentIndex: number) => (currentIndex + 4) % 730,
+                )
+              }
             />
           </div>
           {/* <ButtonDatePicker
@@ -163,7 +183,7 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
   if (isLoading)
     return (
       // <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="w-full py-2 flex flex-col justify-center items-center md:justify-start mt-[-0.5rem]">
+      <div className="mt-[-0.5rem] flex w-full flex-col items-center justify-center py-2 md:justify-start">
         {dateSelector()}
         <Loading />
       </div>
@@ -171,11 +191,11 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
     );
   return (
     // <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <div className="w-full py-2 flex flex-col justify-center md:justify-start items-center mt-[-0.5rem]">
+    <div className="mt-[-0.5rem] flex w-full flex-col items-center justify-center py-2 md:justify-start">
       {dateSelector()}
       {data.content.sbData.events.length !== 0 && (
-        <div className="w-full grid bg-white p-2 pb-0 rounded-xl mb-2">
-          <p className="opacity-80 font-semibold mt-1 text-start text-sm md:text-base mb-2">
+        <div className="mb-2 grid w-full rounded-xl bg-white p-2 pb-0">
+          <p className="mb-2 mt-1 text-start text-sm font-semibold opacity-80 md:text-base">
             {getFullDate(selectedDate)}
           </p>
           <hr />
@@ -188,7 +208,7 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
         </div>
       )}
       {data.content.sbData.events.length === 0 && (
-        <p className="w-full text-center mt-5">No games to display</p>
+        <p className="mt-5 w-full text-center">No games to display</p>
       )}
     </div>
     // </LocalizationProvider>

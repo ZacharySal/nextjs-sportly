@@ -6,12 +6,18 @@ import Link from "next/link";
 export default function NBAGameLeaders({ data }: { data: any }) {
   const [selectedStat, setSelectedStat] = useState("points");
 
-  const homePointsLeader = data?.gameData?.leaders?.[0]?.leaders?.[0]?.leaders?.[0];
-  const homeAssistsLeader = data?.gameData?.leaders?.[0]?.leaders?.[1]?.leaders?.[0];
-  const homeReboundsLeader = data?.gameData?.leaders?.[0]?.leaders?.[2]?.leaders?.[0];
-  const awayPointsLeader = data?.gameData?.leaders?.[1]?.leaders?.[0]?.leaders?.[0];
-  const awayAssistsLeader = data?.gameData?.leaders?.[1]?.leaders?.[1]?.leaders?.[0];
-  const awayReboundsLeader = data?.gameData?.leaders?.[1]?.leaders?.[2]?.leaders?.[0];
+  const homePointsLeader =
+    data?.gameData?.leaders?.[0]?.leaders?.[0]?.leaders?.[0];
+  const homeAssistsLeader =
+    data?.gameData?.leaders?.[0]?.leaders?.[1]?.leaders?.[0];
+  const homeReboundsLeader =
+    data?.gameData?.leaders?.[0]?.leaders?.[2]?.leaders?.[0];
+  const awayPointsLeader =
+    data?.gameData?.leaders?.[1]?.leaders?.[0]?.leaders?.[0];
+  const awayAssistsLeader =
+    data?.gameData?.leaders?.[1]?.leaders?.[1]?.leaders?.[0];
+  const awayReboundsLeader =
+    data?.gameData?.leaders?.[1]?.leaders?.[2]?.leaders?.[0];
 
   const pointsLeaders = [awayPointsLeader, homePointsLeader];
   const assistsLeaders = [awayAssistsLeader, homeAssistsLeader];
@@ -29,16 +35,16 @@ export default function NBAGameLeaders({ data }: { data: any }) {
 
   if (data.gameData.leaders[0].leaders.length === 0) return null;
   return (
-    <div className="w-full bg-white rounded-xl p-3 pb-1">
-      <p className="font-semibold text-[14px] pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dotted">
+    <div className="w-full rounded-xl bg-white p-3 pb-1">
+      <p className="border-b border-dotted border-b-[rgba(0,0,0,0.2)] pb-2 text-[14px] font-semibold">
         {data.isGameStarted ? "Game Leaders" : "Season Leaders"}
       </p>
-      <div className="flex w-full justify-around items-center rounded-2xl h-8 mt-2 bg-white text-center testing sub-selector">
+      <div className="testing sub-selector mt-2 flex h-8 w-full items-center justify-around rounded-2xl bg-white text-center">
         <div
           onClick={() => setSelectedStat("points")}
           className={`${
             selectedStat === "points" && "selection-active"
-          } nav-selection flex-grow sub-selection`}
+          } nav-selection sub-selection flex-grow`}
         >
           Points
         </div>
@@ -46,7 +52,7 @@ export default function NBAGameLeaders({ data }: { data: any }) {
           onClick={() => setSelectedStat("assists")}
           className={`${
             selectedStat === "assists" && "selection-active"
-          } nav-selection flex-grow sub-selection`}
+          } nav-selection sub-selection flex-grow`}
         >
           Assists
         </div>
@@ -54,19 +60,19 @@ export default function NBAGameLeaders({ data }: { data: any }) {
           onClick={() => setSelectedStat("rebounds")}
           className={`${
             selectedStat === "rebounds" && "selection-active"
-          } nav-selection flex-grow sub-selection`}
+          } nav-selection sub-selection flex-grow`}
         >
           Rebounds
         </div>
       </div>
       <hr />
-      <div className="w-full flex flex-col py-3 px-0 gap-3 items-center">
+      <div className="flex w-full flex-col items-center gap-3 px-0 py-3">
         {getLeaderCategory().map((leader: any, i: number) => {
           if (typeof leader?.athlete === "undefined") return null;
           return (
             <div
               key={uuidv4()}
-              className="flex flex-row gap-2 pb-3 w-full items-center border-b border-[rgba(0,0,0,0.2)] border-dotted"
+              className="flex w-full flex-row items-center gap-2 border-b border-dotted border-[rgba(0,0,0,0.2)] pb-3"
             >
               <Image
                 width={100}
@@ -74,20 +80,26 @@ export default function NBAGameLeaders({ data }: { data: any }) {
                 src={leader?.athlete.headshot.href}
                 priority={true}
                 alt={"player picture"}
-                className="w-10 h-10 md:w-[40px] md:h-[40px] border rounded-full object-cover"
+                className="h-10 w-10 rounded-full border object-cover md:h-[40px] md:w-[40px]"
               />
-              <div className="flex flex-col px-1 w-full justify-start gap-1">
+              <div className="flex w-full flex-col justify-start gap-1 px-1">
                 <p className="text-[11px]">
                   {`${leader?.athlete.fullName},`}
                   <span className="opacity-60">{` ${leader?.athlete.position.abbreviation} - ${
-                    i === 0 ? data.awayTeam.team.abbreviation : data.homeTeam.team.abbreviation
+                    i === 0
+                      ? data.awayTeam.team.abbreviation
+                      : data.homeTeam.team.abbreviation
                   }`}</span>
                 </p>
-                <div className="flex flex-row w-full justify-between pr-3">
+                <div className="flex w-full flex-row justify-between pr-3">
                   {leader?.statistics?.map((stat: any, i: number) => (
                     <div key={uuidv4()} className="flex flex-col text-center">
-                      <p className="text-sm font-semibold opacity-80">{stat.displayValue}</p>
-                      <p className="text-xs opacity-60 mt-[-3px]">{stat.shortDisplayName}</p>
+                      <p className="text-sm font-semibold opacity-80">
+                        {stat.displayValue}
+                      </p>
+                      <p className="mt-[-3px] text-xs opacity-60">
+                        {stat.shortDisplayName}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -97,7 +109,7 @@ export default function NBAGameLeaders({ data }: { data: any }) {
         })}
         <Link
           href={data.isGameStarted ? "boxscore" : ""}
-          className="text-center w-full h-full text-xs text-[#06c] py-1 cursor-pointer font-semibold anchor-link"
+          className="anchor-link h-full w-full cursor-pointer py-1 text-center text-xs font-semibold text-[#06c]"
         >
           Full Box Score
         </Link>

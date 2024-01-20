@@ -21,15 +21,18 @@ export default function NFLCalendar({
   setShowDateSelector: Function;
   setCurrentYearIndex: Function;
 }) {
-  const [currentCalendarYearIndex, setCurrentCalendarYearIndex] = useState(currentYearIndex);
+  const [currentCalendarYearIndex, setCurrentCalendarYearIndex] =
+    useState(currentYearIndex);
   const calendarSelectedYear = allNFLDates[currentCalendarYearIndex].year;
 
   return (
-    <div className="p-4 date-selector flex flex-col justify-center gap-1">
-      <div className="w-full flex justify-between items-center mb-2">
+    <div className="date-selector flex flex-col justify-center gap-1 p-4">
+      <div className="mb-2 flex w-full items-center justify-between">
         <p
           onClick={() =>
-            setCurrentCalendarYearIndex(mod(currentCalendarYearIndex - 1, allNFLDates.length))
+            setCurrentCalendarYearIndex(
+              mod(currentCalendarYearIndex - 1, allNFLDates.length),
+            )
           }
           className="cursor-pointer"
           style={{ fontSize: "0.75rem", color: "#3e82d6", cursor: "pointer" }}
@@ -39,7 +42,9 @@ export default function NFLCalendar({
         <p className="text-lg">{calendarSelectedYear}</p>
         <p
           onClick={() =>
-            setCurrentCalendarYearIndex(mod(currentCalendarYearIndex + 1, allNFLDates.length))
+            setCurrentCalendarYearIndex(
+              mod(currentCalendarYearIndex + 1, allNFLDates.length),
+            )
           }
           className="cursor-pointer"
           style={{ fontSize: "0.75rem", color: "#3e82d6", cursor: "pointer" }}
@@ -49,7 +54,10 @@ export default function NFLCalendar({
       </div>
 
       {allNFLDates.map((year: any) => (
-        <div key={uuidv4()} className="flex flex-col gap-3 max-h-[20rem] overflow-y-scroll">
+        <div
+          key={uuidv4()}
+          className="flex max-h-[20rem] flex-col gap-3 overflow-y-scroll"
+        >
           {year.year == calendarSelectedYear &&
             year.weeksInYear.map((seasonType: any) => (
               <React.Fragment key={uuidv4()}>
@@ -73,7 +81,7 @@ export default function NFLCalendar({
                           ? "1"
                           : "0.5",
                     }}
-                    className="flex gap-5 justify-between cursor-pointer"
+                    className="flex cursor-pointer justify-between gap-5"
                   >
                     <p className="text-sm">{week.label}</p>
                     <p className="text-sm">{week.dateRange}</p>
@@ -85,7 +93,7 @@ export default function NFLCalendar({
       ))}
       <p
         onClick={() => setShowDateSelector(false)}
-        className="text-xs text-left w-full items-start justify-start flex text-blue-400 cursor-pointer"
+        className="flex w-full cursor-pointer items-start justify-start text-left text-xs text-blue-400"
       >
         CLOSE
       </p>

@@ -22,39 +22,44 @@ const initialFilterOptions: FilterOptions = {
 
 export default function ShotChart({ data }: { data: any }) {
   const [showFilters, setShowFilters] = useState(false);
-  const [homeTeamFilterOptions, setHomeTeamFilterOptions] = useState(initialFilterOptions);
-  const [awayTeamFilterOptions, setAwayTeamFilterOptions] = useState(initialFilterOptions);
+  const [homeTeamFilterOptions, setHomeTeamFilterOptions] =
+    useState(initialFilterOptions);
+  const [awayTeamFilterOptions, setAwayTeamFilterOptions] =
+    useState(initialFilterOptions);
 
   const { homeTeamColor, awayTeamColor } = usePreferredColor(data);
 
   const homeTeamShots = getFilteredTeamShots(
     data.gameData.plays,
     homeTeamFilterOptions,
-    data.homeTeam.team.id
+    data.homeTeam.team.id,
   );
   const awayTeamShots = getFilteredTeamShots(
     data.gameData.plays,
     awayTeamFilterOptions,
-    data.awayTeam.team.id
+    data.awayTeam.team.id,
   );
 
   return (
-    <div className="flex flex-col p-3 min-w-full rounded-md bg-white relative">
-      <h2 className="text-[14px] font-semibold border-b border-[rgba(0,0,0,0.2]) border-dotted pb-2 mb-2">
+    <div className="relative flex min-w-full flex-col rounded-md bg-white p-3">
+      <h2 className="border-[rgba(0,0,0,0.2]) mb-2 border-b border-dotted pb-2 text-[14px] font-semibold">
         Shot Chart
       </h2>
 
-      <div className="relative w-full h-full flex justify-center items-center">
-        <img src="/svgs/court.svg" className="max-w-full max-h-full object-contain relative" />
+      <div className="relative flex h-full w-full items-center justify-center">
+        <img
+          src="/svgs/court.svg"
+          className="relative max-h-full max-w-full object-contain"
+        />
         <Image
           src={data.homeTeam.team.logos[0].href}
           alt=""
           width={data.homeTeam.team.logos[0].width}
           height={data.homeTeam.team.logos[0].height}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/6"
+          className="absolute left-1/2 top-1/2 w-1/6 -translate-x-1/2 -translate-y-1/2"
         />
-        <div className="w-full h-full absolute left-0 top-0 border-black">
-          <div className="absolute w-1/2 translate-x-full h-full rotate-[90deg]">
+        <div className="absolute left-0 top-0 h-full w-full border-black">
+          <div className="absolute h-full w-1/2 translate-x-full rotate-[90deg]">
             {homeTeamShots.map((play: any) => (
               <div key={v4()}>
                 {play.scoringPlay ? (
@@ -65,7 +70,7 @@ export default function ShotChart({ data }: { data: any }) {
                         top: `calc(${play.coordinate.y * 2}% + 30px)`,
                         backgroundColor: "#" + homeTeamColor,
                       }}
-                      className="md:w-[15px] w-[14px] h-[14px] md:h-[15px] rounded-full rotate-90 border-2 left-0 border-white absolute"
+                      className="absolute left-0 h-[14px] w-[14px] rotate-90 rounded-full border-2 border-white md:h-[15px] md:w-[15px]"
                     ></div>
                   </>
                 ) : (
@@ -77,13 +82,13 @@ export default function ShotChart({ data }: { data: any }) {
                       border: `3px solid #${homeTeamColor}`,
                       boxShadow: "0px 0px 0px 2px white",
                     }}
-                    className="md:w-[12px] w-[11px] h-[11px] md:h-[12px] rounded-full rotate-90 left-0 absolute"
+                    className="absolute left-0 h-[11px] w-[11px] rotate-90 rounded-full md:h-[12px] md:w-[12px]"
                   ></div>
                 )}
               </div>
             ))}
           </div>
-          <div className="absolute w-1/2 h-full border-red-400 rotate-[270deg]">
+          <div className="absolute h-full w-1/2 rotate-[270deg] border-red-400">
             {awayTeamShots.map((play: any) => (
               <div key={v4()}>
                 {play.scoringPlay ? (
@@ -94,7 +99,7 @@ export default function ShotChart({ data }: { data: any }) {
                         top: `calc(${play.coordinate.y * 2}% + 22px)`,
                         backgroundColor: "#" + awayTeamColor,
                       }}
-                      className="md:w-[15px] w-[14px] h-[14px] md:h-[15px] rounded-full rotate-90 border-2 left-0 border-white absolute"
+                      className="absolute left-0 h-[14px] w-[14px] rotate-90 rounded-full border-2 border-white md:h-[15px] md:w-[15px]"
                     ></div>
                   </>
                 ) : (
@@ -106,7 +111,7 @@ export default function ShotChart({ data }: { data: any }) {
                       border: `3px solid #${awayTeamColor}`,
                       boxShadow: "0px 0px 0px 2px white",
                     }}
-                    className="md:w-[12px] w-[11px] h-[11px] md:h-[12px] rounded-full rotate-90 left-0 absolute"
+                    className="absolute left-0 h-[11px] w-[11px] rotate-90 rounded-full md:h-[12px] md:w-[12px]"
                   ></div>
                 )}
               </div>
@@ -114,27 +119,37 @@ export default function ShotChart({ data }: { data: any }) {
           </div>
         </div>
       </div>
-      <div className="w-full my-2 mt-5">
+      <div className="my-2 mt-5 w-full">
         {showFilters && (
-          <div className="w-full flex flex-col mb-5">
+          <div className="mb-5 flex w-full flex-col">
             <select
-              className="bg-gray-100 p-2 rounded-md px-2 text-sm uppercase mb-1"
+              className="mb-1 rounded-md bg-gray-100 p-2 px-2 text-sm uppercase"
               value={homeTeamFilterOptions.selectedQuarter}
               onChange={(e) => (
-                setAwayTeamFilterOptions((curr) => ({ ...curr, selectedQuarter: e.target.value })),
-                setHomeTeamFilterOptions((curr) => ({ ...curr, selectedQuarter: e.target.value }))
+                setAwayTeamFilterOptions((curr) => ({
+                  ...curr,
+                  selectedQuarter: e.target.value,
+                })),
+                setHomeTeamFilterOptions((curr) => ({
+                  ...curr,
+                  selectedQuarter: e.target.value,
+                }))
               )}
             >
-              {["All Quarters", "1st Quarter", "2nd Quarter", "3rd Quarter", "4th Quarter"].map(
-                (text: string) => (
-                  <option key={v4()} id={`${text}`} value={`${text}`}>
-                    {`${text}`}
-                  </option>
-                )
-              )}
+              {[
+                "All Quarters",
+                "1st Quarter",
+                "2nd Quarter",
+                "3rd Quarter",
+                "4th Quarter",
+              ].map((text: string) => (
+                <option key={v4()} id={`${text}`} value={`${text}`}>
+                  {`${text}`}
+                </option>
+              ))}
             </select>
 
-            <div className="flex gap-1 items-center mt-3 mb-2">
+            <div className="mb-2 mt-3 flex items-center gap-1">
               <Image
                 src={data.awayTeam.team.logos[0].href}
                 alt=""
@@ -142,30 +157,41 @@ export default function ShotChart({ data }: { data: any }) {
                 height={data.awayTeam.team.logos[0].height}
                 className="w-5 object-contain"
               />
-              <p className="font-[500] uppercase text-[14px]">{data.awayTeam.team.name}</p>
+              <p className="text-[14px] font-[500] uppercase">
+                {data.awayTeam.team.name}
+              </p>
             </div>
 
             <select
-              className="bg-gray-100 p-2 rounded-md px-2 text-sm uppercase mb-1"
+              className="mb-1 rounded-md bg-gray-100 p-2 px-2 text-sm uppercase"
               value={awayTeamFilterOptions.selectedPlayer}
               onChange={(e) =>
-                setAwayTeamFilterOptions((curr) => ({ ...curr, selectedPlayer: e.target.value }))
+                setAwayTeamFilterOptions((curr) => ({
+                  ...curr,
+                  selectedPlayer: e.target.value,
+                }))
               }
             >
               <option value="All Players" id="All Players">
                 All Players
               </option>
-              {data.gameData.boxscore.players[0].statistics[0].athletes.map((athlete: any) => {
-                if (!athlete.athlete.didNotPlay)
-                  return (
-                    <option key={v4()} id={athlete.athlete.displayName} value={athlete.athlete.id}>
-                      {athlete.athlete.displayName}
-                    </option>
-                  );
-              })}
+              {data.gameData.boxscore.players[0].statistics[0].athletes.map(
+                (athlete: any) => {
+                  if (!athlete.athlete.didNotPlay)
+                    return (
+                      <option
+                        key={v4()}
+                        id={athlete.athlete.displayName}
+                        value={athlete.athlete.id}
+                      >
+                        {athlete.athlete.displayName}
+                      </option>
+                    );
+                },
+              )}
             </select>
 
-            <div className="flex gap-1 pl-6 items-center">
+            <div className="flex items-center gap-1 pl-6">
               <input
                 checked={awayTeamFilterOptions.showMadeShots}
                 onChange={() =>
@@ -183,7 +209,7 @@ export default function ShotChart({ data }: { data: any }) {
                 style={{
                   backgroundColor: "#" + awayTeamColor,
                 }}
-                className="md:w-[15px] w-[14px] h-[14px] md:h-[15px] rounded-full rotate-90 border-2 border-white"
+                className="h-[14px] w-[14px] rotate-90 rounded-full border-2 border-white md:h-[15px] md:w-[15px]"
               ></div>
               <label htmlFor="awayMade" className="mr-5 text-[14px]">
                 Made
@@ -206,14 +232,14 @@ export default function ShotChart({ data }: { data: any }) {
                   border: `3px solid #${awayTeamColor}`,
                   boxShadow: "0px 0px 0px 2px white",
                 }}
-                className="md:w-[12px] w-[11px] h-[11px] md:h-[12px] rounded-full"
+                className="h-[11px] w-[11px] rounded-full md:h-[12px] md:w-[12px]"
               ></div>
               <label htmlFor="awayMissed" className="text-[14px]">
                 Missed
               </label>
             </div>
 
-            <div className="flex gap-1 items-center mt-4 mb-2">
+            <div className="mb-2 mt-4 flex items-center gap-1">
               <Image
                 src={data.homeTeam.team.logos[0].href}
                 alt=""
@@ -221,30 +247,41 @@ export default function ShotChart({ data }: { data: any }) {
                 height={data.homeTeam.team.logos[0].height}
                 className="w-5 object-contain"
               />
-              <p className="font-[500] text-[14px] uppercase">{data.homeTeam.team.name}</p>
+              <p className="text-[14px] font-[500] uppercase">
+                {data.homeTeam.team.name}
+              </p>
             </div>
 
             <select
-              className="bg-gray-100 p-2 rounded-md px-2 text-sm uppercase"
+              className="rounded-md bg-gray-100 p-2 px-2 text-sm uppercase"
               value={homeTeamFilterOptions.selectedPlayer}
               onChange={(e) =>
-                setHomeTeamFilterOptions((curr) => ({ ...curr, selectedPlayer: e.target.value }))
+                setHomeTeamFilterOptions((curr) => ({
+                  ...curr,
+                  selectedPlayer: e.target.value,
+                }))
               }
             >
               <option value="All Players" id="All Players">
                 All Players
               </option>
-              {data.gameData.boxscore.players[1].statistics[0].athletes.map((athlete: any) => {
-                if (!athlete.athlete.didNotPlay)
-                  return (
-                    <option key={v4()} id={athlete.athlete.displayName} value={athlete.athlete.id}>
-                      {athlete.athlete.displayName}
-                    </option>
-                  );
-              })}
+              {data.gameData.boxscore.players[1].statistics[0].athletes.map(
+                (athlete: any) => {
+                  if (!athlete.athlete.didNotPlay)
+                    return (
+                      <option
+                        key={v4()}
+                        id={athlete.athlete.displayName}
+                        value={athlete.athlete.id}
+                      >
+                        {athlete.athlete.displayName}
+                      </option>
+                    );
+                },
+              )}
             </select>
 
-            <div className="flex gap-1 pl-6 items-center my-1">
+            <div className="my-1 flex items-center gap-1 pl-6">
               <input
                 checked={homeTeamFilterOptions.showMadeShots}
                 onChange={() =>
@@ -262,7 +299,7 @@ export default function ShotChart({ data }: { data: any }) {
                 style={{
                   backgroundColor: "#" + homeTeamColor,
                 }}
-                className="md:w-[15px] w-[14px] h-[14px] md:h-[15px] rounded-full rotate-90 border-2 border-white"
+                className="h-[14px] w-[14px] rotate-90 rounded-full border-2 border-white md:h-[15px] md:w-[15px]"
               ></div>
               <label htmlFor="awayMade" className="mr-5 text-[14px]">
                 Made
@@ -286,7 +323,7 @@ export default function ShotChart({ data }: { data: any }) {
                   border: `3px solid #${homeTeamColor}`,
                   boxShadow: "0px 0px 0px 2px white",
                 }}
-                className="md:w-[12px] w-[11px] h-[11px] md:h-[12px] rounded-full"
+                className="h-[11px] w-[11px] rounded-full md:h-[12px] md:w-[12px]"
               ></div>
               <label htmlFor="awayMissed" className="text-[14px]">
                 Missed
@@ -296,7 +333,7 @@ export default function ShotChart({ data }: { data: any }) {
         )}
         <div
           style={{ transition: "height 1s ease" }}
-          className="flex gap-3 text-[#06c] cursor-pointer w-full justify-center items-center"
+          className="flex w-full cursor-pointer items-center justify-center gap-3 text-[#06c]"
         >
           <img
             style={{

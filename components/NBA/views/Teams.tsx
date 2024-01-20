@@ -17,7 +17,9 @@ export default function Teams({ data }: { data: any }) {
     </>
   );
 
-  const mobileView = () => <AllTeams allTeams={nbaDivisionTeams} league="nba" />;
+  const mobileView = () => (
+    <AllTeams allTeams={nbaDivisionTeams} league="nba" />
+  );
 
   return (
     <>

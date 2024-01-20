@@ -22,150 +22,186 @@ export default function View({ gameId }: { gameId: string }) {
     fetcher,
     {
       refreshInterval: 5000,
-    }
+    },
   );
 
   function gameLeaders() {
     return (
-      <div className="w-full bg-white rounded-xl p-3">
-        <p className="text-sm opacity-70 font-semibold text-start mb-1">
+      <div className="w-full rounded-xl bg-white p-3">
+        <p className="mb-1 text-start text-sm font-semibold opacity-70">
           {data.isGameStarted ? "Game Leaders" : "Season Leaders"}
         </p>
 
-        <div className="grid grid-rows-[auto,auto,auto,auto,auto,auto] grid-cols-2 gap-x-2 gap-y-0 items-center justify-between">
-          <div className="w-full col-span-2">
+        <div className="grid grid-cols-2 grid-rows-[auto,auto,auto,auto,auto,auto] items-center justify-between gap-x-2 gap-y-0">
+          <div className="col-span-2 w-full">
             <hr className="mt-2" />
-            <p className="text-sm text-center opacity-70 mb-[-0.5rem] my-2">Passing Yards</p>
+            <p className="my-2 mb-[-0.5rem] text-center text-sm opacity-70">
+              Passing Yards
+            </p>
           </div>
           {/* AWAY TEAM PASSING LEADER */}
-          <div className="grid place-items-end justify-center gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between relative my-2">
-            <div className="flex col-start-1 flex-col row-span-2 justify-center items-center gap-1 player-divider">
+          <div className="grid-cols-[1fr, 3fr] relative my-2 grid grid-rows-2 place-items-end justify-center justify-between gap-x-2 gap-y-0">
+            <div className="player-divider col-start-1 row-span-2 flex flex-col items-center justify-center gap-1">
               <Image
-                src={data.gameData.leaders[1].leaders[0].leaders[0].athlete.headshot.href}
+                src={
+                  data.gameData.leaders[1].leaders[0].leaders[0].athlete
+                    .headshot.href
+                }
                 width={100}
                 height={100}
                 alt="player"
-                className="w-12 h-12 md:w-[35px] md:h-[35px] border rounded-full object-cover"
+                className="h-12 w-12 rounded-full border object-cover md:h-[35px] md:w-[35px]"
               />
-              <p className="text-xs opacity-80">{data.gameData.leaders[1].team.abbreviation}</p>
+              <p className="text-xs opacity-80">
+                {data.gameData.leaders[1].team.abbreviation}
+              </p>
             </div>
-            <p className="col-start-2 row-start-1 text-end text-xs opacity-80 font-bold pr-2">
+            <p className="col-start-2 row-start-1 pr-2 text-end text-xs font-bold opacity-80">
               {data.gameData.leaders[1].leaders[0].leaders[0].athlete.shortName}
             </p>
-            <p className="col-start-2 row-start-2 flex h-full text-end text-[10px] opacity-70 pr-2">
+            <p className="col-start-2 row-start-2 flex h-full pr-2 text-end text-[10px] opacity-70">
               {data.gameData.leaders[1].leaders[0].leaders[0].displayValue}
             </p>
           </div>
 
           {/* HOME TEAM PASSING LEADER */}
-          <div className="grid items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between">
-            <div className="flex col-start-2 flex-col row-span-2 justify-center items-center gap-1">
+          <div className="grid-cols-[1fr, 3fr] grid grid-rows-2 items-end justify-between gap-x-2 gap-y-0">
+            <div className="col-start-2 row-span-2 flex flex-col items-center justify-center gap-1">
               <Image
-                src={data.gameData.leaders[0].leaders[0].leaders[0].athlete.headshot.href}
+                src={
+                  data.gameData.leaders[0].leaders[0].leaders[0].athlete
+                    .headshot.href
+                }
                 width={100}
                 height={100}
                 alt="player"
-                className="w-12 h-12 md:w-[35px] md:h-[35px] border rounded-full object-cover"
+                className="h-12 w-12 rounded-full border object-cover md:h-[35px] md:w-[35px]"
               />
-              <p className="text-xs opacity-80">{data.gameData.leaders[0].team.abbreviation}</p>
+              <p className="text-xs opacity-80">
+                {data.gameData.leaders[0].team.abbreviation}
+              </p>
             </div>
 
-            <p className="col-start-1 row-start-1 w-full text-start text-xs opacity-80 font-bold pl-2">
+            <p className="col-start-1 row-start-1 w-full pl-2 text-start text-xs font-bold opacity-80">
               {data.gameData.leaders[0].leaders[0].leaders[0].athlete.shortName}
             </p>
-            <p className="col-start-1 row-start-2 flex h-full text-start text-[10px] opacity-70 pl-2">
+            <p className="col-start-1 row-start-2 flex h-full pl-2 text-start text-[10px] opacity-70">
               {data.gameData.leaders[0].leaders[0].leaders[0].displayValue}
             </p>
           </div>
 
-          <div className="w-full col-span-2">
+          <div className="col-span-2 w-full">
             <hr className="mt-2" />
-            <p className="text-sm text-center opacity-70 mb-[-0.5rem] my-2">Rushing Yards</p>
+            <p className="my-2 mb-[-0.5rem] text-center text-sm opacity-70">
+              Rushing Yards
+            </p>
           </div>
 
           {/* AWAY TEAM RUSHING LEADER */}
-          <div className="grid place-items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between relative">
-            <div className="flex col-start-1 flex-col row-span-2 justify-center items-center gap-1 player-divider">
+          <div className="grid-cols-[1fr, 3fr] relative grid grid-rows-2 place-items-end justify-between gap-x-2 gap-y-0">
+            <div className="player-divider col-start-1 row-span-2 flex flex-col items-center justify-center gap-1">
               <Image
-                src={data.gameData.leaders[1].leaders[1].leaders[0].athlete.headshot.href}
+                src={
+                  data.gameData.leaders[1].leaders[1].leaders[0].athlete
+                    .headshot.href
+                }
                 width={100}
                 height={100}
                 alt="player"
-                className="w-12 h-12 md:w-[35px] md:h-[35px] border rounded-full object-cover"
+                className="h-12 w-12 rounded-full border object-cover md:h-[35px] md:w-[35px]"
               />
-              <p className="text-xs opacity-80">{data.gameData.leaders[1].team.abbreviation}</p>
+              <p className="text-xs opacity-80">
+                {data.gameData.leaders[1].team.abbreviation}
+              </p>
             </div>
-            <p className="col-start-2 row-start-1 truncate text-end text-xs opacity-80 font-bold pr-2">
+            <p className="col-start-2 row-start-1 truncate pr-2 text-end text-xs font-bold opacity-80">
               {data.gameData.leaders[1].leaders[1].leaders[0].athlete.shortName}
             </p>
-            <p className="col-start-2 row-start-2 flex h-full text-end text-[10px] opacity-70 pr-2">
+            <p className="col-start-2 row-start-2 flex h-full pr-2 text-end text-[10px] opacity-70">
               {data.gameData.leaders[1].leaders[1].leaders[0].displayValue}
             </p>
           </div>
 
           {/* HOME TEAM RUSHING LEADER */}
-          <div className="grid items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between my-2">
-            <div className="flex col-start-2 flex-col row-span-2 justify-center items-center gap-1">
+          <div className="grid-cols-[1fr, 3fr] my-2 grid grid-rows-2 items-end justify-between gap-x-2 gap-y-0">
+            <div className="col-start-2 row-span-2 flex flex-col items-center justify-center gap-1">
               <Image
-                src={data.gameData.leaders[0].leaders[1].leaders[0].athlete.headshot.href}
+                src={
+                  data.gameData.leaders[0].leaders[1].leaders[0].athlete
+                    .headshot.href
+                }
                 width={100}
                 height={100}
                 alt="player"
-                className="w-12 h-12 md:w-[35px] md:h-[35px] border rounded-full object-cover"
+                className="h-12 w-12 rounded-full border object-cover md:h-[35px] md:w-[35px]"
               />
-              <p className="text-xs opacity-80">{data.gameData.leaders[0].team.abbreviation}</p>
+              <p className="text-xs opacity-80">
+                {data.gameData.leaders[0].team.abbreviation}
+              </p>
             </div>
 
-            <p className="col-start-1 row-start-1 w-full text-start text-xs opacity-80 font-bold pl-2">
+            <p className="col-start-1 row-start-1 w-full pl-2 text-start text-xs font-bold opacity-80">
               {data.gameData.leaders[0].leaders[1].leaders[0].athlete.shortName}
             </p>
-            <p className="col-start-1 row-start-2 flex h-full text-start text-[10px] opacity-70 pl-2">
+            <p className="col-start-1 row-start-2 flex h-full pl-2 text-start text-[10px] opacity-70">
               {data.gameData.leaders[0].leaders[1].leaders[0].displayValue}
             </p>
           </div>
 
-          <div className="w-full col-span-2">
+          <div className="col-span-2 w-full">
             <hr className="mt-2" />
-            <p className="text-sm text-center opacity-70 mb-[-0.5rem] my-2">Recieving Yards</p>
+            <p className="my-2 mb-[-0.5rem] text-center text-sm opacity-70">
+              Recieving Yards
+            </p>
           </div>
 
           {/* AWAY TEAM RECIEVING LEADER */}
-          <div className="grid place-items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between my-2 relative">
-            <div className="flex col-start-1 flex-col row-span-2 justify-center items-center gap-1 player-divider">
+          <div className="grid-cols-[1fr, 3fr] relative my-2 grid grid-rows-2 place-items-end justify-between gap-x-2 gap-y-0">
+            <div className="player-divider col-start-1 row-span-2 flex flex-col items-center justify-center gap-1">
               <Image
-                src={data.gameData.leaders[1].leaders[2].leaders[0].athlete.headshot.href}
+                src={
+                  data.gameData.leaders[1].leaders[2].leaders[0].athlete
+                    .headshot.href
+                }
                 width={100}
                 height={100}
                 alt="player"
-                className="w-12 h-12 md:w-[35px] md:h-[35px] border rounded-full object-cover"
+                className="h-12 w-12 rounded-full border object-cover md:h-[35px] md:w-[35px]"
               />
-              <p className="text-xs opacity-80">{data.gameData.leaders[1].team.abbreviation}</p>
+              <p className="text-xs opacity-80">
+                {data.gameData.leaders[1].team.abbreviation}
+              </p>
             </div>
-            <p className="col-start-2 row-start-1 text-end text-xs opacity-80 font-bold pr-2">
+            <p className="col-start-2 row-start-1 pr-2 text-end text-xs font-bold opacity-80">
               {data.gameData.leaders[1].leaders[2].leaders[0].athlete.shortName}
             </p>
-            <p className="col-start-2 row-start-2 flex h-full text-end text-[10px] opacity-70 pr-2">
+            <p className="col-start-2 row-start-2 flex h-full pr-2 text-end text-[10px] opacity-70">
               {data.gameData.leaders[1].leaders[2].leaders[0].displayValue}
             </p>
           </div>
 
           {/* HOME TEAM RECIEVING LEADER */}
-          <div className="grid items-end gap-x-2 gap-y-0 grid-cols-[1fr, 3fr] grid-rows-2 justify-between">
-            <div className="flex col-start-2 flex-col row-span-2 justify-center items-center gap-1">
+          <div className="grid-cols-[1fr, 3fr] grid grid-rows-2 items-end justify-between gap-x-2 gap-y-0">
+            <div className="col-start-2 row-span-2 flex flex-col items-center justify-center gap-1">
               <Image
-                src={data.gameData.leaders[0].leaders[2].leaders[0].athlete.headshot.href}
+                src={
+                  data.gameData.leaders[0].leaders[2].leaders[0].athlete
+                    .headshot.href
+                }
                 width={100}
                 height={100}
                 alt="player"
-                className="w-12 h-12 md:w-[35px] md:h-[35px] border rounded-full object-cover"
+                className="h-12 w-12 rounded-full border object-cover md:h-[35px] md:w-[35px]"
               />
-              <p className="text-xs opacity-80">{data.gameData.leaders[0].team.abbreviation}</p>
+              <p className="text-xs opacity-80">
+                {data.gameData.leaders[0].team.abbreviation}
+              </p>
             </div>
 
-            <p className="col-start-1 row-start-1 w-full text-start text-xs opacity-80 font-bold pl-2">
+            <p className="col-start-1 row-start-1 w-full pl-2 text-start text-xs font-bold opacity-80">
               {data.gameData.leaders[0].leaders[2].leaders[0].athlete.shortName}
             </p>
-            <p className="col-start-1 row-start-2 flex h-full text-start text-[10px] opacity-70 pl-2">
+            <p className="col-start-1 row-start-2 flex h-full pl-2 text-start text-[10px] opacity-70">
               {data.gameData.leaders[0].leaders[2].leaders[0].displayValue}
             </p>
           </div>
@@ -177,13 +213,19 @@ export default function View({ gameId }: { gameId: string }) {
   const desktopView = () => (
     <>
       <NFLGameStats data={data} league="nfl" />
-      <div className="flex self-start flex-col justify-center items-center gap-3">
+      <div className="flex flex-col items-center justify-center gap-3 self-start">
         {data.gameData.leaders[0].leaders.length > 0 &&
           data.gameData.leaders[1].leaders.length > 0 &&
           gameLeaders()}
-        {data.gameData.predictor && <MatchupPredictor data={data} league={"nfl"} />}
+        {data.gameData.predictor && (
+          <MatchupPredictor data={data} league={"nfl"} />
+        )}
         <DivisionStandings data={data} isNFL={true} league="nfl" />
-        <Articles title="NFL News" news={data.gameData.news.articles} limit={6} />
+        <Articles
+          title="NFL News"
+          news={data.gameData.news.articles}
+          limit={6}
+        />
       </div>
     </>
   );

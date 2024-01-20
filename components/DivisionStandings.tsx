@@ -24,11 +24,12 @@ export default function DivisionStandings({
   }
 
   const isMatchingTeam = (name: string) =>
-    data.homeTeam.team.location.includes(name) || data.awayTeam.team.location.includes(name);
+    data.homeTeam.team.location.includes(name) ||
+    data.awayTeam.team.location.includes(name);
 
   return data.gameData.standings.groups.map((group: any) => (
-    <div key={uuidv4()} className="w-full bg-white rounded-xl p-3">
-      <p className="font-semibold text-[14px] mb-3">{group.header}</p>
+    <div key={uuidv4()} className="w-full rounded-xl bg-white p-3">
+      <p className="mb-3 text-[14px] font-semibold">{group.header}</p>
 
       <table className="misc-table table min-w-full">
         <thead className="table-header">
@@ -55,12 +56,12 @@ export default function DivisionStandings({
                   fontWeight: isMatchingTeam(team.team) ? "700" : "400",
                   color: isMatchingTeam(team.team) ? "black" : "#6c6d6f",
                 }}
-                className="text-xs p-1"
+                className="p-1 text-xs"
                 align="left"
               >
                 <Link
                   href={`/${league}/team/${team.id}/home`}
-                  className="whitespace-nowrap anchor-link"
+                  className="anchor-link whitespace-nowrap"
                 >
                   {team.team}
                 </Link>
@@ -70,7 +71,7 @@ export default function DivisionStandings({
                   fontWeight: isMatchingTeam(team.team) ? "700" : "400",
                   color: isMatchingTeam(team.team) ? "black" : "#6c6d6f",
                 }}
-                className="text-xs table-cell"
+                className="table-cell text-xs"
                 align="center"
               >
                 {getWins(team)}
@@ -80,7 +81,7 @@ export default function DivisionStandings({
                   fontWeight: isMatchingTeam(team.team) ? "700" : "400",
                   color: isMatchingTeam(team.team) ? "black" : "#6c6d6f",
                 }}
-                className="text-xs table-cell"
+                className="table-cell text-xs"
                 align="center"
               >
                 {getLosses(team)}
@@ -90,7 +91,7 @@ export default function DivisionStandings({
                   fontWeight: isMatchingTeam(team.team) ? "700" : "400",
                   color: isMatchingTeam(team.team) ? "black" : "#6c6d6f",
                 }}
-                className="text-xs table-cell"
+                className="table-cell text-xs"
                 align="center"
               >
                 {getWinPercentage(team)}

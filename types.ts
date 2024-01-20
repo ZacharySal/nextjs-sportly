@@ -264,6 +264,7 @@ export type NFLGameData = {
           name: string;
         }>;
       }>;
+      players: any;
     };
     drives: any;
     gameInfo: {

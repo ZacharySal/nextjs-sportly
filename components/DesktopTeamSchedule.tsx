@@ -18,9 +18,9 @@ function teamWon(event: any, teamName: string) {
       ? true
       : false
     : event.competitions[0].competitors[1].score.value >
-      event.competitions[0].competitors[0].score.value
-    ? true
-    : false;
+        event.competitions[0].competitors[0].score.value
+      ? true
+      : false;
 }
 
 export default function DesktopTeamSchedule({
@@ -38,10 +38,12 @@ export default function DesktopTeamSchedule({
     let newss = event.name.replace(teamName, "");
     let n = newss.replace(" at ", " @ ");
     let b =
-      n.at(-1 - 1) === "@" ? "vs " + n.substring(0, n.indexOf("@")) : "@ " + n.split(" ").slice(-1);
+      n.at(-1 - 1) === "@"
+        ? "vs " + n.substring(0, n.indexOf("@"))
+        : "@ " + n.split(" ").slice(-1);
 
     return b.includes("vs") ? (
-      <div className="w-[8rem] p-1 flex flex-row items-center gap-1">
+      <div className="flex w-[8rem] flex-row items-center gap-1 p-1">
         <p className="text-[11px] font-semibold opacity-70"> vs </p>
         <Image
           width={event.competitions[0].competitors[1].team.logos[0].width}
@@ -52,11 +54,15 @@ export default function DesktopTeamSchedule({
           alt="team logo"
         />
         <p className="text-[11px] font-semibold opacity-70">
-          {b.substring(0, b.lastIndexOf(" ")).split(" ").splice(-1)[0].replace("vs", "")}
+          {b
+            .substring(0, b.lastIndexOf(" "))
+            .split(" ")
+            .splice(-1)[0]
+            .replace("vs", "")}
         </p>
       </div>
     ) : (
-      <div className="w-[8rem] p-1 flex flex-row items-center gap-1">
+      <div className="flex w-[8rem] flex-row items-center gap-1 p-1">
         <p className="text-[11px] font-semibold opacity-70">@</p>
         <Image
           width={event.competitions[0].competitors[0].team.logos[0].width}
@@ -66,7 +72,10 @@ export default function DesktopTeamSchedule({
           className="w-7 object-contain"
           alt="team logo"
         />
-        <p className="text-[11px] font-semibold opacity-70"> {b.replace("@", "")}</p>
+        <p className="text-[11px] font-semibold opacity-70">
+          {" "}
+          {b.replace("@", "")}
+        </p>
       </div>
     );
 
@@ -74,32 +83,36 @@ export default function DesktopTeamSchedule({
   }
 
   return (
-    <div className="w-full bg-white rounded-xl">
+    <div className="w-full rounded-xl bg-white">
       {isTeamView ? (
-        <p className="text-xl md:text-2xl font-semibold mb-1 opacity-90 p-3">
+        <p className="mb-1 p-3 text-xl font-semibold opacity-90 md:text-2xl">
           {teamName} Schedule 2023
         </p>
       ) : (
-        <p className="px-3 py-1 mb-2 font-semibold text-base opacity-80 pt-3">2023 Schedule</p>
+        <p className="mb-2 px-3 py-1 pt-3 text-base font-semibold opacity-80">
+          2023 Schedule
+        </p>
       )}
 
-      <div className="grid grid-cols[2fr,auto,2fr] border-b border-t border-[rgba(0,0,0,0.1)] bg-[#f9f9fb] px-2 py-1">
-        <p className="text-[10px] uppercase opacity-60 font-semibold">Regular Season</p>
+      <div className="grid-cols[2fr,auto,2fr] grid border-b border-t border-[rgba(0,0,0,0.1)] bg-[#f9f9fb] px-2 py-1">
+        <p className="text-[10px] font-semibold uppercase opacity-60">
+          Regular Season
+        </p>
       </div>
       {data.teamSchedule.events.map((event: any, i: number) => (
         <Link href={`/${league}/game/${event.id}/home`} key={uuidv4()}>
-          <div className="grid grid-cols[2fr,auto,2fr] border-b border-[rgba(0,0,0,0.1)] bg-[#f9f9fb] px-2 py-1 team-schedule-card">
+          <div className="grid-cols[2fr,auto,2fr] team-schedule-card grid border-b border-[rgba(0,0,0,0.1)] bg-[#f9f9fb] px-2 py-1">
             {formatName(event, teamName)}
             {event.competitions[0].competitors[1]?.score?.value && (
               <p
                 style={{ color: teamWon(event, teamName) ? "#094" : "#d00" }}
-                className="text-[11px] w-full text-end m-auto col-start-2 font-semibold"
+                className="col-start-2 m-auto w-full text-end text-[11px] font-semibold"
               >
                 {teamWon(event, teamName) ? "W" : "L"}
               </p>
             )}
 
-            <p className="w-[4rem] text-end opacity-70 text-[11px] font-semibold m-auto col-start-3">
+            <p className="col-start-3 m-auto w-[4rem] text-end text-[11px] font-semibold opacity-70">
               {event.competitions[0].competitors[1]?.score?.value ? (
                 <>
                   {event.competitions[0].competitors[1]?.score?.value || "0"} -{" "}
@@ -112,7 +125,7 @@ export default function DesktopTeamSchedule({
           </div>
         </Link>
       ))}
-      <p className="text-center w-full h-full text-[13px] text-[#06c] cursor-pointer p-2 font-semibold">
+      <p className="h-full w-full cursor-pointer p-2 text-center text-[13px] font-semibold text-[#06c]">
         Full Schedule
       </p>
     </div>

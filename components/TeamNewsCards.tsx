@@ -9,15 +9,24 @@ function formatDate(date: string) {
   });
 }
 
-export default function TeamNewsCards({ data, league }: { data: any; league: string }) {
+export default function TeamNewsCards({
+  data,
+  league,
+}: {
+  data: any;
+  league: string;
+}) {
   return (
     <>
       {data.teamNews.articles
-        .filter((article: any) => article.type !== "Preview" && article.type !== "Recap")
+        .filter(
+          (article: any) =>
+            article.type !== "Preview" && article.type !== "Recap",
+        )
         .map((article: any) => (
           <Link key={uuidv4()} target="_blank" href={article.links["web"].href}>
-            <div className="w-full bg-white px-3 py-1 flex rounded-xl mb-4 flex-col article-container">
-              <div className="flex flex-row justify-start items-center gap-1 mb-1">
+            <div className="article-container mb-4 flex w-full flex-col rounded-xl bg-white px-3 py-1">
+              <div className="mb-1 flex flex-row items-center justify-start gap-1">
                 <Image
                   width={data.teamData.team.logos[0].width}
                   height={data.teamData.team.logos[0].height}
@@ -26,22 +35,28 @@ export default function TeamNewsCards({ data, league }: { data: any; league: str
                   className="w-7 object-contain"
                   alt="team logo"
                 />
-                <p className="font-semibold tracking-wider">{data.teamData.team.name}</p>
+                <p className="font-semibold tracking-wider">
+                  {data.teamData.team.name}
+                </p>
               </div>
-              <div className="mb-2 bg-white drop-shadow-lg rounded-xl cursor-pointer">
+              <div className="mb-2 cursor-pointer rounded-xl bg-white drop-shadow-lg">
                 <Image
                   width={article.images[0].width}
                   height={article.images[0].height}
                   priority={true}
                   src={article.images[0].url}
-                  className="min-w-full max-h-[22rem] object-cover rounded-t-xl border-b-4 border-gray-300"
+                  className="max-h-[22rem] min-w-full rounded-t-xl border-b-4 border-gray-300 object-cover"
                   alt="team logo"
                 />
                 <div className="p-2">
-                  <p className="text-sm font-bold article-headline">{article.headline}</p>
+                  <p className="article-headline text-sm font-bold">
+                    {article.headline}
+                  </p>
                   <p className="text-xs opacity-40">
                     {formatDate(article.published)} •{" "}
-                    {typeof article.byline !== "undefined" ? article.byline : "AP"}
+                    {typeof article.byline !== "undefined"
+                      ? article.byline
+                      : "AP"}
                   </p>
                 </div>
               </div>

@@ -6,7 +6,7 @@ export default function CourtSVG({ goalColor }: Props) {
   return (
     <svg
       id="nba-court-svg"
-      style={{ height: "100%", width: "100%", overflow: "visible" }}
+      style={{ height: "100%", width: "100%", overflow: "visible", zIndex: 10 }}
       preserveAspectRatio="xMinYMax meet"
       viewBox="0 0 584 109"
     >

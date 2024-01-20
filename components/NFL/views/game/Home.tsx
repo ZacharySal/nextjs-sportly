@@ -29,7 +29,7 @@ export default function Home({ gameId }: { gameId: string }) {
     fetcher,
     {
       refreshInterval: 5000,
-    }
+    },
   );
 
   if (!isLoading) {
@@ -38,7 +38,7 @@ export default function Home({ gameId }: { gameId: string }) {
 
   const desktopView = () => (
     <>
-      <div className="flex self-start flex-col justify-center items-center gap-3">
+      <div className="flex flex-col items-center justify-center gap-3 self-start">
         <NFLGameLeaders data={data} />
         <DivisionStandings data={data} isNFL={true} league="nfl" />
         <StadiumInfo data={data} />
@@ -54,22 +54,32 @@ export default function Home({ gameId }: { gameId: string }) {
         {!data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
-            <InjuryReport data={data} league="nfl" />
-            <LastFive data={data} league="nfl" isDesktopScreen={isDesktopScreen} />
+            <InjuryReport data={data} />
+            <LastFive
+              data={data}
+              league="nfl"
+              isDesktopScreen={isDesktopScreen}
+            />
           </>
         )}
       </div>
 
-      <div className="flex self-start flex-col justify-center items-center gap-3">
-        {data.gameInfo.status.type.state !== "pre" && <NFLTeamStats data={data} />}
+      <div className="flex flex-col items-center justify-center gap-3 self-start">
+        {data.gameInfo.status.type.state !== "pre" && (
+          <NFLTeamStats data={data} />
+        )}
         <MatchupPredictor data={data} league="nfl" />
-        <Articles title="NFL News" news={data.gameData.news.articles} limit={6} />
+        <Articles
+          title="NFL News"
+          news={data.gameData.news.articles}
+          limit={6}
+        />
       </div>
     </>
   );
 
   const mobileView = () => (
-    <div className="w-full flex flex-col justify-center items-center gap-3">
+    <div className="flex w-full flex-col items-center justify-center gap-3">
       <GameRecapArticle data={data} />
       {data.isGameStarted ? (
         <>
@@ -82,11 +92,15 @@ export default function Home({ gameId }: { gameId: string }) {
         <>
           <MatchupPredictor data={data} league={"nfl"} />
           <NFLGameLeaders data={data} />
-          <InjuryReport data={data} league="nfl" />
-          <LastFive data={data} league="nfl" isDesktopScreen={isDesktopScreen} />
+          <InjuryReport data={data} />
+          <LastFive
+            data={data}
+            league="nfl"
+            isDesktopScreen={isDesktopScreen}
+          />
         </>
       )}
-      <DivisionStandings data={data} isNFL={true} league="nfl" />
+      <DivisionStandings data={data} isNFL league="nfl" />
       <StadiumInfo data={data} />
     </div>
   );

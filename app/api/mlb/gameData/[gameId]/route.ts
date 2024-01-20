@@ -2,9 +2,12 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request, { params }: { params: { gameId: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { gameId: string } },
+) {
   const gameDataResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${params.gameId}`
+    `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${params.gameId}`,
   );
 
   if (!gameDataResponse.ok) {
@@ -19,7 +22,7 @@ export async function GET(request: Request, { params }: { params: { gameId: stri
   const awayTeamId = awayTeam.id;
 
   const homeTeamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${homeTeamId}/statistics`
+    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${homeTeamId}/statistics`,
   );
 
   if (!homeTeamStatsResponse.ok) {
@@ -29,7 +32,7 @@ export async function GET(request: Request, { params }: { params: { gameId: stri
   const homeTeamStats = await homeTeamStatsResponse.json();
 
   const awayTeamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${awayTeamId}/statistics`
+    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${awayTeamId}/statistics`,
   );
 
   if (!awayTeamStatsResponse.ok) {

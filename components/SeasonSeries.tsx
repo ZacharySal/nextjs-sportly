@@ -4,11 +4,19 @@ import { channel } from "diagnostics_channel";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function SeasonSeries({ data, league }: { data: any; league: string }) {
+export default function SeasonSeries({
+  data,
+  league,
+}: {
+  data: any;
+  league: string;
+}) {
   return (
-    <div className="bg-white min-w-full p-3 rounded-md">
-      <p className="font-semibold text-[14px]">{data.gameData.seasonseries[0].description}</p>
-      <p className="opacity-60 font-semibold text-[12px] pb-2 border-b border-b-[rgba(0,0,0,0.2)] border-dotted">
+    <div className="min-w-full rounded-md bg-white p-3">
+      <p className="text-[14px] font-semibold">
+        {data.gameData.seasonseries[0].description}
+      </p>
+      <p className="border-b border-dotted border-b-[rgba(0,0,0,0.2)] pb-2 text-[12px] font-semibold opacity-60">
         {data.gameData.seasonseries[0].summary.replaceAll("series", "")}
       </p>
       {data.gameData.seasonseries[0].events.map((event: any, i: number) => (
@@ -20,10 +28,10 @@ export default function SeasonSeries({ data, league }: { data: any; league: stri
                   ? "1px dotted rgba(0,0,0,0.2)"
                   : "none",
             }}
-            className="w-full grid grid-cols-[1fr_25%] gap-3 py-2"
+            className="grid w-full grid-cols-[1fr_25%] gap-3 py-2"
           >
             {/* 1ST COLUMN: GAME INFO */}
-            <div className="w-full grid grid-cols-[1fr_auto] items-center grid-rows-[1fr_1fr] score-cell relative">
+            <div className="score-cell relative grid w-full grid-cols-[1fr_auto] grid-rows-[1fr_1fr] items-center">
               {/* AWAY TEAM IMG AND NAME */}
               <div className="flex items-center gap-2">
                 <Image
@@ -36,13 +44,17 @@ export default function SeasonSeries({ data, league }: { data: any; league: stri
                 />
                 <p
                   style={{
-                    opacity: event.competitors[1].winner || event.status === "pre" ? "1" : "0.6",
+                    opacity:
+                      event.competitors[1].winner || event.status === "pre"
+                        ? "1"
+                        : "0.6",
                   }}
                   className="text-[14px] font-semibold"
                 >
                   {
                     event.competitors[1].team.displayName.split(" ")[
-                      event.competitors[1].team.displayName.split(" ").length - 1
+                      event.competitors[1].team.displayName.split(" ").length -
+                        1
                     ]
                   }
                 </p>
@@ -50,11 +62,14 @@ export default function SeasonSeries({ data, league }: { data: any; league: stri
               {/* AWAY TEAM SCORE */}
               <p
                 style={{
-                  opacity: event.competitors[1].winner || event.status === "pre" ? "1" : "0.6",
+                  opacity:
+                    event.competitors[1].winner || event.status === "pre"
+                      ? "1"
+                      : "0.6",
                 }}
                 className={`${
                   event.competitors[1].winner && "winning-score"
-                } text-[14px] text-end font-semibold`}
+                } text-end text-[14px] font-semibold`}
               >
                 {event.status !== "pre" && event.competitors[1].score}
               </p>
@@ -71,13 +86,17 @@ export default function SeasonSeries({ data, league }: { data: any; league: stri
                 />
                 <p
                   style={{
-                    opacity: event.competitors[0].winner || event.status === "pre" ? "1" : "0.6",
+                    opacity:
+                      event.competitors[0].winner || event.status === "pre"
+                        ? "1"
+                        : "0.6",
                   }}
                   className="text-[14px] font-semibold tracking-wide"
                 >
                   {
                     event.competitors[0].team.displayName.split(" ")[
-                      event.competitors[0].team.displayName.split(" ").length - 1
+                      event.competitors[0].team.displayName.split(" ").length -
+                        1
                     ]
                   }
                 </p>
@@ -85,43 +104,52 @@ export default function SeasonSeries({ data, league }: { data: any; league: stri
               {/* HOME TEAM SCORE */}
               <p
                 style={{
-                  opacity: event.competitors[0].winner || event.status === "pre" ? "1" : "0.6",
+                  opacity:
+                    event.competitors[0].winner || event.status === "pre"
+                      ? "1"
+                      : "0.6",
                 }}
                 className={`${
                   event.competitors[0].winner && "winning-score"
-                } text-[14px] text-end font-semibold`}
+                } text-end text-[14px] font-semibold`}
               >
                 {event.status !== "pre" && event.competitors[0].score}
               </p>
             </div>
 
-            <div className="flex w-full justify-start items-center">
+            <div className="flex w-full items-center justify-start">
               <div className="flex flex-col">
-                <p className="text-xs opacity-60 font-[500]">Game {i + 1}</p>
+                <p className="text-xs font-[500] opacity-60">Game {i + 1}</p>
                 {event.statusType.state !== "pre" ? (
                   <>
-                    <p className="text-xs opacity-75 font-semibold">
+                    <p className="text-xs font-semibold opacity-75">
                       {new Date(event.date).toLocaleDateString("en-us", {
                         day: "numeric",
                         month: "numeric",
                       })}
                     </p>
                     <p
-                      style={{ color: event.status == "in" ? "#d50a0a" : "black" }}
-                      className="flex w-full justify-start items-center text-xs font-semibold"
+                      style={{
+                        color: event.status == "in" ? "#d50a0a" : "black",
+                      }}
+                      className="flex w-full items-center justify-start text-xs font-semibold"
                     >
-                      {event.status == "in" ? "LIVE" : event.statusType.shortDetail}
+                      {event.status == "in"
+                        ? "LIVE"
+                        : event.statusType.shortDetail}
                     </p>
                   </>
                 ) : (
                   <>
-                    <p className="text-xs opacity-90 font-semibold">
+                    <p className="text-xs font-semibold opacity-90">
                       {new Date(event.date).toLocaleDateString("en-us", {
                         day: "numeric",
                         month: "numeric",
                       })}
                     </p>
-                    <p className="text-xs opacity-90">{event?.broadcasts?.[0]?.media?.shortName}</p>
+                    <p className="text-xs opacity-90">
+                      {event?.broadcasts?.[0]?.media?.shortName}
+                    </p>
                   </>
                 )}
               </div>

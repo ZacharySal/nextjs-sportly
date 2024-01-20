@@ -2,10 +2,20 @@
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
-import { mlbDivisonTeams, nbaDivisionTeams, nflDivisonTeams } from "@/lib/constants";
+import {
+  mlbDivisonTeams,
+  nbaDivisionTeams,
+  nflDivisonTeams,
+} from "@/lib/constants";
 import Link from "next/link";
 
-export default function GameHeader({ league, data }: { league: string; data: any }) {
+export default function GameHeader({
+  league,
+  data,
+}: {
+  league: string;
+  data: any;
+}) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
   const homeTeam = data.gameData.header.competitions[0].competitors[0];
   const awayTeam = data.gameData.header.competitions[0].competitors[1];
@@ -28,33 +38,40 @@ export default function GameHeader({ league, data }: { league: string; data: any
   return (
     <>
       {isDesktopScreen ? (
-        <div className="bg-white w-full flex justify-center border-b border-[rgba(0,0,0,0.2)] z-40 sticky top-[2.75rem]">
-          <div className="w-full 2xl:w-2/5 h-24 flex-row flex justify-center items-center gap-10 relative">
-            <div className="flex flex-row justify-center items-center gap-3">
+        <div className="sticky top-[2.75rem] z-40 flex w-full justify-center border-b border-[rgba(0,0,0,0.2)] bg-white">
+          <div className="relative flex h-24 w-full flex-row items-center justify-center gap-10 2xl:w-2/5">
+            <div className="flex flex-row items-center justify-center gap-3">
               <div className="flex flex-col text-black">
                 <div
                   style={{ backgroundColor: "#" + awayTeam.team.color }}
-                  className="mr-10 game-header-logo-wrapper game-header-logo-wrapper--left md:left-0 xl:left-[150px] 2xl:left-[-150px]"
+                  className="game-header-logo-wrapper game-header-logo-wrapper--left mr-10 md:left-0 xl:left-[150px] 2xl:left-[-150px]"
                 >
                   <Image
                     src={awayTeam.team.logos[3].href}
                     width={awayTeam.team.logos[3].width}
                     height={awayTeam.team.logos[3].height}
                     alt="away team logo"
-                    className="w-44 object-cover game-header-logo--left"
+                    className="game-header-logo--left w-44 object-cover"
                   />
                 </div>
-                <Link className="w-full " href={`/${league}/team/${awayTeam.team.id}/home`}>
-                  <p className="text font-bold whitespace-nowrap">
+                <Link
+                  className="w-full "
+                  href={`/${league}/team/${awayTeam.team.id}/home`}
+                >
+                  <p className="text whitespace-nowrap font-bold">
                     {awayTeam.team.location + " " + awayTeam.team.name}
                   </p>
-                  <p className="text-xs opacity-70 text-right">
+                  <p className="text-right text-xs opacity-70">
                     {findTeamDivison(awayTeam.team.displayName)},{" "}
-                    {typeof awayTeam.record !== "undefined" && awayTeam.record?.[0]?.displayValue}
+                    {typeof awayTeam.record !== "undefined" &&
+                      awayTeam.record?.[0]?.displayValue}
                   </p>
                 </Link>
               </div>
-              <Link className="w-full " href={`/${league}/team/${awayTeam.team.id}/home`}>
+              <Link
+                className="w-full "
+                href={`/${league}/team/${awayTeam.team.id}/home`}
+              >
                 <Image
                   src={awayTeam.team.logos[0].href}
                   width={awayTeam.team.logos[0].width}
@@ -75,20 +92,22 @@ export default function GameHeader({ league, data }: { league: string; data: any
                       ? "0.5"
                       : "1",
                 }}
-                className="w-full text-black text-4xl ml-4"
+                className="ml-4 w-full text-4xl text-black"
               >
                 {awayTeam.score}
               </p>
             </div>
             {isGameStarted ? (
               <p
-                style={{ color: gameInfo.status.type.state == "in" ? "#d00" : "black" }}
+                style={{
+                  color: gameInfo.status.type.state == "in" ? "#d00" : "black",
+                }}
                 className="text-sm font-semibold"
               >
                 {gameInfo.status.type.shortDetail}
               </p>
             ) : (
-              <div className="flex flex-col justify-center items-center col-start-2 text-black">
+              <div className="col-start-2 flex flex-col items-center justify-center text-black">
                 <p className="text-sm opacity-70">
                   {gameInfo.broadcasts[0]?.media?.shortName || ""}
                 </p>
@@ -103,7 +122,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
               </div>
             )}
 
-            <div className="flex flex-row justify-center items-center gap-3">
+            <div className="flex flex-row items-center justify-center gap-3">
               <p
                 key={homeTeam.score}
                 style={{
@@ -114,11 +133,14 @@ export default function GameHeader({ league, data }: { league: string; data: any
                       ? "0.5"
                       : "1",
                 }}
-                className="w-full text-black text-4xl mr-4"
+                className="mr-4 w-full text-4xl text-black"
               >
                 {homeTeam.score}
               </p>
-              <Link className="w-full " href={`/${league}/team/${homeTeam.team.id}/home`}>
+              <Link
+                className="w-full "
+                href={`/${league}/team/${homeTeam.team.id}/home`}
+              >
                 <Image
                   src={homeTeam.team.logos[0].href}
                   width={homeTeam.team.logos[0].width}
@@ -127,27 +149,31 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   className="w-14 object-cover"
                 />
               </Link>
-              <Link className="w-full " href={`/${league}/team/${homeTeam.team.id}/home`}>
+              <Link
+                className="w-full "
+                href={`/${league}/team/${homeTeam.team.id}/home`}
+              >
                 <div className="flex flex-col text-black opacity-80">
-                  <p className="font-bold whitespace-nowrap">
+                  <p className="whitespace-nowrap font-bold">
                     {homeTeam.team.location + " " + homeTeam.team.name}
                   </p>
-                  <p className="text-xs opacity-70 text-left">
+                  <p className="text-left text-xs opacity-70">
                     {findTeamDivison(homeTeam.team.displayName)},{" "}
-                    {typeof homeTeam.record !== "undefined" && homeTeam.record?.[0]?.displayValue}
+                    {typeof homeTeam.record !== "undefined" &&
+                      homeTeam.record?.[0]?.displayValue}
                   </p>
                 </div>
               </Link>
               <div
                 style={{ backgroundColor: "#" + homeTeam.team.color }}
-                className="ml-10 game-header-logo-wrapper game-header-logo-wrapper--right md:right-0 xl:right-[150px]  2xl:right-[-150px]"
+                className="game-header-logo-wrapper game-header-logo-wrapper--right ml-10 md:right-0 xl:right-[150px]  2xl:right-[-150px]"
               >
                 <Image
                   src={homeTeam.team.logos[3].href}
                   width={homeTeam.team.logos[3].width}
                   height={homeTeam.team.logos[3].height}
                   alt="away team logo"
-                  className="w-44 object-cover game-header-logo--right"
+                  className="game-header-logo--right w-44 object-cover"
                 />
               </div>
             </div>
@@ -161,19 +187,19 @@ export default function GameHeader({ league, data }: { league: string; data: any
                 style={{
                   backgroundColor: "white",
                 }}
-                className="w-full h-[55px] py-8 border-b border-[rgba(0,0,0,0.2)] place-items-center justify-center gap-x-6 text-center text-black px-3 grid grid-rows-1 shadow-sm sticky top-[2.75rem] z-40"
+                className="sticky top-[2.75rem] z-40 grid h-[55px] w-full grid-rows-1 place-items-center justify-center gap-x-6 border-b border-[rgba(0,0,0,0.2)] px-3 py-8 text-center text-black shadow-sm"
               >
                 {/*Away Team Logo, abv, and record*/}
                 <Link
-                  className="w-full col-start-1"
+                  className="col-start-1 w-full"
                   href={`/${league}/team/${awayTeam.team.id}/home`}
                 >
-                  <div className="flex flex-row gap-2 justify-center items-center">
+                  <div className="flex flex-row items-center justify-center gap-2">
                     <div className="flex flex-col">
-                      <p className="text-sm opacity-80 font-semibold">
+                      <p className="text-sm font-semibold opacity-80">
                         {awayTeam.team.abbreviation}
                       </p>
-                      <p className="text-xs opacity-80 whitespace-nowrap">
+                      <p className="whitespace-nowrap text-xs opacity-80">
                         {awayTeam.record?.[0]?.displayValue || "0-0"}
                       </p>
                     </div>
@@ -187,7 +213,7 @@ export default function GameHeader({ league, data }: { league: string; data: any
                   </div>
                 </Link>
 
-                <div className="flex flex-col justify-center items-center col-start-2 text-black">
+                <div className="col-start-2 flex flex-col items-center justify-center text-black">
                   <p className="text-xs opacity-70">
                     {gameInfo.broadcasts[0]?.media?.shortName || ""}
                   </p>
@@ -203,10 +229,10 @@ export default function GameHeader({ league, data }: { league: string; data: any
 
                 {/*Home Team Logo, abv, and record*/}
                 <Link
-                  className="w-full col-start-3 "
+                  className="col-start-3 w-full "
                   href={`/${league}/team/${homeTeam.team.id}/home`}
                 >
-                  <div className="flex flex-row gap-2 justify-center items-center">
+                  <div className="flex flex-row items-center justify-center gap-2">
                     <Image
                       src={homeTeam.team.logos[0].href}
                       width={homeTeam.team.logos[0].width}
@@ -215,10 +241,10 @@ export default function GameHeader({ league, data }: { league: string; data: any
                       className="w-8 object-contain"
                     />
                     <div className="flex flex-col">
-                      <p className="text-sm opacity-80 font-semibold">
+                      <p className="text-sm font-semibold opacity-80">
                         {homeTeam.team.abbreviation}
                       </p>
-                      <p className="text-xs opacity-80 whitespace-nowrap">
+                      <p className="whitespace-nowrap text-xs opacity-80">
                         {homeTeam.record?.[0]?.displayValue || "0-0"}
                       </p>
                     </div>
@@ -232,19 +258,19 @@ export default function GameHeader({ league, data }: { league: string; data: any
                 style={{
                   backgroundColor: "white",
                 }}
-                className="w-full h-[55px] px-3 py-8 border-b border-[rgba(0,0,0,0.2)] place-items-center text-center text-black grid grid-cols-5 grid-rows-1 shadow-sm sticky top-[2.75rem] z-40"
+                className="sticky top-[2.75rem] z-40 grid h-[55px] w-full grid-cols-5 grid-rows-1 place-items-center border-b border-[rgba(0,0,0,0.2)] px-3 py-8 text-center text-black shadow-sm"
               >
                 {/*Home Team Logo, abv, and record*/}
                 <Link
-                  className="w-full col-start-1"
+                  className="col-start-1 w-full"
                   href={`/${league}/team/${awayTeam.team.id}/home`}
                 >
-                  <div className="flex flex-col-reverse xs:flex-row gap-1 items-center justify-end">
+                  <div className="flex flex-col-reverse items-center justify-end gap-1 xs:flex-row">
                     <div className="flex flex-col">
-                      <p className="text-xs opacity-70 font-semibold">
+                      <p className="text-xs font-semibold opacity-70">
                         {awayTeam.team.abbreviation}
                       </p>
-                      <p className="text-xs opacity-70 whitespace-nowrap">
+                      <p className="whitespace-nowrap text-xs opacity-70">
                         {typeof awayTeam.record !== "undefined" &&
                           awayTeam.record?.[0]?.displayValue}
                       </p>
@@ -273,16 +299,19 @@ export default function GameHeader({ league, data }: { league: string; data: any
                     data.gameInfo.status.type.state == "post"
                       ? "away-winning-score-header"
                       : ""
-                  } pr-2 relative text-2xl col-start-2`}
+                  } relative col-start-2 pr-2 text-2xl`}
                 >
                   {awayTeam.score}
                 </p>
 
                 <p
                   style={{
-                    color: gameInfo.status.type.shortDetail == "Final" ? "black" : "#d50a0a",
+                    color:
+                      gameInfo.status.type.shortDetail == "Final"
+                        ? "black"
+                        : "#d50a0a",
                   }}
-                  className="opacity-90 whitespace-nowrap text-sm font-semibold col-start-3 pt-[4px]"
+                  className="col-start-3 whitespace-nowrap pt-[4px] text-sm font-semibold opacity-90"
                 >
                   {gameInfo.status.type.shortDetail}
                 </p>
@@ -301,13 +330,16 @@ export default function GameHeader({ league, data }: { league: string; data: any
                     data.gameInfo.status.type.state == "post"
                       ? "home-winning-score-header"
                       : ""
-                  } relative pl-2 text-2xl col-start-4`}
+                  } relative col-start-4 pl-2 text-2xl`}
                 >
                   {homeTeam.score}
                 </p>
 
-                <Link className="w-full " href={`/${league}/team/${homeTeam.team.id}/home`}>
-                  <div className="flex flex-col xs:flex-row gap-1 items-center col-start-5 text-black">
+                <Link
+                  className="w-full "
+                  href={`/${league}/team/${homeTeam.team.id}/home`}
+                >
+                  <div className="col-start-5 flex flex-col items-center gap-1 text-black xs:flex-row">
                     <Image
                       src={homeTeam.team.logos[0].href}
                       width={homeTeam.team.logos[0].width}
@@ -316,10 +348,10 @@ export default function GameHeader({ league, data }: { league: string; data: any
                       className="w-8 object-contain"
                     />
                     <div className="flex flex-col">
-                      <p className="text-xs opacity-80 font-semibold">
+                      <p className="text-xs font-semibold opacity-80">
                         {homeTeam.team.abbreviation}
                       </p>
-                      <p className="text-xs opacity-80  whitespace-nowrap">
+                      <p className="whitespace-nowrap text-xs  opacity-80">
                         {typeof homeTeam.record !== "undefined" &&
                           homeTeam.record?.[0]?.displayValue}
                       </p>

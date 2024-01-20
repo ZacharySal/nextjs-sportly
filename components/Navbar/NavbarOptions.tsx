@@ -31,10 +31,10 @@ const setTeamImageSrc = (fullName: string, league: string) => {
 export default function NavbarOptions() {
   const pathName = usePathname();
   const dropDownMenu = (league: string, divisonTeams: any) => (
-    <div className="flex flex-row menu-option relative h-full items-center cursor-pointer">
+    <div className="menu-option relative flex h-full cursor-pointer flex-row items-center">
       <Link href={`/${league}`} style={{ textDecoration: "none" }}>
         <p
-          className={`text-white uppercase relative font-[600] ${
+          className={`relative font-[600] uppercase text-white ${
             pathName.includes(league) && "league-open"
           }`}
         >
@@ -43,50 +43,68 @@ export default function NavbarOptions() {
       </Link>
       <div className="menu-dropdown hidden">
         <div className="flex flex-row gap-5">
-          <div className="flex flex-col gap-1 text-black pt-3 w-2/7 justify-start">
-            <Link href={`/${league}`} className="no-underline text-black">
-              <p className="rounded-md opacity-60 p-2 text-[14px] menu-dropdown-option">Scores</p>
+          <div className="w-2/7 flex flex-col justify-start gap-1 pt-3 text-black">
+            <Link href={`/${league}`} className="text-black no-underline">
+              <p className="menu-dropdown-option rounded-md p-2 text-[14px] opacity-60">
+                Scores
+              </p>
             </Link>
-            <Link href={`/${league}/standings`} className="no-underline text-black">
-              <p className="rounded-md opacity-60 p-2 text-[14px] menu-dropdown-option">
+            <Link
+              href={`/${league}/standings`}
+              className="text-black no-underline"
+            >
+              <p className="menu-dropdown-option rounded-md p-2 text-[14px] opacity-60">
                 Standings
               </p>
             </Link>
-            <Link href={`/${league}/teams`} className="no-underline text-black">
-              <p className="rounded-md opacity-60 p-2 text-[14px] menu-dropdown-option">Teams</p>
+            <Link href={`/${league}/teams`} className="text-black no-underline">
+              <p className="menu-dropdown-option rounded-md p-2 text-[14px] opacity-60">
+                Teams
+              </p>
             </Link>
           </div>
 
           <div
             style={{
               gridTemplateColumns:
-                league === "nfl" ? "repeat(4, minmax(0, 1fr))" : "repeat(3, minmax(0, 1fr))",
+                league === "nfl"
+                  ? "repeat(4, minmax(0, 1fr))"
+                  : "repeat(3, minmax(0, 1fr))",
             }}
-            className="grid gap-x-8 bg-gray-100 p-3 rounded-xl"
+            className="grid gap-x-8 rounded-xl bg-gray-100 p-3"
           >
-            {Object.entries(divisonTeams).map(([conference, teams]: [string, any]) => (
-              <div key={conference + uuidv4()} className="flex flex-col gap-2 mb-3 text-black">
-                <h1 className="font-bold text-[12px] opacity-70">{conference}</h1>
-                {teams.map((team: any) => (
-                  <Link
-                    className="no-underline text-black"
-                    href={`/${league}/team/${team[1]}/home`}
-                    key={uuidv4()}
-                  >
-                    <div className="flex flex-row justify-start items-center w-full gap-2 p-1 rounded-md menu-dropdown-team">
-                      <Image
-                        width={100}
-                        height={100}
-                        alt="team"
-                        src={setTeamImageSrc(team[0], league)}
-                        className="w-7 object-contain"
-                      />
-                      <p className="text-[12px] whitespace-nowrap opacity-60">{team[0]}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            ))}
+            {Object.entries(divisonTeams).map(
+              ([conference, teams]: [string, any]) => (
+                <div
+                  key={conference + uuidv4()}
+                  className="mb-3 flex flex-col gap-2 text-black"
+                >
+                  <h1 className="text-[12px] font-bold opacity-70">
+                    {conference}
+                  </h1>
+                  {teams.map((team: any) => (
+                    <Link
+                      className="text-black no-underline"
+                      href={`/${league}/team/${team[1]}/home`}
+                      key={uuidv4()}
+                    >
+                      <div className="menu-dropdown-team flex w-full flex-row items-center justify-start gap-2 rounded-md p-1">
+                        <Image
+                          width={100}
+                          height={100}
+                          alt="team"
+                          src={setTeamImageSrc(team[0], league)}
+                          className="w-7 object-contain"
+                        />
+                        <p className="whitespace-nowrap text-[12px] opacity-60">
+                          {team[0]}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ),
+            )}
           </div>
         </div>
       </div>

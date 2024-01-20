@@ -4,7 +4,13 @@ import { nameExceptions } from "../lib/constants";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function TeamSideCard({ name, league }: { name: string; league: string }) {
+export default function TeamSideCard({
+  name,
+  league,
+}: {
+  name: string;
+  league: string;
+}) {
   let parts = name[0].split(" ");
   let teamName = parts.pop();
   let location = parts.join(" ");
@@ -18,7 +24,7 @@ export default function TeamSideCard({ name, league }: { name: string; league: s
   return (
     <div
       style={{ cursor: "pointer" }}
-      className="flex justify-start flex-row items-center gap-2 mt-4"
+      className="mt-4 flex flex-row items-center justify-start gap-2"
     >
       <Link href={`/${league}/team/${name[1]}/home`}>
         <Image
@@ -26,30 +32,34 @@ export default function TeamSideCard({ name, league }: { name: string; league: s
           width={100}
           height={100}
           alt="team logo"
-          className="w-11 md:w-12 object-contain"
+          className="w-11 object-contain md:w-12"
         />
       </Link>
 
       <div className="flex flex-col gap-1">
         <Link href={`/${league}/team/${name[1]}/home`}>
-          <p className="text-[14px] font-[400] md:text-base team-link">{name[0]}</p>
+          <p className="team-link text-[14px] font-[400] md:text-base">
+            {name[0]}
+          </p>
         </Link>
         <div className="flex flex-row justify-start gap-1">
           <Link href={`/${league}/team/${name[1]}/stats`}>
-            <p className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
+            <p className="anchor-link border-r border-[rgba(0,0,0,0.1)] pr-1 text-[11px]">
               Statistics
             </p>
           </Link>
           <Link href={`/${league}/team/${name[1]}/schedule`}>
-            <p className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">
+            <p className="anchor-link border-r border-[rgba(0,0,0,0.1)] pr-1 text-[11px]">
               Schedule
             </p>
           </Link>
           <Link href={`/${league}/team/${name[1]}/roster`}>
-            <p className="text-[11px] anchor-link pr-1 border-r border-[rgba(0,0,0,0.1)]">Roster</p>
+            <p className="anchor-link border-r border-[rgba(0,0,0,0.1)] pr-1 text-[11px]">
+              Roster
+            </p>
           </Link>
           <Link href={`/${league}/team/${name[1]}/roster`}>
-            <p className="text-[11px] anchor-link">Depth Chart</p>
+            <p className="anchor-link text-[11px]">Depth Chart</p>
           </Link>
         </div>
       </div>

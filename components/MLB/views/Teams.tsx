@@ -13,7 +13,11 @@ export default function Home({ data }: { data: any }) {
   const desktopView = () => (
     <>
       <AllTeams allTeams={mlbDivisonTeams} league="mlb" />
-      <Articles title={`MLB News`} news={data.scoreData.news.articles} limit={10} />
+      <Articles
+        title={`MLB News`}
+        news={data.scoreData.news.articles}
+        limit={10}
+      />
     </>
   );
 

@@ -7,7 +7,13 @@ import Link from "next/link";
 import { v4 } from "uuid";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
-export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league: string }) {
+export default function ScoreCard({
+  gameInfo,
+  league,
+}: {
+  gameInfo: any;
+  league: string;
+}) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const game = gameInfo.competitions[0];
@@ -27,7 +33,8 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     minute: "2-digit",
   });
 
-  const isGameDetailsFinalized = awayTeamName !== "TBD" && homeTeamName !== "TBD";
+  const isGameDetailsFinalized =
+    awayTeamName !== "TBD" && homeTeamName !== "TBD";
   const isGameScheduled = game.status.type.state === "pre";
   const isGameInProgess = game.status.type.state === "in";
   const isGameFinished = game.status.type.state === "post";
@@ -39,37 +46,41 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
   const odds = typeof game?.odds == "undefined" ? "" : game.odds[0].details;
 
   const { data, isLoading } = useSWR(
-    isDesktopScreen ? `https://cdn.espn.com/core/${league}/game?xhr=1&gameId=${gameId}` : null,
+    isDesktopScreen
+      ? `https://cdn.espn.com/core/${league}/game?xhr=1&gameId=${gameId}`
+      : null,
     fetcher,
-    { refreshInterval: 30000 }
+    { refreshInterval: 30000 },
   );
 
   /* FEATURED ATHLETES FOR MLB TOP PERFORMERS */
 
   const getScoreOrRecord = (teamIndex: number) => {
     return isGameScheduled
-      ? isGameDetailsFinalized && typeof game.competitors[teamIndex].records !== "undefined"
+      ? isGameDetailsFinalized &&
+        typeof game.competitors[teamIndex].records !== "undefined"
         ? game.competitors[teamIndex].records[0].summary
         : ""
       : teamIndex === 1
-      ? awayTeamScore
-      : homeTeamScore;
+        ? awayTeamScore
+        : homeTeamScore;
   };
 
   const getTopPerformersByLeague = () => {
     if (league === "NBA") {
       return (
-        <div className="flex flex-col justify-start gap-3">
+        <div className="flex flex-col justify-start gap-1">
           <div className="flex flex-row items-center gap-2">
             <Image
               src={
-                data.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
+                data.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]
+                  ?.athlete?.headshot?.href
               }
               width={100}
               height={100}
               priority={true}
               alt="away team points leader"
-              className="w-[40px] h-[40px] border rounded-full object-cover"
+              className="h-[40px] w-[40px] rounded-full border object-cover"
             />
             <div className="flex flex-col">
               <p className="text-xs">
@@ -95,13 +106,14 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           <div className="flex flex-row items-center gap-2">
             <Image
               src={
-                data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
+                data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]
+                  ?.athlete?.headshot?.href
               }
               width={100}
               height={100}
               priority={true}
               alt="away team points leader"
-              className="w-[40px] h-[40px] border rounded-full object-cover"
+              className="h-[40px] w-[40px] rounded-full border object-cover"
             />
             <div className="flex flex-col">
               <p className="text-xs">
@@ -133,13 +145,14 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           <div className="flex flex-row items-center gap-2">
             <Image
               src={
-                data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
+                data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]
+                  ?.athlete?.headshot?.href
               }
               width={100}
               height={100}
               priority={true}
               alt="away team points leader"
-              className="w-[40px] h-[40px] border rounded-full object-cover"
+              className="h-[40px] w-[40px] rounded-full border object-cover"
             />
             <div className="flex flex-col">
               <p className="text-xs">
@@ -156,13 +169,14 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
           <div className="flex flex-row items-center gap-2">
             <Image
               src={
-                data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]?.athlete?.headshot?.href
+                data?.gamepackageJSON?.leaders[0]?.leaders[0]?.leaders[0]
+                  ?.athlete?.headshot?.href
               }
               width={100}
               height={100}
               priority={true}
               alt="away team points leader"
-              className="w-[40px] h-[40px] border rounded-full object-cover"
+              className="h-[40px] w-[40px] rounded-full border object-cover"
             />
             <div className="flex flex-col">
               <p className="text-xs">
@@ -181,28 +195,28 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
       );
     } else if (league === "MLB") {
       return (
-        <div className="flex flex-col justify-start items-start gap-1">
-          {typeof data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes !==
-            "undefined" && (
+        <div className="flex flex-col items-start justify-start gap-1">
+          {typeof data?.gamepackageJSON?.header?.competitions[0]?.status
+            ?.featuredAthletes !== "undefined" && (
             <>
               {typeof data?.gamepackageJSON?.header?.competitions[0]?.status
                 ?.featuredAthletes[0] !== "undefined" && (
                 <div className="flex flex-row items-center gap-1">
-                  <p className="text-[10px] opacity-60 w-[30px]">WIN</p>
+                  <p className="w-[30px] text-[10px] opacity-60">WIN</p>
 
                   <Image
                     src={
-                      data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes[0]
-                        ?.athlete?.headshot?.href
+                      data?.gamepackageJSON?.header?.competitions[0]?.status
+                        ?.featuredAthletes[0]?.athlete?.headshot?.href
                     }
                     width={100}
                     height={100}
                     priority={true}
                     alt={
-                      data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes[0]
-                        ?.athlete?.headshot?.alt
+                      data?.gamepackageJSON?.header?.competitions[0]?.status
+                        ?.featuredAthletes[0]?.athlete?.headshot?.alt
                     }
-                    className="w-[30px] h-[30px] border rounded-full object-cover"
+                    className="h-[30px] w-[30px] rounded-full border object-cover"
                   />
                   <div className="flex flex-col">
                     <p className="text-xs opacity-80">
@@ -218,7 +232,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               {typeof data?.gamepackageJSON?.header?.competitions[0]?.status
                 ?.featuredAthletes[1] !== "undefined" && (
                 <div className="flex flex-row items-center gap-1">
-                  <p className="text-[10px] opacity-60 w-[30px]">LOSS</p>
+                  <p className="w-[30px] text-[10px] opacity-60">LOSS</p>
 
                   <Image
                     src={
@@ -229,10 +243,10 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                     height={100}
                     priority={true}
                     alt={
-                      data?.gamepackageJSON?.header?.competitions[0]?.status.featuredAthletes[1]
-                        .athlete?.headshot?.alt || "N/A"
+                      data?.gamepackageJSON?.header?.competitions[0]?.status
+                        .featuredAthletes[1].athlete?.headshot?.alt || "N/A"
                     }
-                    className="w-[30px] h-[30px] border rounded-full object-cover"
+                    className="h-[30px] w-[30px] rounded-full border object-cover"
                   />
                   <div className="flex flex-col">
                     <p className="text-xs opacity-80">
@@ -248,21 +262,21 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               {typeof data?.gamepackageJSON?.header?.competitions[0]?.status
                 ?.featuredAthletes[2] !== "undefined" && (
                 <div className="flex flex-row items-center gap-1">
-                  <p className="text-[10px] opacity-60 w-[30px]">SAVE</p>
+                  <p className="w-[30px] text-[10px] opacity-60">SAVE</p>
 
                   <Image
                     src={
-                      data?.gamepackageJSON.header.competitions[0].status.featuredAthletes[2]
-                        .athlete?.headshot?.href
+                      data?.gamepackageJSON.header.competitions[0].status
+                        .featuredAthletes[2].athlete?.headshot?.href
                     }
                     width={100}
                     height={100}
                     priority={true}
                     alt={
-                      data?.gamepackageJSON?.header?.competitions[0]?.status?.featuredAthletes[2]
-                        ?.athlete?.headshot?.alt
+                      data?.gamepackageJSON?.header?.competitions[0]?.status
+                        ?.featuredAthletes[2]?.athlete?.headshot?.alt
                     }
-                    className="w-[30px] h-[30px] border rounded-full object-cover"
+                    className="h-[30px] w-[30px] rounded-full border object-cover"
                   />
                   <div className="flex flex-col">
                     <p className="text-xs opacity-80">
@@ -284,20 +298,36 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
   const getLinescoreHeaderByLeague = () => {
     if (league === "nfl" || league === "NBA") {
       return (
-        <div className="w-full flex justify-end pr-3">
-          <p className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">1</p>
-          <p className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">2</p>
-          <p className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">3</p>
-          <p className="w-[20px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">4</p>
-          <p className="justify-end flex pr-[2px] w-[50px] text-[12px] opacity-70 font-[600]">T</p>
+        <div className="flex w-full justify-end pr-3">
+          <p className="flex w-[20px] justify-center pl-2 text-[12px] font-[600] opacity-70">
+            1
+          </p>
+          <p className="flex w-[20px] justify-center pl-2 text-[12px] font-[600] opacity-70">
+            2
+          </p>
+          <p className="flex w-[20px] justify-center pl-2 text-[12px] font-[600] opacity-70">
+            3
+          </p>
+          <p className="flex w-[20px] justify-center pl-2 text-[12px] font-[600] opacity-70">
+            4
+          </p>
+          <p className="flex w-[50px] justify-end pr-[2px] text-[12px] font-[600] opacity-70">
+            T
+          </p>
         </div>
       );
     } else if (league === "MLB") {
       return (
-        <div className="w-full flex justify-end pr-3">
-          <p className="w-[40px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">R</p>
-          <p className="w-[40px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">H</p>
-          <p className="w-[40px] pl-2 flex justify-center text-[12px] opacity-70 font-[600]">E</p>
+        <div className="flex w-full justify-end pr-3">
+          <p className="flex w-[40px] justify-center pl-2 text-[12px] font-[600] opacity-70">
+            R
+          </p>
+          <p className="flex w-[40px] justify-center pl-2 text-[12px] font-[600] opacity-70">
+            H
+          </p>
+          <p className="flex w-[40px] justify-center pl-2 text-[12px] font-[600] opacity-70">
+            E
+          </p>
         </div>
       );
     }
@@ -307,26 +337,28 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     if (league === "NFL" || league === "NBA") {
       return (
         <div
-          style={{ opacity: isGameFinished ? (teamWon ? "0.8" : "0.4") : "0.8" }}
-          className={`w-full flex justify-end items-center pr-3 ${
+          style={{
+            opacity: isGameFinished ? (teamWon ? "0.8" : "0.4") : "0.8",
+          }}
+          className={`flex w-full items-center justify-end pr-3 ${
             isGameFinished && teamWon && "dt-team-won"
           }`}
         >
-          <p className="w-[20px] pl-2 flex justify-center text-[12px]">
+          <p className="flex w-[20px] justify-center pl-2 text-[12px]">
             {team.linescores?.[0]?.displayValue || "-"}
           </p>
-          <p className="w-[20px] pl-2 flex justify-center text-[12px]">
+          <p className="flex w-[20px] justify-center pl-2 text-[12px]">
             {team.linescores?.[1]?.displayValue || "-"}
           </p>
-          <p className="w-[20px] pl-2 flex justify-center text-[12px]">
+          <p className="flex w-[20px] justify-center pl-2 text-[12px]">
             {team.linescores?.[2]?.displayValue || "-"}
           </p>
-          <p className="w-[20px] pl-2 flex justify-center text-[12px]">
+          <p className="flex w-[20px] justify-center pl-2 text-[12px]">
             {team.linescores?.[3]?.displayValue || "-"}
           </p>
           <p
             style={{ transition: "all 0.5s ease-in" }}
-            className="justify-end flex pl-[1rem] w-[50px] font-bold text-xl"
+            className="flex w-[50px] justify-end pl-[1rem] text-xl font-bold"
           >
             {team?.score || "-"}
           </p>
@@ -336,15 +368,15 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
       return (
         <div
           style={{ opacity: teamWon ? "0.8" : "0.4" }}
-          className={`w-full flex justify-end items-center pr-3 ${teamWon && "dt-team-won"}`}
+          className={`flex w-full items-center justify-end pr-3 ${teamWon && "dt-team-won"}`}
         >
-          <p className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
+          <p className="flex w-[40px] justify-center pl-2 text-[16px] font-semibold">
             {team?.score || "-"}
           </p>
-          <p className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
+          <p className="flex w-[40px] justify-center pl-2 text-[16px] font-semibold">
             {team?.hits || "-"}
           </p>
-          <p className="w-[40px] pl-2 flex justify-center font-semibold text-[16px]">
+          <p className="flex w-[40px] justify-center pl-2 text-[16px] font-semibold">
             {team?.errors || "0"}
           </p>
         </div>
@@ -353,10 +385,16 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
   };
 
   const mobileView = () => (
-    <Link href={isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""}>
-      <div className="w-full grid grid-cols-[1fr_25%] gap-3 py-2">
+    <Link
+      href={
+        isGameDetailsFinalized
+          ? `/${league.toLowerCase()}/game/${gameId}/home`
+          : ""
+      }
+    >
+      <div className="grid w-full grid-cols-[1fr_25%] gap-3 py-2">
         {/* 1ST COLUMN: GAME INFO */}
-        <div className="w-full grid grid-cols-[1fr_auto] items-center grid-rows-[1fr_1fr] score-cell relative">
+        <div className="score-cell relative grid w-full grid-cols-[1fr_auto] grid-rows-[1fr_1fr] items-center">
           {/* AWAY TEAM IMG AND NAME */}
           <div className="flex items-center gap-2">
             <Image
@@ -383,7 +421,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
             }}
             className={`${
               awayTeamScore > homeTeamScore && "winning-score"
-            } text-[14px] text-end font-semibold md:text-base md:font-bold`}
+            } text-end text-[14px] font-semibold md:text-base md:font-bold`}
           >
             {getScoreOrRecord(1)}
           </p>
@@ -402,7 +440,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               style={{
                 opacity: homeTeamWon || isGameScheduled ? "1" : "0.6",
               }}
-              className="text-[14px] md:text-base font-semibold tracking-wide"
+              className="text-[14px] font-semibold tracking-wide md:text-base"
             >
               {homeTeamName}
             </p>
@@ -414,7 +452,7 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
             }}
             className={`${
               homeTeamScore > awayTeamScore && "winning-score"
-            } text-[14px] text-end font-semibold md:text-base md:font-bold`}
+            } text-end text-[14px] font-semibold md:text-base md:font-bold`}
           >
             {getScoreOrRecord(0)}
           </p>
@@ -423,14 +461,14 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
         {isGameFinished || isGameInProgess ? (
           <p
             style={{ color: isGameFinished ? "black" : "#d50a0a" }}
-            className="flex w-full justify-start items-center text-xs opacity-80 font-semibold"
+            className="flex w-full items-center justify-start text-xs font-semibold opacity-80"
           >
             {game.status.type.shortDetail}
           </p>
         ) : (
-          <div className="flex w-full justify-start items-center">
+          <div className="flex w-full items-center justify-start">
             <div className="flex flex-col">
-              <p className="text-xs opacity-90 font-semibold">{gameTime}</p>
+              <p className="text-xs font-semibold opacity-90">{gameTime}</p>
               <p className="text-xs opacity-70">{channel}</p>
               <p className="text-xs opacity-70">{odds}</p>
             </div>
@@ -441,28 +479,31 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
   );
 
   const desktopView = () => (
-    <div className="w-full grid grid-cols-[3fr,2fr,3fr] px-1 py-2 place-items-center">
+    <div className="grid w-full grid-cols-[3fr,2fr,3fr] place-items-center px-1 py-2">
       {/* game date, network */}
-      <div className="min-w-full h-full my-auto col-start-1 border-r border-[rgba(0,0,0,0.1)]">
-        <div className="w-full h-full justify-center flex flex-col gap-[1px] ">
-          <div className="w-full flex items-center">
+      <div className="col-start-1 my-auto h-full min-w-full border-r border-[rgba(0,0,0,0.1)]">
+        <div className="flex h-full w-full flex-col justify-center gap-[1px] ">
+          <div className="flex w-full items-center">
             <p
               style={{
                 color: isGameInProgess ? "#d50a0a" : "black",
                 opacity: isGameInProgess ? "0.9" : "0.7",
               }}
-              className="whitespace-nowrap text-[12px] mb-1 font-[600] uppercase"
+              className="mb-1 whitespace-nowrap text-[12px] font-[600] uppercase"
             >
-              {game.status.type.state !== "pre" ? game.status.type.shortDetail : gameTime}
+              {game.status.type.state !== "pre"
+                ? game.status.type.shortDetail
+                : gameTime}
             </p>
-            {(game.status.type.state === "in" || game.status.type.state === "post") &&
+            {(game.status.type.state === "in" ||
+              game.status.type.state === "post") &&
               game.status.type.detail != "Postponed" &&
               getLinescoreHeaderByLeague()}
           </div>
           {/* away team*/}
           <Link
             href={`/${league.toLowerCase()}/team/${game.competitors[1].team.id}/home`}
-            className="flex flex-row gap-2 items-center mb-2 relative"
+            className="relative mb-2 flex flex-row items-center gap-2"
           >
             <Image
               src={game.competitors[1].team.logo ?? "/default.png"}
@@ -472,31 +513,37 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               alt="home team logo"
               className="w-9 object-cover"
             />
-            <div className="w-full flex flex-row">
-              <div className="flex flex-col w-full">
+            <div className="flex w-full flex-row">
+              <div className="flex w-full flex-col">
                 <p
                   style={{ opacity: awayTeamWon ? "0.8" : "0.4" }}
-                  className="text-[14px] font-semibold whitespace-nowrap"
+                  className="whitespace-nowrap text-[14px] font-semibold"
                 >
                   {awayTeamName}
                 </p>
                 {typeof game.competitors[1].records !== "undefined" && (
-                  <p className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${
+                  <p className="wihtespace-nowrap text-xs capitalize opacity-60">{`(${
                     game.competitors[1].records[0].summary
                   }, ${data["__gamepackage__"].awayTeam?.record[1]?.displayValue || ""} ${
                     data["__gamepackage__"].awayTeam?.record[1]?.type || ""
                   })`}</p>
                 )}
               </div>
-              {(game.status.type.state !== "pre" || game.status.type.state === "post") &&
+              {(game.status.type.state !== "pre" ||
+                game.status.type.state === "post") &&
                 game.status.type.detail != "Postponed" && (
-                  <>{getLinescoreValuesByLeague(data["__gamepackage__"].awayTeam, awayTeamWon)}</>
+                  <>
+                    {getLinescoreValuesByLeague(
+                      data["__gamepackage__"].awayTeam,
+                      awayTeamWon,
+                    )}
+                  </>
                 )}
             </div>
           </Link>
           <Link
             href={`/${league.toLowerCase()}/team/${game.competitors[0].team.id}/home`}
-            className="flex flex-row gap-2 items-center relative"
+            className="relative flex flex-row items-center gap-2"
           >
             <Image
               src={game.competitors[0].team.logo ?? "/default.png"}
@@ -506,8 +553,8 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               alt="home team logo"
               className="w-9 object-cover"
             />
-            <div className="w-full flex flex-row">
-              <div className="w-full flex flex-col">
+            <div className="flex w-full flex-row">
+              <div className="flex w-full flex-col">
                 <p
                   style={{ opacity: homeTeamWon ? "0.8" : "0.4" }}
                   className="text-[14px] font-semibold"
@@ -515,31 +562,37 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                   {homeTeamName}
                 </p>
                 {typeof game.competitors[0].records !== "undefined" && (
-                  <p className="text-xs opacity-60 wihtespace-nowrap capitalize">{`(${
+                  <p className="wihtespace-nowrap text-xs capitalize opacity-60">{`(${
                     game.competitors[0].records[0].summary
                   }, ${data["__gamepackage__"].homeTeam?.record[1]?.displayValue || ""} ${
                     data["__gamepackage__"].homeTeam?.record[1]?.type || ""
                   })`}</p>
                 )}
               </div>
-              {(game.status.type.state !== "pre" || game.status.type.state === "post") &&
+              {(game.status.type.state !== "pre" ||
+                game.status.type.state === "post") &&
                 game.status.type.detail != "Postponed" && (
-                  <>{getLinescoreValuesByLeague(data["__gamepackage__"].homeTeam, homeTeamWon)}</>
+                  <>
+                    {getLinescoreValuesByLeague(
+                      data["__gamepackage__"].homeTeam,
+                      homeTeamWon,
+                    )}
+                  </>
                 )}
             </div>
           </Link>
         </div>
       </div>
 
-      <div className="min-w-full h-full w-full min-h-full col-start-2 px-3">
+      <div className="col-start-2 h-full min-h-full w-full min-w-full px-3">
         {/* IF GAME IS SCHEDULED WE SHOW VENUE INFO AND TICKETS */}
         {isGameScheduled && isGameDetailsFinalized && (
-          <div className="h-full flex flex-col justify-evenly gap-2">
+          <div className="flex h-full flex-col justify-evenly gap-2">
             <div className="">
-              <p className="text-[11px] opacity-70 font-[600]">{`${
+              <p className="text-[11px] font-[600] opacity-70">{`${
                 game?.venue?.fullName ?? ""
               }`}</p>
-              <p className="text-[11px] opacity-60]">{`${game?.venue?.address.city ?? ""}, ${
+              <p className="opacity-60] text-[11px]">{`${game?.venue?.address.city ?? ""}, ${
                 game?.venue?.address.state ?? ""
               }`}</p>
             </div>
@@ -548,70 +601,93 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               <div className="border-b border-t border-[rgba(0,0,0,0.1)] py-2">
                 <Link
                   target="_blank"
-                  href={data.gamepackageJSON.ticketsInfo["seatSituation"].eventLink}
+                  href={
+                    data.gamepackageJSON.ticketsInfo["seatSituation"].eventLink
+                  }
                 >
                   <div className="flex flex-row items-center gap-1">
-                    <Image src="/icons/credit-card.svg" width="20" height="20" alt="right icon" />
-                    <p className="text-[12px] opacity-60] anchor-link">
-                      {data.gamepackageJSON.ticketsInfo["seatSituation"].summary}
+                    <Image
+                      src="/icons/credit-card.svg"
+                      width="20"
+                      height="20"
+                      alt="right icon"
+                    />
+                    <p className="opacity-60] anchor-link text-[12px]">
+                      {
+                        data.gamepackageJSON.ticketsInfo["seatSituation"]
+                          .summary
+                      }
                     </p>
                   </div>
                 </Link>
               </div>
             )}
 
-            <div>{odds && <p className="text-[11px] opacity-60]">{`Line: ${odds}`}</p>}</div>
+            <div>
+              {odds && (
+                <p className="opacity-60] text-[11px]">{`Line: ${odds}`}</p>
+              )}
+            </div>
           </div>
         )}
         {/* IF GAME IS IN PROGRESS OR FINISHED WE SHOW A VIDEO OR ARTICLE */}
         {(isGameFinished || isGameInProgess) && (
           <>
             {data["gamepackageJSON"]["videos"].length > 0 && (
-              <div className="w-full h-full relative cursor-pointer article-video-container overflow-hidden">
+              <div className="article-video-container relative h-full w-full cursor-pointer overflow-hidden">
                 <Image
                   width={576}
                   height={324}
                   alt="video"
                   src={
-                    data["gamepackageJSON"]["videos"][data.gamepackageJSON.videos.length - 1]
-                      .thumbnail
+                    data["gamepackageJSON"]["videos"][
+                      data.gamepackageJSON.videos.length - 1
+                    ].thumbnail
                   }
-                  className="w-full h-full object-cover video-preview"
+                  className="video-preview h-full w-full object-cover"
                 />
                 <Link
                   target="_blank"
                   href={
-                    data["gamepackageJSON"]["videos"][data.gamepackageJSON.videos.length - 1][
-                      "links"
-                    ]["web"].href
+                    data["gamepackageJSON"]["videos"][
+                      data.gamepackageJSON.videos.length - 1
+                    ]["links"]["web"].href
                   }
                 >
                   <div className="gray-circle sm-circle"></div>
                 </Link>
                 <div className="arrow sm-arrow"></div>
                 <p className="text-over-video">
-                  {data["gamepackageJSON"]["videos"][0].description.substring(0, 60)}
-                  {data["gamepackageJSON"]["videos"][0].description.length > 60 && "..."}
+                  {data["gamepackageJSON"]["videos"][0].description.substring(
+                    0,
+                    60,
+                  )}
+                  {data["gamepackageJSON"]["videos"][0].description.length >
+                    60 && "..."}
                 </p>
               </div>
             )}
             {data["gamepackageJSON"]["videos"].length === 0 &&
               typeof data.gamepackageJSON.article !== "undefined" && (
-                <Link target="_blank" href={data.gamepackageJSON.article.links.web.href}>
-                  <p className="text-[12px] font-semibold opacity-80 mb-2">
+                <Link
+                  target="_blank"
+                  href={data.gamepackageJSON.article.links.web.href}
+                >
+                  <p className="mb-2 text-[12px] font-semibold opacity-80">
                     {data.gamepackageJSON.article.headline}
                   </p>
-                  <p className="text-xs opacity-70 overflow-hidden">
+                  <p className="overflow-hidden text-xs opacity-70">
                     {data.gamepackageJSON.article.description.substring(0, 80)}
-                    {data.gamepackageJSON.article.description.length > 80 && "..."}
+                    {data.gamepackageJSON.article.description.length > 80 &&
+                      "..."}
                   </p>
                 </Link>
               )}
             {data["gamepackageJSON"]["videos"].length === 0 &&
               typeof data.gamepackageJSON.article === "undefined" && (
                 <div className="">
-                  <p className="text-[11px] opacity-70 font-[600]">{`${game.venue.fullName}`}</p>
-                  <p className="text-[11px] opacity-60]">{`${game.venue.address.city}, ${
+                  <p className="text-[11px] font-[600] opacity-70">{`${game.venue.fullName}`}</p>
+                  <p className="opacity-60] text-[11px]">{`${game.venue.address.city}, ${
                     game.venue.address?.state || ""
                   }`}</p>
                 </div>
@@ -621,25 +697,25 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
       </div>
 
       {/* IF GAME IS SCEHDULED WE SHOW PLAYERS TO WATCH */}
-      <div className="min-w-full min-h-full h-full flex flex-col gap-1 col-start-3 border-l border-[rgba(0,0,0,0.1)] px-2">
+      <div className="col-start-3 flex h-full min-h-full min-w-full flex-col gap-1 border-l border-[rgba(0,0,0,0.1)] px-2">
         {game.status.type.state === "pre" && (
-          <div className="h-full flex flex-row gap-2 justify-between items-center">
+          <div className="flex h-full flex-row items-center justify-between gap-2">
             {typeof game.competitors[1].leaders !== "undefined" &&
               typeof game.competitors[0].leaders !== "undefined" && (
-                <div className="h-full flex flex-col justify-start gap-1">
+                <div className="flex h-full flex-col justify-start gap-1">
                   <p className="text-[12px] opacity-60">PLAYERS TO WATCH</p>
                   {/* away team point leader */}
                   <div className="flex flex-row items-center gap-2">
                     <Image
                       src={
-                        data?.gamepackageJSON?.leaders?.[1].leaders?.[0].leaders?.[0]?.athlete
-                          ?.headshot.href
+                        data?.gamepackageJSON?.leaders?.[1].leaders?.[0]
+                          .leaders?.[0]?.athlete?.headshot.href
                       }
                       width={100}
                       height={100}
                       priority={true}
                       alt="away team points leader"
-                      className="w-[40px] h-[40px] border rounded-full object-cover"
+                      className="h-[40px] w-[40px] rounded-full border object-cover"
                     />
                     <div className="flex flex-col">
                       <p className="text-xs">
@@ -654,12 +730,12 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                               {stat.displayValue}
                               <span className="text-[10px] opacity-60">{` ${stat.abbreviation}`}</span>
                             </p>
-                          )
+                          ),
                         ) ?? (
                           <p className="text-[11px] opacity-70">
                             {
-                              data?.gamepackageJSON?.leaders?.[1].leaders?.[0].leaders?.[0]
-                                .displayValue
+                              data?.gamepackageJSON?.leaders?.[1].leaders?.[0]
+                                .leaders?.[0].displayValue
                             }
                           </p>
                         )}
@@ -669,14 +745,14 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                   <div className="flex flex-row items-center gap-2">
                     <Image
                       src={
-                        data?.gamepackageJSON?.leaders?.[0].leaders?.[0].leaders?.[0]?.athlete
-                          ?.headshot.href
+                        data?.gamepackageJSON?.leaders?.[0].leaders?.[0]
+                          .leaders?.[0]?.athlete?.headshot.href
                       }
                       width={100}
                       height={100}
                       priority={true}
                       alt="away team points leader"
-                      className="w-[40px] h-[40px] border rounded-full object-cover"
+                      className="h-[40px] w-[40px] rounded-full border object-cover"
                     />
                     <div className="flex flex-col">
                       <p className="text-xs">
@@ -691,12 +767,12 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                               {stat.displayValue}
                               <span className="text-[10px] opacity-60">{` ${stat.abbreviation}`}</span>
                             </p>
-                          )
+                          ),
                         ) ?? (
                           <p className="text-[11px] opacity-70">
                             {
-                              data?.gamepackageJSON?.leaders?.[0].leaders?.[0].leaders?.[0]
-                                .displayValue
+                              data?.gamepackageJSON?.leaders?.[0].leaders?.[0]
+                                .leaders?.[0].displayValue
                             }
                           </p>
                         )}
@@ -710,7 +786,9 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               <div className="flex flex-col items-start justify-start gap-3">
                 <Link
                   href={
-                    isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""
+                    isGameDetailsFinalized
+                      ? `/${league.toLowerCase()}/game/${gameId}/home`
+                      : ""
                   }
                 >
                   <div className="dt-scorecard-button">GAMECAST</div>
@@ -718,7 +796,9 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
                 {typeof data.gamepackageJSON.ticketsInfo !== "undefined" && (
                   <Link
                     target="_blank"
-                    href={data.gamepackageJSON.ticketsInfo.seatSituation.eventLink}
+                    href={
+                      data.gamepackageJSON.ticketsInfo.seatSituation.eventLink
+                    }
                   >
                     <div className="dt-scorecard-button">TICKETS</div>
                   </Link>
@@ -729,9 +809,10 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
         )}
         {game.status.type.detail != "Postponed" &&
           isGameDetailsFinalized &&
-          (game.status.type.state === "post" || game.status.type.state === "in") && (
-            <div className="flex flex-row gap-2 justify-between items-center">
-              <div className="h-full flex gap-2 flex-col justify-start">
+          (game.status.type.state === "post" ||
+            game.status.type.state === "in") && (
+            <div className="flex flex-row items-center justify-between gap-2">
+              <div className="flex h-full flex-col justify-start gap-2">
                 <p className="text-[12px] opacity-60">TOP PERFORMERS</p>
                 {getTopPerformersByLeague()}
               </div>
@@ -739,14 +820,18 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
               <div className="flex flex-col gap-3">
                 <Link
                   href={
-                    isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/home` : ""
+                    isGameDetailsFinalized
+                      ? `/${league.toLowerCase()}/game/${gameId}/home`
+                      : ""
                   }
                 >
                   <div className="dt-scorecard-button">GAMECAST</div>
                 </Link>
                 <Link
                   href={
-                    isGameDetailsFinalized ? `/${league.toLowerCase()}/game/${gameId}/boxscore` : ""
+                    isGameDetailsFinalized
+                      ? `/${league.toLowerCase()}/game/${gameId}/boxscore`
+                      : ""
                   }
                 >
                   <div className="dt-scorecard-button">BOX SCORE</div>
@@ -775,58 +860,58 @@ export default function ScoreCard({ gameInfo, league }: { gameInfo: any; league:
     return (
       <>
         {isDesktopScreen ? (
-          <div className="w-full grid grid-cols-[3fr,2fr,3fr] px-1 py-2 place-items-center">
+          <div className="grid w-full grid-cols-[3fr,2fr,3fr] place-items-center px-1 py-2">
             {/* game date, network */}
-            <div className="min-w-full h-full my-auto col-start-1 border-r border-[rgba(0,0,0,0.1)]">
-              <div className="w-full h-full justify-center flex flex-col gap-3">
-                <div className="w-[40px] h-[10px] bg-gray-200 animate-pulse"></div>
+            <div className="col-start-1 my-auto h-full min-w-full border-r border-[rgba(0,0,0,0.1)]">
+              <div className="flex h-full w-full flex-col justify-center gap-3">
+                <div className="h-[10px] w-[40px] animate-pulse bg-gray-200"></div>
                 {/* away team*/}
-                <div className="flex flex-row gap-2 items-center mb-2">
-                  <div className="w-9 h-9 rounded-full bg-gray-200 animate-pulse"></div>
-                  <div className="w-full flex flex-row">
-                    <div className="flex flex-col w-full gap-2">
-                      <div className="w-[60px] h-[10px] bg-gray-200 animate-pulse"></div>
-                      <div className="w-[100px] h-[10px] bg-gray-200 animate-pulse"></div>
+                <div className="mb-2 flex flex-row items-center gap-2">
+                  <div className="h-9 w-9 animate-pulse rounded-full bg-gray-200"></div>
+                  <div className="flex w-full flex-row">
+                    <div className="flex w-full flex-col gap-2">
+                      <div className="h-[10px] w-[60px] animate-pulse bg-gray-200"></div>
+                      <div className="h-[10px] w-[100px] animate-pulse bg-gray-200"></div>
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-row gap-2 items-center mb-2">
-                  <div className="w-9 h-9 rounded-full bg-gray-200 animate-pulse"></div>
-                  <div className="w-full flex flex-row">
-                    <div className="flex flex-col w-full gap-2">
-                      <div className="w-[60px] h-[10px] bg-gray-200 animate-pulse"></div>
-                      <div className="w-[100px] h-[10px] bg-gray-200 animate-pulse"></div>
+                <div className="mb-2 flex flex-row items-center gap-2">
+                  <div className="h-9 w-9 animate-pulse rounded-full bg-gray-200"></div>
+                  <div className="flex w-full flex-row">
+                    <div className="flex w-full flex-col gap-2">
+                      <div className="h-[10px] w-[60px] animate-pulse bg-gray-200"></div>
+                      <div className="h-[10px] w-[100px] animate-pulse bg-gray-200"></div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="min-w-full h-full w-full min-h-full col-start-2 px-3">
+            <div className="col-start-2 h-full min-h-full w-full min-w-full px-3">
               <div className="flex flex-col gap-3">
-                <div className="w-[60px] h-[10px] bg-gray-200 animate-pulse"></div>
-                <div className="w-[80px] h-[10px] bg-gray-200 animate-pulse"></div>
-                <div className="w-[60px] h-[10px] bg-gray-200 animate-pulse mt-4"></div>
-                <div className="w-[40px] h-[10px] bg-gray-200 animate-pulse"></div>
+                <div className="h-[10px] w-[60px] animate-pulse bg-gray-200"></div>
+                <div className="h-[10px] w-[80px] animate-pulse bg-gray-200"></div>
+                <div className="mt-4 h-[10px] w-[60px] animate-pulse bg-gray-200"></div>
+                <div className="h-[10px] w-[40px] animate-pulse bg-gray-200"></div>
               </div>
             </div>
 
             {/* IF GAME IS SCEHDULED WE SHOW PLAYERS TO WATCH */}
-            <div className="min-w-full min-h-full h-full flex flex-col gap-3 col-start-3 border-l border-[rgba(0,0,0,0.1)] px-2">
-              <div className="w-[110px] h-[10px] bg-gray-200 animate-pulse"></div>
+            <div className="col-start-3 flex h-full min-h-full min-w-full flex-col gap-3 border-l border-[rgba(0,0,0,0.1)] px-2">
+              <div className="h-[10px] w-[110px] animate-pulse bg-gray-200"></div>
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-gray-200"></div>
+                <div className="h-9 w-9 rounded-full bg-gray-200"></div>
                 <div className="flex flex-col gap-2">
-                  <div className="w-[100px] h-[10px] bg-gray-200 animate-pulse"></div>
-                  <div className="w-[50px] h-[10px] bg-gray-200 animate-pulse"></div>
+                  <div className="h-[10px] w-[100px] animate-pulse bg-gray-200"></div>
+                  <div className="h-[10px] w-[50px] animate-pulse bg-gray-200"></div>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-gray-200"></div>
+                <div className="h-9 w-9 rounded-full bg-gray-200"></div>
                 <div className="flex flex-col gap-2">
-                  <div className="w-[100px] h-[10px] bg-gray-200 animate-pulse"></div>
-                  <div className="w-[50px] h-[10px] bg-gray-200 animate-pulse"></div>
+                  <div className="h-[10px] w-[100px] animate-pulse bg-gray-200"></div>
+                  <div className="h-[10px] w-[50px] animate-pulse bg-gray-200"></div>
                 </div>
               </div>
             </div>

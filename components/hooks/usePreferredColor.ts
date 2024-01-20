@@ -32,7 +32,10 @@ export default function usePreferredColor(data: any) {
 
   const { homeTeamColor, awayTeamColor } = potentialColorCombos
     .map((el: any) => el)
-    .find((combo: any) => !isSimilar(getRGB(combo.homeTeamColor), getRGB(combo.awayTeamColor)));
+    .find(
+      (combo: any) =>
+        !isSimilar(getRGB(combo.homeTeamColor), getRGB(combo.awayTeamColor)),
+    );
 
   return { homeTeamColor, awayTeamColor };
 }

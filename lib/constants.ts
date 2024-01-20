@@ -139,7 +139,11 @@ export const nbaDivisionTeams = {
   ],
 };
 
-export const nameExceptions: string[] = ["Boston Red Sox", "Toronto Blue Jays", "Chicago White Sox"];
+export const nameExceptions: string[] = [
+  "Boston Red Sox",
+  "Toronto Blue Jays",
+  "Chicago White Sox",
+];
 
 export const allNFLDates = [
   {

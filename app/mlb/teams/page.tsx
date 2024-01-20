@@ -1,7 +1,9 @@
 import View from "../../../components/MLB/views/Teams";
 
 async function getScoreData() {
-  const scoreData = await fetch(`https://cdn.espn.com/core/mlb/scoreboard?xhr=1`);
+  const scoreData = await fetch(
+    `https://cdn.espn.com/core/mlb/scoreboard?xhr=1`,
+  );
 
   if (!scoreData.ok) {
     throw new Error("Failed to fetch NBA score data");

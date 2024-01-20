@@ -20,27 +20,32 @@ export default function GameRecapArticle({ data }: { data: GameData }) {
   return (
     <>
       {hasVideo && (
-        <div className="w-full bg-white p-3 rounded-xl">
-          <div className="w-full relative cursor-pointer article-video-container overflow-hidden">
+        <div className="w-full rounded-xl bg-white p-3">
+          <div className="article-video-container relative w-full cursor-pointer overflow-hidden">
             <Image
               width={data.gameData.article.images[0].width}
               height={data.gameData.article.images[0].height}
               alt="video"
               src={data.gameData.article.images[0].url}
-              className="w-full object-cover video-preview rounded-xl"
+              className="video-preview w-full rounded-xl object-cover"
             />
-            <Link target="_blank" href={data.gameData.article.video[0].links["web"].href}>
+            <Link
+              target="_blank"
+              href={data.gameData.article.video[0].links["web"].href}
+            >
               <div className="gray-circle"></div>
             </Link>
             <div className="arrow"></div>
           </div>
           <Link target="_blank" href={data.gameData.article.links["web"].href}>
-            <div className="article-container w-full bg-white rounded-xl p-3 mt-3 cursor-pointer custom-shadow">
-              <p className="text-[14px] opacity-80 font-semibold article-headline">
+            <div className="article-container custom-shadow mt-3 w-full cursor-pointer rounded-xl bg-white p-3">
+              <p className="article-headline text-[14px] font-semibold opacity-80">
                 {data.gameData.article.headline}
               </p>
-              <p className="text-sm opacity-70">{data.gameData.article.description}</p>
-              <p className="text-sm opacity-60 mt-2">
+              <p className="text-sm opacity-70">
+                {data.gameData.article.description}
+              </p>
+              <p className="mt-2 text-sm opacity-60">
                 {convertDate(data.gameData.article.published) + " - AP"}
               </p>
             </div>
@@ -49,12 +54,14 @@ export default function GameRecapArticle({ data }: { data: GameData }) {
       )}
       {hasArticle && !hasVideo && (
         <Link target="_blank" href={data.gameData.article.links["web"].href}>
-          <div className="article-container w-full bg-white p-3 rounded-xl cursor-pointer color-red">
-            <p className="text-[14px] opacity-80 font-[600] article-headline">
+          <div className="article-container color-red w-full cursor-pointer rounded-xl bg-white p-3">
+            <p className="article-headline text-[14px] font-[600] opacity-80">
               {data.gameData.article.headline}
             </p>
-            <p className="text-sm opacity-60">{data.gameData.article.description}</p>
-            <p className="text-sm opacity-60 mt-2">
+            <p className="text-sm opacity-60">
+              {data.gameData.article.description}
+            </p>
+            <p className="mt-2 text-sm opacity-60">
               {convertDate(data.gameData.article.published) + " - AP"}
             </p>
           </div>

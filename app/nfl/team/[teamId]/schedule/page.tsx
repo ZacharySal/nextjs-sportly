@@ -1,9 +1,18 @@
-import { getTeamData, getTeamSchedule, getNFLTeamStats, getTeamNews } from "@/lib/utils";
+import {
+  getTeamData,
+  getTeamSchedule,
+  getNFLTeamStats,
+  getTeamNews,
+} from "@/lib/utils";
 import View from "../../../../../components/NFL/views/team/Schedule";
 
 export const revalidate = 600;
 
-export async function generateMetadata({ params }: { params: { teamId: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { teamId: string };
+}) {
   const teamData = await getTeamData("nfl", params.teamId);
 
   return {

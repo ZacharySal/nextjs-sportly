@@ -1,7 +1,16 @@
 import View from "@/components/MLB/views/team/Home";
-import { getMLBTeamStats, getTeamNews, getTeamSchedule, getTeamData } from "@/lib/utils";
+import {
+  getMLBTeamStats,
+  getTeamNews,
+  getTeamSchedule,
+  getTeamData,
+} from "@/lib/utils";
 
-export async function generateMetadata({ params }: { params: { teamId: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { teamId: string };
+}) {
   const teamData = await getTeamData("mlb", params.teamId);
 
   return {

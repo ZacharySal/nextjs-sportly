@@ -20,7 +20,7 @@ export default function LastFive({
 }: {
   data: GameData;
   league: string;
-  isDesktopScreen: any;
+  isDesktopScreen: boolean;
 }) {
   const [selectedTeam, setSelectedTeam] = useState(1);
 
@@ -29,9 +29,9 @@ export default function LastFive({
 
   const teamLastFive = (teamId: number) => (
     <div>
-      <table className="min-w-full table misc-table">
+      <table className="misc-table table min-w-full">
         <thead>
-          <tr className="text-[11px] table-header">
+          <tr className="table-header text-[11px]">
             <th className="pl-1" align="left">
               DATE
             </th>
@@ -44,13 +44,13 @@ export default function LastFive({
         <tbody>
           {data.gameData.lastFiveGames[teamId].events.map((event: any) => (
             <tr key={uuidv4()} className="text-xs">
-              <td className="pl-1 injury-name opacity-60" align="left">
+              <td className="injury-name pl-1 opacity-60" align="left">
                 {formatDate(event.gameDate)}
               </td>
 
               <td align="center">
-                <div className="grid grid-cols-[15px_auto_20px] gap-x-1 justify-center items-center">
-                  <p className="text-xs opacity-60 pr-2">{event.atVs}</p>
+                <div className="grid grid-cols-[15px_auto_20px] items-center justify-center gap-x-1">
+                  <p className="pr-2 text-xs opacity-60">{event.atVs}</p>
                   <Image
                     width={500}
                     height={500}
@@ -60,21 +60,26 @@ export default function LastFive({
                     alt="team logo"
                   />
                   <Link href={`/${league}/team/${event.opponent.id}/home`}>
-                    <p className="text-xs anchor-link">{event.opponent.abbreviation}</p>
+                    <p className="anchor-link text-xs">
+                      {event.opponent.abbreviation}
+                    </p>
                   </Link>
                 </div>
               </td>
 
-              <td className="pr-1 injury-date" align="right">
+              <td className="injury-date pr-1" align="right">
                 <div className="flex justify-end pr-1">
                   <p
-                    style={{ opacity: "1", color: event.gameResult === "W" ? "#094" : "#d00" }}
-                    className="font-semibold text-[12px] w-7 text-center"
+                    style={{
+                      opacity: "1",
+                      color: event.gameResult === "W" ? "#094" : "#d00",
+                    }}
+                    className="w-7 text-center text-[12px] font-semibold"
                   >
                     {event.gameResult}
                   </p>
                   <Link href={`/${league}/game/${event.id}/home`}>
-                    <p className="w-10 text-right basis-1/3 text-sm text-xs text-black font-[400] anchor-link">
+                    <p className="anchor-link w-10 basis-1/3 text-right text-sm text-xs font-[400] text-black">
                       {event.score}
                     </p>
                   </Link>
@@ -88,15 +93,15 @@ export default function LastFive({
   );
 
   const mobileView = () => (
-    <div className="bg-white rounded-xl w-full px-2 pb-4">
-      <div className="flex w-full justify-around gap-3 my-5 rounded-2xl p-2 bg-[#edeef09c] text-center">
+    <div className="w-full rounded-xl bg-white px-2 pb-4">
+      <div className="my-5 flex w-full justify-around gap-3 rounded-2xl bg-[#edeef09c] p-2 text-center">
         <div
           onClick={() => setSelectedTeam(0)}
           className={`${
             selectedTeam === 0 && "button-active"
-          } flex-grow h-full text-xs cursor-pointer font-semibold`}
+          } h-full flex-grow cursor-pointer text-xs font-semibold`}
         >
-          <div className="flex flex-row gap-1 items-center justify-center">
+          <div className="flex flex-row items-center justify-center gap-1">
             <Image
               width={500}
               height={500}
@@ -105,7 +110,10 @@ export default function LastFive({
               className="w-6 object-contain"
               alt="team logo"
             />
-            <p style={{ color: selectedTeam === 0 ? "black" : "#6c6d6f" }} className="text-sm">
+            <p
+              style={{ color: selectedTeam === 0 ? "black" : "#6c6d6f" }}
+              className="text-sm"
+            >
               {awayTeamName} Last Five
             </p>
           </div>
@@ -114,9 +122,9 @@ export default function LastFive({
           onClick={() => setSelectedTeam(1)}
           className={`${
             selectedTeam === 1 && "button-active"
-          } flex-grow h-full text-xs cursor-pointer font-semibold`}
+          } h-full flex-grow cursor-pointer text-xs font-semibold`}
         >
-          <div className="flex flex-row gap-1 items-center justify-center">
+          <div className="flex flex-row items-center justify-center gap-1">
             <Image
               width={500}
               height={500}

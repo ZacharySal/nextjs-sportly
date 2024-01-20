@@ -1,6 +1,6 @@
 function Loading() {
   return (
-    <div className="w-full h-80 flex justify-center items-center relative">
+    <div className="relative flex h-80 w-full items-center justify-center">
       <div className="loader">
         <svg className="circular">
           <circle
