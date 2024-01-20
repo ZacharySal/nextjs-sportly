@@ -15,13 +15,20 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function Page({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
-  const { data, isLoading } = useSWR(
+  const { data, isLoading, error } = useSWR(
     `https://nextjs-sportly.vercel.app/api/nfl/gameData/${gameId}`,
     fetcher,
     {
       refreshInterval: 5000,
     },
   );
+
+  if (!isLoading) {
+    console.log(data);
+  }
+  if (error) {
+    console.log(error);
+  }
 
   const desktopView = () => (
     <>
@@ -47,12 +54,13 @@ export default function Page({ gameId }: { gameId: string }) {
   );
 
   if (isLoading) return <Loading />;
-  return (
-    <>
-      <GameUserSelection userSelection={"news"} data={data} />
-      <ContainerBox isDesktopScreen={isDesktopScreen}>
-        {isDesktopScreen ? desktopView() : mobileView()}
-      </ContainerBox>
-    </>
-  );
+  else
+    return (
+      <>
+        <GameUserSelection userSelection={"news"} data={data} />
+        <ContainerBox isDesktopScreen={isDesktopScreen}>
+          {isDesktopScreen ? desktopView() : mobileView()}
+        </ContainerBox>
+      </>
+    );
 }

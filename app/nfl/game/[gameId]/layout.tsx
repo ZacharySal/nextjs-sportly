@@ -12,13 +12,21 @@ export default function Layout({
   params: { gameId: string };
   children: React.ReactNode;
 }) {
-  const { data, isLoading } = useSWR(
+  const { data, isLoading, error } = useSWR(
     `https://nextjs-sportly.vercel.app/api/nfl/gameData/${params.gameId}`,
     fetcher,
     {
       refreshInterval: 5000,
     },
   );
+
+  if (!isLoading) {
+    console.log(data);
+  }
+
+  if (error) {
+    console.log(error);
+  }
 
   if (!isLoading)
     return (

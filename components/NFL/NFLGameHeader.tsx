@@ -93,24 +93,7 @@ export default function NFLGameHeader({
                 </p>
                 {data.gameInfo.status.type.state == "in" && (
                   <div className="flex flex-col gap-[2px]">
-                    <div className="flex h-[15px] w-[100px] items-center justify-center gap-[2px]">
-                      {new Array(data?.awayTeam?.timeoutsRemaining ?? 0)
-                        .fill("1")
-                        .map((num: string, i: number) => (
-                          <div
-                            key={v4()}
-                            className="h-[6px] w-[6px] rounded-full bg-yellow-400"
-                          ></div>
-                        ))}
-                      {new Array(7 - data?.awayTeam?.timeoutsRemaining ?? 0)
-                        .fill("1")
-                        .map((num: string, i: number) => (
-                          <div
-                            key={v4()}
-                            className="h-[6px] w-[6px] rounded-full bg-gray-200"
-                          ></div>
-                        ))}
-                    </div>
+                    <div className="flex h-[15px] w-[100px] items-center justify-center gap-[2px]"></div>
                     <p
                       style={{
                         opacity:
@@ -219,39 +202,6 @@ export default function NFLGameHeader({
                 >
                   {homeTeam.score}
                 </p>
-                {data.gameInfo.status.type.state == "in" && (
-                  <div className="flex flex-col gap-[2px]">
-                    <div className="flex h-[15px] w-[100px] items-center justify-center gap-[2px]">
-                      {new Array(data?.homeTeam?.timeoutsRemaining ?? 0)
-                        .fill("1")
-                        .map(() => (
-                          <div
-                            key={v4()}
-                            className="h-[6px] w-[6px] rounded-full bg-yellow-400"
-                          ></div>
-                        ))}
-                      {new Array(7 - data.homeTeam?.timeoutsRemaining ?? 0)
-                        .fill("1")
-                        .map(() => (
-                          <div
-                            key={v4()}
-                            className="h-[6px] w-[6px] rounded-full bg-gray-200"
-                          ></div>
-                        ))}
-                    </div>
-                    <p
-                      style={{
-                        opacity:
-                          data?.homeTeam?.fouls?.bonusState != "NONE"
-                            ? "0.6"
-                            : "0.2",
-                      }}
-                      className="text-center text-[11px] font-[500]"
-                    >
-                      BONUS
-                    </p>
-                  </div>
-                )}
               </div>
 
               <Link
@@ -435,37 +385,7 @@ export default function NFLGameHeader({
                     {awayTeam.score}
                   </p>
                   {data.gameInfo.status.type.state == "in" && (
-                    <div className="flex flex-col">
-                      <div className="flex h-[15px] w-[100px] items-center justify-center gap-[2px]">
-                        {new Array(data?.awayTeam?.timeoutsRemaining ?? 0)
-                          .fill("1")
-                          .map((num: string, i: number) => (
-                            <div
-                              key={v4()}
-                              className="h-[4px] w-[4px] rounded-full bg-yellow-400"
-                            ></div>
-                          ))}
-                        {new Array(7 - data?.awayTeam?.timeoutsRemaining ?? 0)
-                          .fill("1")
-                          .map((num: string, i: number) => (
-                            <div
-                              key={v4()}
-                              className="h-[4px] w-[4px] rounded-full bg-gray-200"
-                            ></div>
-                          ))}
-                      </div>
-                      <p
-                        style={{
-                          opacity:
-                            data?.awayTeam?.fouls.bonusState != "NONE"
-                              ? "0.6"
-                              : "0.2",
-                        }}
-                        className="text-center text-[11px] font-[500]"
-                      >
-                        BONUS
-                      </p>
-                    </div>
+                    <div className="flex flex-col"></div>
                   )}
                 </div>
 
@@ -506,37 +426,7 @@ export default function NFLGameHeader({
                     {homeTeam.score}
                   </p>
                   {data.gameInfo.status.type.state == "in" && (
-                    <div className="flex flex-col">
-                      <div className="flex h-[15px] w-[100px] items-center justify-center gap-[2px]">
-                        {new Array(data?.homeTeam?.timeoutsRemaining ?? 0)
-                          .fill("1")
-                          .map((num: string, i: number) => (
-                            <div
-                              key={v4()}
-                              className="h-[4px] w-[4px] rounded-full bg-yellow-400"
-                            ></div>
-                          ))}
-                        {new Array(7 - data?.homeTeam?.timeoutsRemaining ?? 0)
-                          .fill("1")
-                          .map((num: string, i: number) => (
-                            <div
-                              key={v4()}
-                              className="h-[4px] w-[4px] rounded-full bg-gray-200"
-                            ></div>
-                          ))}
-                      </div>
-                      <p
-                        style={{
-                          opacity:
-                            data?.homeTeam?.fouls.bonusState != "NONE"
-                              ? "0.6"
-                              : "0.2",
-                        }}
-                        className="text-center text-[11px] font-[500]"
-                      >
-                        BONUS
-                      </p>
-                    </div>
+                    <div className="flex flex-col"></div>
                   )}
                 </div>
 

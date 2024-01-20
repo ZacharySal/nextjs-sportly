@@ -24,7 +24,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function Home({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
-  const { data, isLoading }: { data: NFLGameData; isLoading: boolean } = useSWR(
+  const { data, isLoading, error } = useSWR(
     `https://nextjs-sportly.vercel.app/api/nfl/gameData/${gameId}`,
     fetcher,
     {
@@ -34,6 +34,9 @@ export default function Home({ gameId }: { gameId: string }) {
 
   if (!isLoading) {
     console.log(data);
+  }
+  if (error) {
+    console.log(error);
   }
 
   const desktopView = () => (
