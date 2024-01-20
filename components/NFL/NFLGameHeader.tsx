@@ -91,22 +91,6 @@ export default function NFLGameHeader({
                 >
                   {awayTeam.score}
                 </p>
-                {data.gameInfo.status.type.state == "in" && (
-                  <div className="flex flex-col gap-[2px]">
-                    <div className="flex h-[15px] w-[100px] items-center justify-center gap-[2px]"></div>
-                    <p
-                      style={{
-                        opacity:
-                          data?.awayTeam?.fouls.bonusState != "NONE"
-                            ? "0.6"
-                            : "0.2",
-                      }}
-                      className="text-center text-[11px] font-[500]"
-                    >
-                      BONUS
-                    </p>
-                  </div>
-                )}
               </div>
             </div>
             {isGameStarted ? (
