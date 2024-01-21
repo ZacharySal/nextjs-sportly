@@ -141,7 +141,7 @@ export default function ScoreCard({
       );
     } else if (league === "NFL") {
       return (
-        <div className="flex flex-col justify-start gap-3">
+        <div className="flex flex-col justify-start gap-1">
           <div className="flex flex-row items-center gap-2">
             <Image
               src={
@@ -746,7 +746,7 @@ export default function ScoreCard({
                     <Image
                       src={
                         data?.gamepackageJSON?.leaders?.[0].leaders?.[0]
-                          .leaders?.[0]?.athlete?.headshot.href
+                          ?.leaders?.[0]?.athlete?.headshot.href
                       }
                       width={100}
                       height={100}
@@ -756,23 +756,23 @@ export default function ScoreCard({
                     />
                     <div className="flex flex-col">
                       <p className="text-xs">
-                        {`${data?.gamepackageJSON?.leaders?.[0].leaders?.[0]?.leaders?.[0]?.athlete?.fullName} `}
-                        <span className="opacity-60">{`${data?.gamepackageJSON?.leaders?.[0]?.leaders?.[0].leaders?.[0]?.athlete?.position?.abbreviation} - ${game?.competitors[0]?.team?.abbreviation}`}</span>
+                        {`${data?.gamepackageJSON?.leaders?.[0]?.leaders?.[0]?.leaders?.[0]?.athlete?.fullName} `}
+                        <span className="opacity-60">{`${data?.gamepackageJSON?.leaders?.[0]?.leaders?.[0]?.leaders?.[0]?.athlete?.position?.abbreviation} - ${game?.competitors[0]?.team?.abbreviation}`}</span>
                       </p>
 
                       <div className="flex gap-2">
-                        {data?.gamepackageJSON?.leaders?.[0].leaders?.[0].leaders?.[0].statistics?.map(
+                        {data?.gamepackageJSON?.leaders?.[0]?.leaders?.[0]?.leaders?.[0]?.statistics?.map(
                           (stat: any) => (
                             <p key={v4()} className="text-xs">
-                              {stat.displayValue}
-                              <span className="text-[10px] opacity-60">{` ${stat.abbreviation}`}</span>
+                              {stat?.displayValue}
+                              <span className="text-[10px] opacity-60">{` ${stat?.abbreviation}`}</span>
                             </p>
                           ),
                         ) ?? (
                           <p className="text-[11px] opacity-70">
                             {
-                              data?.gamepackageJSON?.leaders?.[0].leaders?.[0]
-                                .leaders?.[0].displayValue
+                              data?.gamepackageJSON?.leaders?.[0]?.leaders?.[0]
+                                ?.leaders?.[0].displayValue
                             }
                           </p>
                         )}

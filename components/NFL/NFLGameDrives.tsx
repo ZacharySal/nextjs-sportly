@@ -64,13 +64,13 @@ export default function NFLGameDrives({ data }: { data: any }) {
                           : `#${data.awayTeam.team.color}`
                         : "gray",
                     }}
-                    className="flex flex-col items-start justify-start rounded border-l-8 bg-white p-3"
+                    className="flex flex-col items-start justify-start rounded border-l-8 bg-gray-100 p-2"
                   >
                     <p className="text-base font-semibold opacity-100">
                       {play.type.text}
                     </p>
                     <p className="text-sm opacity-80">{play.text}</p>
-                    <p className="mt-5 text-xs opacity-80">
+                    <p className="mt-1 text-xs opacity-80">
                       {play.start.downDistanceText}
                     </p>
                   </div>
