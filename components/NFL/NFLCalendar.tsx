@@ -1,8 +1,9 @@
-import React from "react";
 import { useState } from "react";
+import Image from "next/image";
 
 import { v4 as uuidv4 } from "uuid";
 import { allNFLDates } from "@/lib/constants";
+import React from "react";
 
 function mod(n: number, m: number) {
   return ((n % m) + m) % m;
@@ -26,31 +27,34 @@ export default function NFLCalendar({
   const calendarSelectedYear = allNFLDates[currentCalendarYearIndex].year;
 
   return (
-    <div className="date-selector flex flex-col justify-center gap-1 p-4">
+    <div className="date-selector top-10 z-50 flex flex-col justify-center gap-1 bg-white p-4 shadow-2xl">
       <div className="mb-2 flex w-full items-center justify-between">
-        <p
+        <Image
+          alt="left icon"
+          src="/icons/chevron-left.svg"
+          width="25"
+          height="25"
+          style={{ fontSize: "0.75rem", color: "black", cursor: "pointer" }}
           onClick={() =>
             setCurrentCalendarYearIndex(
               mod(currentCalendarYearIndex - 1, allNFLDates.length),
             )
           }
-          className="cursor-pointer"
-          style={{ fontSize: "0.75rem", color: "#3e82d6", cursor: "pointer" }}
-        >
-          left angle icon
-        </p>
+        />
+
         <p className="text-lg">{calendarSelectedYear}</p>
-        <p
+        <Image
           onClick={() =>
             setCurrentCalendarYearIndex(
               mod(currentCalendarYearIndex + 1, allNFLDates.length),
             )
           }
-          className="cursor-pointer"
-          style={{ fontSize: "0.75rem", color: "#3e82d6", cursor: "pointer" }}
-        >
-          right angle icon
-        </p>
+          width="25"
+          height="25"
+          alt="right icon"
+          src="/icons/chevron-right.svg"
+          style={{ fontSize: "0.75rem", color: "black", cursor: "pointer" }}
+        />
       </div>
 
       {allNFLDates.map((year: any) => (

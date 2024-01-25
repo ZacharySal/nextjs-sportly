@@ -474,6 +474,12 @@ export default function ScoreCard({
             </div>
           </div>
         )}
+
+        {isGameNoteAvailable && (
+          <p className="mt-[-0.25rem] text-xs opacity-60">
+            {game.notes[0]?.headline}
+          </p>
+        )}
       </div>
     </Link>
   );
@@ -581,6 +587,9 @@ export default function ScoreCard({
                 )}
             </div>
           </Link>
+          {isGameNoteAvailable && (
+            <p className="mt-2 text-xs opacity-60">{game.notes[0]?.headline}</p>
+          )}
         </div>
       </div>
 
@@ -703,7 +712,9 @@ export default function ScoreCard({
             {typeof game.competitors[1].leaders !== "undefined" &&
               typeof game.competitors[0].leaders !== "undefined" && (
                 <div className="flex h-full flex-col justify-start gap-1">
-                  <p className="text-[12px] opacity-60">PLAYERS TO WATCH</p>
+                  <p className="text-[12px] font-[400] opacity-60">
+                    PLAYERS TO WATCH
+                  </p>
                   {/* away team point leader */}
                   <div className="flex flex-row items-center gap-2">
                     <Image
@@ -813,7 +824,9 @@ export default function ScoreCard({
             game.status.type.state === "in") && (
             <div className="flex flex-row items-center justify-between gap-2">
               <div className="flex h-full flex-col justify-start gap-2">
-                <p className="text-[12px] opacity-60">TOP PERFORMERS</p>
+                <p className="text-[12px] font-[400] opacity-60">
+                  TOP PERFORMERS
+                </p>
                 {getTopPerformersByLeague()}
               </div>
 

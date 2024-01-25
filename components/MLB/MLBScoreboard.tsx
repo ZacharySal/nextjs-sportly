@@ -126,14 +126,14 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
 
   function dateSelector() {
     return (
-      <div className="mb-3  w-full rounded-xl bg-white p-2 md:p-4">
-        <p className="mb-1 text-xl font-semibold opacity-80 md:text-2xl">
+      <div className="mb-3  w-full rounded-xl bg-white p-3">
+        <p className="mb-1 text-xl font-bold opacity-80 md:text-2xl">
           MLB Scoreboard
         </p>
         <div className="flex w-full items-center gap-3">
           <div
             id="style-1"
-            className="flex w-full flex-row items-center justify-between overflow-x-auto pl-2"
+            className="flex w-full flex-row items-center justify-between overflow-x-auto px-2"
           >
             <Image
               src="/icons/chevron-left.svg"

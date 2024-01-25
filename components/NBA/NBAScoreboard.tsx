@@ -77,20 +77,21 @@ function NBAScoreboard({ initialScoreData }: { initialScoreData: ScoreData }) {
 
   function dateSelector() {
     return (
-      <div className="mb-3 w-full rounded-xl bg-white p-2 md:p-4">
-        <p className="mb-1 text-xl font-semibold opacity-80 md:text-2xl">
+      <div className="mb-3 w-full rounded-xl bg-white p-3">
+        <p className="mb-1 text-xl font-bold opacity-80 md:text-2xl">
           NBA Scoreboard
         </p>
         <div className="flex w-full items-center gap-3">
           <div
             id="style-1"
-            className="flex w-full flex-row items-center justify-between overflow-x-auto pl-2"
+            className="flex w-full flex-row items-center justify-between overflow-x-auto px-2"
           >
             <Image
               src="/icons/chevron-left.svg"
               width="25"
               height="25"
               alt="left arrow"
+              className="cursor-pointer"
               onClick={() =>
                 setCurrentIndex(
                   (currentIndex: number) => (currentIndex - 4) % 730,
@@ -114,6 +115,7 @@ function NBAScoreboard({ initialScoreData }: { initialScoreData: ScoreData }) {
             ))}
             <Image
               src="/icons/chevron-right.svg"
+              className="cursor-pointer"
               onClick={() =>
                 setCurrentIndex(
                   (currentIndex: number) => (currentIndex + 4) % 730,

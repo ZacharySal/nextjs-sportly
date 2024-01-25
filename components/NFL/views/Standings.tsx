@@ -9,17 +9,14 @@ import LeagueContainerBox from "@/components/LeagueContainerBox";
 export default function Standings({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
+  console.log(data);
   const desktopView = () => (
     <>
       <LeagueStandings
         data={data.standingsData.content.standings}
         league="nfl"
       />
-      <Articles
-        title={`NFL News`}
-        news={data.scoreData.news.articles}
-        limit={5}
-      />
+      <Articles title={`NFL News`} news={data.newsData.articles} limit={5} />
     </>
   );
 

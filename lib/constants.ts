@@ -290,11 +290,7 @@ export const allNFLDates = [
             label: "Conf Champ",
             value: "3",
           },
-          {
-            dateRange: "Jan 22 - Jan 28",
-            label: "Pro Bowl",
-            value: "4",
-          },
+
           {
             dateRange: "Jan 29 - Feb 4",
             label: "Super Bowl",
@@ -448,11 +444,7 @@ export const allNFLDates = [
             label: "Conf Champ",
             value: "3",
           },
-          {
-            dateRange: "Jan 27 - Feb 2",
-            label: "Pro Bowl",
-            value: "4",
-          },
+
           {
             dateRange: "Feb 3 - 9",
             label: "Super Bowl",
@@ -606,11 +598,7 @@ export const allNFLDates = [
             label: "Conf Champ",
             value: "3",
           },
-          {
-            dateRange: "Feb 2 - 8",
-            label: "Pro Bowl",
-            value: "4",
-          },
+
           {
             dateRange: "Feb 9 - 15",
             label: "Super Bowl",
@@ -764,11 +752,7 @@ export const allNFLDates = [
             label: "Conf Champ",
             value: "3",
           },
-          {
-            dateRange: "Feb 1 - Feb 7",
-            label: "Pro Bowl",
-            value: "4",
-          },
+
           {
             dateRange: "Feb 8 - 14",
             label: "Super Bowl",
@@ -922,11 +906,7 @@ export const allNFLDates = [
             label: "Conf Champ",
             value: "3",
           },
-          {
-            dateRange: "Jan 31 - Feb 6",
-            label: "Pro Bowl",
-            value: "4",
-          },
+
           {
             dateRange: "Feb 7 - 14",
             label: "Super Bowl",

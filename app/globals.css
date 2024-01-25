@@ -26,15 +26,13 @@ main {
 }
 
 .main-logo {
-  background: linear-gradient(
-    120deg,
-    #d00 0%,
-    #d00 75%,
-    hsl(0, 91%, 35%) 75%,
-    hsl(0, 91%, 35%) 81%,
-    #2b2c2d 81%,
-    #2b2c2d 100%
-  );
+  background: linear-gradient(120deg,
+      #d00 0%,
+      #d00 75%,
+      hsl(0, 91%, 35%) 75%,
+      hsl(0, 91%, 35%) 81%,
+      #2b2c2d 81%,
+      #2b2c2d 100%);
 }
 
 .rr {
@@ -91,9 +89,7 @@ main {
   background-color: hsl(0, 0%, 98%);
 }
 
-.standings-table
-  tbody:nth-of-type(even)
-  tr:nth-of-type(even):not(.table-header) {
+.standings-table tbody:nth-of-type(even) tr:nth-of-type(even):not(.table-header) {
   background-color: hsl(0, 0%, 98%) !important;
 }
 
@@ -158,7 +154,7 @@ th {
   padding: 0 12px 0 8px;
 }
 
-.table-fixed-left-thead tr > td {
+.table-fixed-left-thead tr>td {
   width: auto;
   height: 28px;
   background-color: inherit;
@@ -354,7 +350,7 @@ th {
   padding: 20px 30px;
   right: 0;
   bottom: 0;
-  top: 4rem;
+  top: 6rem;
 }
 
 .user-selection-logo::after {
@@ -566,11 +562,11 @@ th {
   font-size: 12px !important;
 }
 
-.testing:hover > a:not(.selection-active) {
+.testing:hover>a:not(.selection-active) {
   opacity: 0.5;
 }
 
-.testing:hover > .sub-selection:not(.selection-active) {
+.testing:hover>.sub-selection:not(.selection-active) {
   opacity: 0.5;
 }
 
@@ -578,11 +574,11 @@ th {
   opacity: 1 !important;
 }
 
-.testing > .sub-selection:not(.selection-active) {
+.testing>.sub-selection:not(.selection-active) {
   opacity: 0.5;
 }
 
-.testing:hover > .selection-active::before {
+.testing:hover>.selection-active::before {
   height: 0px;
 }
 
