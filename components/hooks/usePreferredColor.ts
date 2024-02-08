@@ -7,7 +7,8 @@ function getRGB(color: string) {
 }
 
 function isSimilar([r1, g1, b1]: any, [r2, g2, b2]: any) {
-  return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2) < 60;
+  // the two colors are similar if the result is less than 100
+  return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2) < 100;
 }
 
 export default function usePreferredColor(data: any) {
@@ -30,12 +31,20 @@ export default function usePreferredColor(data: any) {
     },
   ];
 
+  // find the first color combo that are not similar to each other, if none found, use default colors
+
   const { homeTeamColor, awayTeamColor } = potentialColorCombos
     .map((el: any) => el)
     .find(
       (combo: any) =>
         !isSimilar(getRGB(combo.homeTeamColor), getRGB(combo.awayTeamColor)),
-    );
+    ) ?? {
+    homeTeamColor: data.homeTeam.team.color,
+    awayTeamColor: data.awayTeam.team.color,
+  };
 
-  return { homeTeamColor, awayTeamColor };
+  return {
+    homeTeamColor,
+    awayTeamColor,
+  };
 }

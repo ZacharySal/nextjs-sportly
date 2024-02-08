@@ -32,13 +32,6 @@ export default function Home({ gameId }: { gameId: string }) {
     },
   );
 
-  if (!isLoading) {
-    console.log(data);
-  }
-  if (error) {
-    console.log(error);
-  }
-
   const desktopView = () => (
     <>
       <div className="flex flex-col items-center justify-center gap-3 self-start">

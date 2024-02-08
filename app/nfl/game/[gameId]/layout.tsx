@@ -20,14 +20,6 @@ export default function Layout({
     },
   );
 
-  if (!isLoading) {
-    console.log(data);
-  }
-
-  if (error) {
-    console.log(error);
-  }
-
   if (!isLoading)
     return (
       <>

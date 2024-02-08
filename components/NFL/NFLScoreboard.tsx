@@ -50,8 +50,6 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
 
   const [showDateSelector, setShowDateSelector] = useState(false);
 
-  console.log(showDateSelector);
-
   const currentWeekInfo = {
     year: initialScoreData.content.sbData.season.year,
     type: initialScoreData.content.sbData.season.type,

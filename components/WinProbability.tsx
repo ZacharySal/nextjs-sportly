@@ -52,8 +52,6 @@ export default function WinProbability({
     dataPoints.reduce((a: any, b: any) => a + b.awayTeamWinChance),
   );
 
-  console.log(awayTeamWinChanceAvg);
-
   const finalDataPoint = dataPoints.slice(-1)[0];
 
   return (

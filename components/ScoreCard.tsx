@@ -18,10 +18,6 @@ export default function ScoreCard({
 
   const game = gameInfo.competitions[0];
 
-  if (game.status.type.state !== "pre") {
-    console.log(game);
-  }
-
   const homeTeamName: string = game.competitors[0].team.shortDisplayName;
   const awayTeamName: string = game.competitors[1].team.shortDisplayName;
   const homeTeamScore = Number(game.competitors[0].score);

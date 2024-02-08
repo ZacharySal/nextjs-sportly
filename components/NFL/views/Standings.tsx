@@ -9,7 +9,6 @@ import LeagueContainerBox from "@/components/LeagueContainerBox";
 export default function Standings({ data }: { data: any }) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
-  console.log(data);
   const desktopView = () => (
     <>
       <LeagueStandings

@@ -23,13 +23,6 @@ export default function Page({ gameId }: { gameId: string }) {
     },
   );
 
-  if (!isLoading) {
-    console.log(data);
-  }
-  if (error) {
-    console.log(error);
-  }
-
   const desktopView = () => (
     <>
       <div className="flex basis-1/2 flex-col gap-3">
