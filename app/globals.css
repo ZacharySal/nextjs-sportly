@@ -183,12 +183,14 @@ th {
 .button-active {
   border-radius: 50px;
   background-color: white;
-  box-shadow: 0px 0px 1px 10px white, 0px 0px 10px 5px rgba(0, 0, 0, 0.9);
+  box-shadow:
+    0px 0px 1px 10px white,
+    0px 0px 10px 5px rgba(0, 0, 0, 0.9);
   color: red;
 }
 
 .matchup-predictor-teams-container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -348,7 +350,7 @@ th {
   padding: 20px 30px;
   right: 0;
   bottom: 0;
-  top: 4rem;
+  top: 6rem;
 }
 
 .user-selection-logo::after {
@@ -465,7 +467,7 @@ th {
   bottom: 0;
   right: -5px;
   width: 1px;
-  height: 55px;
+  height: 48px;
   background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -706,8 +708,6 @@ th {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-
-
 .loader {
   position: absolute;
   width: 100px;
@@ -728,7 +728,9 @@ th {
   stroke-dasharray: 1, 200;
   stroke-dashoffset: 0;
   stroke: #3772df;
-  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  animation:
+    dash 1.5s ease-in-out infinite,
+    color 6s ease-in-out infinite;
   stroke-linecap: round;
 }
 

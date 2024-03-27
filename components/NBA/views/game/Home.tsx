@@ -19,8 +19,9 @@ import useSWR from "swr";
 import Image from "next/image";
 import Loading from "@/app/loading";
 import Linescores from "@/components/Linescores";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Label } from "recharts";
 import GameFlow from "@/components/GameFlow";
+import ShotChart from "../../ShotChart";
+import WinProbability from "@/components/WinProbability";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -32,27 +33,35 @@ export default function Home({ gameId }: { gameId: string }) {
     fetcher,
     {
       refreshInterval: 5000,
-    }
+    },
   );
-
   const mobileView = () => (
-    <div className="w-full flex flex-col justify-center items-center gap-3">
+    <div className="flex w-full flex-col items-center justify-center gap-3">
       <GameRecapArticle data={data} />
       {data.isGameStarted ? (
         <>
-          {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
+          {data.gameInfo.status.type.state === "in" && (
+            <RecentPlays data={data} isDesktopScreen={isDesktopScreen} />
+          )}
           <Linescores data={data} />
           <NBAGameLeaders data={data} />
           {data.isGameStarted && <NBATeamStats data={data} />}
           <GameFlow data={data} isDesktopScreen={isDesktopScreen} />
-          <MatchupPredictor data={data} league={"nba"} />
+          <ShotChart data={data} />
+          {data.gameInfo.status.type.state === "in" && (
+            <InjuryReport data={data} />
+          )}
         </>
       ) : (
         <>
           <MatchupPredictor data={data} league={"nba"} />
           <NBAGameLeaders data={data} />
-          <InjuryReport data={data} league="nba" />
-          <LastFive data={data} league="nba" isDesktopScreen={isDesktopScreen} />
+          <InjuryReport data={data} />
+          <LastFive
+            data={data}
+            league="nba"
+            isDesktopScreen={isDesktopScreen}
+          />
         </>
       )}
       <SeasonSeries data={data} league="nba" />
@@ -63,35 +72,54 @@ export default function Home({ gameId }: { gameId: string }) {
 
   const desktopView = () => (
     <>
-      <div className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+      <div className="flex basis-1/4 flex-col items-center justify-center gap-3 self-start">
+        {data.gameInfo.status.type.state !== "pre" && (
+          <NBAGameLeaders data={data} />
+        )}
+
         <MatchupPredictor data={data} league="nba" />
         <DivisionStandings data={data} isNFL={false} league="nba" />
         <StadiumInfo data={data} />
       </div>
 
-      <div className="flex flex-col gap-3 basis-1/2">
+      <div className="flex basis-1/2 flex-col gap-3">
         {!data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
             <NBAGameLeaders data={data} />
-            <InjuryReport data={data} league="nba" />
-            <LastFive data={data} league="nba" isDesktopScreen={isDesktopScreen} />
+            <InjuryReport data={data} />
+            <LastFive
+              data={data}
+              league="nba"
+              isDesktopScreen={isDesktopScreen}
+            />
           </>
         )}
         {data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
-            {data.gameInfo.status.type.state === "in" && <RecentPlays data={data} />}
-            <NBAGameLeaders data={data} />
+            {data.gameInfo.status.type.state === "in" && (
+              <RecentPlays data={data} isDesktopScreen={isDesktopScreen} />
+            )}
+
+            {/* <WinProbability data={data} isDesktopScreen={isDesktopScreen} /> */}
             <GameFlow data={data} isDesktopScreen={isDesktopScreen} />
+            <ShotChart data={data} />
+            {data.gameInfo.status.type.state === "in" && (
+              <InjuryReport data={data} />
+            )}
           </>
         )}
       </div>
 
-      <div className="flex flex-col gap-3 basis-1/4">
+      <div className="flex basis-1/4 flex-col gap-3">
         {data.isGameStarted && <NBATeamStats data={data} />}
         <SeasonSeries data={data} league="nba" />
-        <Articles title="NBA News" news={data.gameData.news.articles} limit={3} />
+        <Articles
+          title="NBA News"
+          news={data.gameData.news.articles}
+          limit={3}
+        />
       </div>
     </>
   );

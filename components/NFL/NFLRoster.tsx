@@ -1,36 +1,41 @@
+import { Team } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 
 export default function NFLRoster({ data }: { data: any }) {
   return (
-    <div className="w-full bg-white p-3 rounded-xl">
-      <p className="text-xl md:text-2xl font-semibold mb-4 opacity-90">
+    <div className="w-full rounded-xl bg-white p-3">
+      <p className="mb-4 text-xl font-semibold opacity-90 md:text-2xl">
         {data.team.displayName} Team Roster 2023
       </p>
       {data.athletes.map((category: any) => (
         <>
-          <p className="capitalize opacity-60 font-[600] tracking-wide md:text-lg mb-2">
+          <p className="mb-2 font-[600] capitalize tracking-wide opacity-60 md:text-lg">
             {category.position}
           </p>
-          <div className="w-full flex justify-center overflow-hidden mb-2">
+          <div className="mb-2 flex w-full justify-center overflow-hidden">
             <table className="border-collpase">
               <thead className="table-fixed-left-thead table-header">
                 <tr className="table-header">
-                  <th className="uppercase pl-2" align="left">
+                  <th className="pl-2 uppercase" align="left">
                     Name
                   </th>
                 </tr>
                 {category.items.map((athlete: any) => (
                   <tr key={uuidv4()} className="team-info-cell">
                     <td className="flex flex-row items-center gap-1 pl-2">
-                      <p className="text-xs text-[#3e82d6]">{athlete.fullName}</p>
-                      <p className="text-[10px] text-black opacity-50">({athlete.jersey})</p>
+                      <p className="text-xs text-[#3e82d6]">
+                        {athlete.fullName}
+                      </p>
+                      <p className="text-[10px] text-black opacity-50">
+                        ({athlete.jersey})
+                      </p>
                     </td>
                   </tr>
                 ))}
               </thead>
             </table>
             <div className="w-full overflow-x-auto">
-              <table className="table standings-table">
+              <table className="standings-table table">
                 <thead>
                   <tr className="table-header">
                     <th align="center">POS</th>

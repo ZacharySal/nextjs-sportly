@@ -3,7 +3,11 @@ import View from "../../../../../components/NFL/views/team/Stats";
 
 export const revalidate = 600;
 
-export async function generateMetadata({ params }: { params: { teamId: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { teamId: string };
+}) {
   const teamData = await getTeamData("nfl", params.teamId);
 
   return {

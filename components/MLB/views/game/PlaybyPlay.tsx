@@ -14,23 +14,33 @@ export default function Page({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <div className="flex flex-col basis-1/2 gap-3">
-        {data.isGameStarted && data.homeTeam.linescores && <MLBBoxscore data={data} />}
+      <div className="flex basis-1/2 flex-col gap-3">
+        {data.isGameStarted && data.homeTeam.linescores && (
+          <MLBBoxscore data={data} />
+        )}
         {data.isGameStarted && <MLBScoringPlays data={data} />}
       </div>
 
-      <div className="basis-1/4 flex flex-col gap-3">
-        {data.gameData.predictor && <MatchupPredictor data={data} league="mlb" />}
+      <div className="flex basis-1/4 flex-col gap-3">
+        {data.gameData.predictor && (
+          <MatchupPredictor data={data} league="mlb" />
+        )}
         <DivisionStandings data={data} isNFL={false} league="mlb" />
-        <Articles title="MLB News" news={data.gameData.news.articles} limit={6} />
+        <Articles
+          title="MLB News"
+          news={data.gameData.news.articles}
+          limit={6}
+        />
       </div>
     </>
   );
 
   const mobileView = () => (
     <>
-      <div className="flex flex-col basis-1/2 gap-3">
-        {data.isGameStarted && data.homeTeam.linescores && <MLBBoxscore data={data} />}
+      <div className="flex basis-1/2 flex-col gap-3">
+        {data.isGameStarted && data.homeTeam.linescores && (
+          <MLBBoxscore data={data} />
+        )}
         {data.isGameStarted && <MLBScoringPlays data={data} />}
       </div>
     </>

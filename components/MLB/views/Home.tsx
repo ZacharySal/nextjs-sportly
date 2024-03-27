@@ -15,7 +15,11 @@ export default function Home({ data }: { data: any }) {
   const desktopView = () => (
     <>
       <MLBScoreboard initialScoreData={data.scoreData} />
-      <Articles title={`MLB News`} news={data.scoreData.news.articles} limit={10} />
+      <Articles
+        title={`MLB News`}
+        news={data.scoreData.news.articles}
+        limit={10}
+      />
     </>
   );
 

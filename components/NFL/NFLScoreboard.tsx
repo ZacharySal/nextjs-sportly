@@ -10,6 +10,7 @@ import { allNFLDates } from "@/lib/constants";
 import Image from "next/image";
 import ScoreCard from "../ScoreCard";
 import Loading from "../Loading";
+import NFLCalendar from "./NFLCalendar";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -34,9 +35,9 @@ function getDates(selectedYear: string) {
       year.year === selectedYear &&
       year.weeksInYear.map((seasonType: any) =>
         seasonType.weeks.map((week: any) =>
-          allWeeks.push({ ...week, seasonType: seasonType.seasonType })
-        )
-      )
+          allWeeks.push({ ...week, seasonType: seasonType.seasonType }),
+        ),
+      ),
   );
 
   return allWeeks;
@@ -58,7 +59,7 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
   const [selectedWeekInfo, setSelectedWeekInfo] = useState(currentWeekInfo);
 
   const [currentYearIndex, setCurrentYearIndex] = useState(
-    allNFLDates.map((year) => year.year).indexOf(String(currentWeekInfo.year))
+    allNFLDates.map((year) => year.year).indexOf(String(currentWeekInfo.year)),
   );
 
   const calendarSelectedYear = allNFLDates[currentYearIndex].year;
@@ -67,16 +68,19 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
 
   const [currentWeekIndex, setCurrentWeekIndex] = useState(
     allDates.findIndex(
-      (week: any) => week.value == selectedWeekInfo.week && week.seasonType == selectedWeekInfo.type
-    )
+      (week: any) =>
+        week.value == selectedWeekInfo.week &&
+        week.seasonType == selectedWeekInfo.type,
+    ),
   );
 
   useEffect(() => {
     setCurrentWeekIndex(
       allDates.findIndex(
         (week: any) =>
-          week.value == selectedWeekInfo.week && week.seasonType == selectedWeekInfo.type
-      )
+          week.value == selectedWeekInfo.week &&
+          week.seasonType == selectedWeekInfo.type,
+      ),
     );
   }, [selectedWeekInfo]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -97,7 +101,7 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
     fetcher,
     {
       refreshInterval: 30000,
-    }
+    },
   );
 
   const data = newScoreData ?? initialScoreData;
@@ -108,23 +112,29 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
     });
     //let gg = ungroupedGames.reverse();
     groupedGames = ungroupedGames.reduce(
-      (entryMap: any, e: any) => entryMap.set(e.date, [...(entryMap.get(e.date) || []), e]),
-      new Map()
+      (entryMap: any, e: any) =>
+        entryMap.set(e.date, [...(entryMap.get(e.date) || []), e]),
+      new Map(),
     );
   }
 
   function nflWeekSelector() {
     return (
-      <div className="relative z-10 w-full p-2 md:p-4 bg-white mb-3 rounded-xl">
-        <p className="mb-1 font-semibold text-xl md:text-2xl opacity-80">NFL Scoreboard</p>
-        <div className="pl-2 w-full flex gap-3 items-center">
-          <div className="w-full flex flex-row overflow-x-auto justify-between items-center">
+      <div className="z-1 relative mb-3 w-full rounded-xl bg-white p-3">
+        <p className="mb-1 text-xl font-bold opacity-80 md:text-2xl">
+          NFL Scoreboard
+        </p>
+        <div className="flex w-full items-center gap-3">
+          <div className="flex w-full flex-row items-center justify-between ">
             <Image
               alt="left icon"
               src="/icons/chevron-left.svg"
               width="25"
               height="25"
-              onClick={() => setCurrentWeekIndex(mod(currentWeekIndex - 3, allDates.length))}
+              onClick={() =>
+                setCurrentWeekIndex(mod(currentWeekIndex - 3, allDates.length))
+              }
+              className="cursor-pointer"
             />
             {dateElements.map((week: any) => {
               return (
@@ -144,20 +154,75 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
                         ? "1"
                         : "0.3",
                   }}
-                  className="flex flex-col jusitfy-center items-center font-semibold flex-shrink-0 cursor-pointer p-2"
+                  className="jusitfy-center flex flex-shrink-0 cursor-pointer flex-col items-center p-2 font-semibold"
                 >
                   <p className="text-[13px] font-semibold">{week.label}</p>
                   <p className="text-[11px]">{week.dateRange}</p>
                 </div>
               );
             })}
-            <Image
-              onClick={() => setCurrentWeekIndex(mod(currentWeekIndex + 3, allDates.length))}
-              width="25"
-              height="25"
-              alt="right icon"
-              src="/icons/chevron-right.svg"
-            />
+            <div className="flex gap-4">
+              <Image
+                onClick={() =>
+                  setCurrentWeekIndex(
+                    mod(currentWeekIndex + 3, allDates.length),
+                  )
+                }
+                width="25"
+                height="25"
+                alt="right icon"
+                src="/icons/chevron-right.svg"
+                className="cursor-pointer"
+              />
+              <div
+                style={{ boxShadow: "-5px 0px 10px 1px rgba(0,0,0,0.15)" }}
+                className="z-60 flex grow-0 items-center justify-center rounded-sm bg-white p-3"
+              >
+                <div className="w-[24px]">
+                  <svg
+                    id="calendar"
+                    fill={showDateSelector ? "#3e82d6" : "black"}
+                    style={{ cursor: "pointer" }}
+                    xmlns="http://www.w3.org/2000/svg"
+                    onClick={() =>
+                      setShowDateSelector(
+                        (showDateSelector) => !showDateSelector,
+                      )
+                    }
+                    viewBox="0 0 122.88 122.89"
+                  >
+                    <title>date</title>
+                    <path d="M81.61,4.73C81.61,2.12,84.19,0,87.38,0s5.77,2.12,5.77,4.73V25.45c0,2.61-2.58,4.73-5.77,4.73s-5.77-2.12-5.77-4.73V4.73ZM66.11,105.66c-.8,0-.8-10.1,0-10.1H81.9c.8,0,.8,10.1,0,10.1ZM15.85,68.94c-.8,0-.8-10.1,0-10.1H31.64c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H56.77c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H81.9c.8,0,.8,10.1,0,10.1Zm25.14-10.1H107c.8,0,.8,10.1,0,10.1H91.25c-.8,0-.8-10.1,0-10.1ZM15.85,87.3c-.8,0-.8-10.1,0-10.1H31.64c.8,0,.8,10.1,0,10.1ZM41,87.3c-.8,0-.8-10.1,0-10.1H56.77c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H81.9c.8,0,.8,10.1,0,10.1Zm25.14,0c-.8,0-.8-10.1,0-10.1H107c.8,0,.8,10.1,0,10.1Zm-75.4,18.36c-.8,0-.8-10.1,0-10.1H31.64c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H56.77c.8,0,.8,10.1,0,10.1ZM29.61,4.73C29.61,2.12,32.19,0,35.38,0s5.77,2.12,5.77,4.73V25.45c0,2.61-2.58,4.73-5.77,4.73s-5.77-2.12-5.77-4.73V4.73ZM6.4,43.47H116.47v-22a3,3,0,0,0-.86-2.07,2.92,2.92,0,0,0-2.07-.86H103a3.2,3.2,0,0,1,0-6.4h10.55a9.36,9.36,0,0,1,9.33,9.33v92.09a9.36,9.36,0,0,1-9.33,9.33H9.33A9.36,9.36,0,0,1,0,113.55V21.47a9.36,9.36,0,0,1,9.33-9.33H20.6a3.2,3.2,0,1,1,0,6.4H9.33a3,3,0,0,0-2.07.86,2.92,2.92,0,0,0-.86,2.07v22Zm110.08,6.41H6.4v63.67a3,3,0,0,0,.86,2.07,2.92,2.92,0,0,0,2.07.86H113.55a3,3,0,0,0,2.07-.86,2.92,2.92,0,0,0,.86-2.07V49.88ZM50.43,18.54a3.2,3.2,0,0,1,0-6.4H71.92a3.2,3.2,0,1,1,0,6.4Z" />
+                  </svg>
+                </div>
+
+                {/* <Image
+                  onClick={() =>
+                    setShowDateSelector((showDateSelector) => !showDateSelector)
+                  }
+                  src={"svgs/date-icon.svg"}
+                  width={100}
+                  height={100}
+                  alt={"date picker"}
+                  style={{
+                    fill: showDateSelector
+                      ? "#3e82d6 !important"
+                      : "red !important",
+                    cursor: "pointer",
+                  }}
+                  className="w-7 cursor-pointer"
+                /> */}
+                {showDateSelector && (
+                  <NFLCalendar
+                    currentYearIndex={currentYearIndex}
+                    selectedWeekInfo={selectedWeekInfo}
+                    setSelectedWeekInfo={setSelectedWeekInfo}
+                    setShowDateSelector={setShowDateSelector}
+                    setCurrentYearIndex={setCurrentYearIndex}
+                  />
+                )}
+              </div>
+            </div>
           </div>
           {/* <Paper elevation={1} className="relative bg-white p-3">
             <CalendarMonthOutlined
@@ -183,8 +248,13 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
     let els: any[] = [];
     groupedGames.forEach((gamesOnDate: any, i: any) => {
       els.push(
-        <div key={uuidv4()} className="w-full grid bg-white p-2 pb-0 rounded-xl mb-2">
-          <p className="font-[500] mt-1 text-start text-[14px] md:text-base mb-2">{i}</p>
+        <div
+          key={uuidv4()}
+          className="mb-2 grid w-full rounded-xl bg-white p-2 pb-0"
+        >
+          <p className="mb-2 mt-1 text-start text-[14px] font-[500] md:text-base">
+            {i}
+          </p>
           <hr />
           {gamesOnDate.map((game: any, i: number) => (
             <div key={uuidv4()}>
@@ -192,7 +262,7 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
               {i !== gamesOnDate.length - 1 && <hr />}
             </div>
           ))}
-        </div>
+        </div>,
       );
     });
     return els;
@@ -200,14 +270,14 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
 
   if (isLoading) {
     return (
-      <div className="w-full py-2 mt-[-0.5rem]">
+      <div className="mt-[-0.5rem] w-full py-2">
         {nflWeekSelector()}
         <Loading />
       </div>
     );
   } else if (!isLoading) {
     return (
-      <div className="w-full py-2 mt-[-0.5rem]">
+      <div className="mt-[-0.5rem] w-full py-2">
         {nflWeekSelector()}
         {printSortedGames()}
       </div>

@@ -1,25 +1,32 @@
+import { GameData } from "@/types";
 import Image from "next/image";
 
-export default function StadiumInfo({ data }: { data: any }) {
-  if (typeof data.gameData.gameInfo.venue.images[0] === "undefined") return null;
+export default function StadiumInfo({ data }: { data: GameData }) {
+  if (typeof data.gameData.gameInfo.venue.images[0] === "undefined")
+    return null;
   return (
     <>
-      <div className="w-full flex flex-col bg-white rounded-xl gap-2 p-3">
-        <p className="text-[14px] font-semibold text-start">Stadium Information</p>
+      <div className="flex w-full flex-col gap-2 rounded-xl bg-white p-3">
+        <p className="mb-2 border-b border-dotted border-[rgba(0,0,0,0.2)] pb-2 text-start text-[14px] font-semibold">
+          Stadium Information
+        </p>
 
-        <div className="w-auto h-48 relative">
+        <div className="relative h-48 w-auto">
           <Image
             src={data.gameData.gameInfo.venue.images[0]?.href}
             fill
             priority={true}
-            className="object-cover rounded"
+            className="rounded object-cover"
             alt="Stadium"
           />
         </div>
 
-        <p className="opacity-80 font-bold">{data.gameData.gameInfo.venue.fullName}</p>
-        <p className="opacity-80 text-sm mt-[-0.5rem]">
-          {data.gameData.gameInfo.venue.address.city}, {data.gameData.gameInfo.venue.address.state}
+        <p className="text-sm font-semibold">
+          {data.gameData.gameInfo.venue.fullName}
+        </p>
+        <p className="mt-[-0.5rem] text-sm opacity-80">
+          {data.gameData.gameInfo.venue.address.city},{" "}
+          {data.gameData.gameInfo.venue.address.state}
         </p>
       </div>
     </>

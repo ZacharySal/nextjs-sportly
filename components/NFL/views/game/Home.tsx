@@ -4,7 +4,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import ContainerBox from "@/components/ContainerBox";
 import Articles from "@/components/Articles";
 import StadiumInfo from "@/components/StadiumInfo";
-import NFLBoxscore from "@/components/NFL/NFLBoxscore";
+import NFLTeamStats from "../../NFLTeamStats";
 import DivisionStandings from "@/components/DivisionStandings";
 import NFLScoringPlays from "@/components/NFL/NFLScoringPlays";
 import GameUserSelection from "@/components/GameUserSelection";
@@ -17,29 +17,30 @@ import RecentPlays from "@/components/RecentPlays";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
 import Linescores from "@/components/Linescores";
+import { NFLGameData } from "@/types";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home({ gameId }: { gameId: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
-  const { data, isLoading } = useSWR(
+  const { data, isLoading, error } = useSWR(
     `https://nextjs-sportly.vercel.app/api/nfl/gameData/${gameId}`,
     fetcher,
     {
       refreshInterval: 5000,
-    }
+    },
   );
 
   const desktopView = () => (
     <>
-      <div className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+      <div className="flex flex-col items-center justify-center gap-3 self-start">
         <NFLGameLeaders data={data} />
         <DivisionStandings data={data} isNFL={true} league="nfl" />
         <StadiumInfo data={data} />
       </div>
 
-      <div className="flex flex-col gap-3 basis-1/2">
+      <div className="flex flex-col gap-3">
         {data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
@@ -49,38 +50,53 @@ export default function Home({ gameId }: { gameId: string }) {
         {!data.isGameStarted && (
           <>
             <GameRecapArticle data={data} />
-            <InjuryReport data={data} league="nfl" />
-            <LastFive data={data} league="nfl" isDesktopScreen={isDesktopScreen} />
+            <InjuryReport data={data} />
+            <LastFive
+              data={data}
+              league="nfl"
+              isDesktopScreen={isDesktopScreen}
+            />
           </>
         )}
       </div>
 
-      <div className="flex self-start flex-col justify-center items-center gap-3 basis-1/4">
+      <div className="flex flex-col items-center justify-center gap-3 self-start">
+        {data.gameInfo.status.type.state !== "pre" && (
+          <NFLTeamStats data={data} />
+        )}
         <MatchupPredictor data={data} league="nfl" />
-        <Articles title="NFL News" news={data.gameData.news.articles} limit={6} />
+        <Articles
+          title="NFL News"
+          news={data.gameData.news.articles}
+          limit={6}
+        />
       </div>
     </>
   );
 
   const mobileView = () => (
-    <div className="w-full flex flex-col justify-center items-center gap-3">
+    <div className="flex w-full flex-col items-center justify-center gap-3">
       <GameRecapArticle data={data} />
       {data.isGameStarted ? (
         <>
           <Linescores data={data} />
           <NFLGameLeaders data={data} />
           <NFLScoringPlays data={data} />
-          <MatchupPredictor data={data} league={"nfl"} />
+          <NFLTeamStats data={data} />
         </>
       ) : (
         <>
           <MatchupPredictor data={data} league={"nfl"} />
           <NFLGameLeaders data={data} />
-          <InjuryReport data={data} league="nfl" />
-          <LastFive data={data} league="nfl" isDesktopScreen={isDesktopScreen} />
+          <InjuryReport data={data} />
+          <LastFive
+            data={data}
+            league="nfl"
+            isDesktopScreen={isDesktopScreen}
+          />
         </>
       )}
-      <DivisionStandings data={data} isNFL={true} league="nfl" />
+      <DivisionStandings data={data} isNFL league="nfl" />
       <StadiumInfo data={data} />
     </div>
   );

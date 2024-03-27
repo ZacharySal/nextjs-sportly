@@ -1,12 +1,17 @@
+import { NFLPlay } from "@/types";
 import { NextResponse } from "next/server";
+
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request, { params }: { params: { gameId: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { gameId: string } },
+) {
   const gameDataResponse = await fetch(
     `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${params.gameId}`,
     {
       cache: "no-cache",
-    }
+    },
   );
 
   if (!gameDataResponse.ok) {
@@ -17,13 +22,14 @@ export async function GET(request: Request, { params }: { params: { gameId: stri
 
   const gameInfo = gameData.header.competitions[0];
 
-  let firstQuarterScoringPlays: any[] = [];
-  let secondQuarterScoringPlays: any[] = [];
-  let thirdQuarterScoringPlays: any[] = [];
-  let fourthQuarterScoringPlays: any[] = [];
+  let firstQuarterScoringPlays: Array<NFLPlay> = [];
+  let secondQuarterScoringPlays: Array<NFLPlay> = [];
+  let thirdQuarterScoringPlays: Array<NFLPlay> = [];
+  let fourthQuarterScoringPlays: Array<NFLPlay> = [];
+
   const isGameStarted = gameData.drives ? true : false;
 
-  if (isGameStarted && gameData.scoringPlays?.length > 0) {
+  if (isGameStarted && gameData?.scoringPlays?.length > 0) {
     gameData.scoringPlays.map((play: any) => {
       if (play.period.number === 1) {
         firstQuarterScoringPlays.push(play);

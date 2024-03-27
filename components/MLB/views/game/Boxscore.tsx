@@ -14,14 +14,20 @@ export default function Boxscore({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <div className="flex flex-col basis-1/2 gap-3">
+      <div className="flex basis-1/2 flex-col gap-3">
         <NFLGameStats data={data} league="mlb" />
       </div>
 
-      <div className="basis-1/4 flex flex-col gap-3">
-        {data.gameData.predictor && <MatchupPredictor data={data} league="mlb" />}
+      <div className="flex basis-1/4 flex-col gap-3">
+        {data.gameData.predictor && (
+          <MatchupPredictor data={data} league="mlb" />
+        )}
         <DivisionStandings data={data} isNFL={false} league="mlb" />
-        <Articles title="MLB News" news={data.gameData.news.articles} limit={6} />
+        <Articles
+          title="MLB News"
+          news={data.gameData.news.articles}
+          limit={6}
+        />
       </div>
     </>
   );

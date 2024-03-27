@@ -8,7 +8,7 @@ export async function getNBAGameData(gameId: string) {
     `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${gameId}`,
     {
       cache: "no-cache",
-    }
+    },
   );
 
   if (!gameDataResponse.ok) {
@@ -33,7 +33,7 @@ export async function getMLBGameData(gameId: string) {
     `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${gameId}`,
     {
       cache: "no-cache",
-    }
+    },
   );
 
   if (!gameDataResponse.ok) {
@@ -48,7 +48,7 @@ export async function getMLBGameData(gameId: string) {
   const awayTeamId = awayTeam.id;
 
   const homeTeamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${homeTeamId}/statistics`
+    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${homeTeamId}/statistics`,
   );
 
   if (!homeTeamStatsResponse.ok) {
@@ -58,7 +58,7 @@ export async function getMLBGameData(gameId: string) {
   const homeTeamStats = await homeTeamStatsResponse.json();
 
   const awayTeamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${awayTeamId}/statistics`
+    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${awayTeamId}/statistics`,
   );
 
   if (!awayTeamStatsResponse.ok) {
@@ -114,7 +114,7 @@ export async function getNFLGameData(gameId: string) {
     `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${gameId}`,
     {
       cache: "no-cache",
-    }
+    },
   );
 
   if (!gameDataResponse.ok) {
@@ -159,9 +159,12 @@ export async function getNFLGameData(gameId: string) {
 }
 
 export async function getLeagueScoreData(league: League) {
-  const scoreData = await fetch(`https://cdn.espn.com/core/${league}/scoreboard?xhr=1`, {
-    cache: "no-cache",
-  });
+  const scoreData = await fetch(
+    `https://cdn.espn.com/core/${league}/scoreboard?xhr=1`,
+    {
+      cache: "no-cache",
+    },
+  );
 
   if (!scoreData.ok) {
     throw new Error("Failed to fetch NBA score data");
@@ -175,7 +178,9 @@ export async function getLeagueScoreData(league: League) {
 }
 
 export async function getLeagueNewsData(league: League) {
-  const newsData = await fetch(`https://cdn.espn.com/core/${league}/scoreboard?xhr=1`);
+  const newsData = await fetch(
+    `https://cdn.espn.com/core/${league}/scoreboard?xhr=1`,
+  );
 
   if (!newsData.ok) {
     throw new Error("Failed to fetch NBA score data");
@@ -188,9 +193,12 @@ export async function getLeagueNewsData(league: League) {
 
 export async function getLeagueStandingsData(league: League) {
   const newsData = await getLeagueNewsData(league);
-  const standingsData = await fetch(`https://cdn.espn.com/core/${league}/standings?xhr=1`, {
-    cache: "no-cache",
-  });
+  const standingsData = await fetch(
+    `https://cdn.espn.com/core/${league}/standings?xhr=1`,
+    {
+      cache: "no-cache",
+    },
+  );
 
   if (!standingsData.ok) {
     throw new Error("Failed to fetch NBA standings data");
@@ -205,9 +213,14 @@ export async function getLeagueStandingsData(league: League) {
 }
 
 export async function getTeamNews(league: League, teamId: string) {
-  const sport = league === "nba" ? "basketball" : league === "mlb" ? "baseball" : "football";
+  const sport =
+    league === "nba"
+      ? "basketball"
+      : league === "mlb"
+        ? "baseball"
+        : "football";
   const teamNewsResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/news?team=${teamId}`
+    `https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/news?team=${teamId}`,
   );
 
   if (!teamNewsResponse.ok) {
@@ -220,9 +233,14 @@ export async function getTeamNews(league: League, teamId: string) {
 }
 
 export async function getTeamRoster(league: League, teamId: string) {
-  const sport = league === "nba" ? "basketball" : league === "mlb" ? "baseball" : "football";
+  const sport =
+    league === "nba"
+      ? "basketball"
+      : league === "mlb"
+        ? "baseball"
+        : "football";
   const teamRosterResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/teams/${teamId}/roster`
+    `https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/teams/${teamId}/roster`,
   );
 
   if (!teamRosterResponse.ok) {
@@ -234,9 +252,14 @@ export async function getTeamRoster(league: League, teamId: string) {
 }
 
 export async function getTeamSchedule(league: League, teamId: string) {
-  const sport = league === "nba" ? "basketball" : league === "mlb" ? "baseball" : "football";
+  const sport =
+    league === "nba"
+      ? "basketball"
+      : league === "mlb"
+        ? "baseball"
+        : "football";
   const teamScheduleResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/teams/${teamId}/schedule`
+    `https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/teams/${teamId}/schedule`,
   );
 
   if (!teamScheduleResponse.ok) {
@@ -249,7 +272,7 @@ export async function getTeamSchedule(league: League, teamId: string) {
 
 export async function getNBATeamStats(teamId: string) {
   const teamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2024/types/2/teams/${teamId}/statistics`
+    `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2024/types/2/teams/${teamId}/statistics`,
   );
 
   if (!teamStatsResponse.ok) {
@@ -304,7 +327,7 @@ export async function getNBATeamStats(teamId: string) {
 
 export async function getNFLTeamStats(teamId: string) {
   const teamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/2/teams/${teamId}/statistics`
+    `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/types/2/teams/${teamId}/statistics`,
   );
 
   if (!teamStatsResponse.ok) {
@@ -381,7 +404,7 @@ export async function getNFLTeamStats(teamId: string) {
 
 export async function getMLBTeamStats(teamId: string) {
   const teamStatsResponse = await fetch(
-    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${teamId}/statistics`
+    `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2023/types/2/teams/${teamId}/statistics`,
   );
 
   if (!teamStatsResponse.ok) {
@@ -405,9 +428,14 @@ export async function getMLBTeamStats(teamId: string) {
 }
 
 export async function getTeamData(league: League, teamId: string) {
-  const sport = league === "nba" ? "basketball" : league === "mlb" ? "baseball" : "football";
+  const sport =
+    league === "nba"
+      ? "basketball"
+      : league === "mlb"
+        ? "baseball"
+        : "football";
   const teamDataResponse = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/teams/${teamId}`
+    `https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/teams/${teamId}`,
   );
 
   if (!teamDataResponse.ok) {
@@ -420,4 +448,39 @@ export async function getTeamData(league: League, teamId: string) {
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function getFilteredTeamShots(
+  plays: any,
+  filterOptions: any,
+  teamId: string,
+) {
+  let filteredPlays = plays.filter(
+    (play: any) => play.shootingPlay === true && play.team.id === teamId,
+  );
+  if (filterOptions.selectedQuarter !== "All Quarters") {
+    filteredPlays = filteredPlays.filter(
+      (play: any) => play.period.displayValue === filterOptions.selectedQuarter,
+    );
+  }
+  if (!filterOptions.showMadeShots) {
+    filteredPlays = filteredPlays.filter(
+      (play: any) => play.scoringPlay !== true,
+    );
+  }
+  if (!filterOptions.showMissedShots) {
+    filteredPlays = filteredPlays.filter(
+      (play: any) => play.scoringPlay === true,
+    );
+  }
+  if (filterOptions.selectedPlayer !== "All Players") {
+    filteredPlays = filteredPlays.filter(
+      (play: any) =>
+        play.participants?.[0]?.athlete?.id === filterOptions.selectedPlayer,
+    );
+  }
+  filteredPlays = filteredPlays.filter(
+    (play: any) => play.coordinate.x > 0 && play.coordinate.y > 0,
+  );
+  return filteredPlays;
 }

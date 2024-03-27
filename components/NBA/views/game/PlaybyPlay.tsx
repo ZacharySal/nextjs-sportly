@@ -22,18 +22,24 @@ export default function PlaybyPlay({ gameId }: { gameId: any }) {
     fetcher,
     {
       refreshInterval: 5000,
-    }
+    },
   );
 
   const desktopView = () => (
     <>
-      <div className="flex flex-col gap-3 basis-3/4">
+      <div className="flex basis-3/4 flex-col gap-3">
         <NBAPlaybyPlay data={data} />
       </div>
-      <div className="basis-1/4 flex flex-col gap-3">
-        {data.gameData.predictor && <MatchupPredictor data={data} league="nba" />}
+      <div className="flex basis-1/4 flex-col gap-3">
+        {data.gameData.predictor && (
+          <MatchupPredictor data={data} league="nba" />
+        )}
         <SeasonSeries data={data} league="nba" />
-        <Articles title="NBA News" news={data.gameData.news.articles} limit={6} />
+        <Articles
+          title="NBA News"
+          news={data.gameData.news.articles}
+          limit={6}
+        />
       </div>
     </>
   );

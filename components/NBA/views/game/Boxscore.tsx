@@ -9,6 +9,8 @@ import useSWR from "swr";
 
 import Loading from "@/components/Loading";
 import LeagueContainerBox from "@/components/LeagueContainerBox";
+import NBAGameLeaders from "../../NBAGameLeaders";
+import NBATeamStats from "../../NBATeamStats";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -20,18 +22,21 @@ export default function Boxscore({ gameId }: { gameId: string }) {
     fetcher,
     {
       refreshInterval: 5000,
-    }
+    },
   );
 
-  const mobileView = () => <NBAGameStats data={data} isDesktopScreen={isDesktopScreen} />;
+  const mobileView = () => (
+    <NBAGameStats data={data} isDesktopScreen={isDesktopScreen} />
+  );
 
   const desktopView = () => (
     <>
       <div className="flex flex-col gap-3">
         <NBAGameStats data={data} isDesktopScreen={isDesktopScreen} />
       </div>
-      <div className="flex flex-col basis-1/4 gap-3">
-        <DivisionStandings data={data} isNFL={false} league="nba" />
+      <div className="flex basis-1/4 flex-col gap-3">
+        <NBATeamStats data={data} />
+        <NBAGameLeaders data={data} />
       </div>
     </>
   );

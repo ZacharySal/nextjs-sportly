@@ -15,7 +15,7 @@ export default function Stats({ data }: { data: any }) {
       <div className="basis-3/4">
         <FullTeamStats data={data} />
       </div>
-      <div className="basis-1/4 flex flex-col gap-3">
+      <div className="flex basis-1/4 flex-col gap-3">
         <Articles
           title={`${data.teamData.team.name} News`}
           limit={6}

@@ -2,12 +2,15 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request, { params }: { params: { gameId: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { gameId: string } },
+) {
   const gameDataResponse = await fetch(
     `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${params.gameId}`,
     {
       cache: "no-cache",
-    }
+    },
   );
 
   if (!gameDataResponse.ok) {

@@ -18,7 +18,7 @@ export default function Home() {
     fetcher,
     {
       refreshInterval: 5000,
-    }
+    },
   );
 
   if (isLoading) return <Loading />;
@@ -30,7 +30,11 @@ export default function Home() {
             <LeagueUserSelection userSelection={"scoreboard"} league="nfl" />
             <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
               <NFLScoreboard initialScoreData={data} />
-              <Articles title={`NFL News`} news={data.news.articles} limit={10} />
+              <Articles
+                title={`NFL News`}
+                news={data.news.articles}
+                limit={10}
+              />
             </LeagueContainerBox>
           </>
         ) : (

@@ -6,16 +6,16 @@ export default function NFLPlayByPlay({ data }: { data: any }) {
   const [userSelection, setUserSelection] = useState("scoringPlays");
 
   return (
-    <div className="bg-white rounded-xl w-full px-2">
+    <div className="w-full rounded-xl bg-white px-2">
       <div
-        style={{ width: "clamp(200px, 400px, 600px)" }}
-        className="flex justify-around gap-3 mt-5 mx-auto mb-2 rounded-2xl p-2 bg-[#edeef09c] text-center"
+        style={{ width: "clamp(100px, 300px, 600px)" }}
+        className="mx-auto mb-2 mt-5 flex justify-around gap-3 rounded-2xl bg-[#edeef09c] p-2 text-center"
       >
         <div
           onClick={() => setUserSelection("scoringPlays")}
           className={`${
             userSelection === "scoringPlays" && "button-active"
-          } flex-grow h-full text-xs cursor-pointer font-semibold`}
+          } h-full flex-grow cursor-pointer text-xs font-semibold`}
         >
           Scoring Plays
         </div>
@@ -23,7 +23,7 @@ export default function NFLPlayByPlay({ data }: { data: any }) {
           onClick={() => setUserSelection("allPlays")}
           className={`${
             userSelection === "allPlays" && "button-active"
-          } flex-grow h-full text-xs cursor-pointer font-semibold`}
+          } h-full flex-grow cursor-pointer text-xs font-semibold`}
         >
           All Plays
         </div>

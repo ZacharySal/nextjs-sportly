@@ -29,11 +29,11 @@ const setTeamImageSrc = (fullName: string, league: string) => {
 
 export default function Navbar() {
   return (
-    <nav className="w-full h-11 z-50 flex justify-start items-center flex-row sticky top-0 bg-[#2b2c2d]">
-      <div className="min-w-[12rem] h-full main-logo">
+    <nav className="sticky top-0 z-50 flex h-11 w-full flex-row items-center justify-start bg-[#2b2c2d]">
+      <div className="main-logo h-full min-w-[12rem]">
         <p className={`${russo.className} rr`}>SPORTLY</p>
       </div>
-      <div className="w-full flex flex-row h-full gap-4 justify-end pr-4 md:pr-0 md:justify-start md:ml-1 md:gap-20 ml-[-1rem]">
+      <div className="ml-[-1rem] flex h-full w-full flex-row justify-end gap-4 pr-4 md:ml-1 md:justify-start md:gap-20 md:pr-0">
         <NavbarOptions />
       </div>
     </nav>

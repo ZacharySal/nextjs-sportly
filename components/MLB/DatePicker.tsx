@@ -12,7 +12,12 @@ import Paper from "@mui/material/Paper";
 
 interface ButtonFieldProps
   extends UseDateFieldProps<any>,
-    BaseSingleInputFieldProps<any | null, any, FieldSection, DateValidationError> {
+    BaseSingleInputFieldProps<
+      any | null,
+      any,
+      FieldSection,
+      DateValidationError
+    > {
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -42,7 +47,7 @@ function ButtonField(props: ButtonFieldProps) {
 }
 
 export default function ButtonDatePicker(
-  props: Omit<DatePickerProps<any>, "open" | "onOpen" | "onClose">
+  props: Omit<DatePickerProps<any>, "open" | "onOpen" | "onClose">,
 ) {
   const [open, setOpen] = React.useState(false);
 

@@ -1,8 +1,8 @@
+import { GameData } from "@/types";
 import Image from "next/image";
-import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
-import { nameExceptions } from "../lib/constants";
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("en-US", {
@@ -11,22 +11,23 @@ const formatDate = (date: string) => {
   });
 };
 
-export default function InjuryReport({ data, league }: { data: any; league: string }) {
+export default function InjuryReport({ data }: { data: GameData }) {
+  console.log(data.gameData.injuries);
   if (
     data.gameData.injuries[0].injuries.length === 0 &&
     data.gameData.injuries[1].injuries.length === 0
   )
     return null;
   return (
-    <div className="w-full bg-white p-3 flex flex-col gap-3 rounded-xl">
-      <p className="font-semibold text-[14px] border-b border-dotted pb-3 border-b-[rgba(0,0,0,0.2)]">
+    <div className="flex w-full flex-col gap-3 rounded-xl bg-white p-3">
+      <p className="border-b border-dotted border-b-[rgba(0,0,0,0.2)] pb-3 text-[14px] font-semibold">
         Injury Report
       </p>
       {data.gameData.injuries.map((team: any) => (
         <React.Fragment key={uuidv4()}>
           {team.injuries.length > 0 && (
             <div key={uuidv4()} className="flex flex-col gap-1">
-              <div className="flex flex-row gap-1 items-center mb-1">
+              <div className="mb-1 flex flex-row items-center gap-1">
                 <Image
                   width={team.team.logos[0].width}
                   height={team.team.logos[0].height}
@@ -35,11 +36,13 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
                   className="w-6 object-contain"
                   alt="team logo"
                 />
-                <p className="opacity-80 font-[600] text-sm">{team.team.displayName}</p>
+                <p className="text-sm font-[600] opacity-80">
+                  {team.team.displayName}
+                </p>
               </div>
-              <table className="table misc-table">
+              <table className="misc-table table">
                 <thead>
-                  <tr className="text-[11px] table-header">
+                  <tr className="table-header text-[11px]">
                     <th className="pl-1 text-[11px]" colSpan={2} align="left">
                       NAME, POS
                     </th>
@@ -54,18 +57,24 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
                 <tbody>
                   {team.injuries.map((player: any) => (
                     <tr key={uuidv4()} className="text-[12px]">
-                      <td className="pl-1 injury-name" align="left" colSpan={2}>
-                        <span className="text-[#06c] font-[300]">
-                          {player.athlete.displayName}{" "}
+                      <td className="injury-name pl-1" align="left" colSpan={2}>
+                        <span className="font-[300] text-[#06c]">
+                          {player?.athlete?.fullName || "Unspecified Athlete"}{" "}
                         </span>
                         <span className="text-[#6c6d6f]">
-                          {player.athlete.position.abbreviation}
+                          {player?.athlete?.position?.abbreviation}
                         </span>
                       </td>
-                      <td align="right" className="text-[#6c6d6f] uppercase pr-1">
-                        {player.status}
+                      <td
+                        align="right"
+                        className="pr-1 uppercase text-[#6c6d6f]"
+                      >
+                        {player?.status}
                       </td>
-                      <td className="pr-1 injury-date text-[#6c6d6f]" align="right">
+                      <td
+                        className="injury-date pr-1 text-[#6c6d6f]"
+                        align="right"
+                      >
                         {formatDate(player.date)}
                       </td>
                     </tr>
@@ -94,7 +103,7 @@ export default function InjuryReport({ data, league }: { data: any; league: stri
       ))}
       <Link
         href={""}
-        className="text-center w-full h-full text-xs text-[#06c] py-1 cursor-pointer font-semibold anchor-link"
+        className="anchor-link h-full w-full cursor-pointer py-1 text-center text-xs font-semibold text-[#06c]"
       >
         Full Injury Report
       </Link>

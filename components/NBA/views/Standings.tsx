@@ -11,14 +11,20 @@ export default function Standings({ data }: { data: any }) {
 
   const desktopView = () => (
     <>
-      <LeagueStandings data={data.standingsData.content.standings} league="nba" />
+      <LeagueStandings
+        data={data.standingsData.content.standings}
+        league="nba"
+      />
       <Articles title={`NBA News`} news={data.newsData.articles} limit={5} />
     </>
   );
 
   const mobileView = () => (
     <>
-      <LeagueStandings data={data.standingsData.content.standings} league="nba" />
+      <LeagueStandings
+        data={data.standingsData.content.standings}
+        league="nba"
+      />
     </>
   );
 
