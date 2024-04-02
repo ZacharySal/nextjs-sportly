@@ -31,9 +31,9 @@ export default function NFLGameHeader({
                   className="game-header-logo-wrapper game-header-logo-wrapper--left left-0 mr-10 xl:left-[80px] 2xl:left-[-150px]"
                 >
                   <Image
-                    src={awayTeam.team.logos[3].href}
-                    width={awayTeam.team.logos[3].width}
-                    height={awayTeam.team.logos[3].height}
+                    src={awayTeam?.team?.logos?.[3]?.href ?? ""}
+                    width={awayTeam?.team?.logos?.[3]?.width ?? "100"}
+                    height={awayTeam?.team?.logos?.[3]?.height ?? "100"}
                     alt="away team logo"
                     className="game-header-logo--left w-44 object-cover"
                   />

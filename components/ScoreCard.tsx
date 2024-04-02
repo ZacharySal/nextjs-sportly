@@ -1,9 +1,9 @@
 "use client";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
-import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
+import useSWR from "swr";
 import { v4 } from "uuid";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -691,9 +691,9 @@ export default function ScoreCard({
             {data["gamepackageJSON"]["videos"].length === 0 &&
               typeof data.gamepackageJSON.article === "undefined" && (
                 <div className="">
-                  <p className="text-[11px] font-[600] opacity-70">{`${game.venue.fullName}`}</p>
-                  <p className="opacity-60] text-[11px]">{`${game.venue.address.city}, ${
-                    game.venue.address?.state || ""
+                  <p className="text-[11px] font-[600] opacity-70">{`${game?.venue?.fullName ?? "Unknown location"}`}</p>
+                  <p className="opacity-60] text-[11px]">{`${game?.venue?.address?.city ?? "Unknown location"}, ${
+                    game?.venue?.address?.state ?? ""
                   }`}</p>
                 </div>
               )}

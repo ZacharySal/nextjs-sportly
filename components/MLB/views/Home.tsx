@@ -1,20 +1,20 @@
 "use client";
 
+import LeagueContainerBox from "@/components/LeagueContainerBox";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Articles from "../../Articles";
 import LeagueUserSelection from "../../LeagueUserSelection";
 import Loading from "../../Loading";
-import MLBScoreboard from "../MLBScoreboard";
 import useHasHydrated from "../../hooks/useHasHyrdated";
-import LeagueContainerBox from "@/components/LeagueContainerBox";
+import MLBScoreboard from "../MLBScoreboard";
 
-export default function Home({ data }: { data: any }) {
+export default function Home({ data, date }: { data: any; date?: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
   const pageHydrated = useHasHydrated();
 
   const desktopView = () => (
     <>
-      <MLBScoreboard initialScoreData={data.scoreData} />
+      <MLBScoreboard initialScoreData={data.scoreData} date={date} />
       <Articles
         title={`MLB News`}
         news={data.scoreData.news.articles}
@@ -23,7 +23,9 @@ export default function Home({ data }: { data: any }) {
     </>
   );
 
-  const mobileView = () => <MLBScoreboard initialScoreData={data.scoreData} />;
+  const mobileView = () => (
+    <MLBScoreboard initialScoreData={data.scoreData} date={date} />
+  );
 
   if (!pageHydrated) return <Loading />;
   else

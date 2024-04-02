@@ -1,15 +1,16 @@
 "use client";
 
 // import Paper from "@mui/material/Paper";
+import { allNFLDates } from "@/lib/constants";
 import { useEffect, useState } from "react";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import { allNFLDates } from "@/lib/constants";
 // import CalendarMonthOutlined from "@mui/icons-material/CalendarMonthOutlined";
 import Image from "next/image";
-import ScoreCard from "../ScoreCard";
+import Link from "next/link";
 import Loading from "../Loading";
+import ScoreCard from "../ScoreCard";
 import NFLCalendar from "./NFLCalendar";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -43,10 +44,16 @@ function getDates(selectedYear: string) {
   return allWeeks;
 }
 
-function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
+function NFLScoreboard({
+  initialScoreData,
+  date,
+}: {
+  initialScoreData: any;
+  date?: string;
+}) {
   let groupedGames: any;
 
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const [showDateSelector, setShowDateSelector] = useState(false);
 
@@ -56,7 +63,15 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
     week: initialScoreData.content.sbData.week.number,
   };
 
-  const [selectedWeekInfo, setSelectedWeekInfo] = useState(currentWeekInfo);
+  const [selectedWeekInfo, setSelectedWeekInfo] = useState(
+    date
+      ? {
+          year: date.substring(0, 4),
+          type: date.substring(5, 6),
+          week: date.substring(7),
+        }
+      : currentWeekInfo,
+  );
 
   const [currentYearIndex, setCurrentYearIndex] = useState(
     allNFLDates.map((year) => year.year).indexOf(String(currentWeekInfo.year)),
@@ -138,15 +153,9 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
             />
             {dateElements.map((week: any) => {
               return (
-                <div
+                <Link
                   key={uuidv4()}
-                  onClick={() => {
-                    setSelectedWeekInfo({
-                      ...selectedWeekInfo,
-                      type: week.seasonType,
-                      week: week.value,
-                    });
-                  }}
+                  href={`/nfl/${selectedWeekInfo.year}-${week.seasonType}-${week.value}`}
                   style={{
                     opacity:
                       week.value == selectedWeekInfo.week &&
@@ -158,7 +167,7 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
                 >
                   <p className="text-[13px] font-semibold">{week.label}</p>
                   <p className="text-[11px]">{week.dateRange}</p>
-                </div>
+                </Link>
               );
             })}
             <div className="flex gap-4">
@@ -195,30 +204,11 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
                     <path d="M81.61,4.73C81.61,2.12,84.19,0,87.38,0s5.77,2.12,5.77,4.73V25.45c0,2.61-2.58,4.73-5.77,4.73s-5.77-2.12-5.77-4.73V4.73ZM66.11,105.66c-.8,0-.8-10.1,0-10.1H81.9c.8,0,.8,10.1,0,10.1ZM15.85,68.94c-.8,0-.8-10.1,0-10.1H31.64c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H56.77c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H81.9c.8,0,.8,10.1,0,10.1Zm25.14-10.1H107c.8,0,.8,10.1,0,10.1H91.25c-.8,0-.8-10.1,0-10.1ZM15.85,87.3c-.8,0-.8-10.1,0-10.1H31.64c.8,0,.8,10.1,0,10.1ZM41,87.3c-.8,0-.8-10.1,0-10.1H56.77c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H81.9c.8,0,.8,10.1,0,10.1Zm25.14,0c-.8,0-.8-10.1,0-10.1H107c.8,0,.8,10.1,0,10.1Zm-75.4,18.36c-.8,0-.8-10.1,0-10.1H31.64c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H56.77c.8,0,.8,10.1,0,10.1ZM29.61,4.73C29.61,2.12,32.19,0,35.38,0s5.77,2.12,5.77,4.73V25.45c0,2.61-2.58,4.73-5.77,4.73s-5.77-2.12-5.77-4.73V4.73ZM6.4,43.47H116.47v-22a3,3,0,0,0-.86-2.07,2.92,2.92,0,0,0-2.07-.86H103a3.2,3.2,0,0,1,0-6.4h10.55a9.36,9.36,0,0,1,9.33,9.33v92.09a9.36,9.36,0,0,1-9.33,9.33H9.33A9.36,9.36,0,0,1,0,113.55V21.47a9.36,9.36,0,0,1,9.33-9.33H20.6a3.2,3.2,0,1,1,0,6.4H9.33a3,3,0,0,0-2.07.86,2.92,2.92,0,0,0-.86,2.07v22Zm110.08,6.41H6.4v63.67a3,3,0,0,0,.86,2.07,2.92,2.92,0,0,0,2.07.86H113.55a3,3,0,0,0,2.07-.86,2.92,2.92,0,0,0,.86-2.07V49.88ZM50.43,18.54a3.2,3.2,0,0,1,0-6.4H71.92a3.2,3.2,0,1,1,0,6.4Z" />
                   </svg>
                 </div>
-
-                {/* <Image
-                  onClick={() =>
-                    setShowDateSelector((showDateSelector) => !showDateSelector)
-                  }
-                  src={"svgs/date-icon.svg"}
-                  width={100}
-                  height={100}
-                  alt={"date picker"}
-                  style={{
-                    fill: showDateSelector
-                      ? "#3e82d6 !important"
-                      : "red !important",
-                    cursor: "pointer",
-                  }}
-                  className="w-7 cursor-pointer"
-                /> */}
                 {showDateSelector && (
                   <NFLCalendar
                     currentYearIndex={currentYearIndex}
                     selectedWeekInfo={selectedWeekInfo}
-                    setSelectedWeekInfo={setSelectedWeekInfo}
                     setShowDateSelector={setShowDateSelector}
-                    setCurrentYearIndex={setCurrentYearIndex}
                   />
                 )}
               </div>

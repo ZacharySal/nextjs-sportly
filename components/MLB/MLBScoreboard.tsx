@@ -1,15 +1,20 @@
 "use client";
 
+import {
+  formatDate,
+  getFullDate,
+  getMonthAndDate,
+  getWeekDay,
+  mod,
+} from "@/lib/utils";
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import ScoreCard from "../ScoreCard";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
-// import ButtonDatePicker from "../MLB/DatePicker";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import useWindowDimensions from "../hooks/useWindowDimensions";
 import Loading from "../Loading";
-import Image from "next/image";
+import ScoreCard from "../ScoreCard";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -24,51 +29,21 @@ const getDaysArray = function (start: any, end: any) {
   return arr;
 };
 
-function mod(n: number, m: number) {
-  return ((n % m) + m) % m;
-}
-
-function formatDate(date: string) {
-  const year = date.substring(0, 4);
-  const month = date.substring(4, 6);
-  const day = date.substring(6, 8);
-  return year + "-" + month + "-" + day;
-}
-
-function getWeekDay(date: string) {
-  return new Date(date + "T00:00:00Z").toLocaleDateString(undefined, {
-    timeZone: "UTC",
-    weekday: "short",
-  });
-}
-
-function getMonthAndDate(date: string) {
-  return new Date(date + "T00:00:00Z").toLocaleDateString(undefined, {
-    timeZone: "UTC",
-    month: "short",
-    day: "numeric",
-  });
-}
-
-function getFullDate(date: string) {
-  const newDate = new Date(date).toLocaleDateString(undefined, {
-    timeZone: "UTC",
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-  return newDate;
-}
-
 const baseFetchUrl =
   "https://cdn.espn.com/core/mlb/scoreboard?xhr=1&limit=50&date=";
 
-function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
-  const { height, width } = useWindowDimensions();
+function MLBScoreboard({
+  initialScoreData,
+  date,
+}: {
+  initialScoreData: any;
+  date?: string;
+}) {
+  const { width } = useWindowDimensions();
 
-  const [selectedYear, setSelectedYear] = useState(
-    initialScoreData?.content?.dateParams?.date.substring(0, 4),
+  const selectedYear = initialScoreData?.content?.dateParams?.date.substring(
+    0,
+    4,
   );
 
   const pastYear = Number(selectedYear) - 1;
@@ -77,14 +52,15 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
     new Date(`${pastYear}-01-01`),
     new Date(`${selectedYear}-12-31`),
   );
+
   const formattedDaysInYear = daysInYear.map((v: any) => {
     return v.toISOString().slice(0, 10);
   });
 
   const [selectedDate, setSelectedDate] = useState(
-    formatDate(initialScoreData?.content?.dateParams?.date),
+    date ?? formatDate(initialScoreData?.content?.dateParams?.date),
   );
-  const [calendarValue, setCalendarValue] = useState("");
+
   const [currentIndex, setCurrentIndex] = useState(
     formattedDaysInYear.indexOf(
       formatDate(initialScoreData?.content?.dateParams?.date),
@@ -108,20 +84,9 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
     const dateElements = [];
     const maxEls = Math.min(Math.floor(width / 100), 7);
     for (let i = -1; i <= maxEls - 2; i++) {
-      dateElements.push(formattedDaysInYear[mod(currentIndex + i, 365)]);
+      dateElements.push(formattedDaysInYear[mod(currentIndex + i, 730)]);
     }
     return dateElements;
-  }
-
-  function setNewCalendarDate(unformattedDate: string) {
-    const formattedDate = new Date(unformattedDate);
-    const year = formattedDate.getFullYear().toString();
-    let month = (formattedDate.getMonth() + 1).toString();
-    month = month.length === 1 ? "0" + month[0] : month;
-    let date = formattedDate.getDate().toString();
-    date = date.length === 1 ? "0" + date[0] : date;
-    setSelectedYear(year);
-    setSelectedDate(year + "-" + month + "-" + date);
   }
 
   function dateSelector() {
@@ -147,9 +112,9 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
               }
             />
             {getDateElements().map((date: string) => (
-              <div
+              <Link
                 key={uuidv4()}
-                onClick={() => setSelectedDate(date)}
+                href={`/mlb/${date}`}
                 style={{ opacity: date === selectedDate ? 1 : 0.5 }}
                 className="jusitfy-center flex flex-shrink-0 cursor-pointer flex-col items-center p-2 font-semibold"
               >
@@ -157,7 +122,7 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
                 <div className="flex flex-row items-center justify-center gap-1">
                   <p className="text-xs">{getMonthAndDate(date)}</p>
                 </div>
-              </div>
+              </Link>
             ))}
             <Image
               src="/icons/chevron-right.svg"
@@ -171,10 +136,6 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
               }
             />
           </div>
-          {/* <ButtonDatePicker
-            value={calendarValue}
-            onChange={(newValue) => setNewCalendarDate(newValue["$d"])}
-          /> */}
         </div>
       </div>
     );
@@ -182,15 +143,12 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
 
   if (isLoading)
     return (
-      // <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="mt-[-0.5rem] flex w-full flex-col items-center justify-center py-2 md:justify-start">
         {dateSelector()}
         <Loading />
       </div>
-      // </LocalizationProvider>
     );
   return (
-    // <LocalizationProvider dateAdapter={AdapterDayjs}>
     <div className="mt-[-0.5rem] flex w-full flex-col items-center justify-center py-2 md:justify-start">
       {dateSelector()}
       {data.content.sbData.events.length !== 0 && (
@@ -211,7 +169,6 @@ function MLBScoreboard({ initialScoreData }: { initialScoreData: any }) {
         <p className="mt-5 w-full text-center">No games to display</p>
       )}
     </div>
-    // </LocalizationProvider>
   );
 }
 

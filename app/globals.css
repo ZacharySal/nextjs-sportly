@@ -342,12 +342,12 @@ th {
 
 .date-selector {
   position: absolute;
-  width: max-content;
+  width: 300px;
   height: max-content;
   justify-content: center;
   align-items: center;
   background-color: white;
-  padding: 20px 30px;
+  padding: 20px 10px 10px 10px;
   right: 0;
   bottom: 0;
   top: 6rem;

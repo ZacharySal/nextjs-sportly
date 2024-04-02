@@ -12,7 +12,6 @@ const formatDate = (date: string) => {
 };
 
 export default function InjuryReport({ data }: { data: GameData }) {
-  console.log(data.gameData.injuries);
   if (
     data.gameData.injuries[0].injuries.length === 0 &&
     data.gameData.injuries[1].injuries.length === 0

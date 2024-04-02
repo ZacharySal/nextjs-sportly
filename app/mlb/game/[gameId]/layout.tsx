@@ -11,7 +11,7 @@ export default async function Layout({
   const data = await getMLBGameData(params.gameId);
   return (
     <>
-      <GameHeader data={data} league="nfl" />
+      <GameHeader data={data} league="mlb" />
       {children}
     </>
   );

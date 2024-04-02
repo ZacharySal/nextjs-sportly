@@ -1,12 +1,12 @@
 "use client";
 
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Image from "next/image";
 import {
   mlbDivisonTeams,
   nbaDivisionTeams,
   nflDivisonTeams,
 } from "@/lib/constants";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function GameHeader({
@@ -47,9 +47,9 @@ export default function GameHeader({
                   className="game-header-logo-wrapper game-header-logo-wrapper--left mr-10 md:left-0 xl:left-[150px] 2xl:left-[-150px]"
                 >
                   <Image
-                    src={awayTeam.team.logos[3].href}
-                    width={awayTeam.team.logos[3].width}
-                    height={awayTeam.team.logos[3].height}
+                    src={awayTeam?.team?.logos?.[3]?.href ?? ""}
+                    width={awayTeam?.team?.logos?.[3]?.width ?? "100"}
+                    height={awayTeam?.team?.logos?.[3]?.height ?? "100"}
                     alt="away team logo"
                     className="game-header-logo--left w-44 object-cover"
                   />
