@@ -663,11 +663,11 @@ export default function ScoreCard({
                 </Link>
                 <div className="arrow sm-arrow"></div>
                 <p className="text-over-video">
-                  {data["gamepackageJSON"]["videos"][0].description.substring(
+                  {data["gamepackageJSON"]["videos"][0]?.description?.substring(
                     0,
                     60,
                   )}
-                  {data["gamepackageJSON"]["videos"][0].description.length >
+                  {data["gamepackageJSON"]["videos"][0]?.description?.length >
                     60 && "..."}
                 </p>
               </div>
