@@ -26,7 +26,7 @@ export default function LeagueStandings({
                 <table className="border-collapse">
                   <thead className="table-fixed-left-thead table-header">
                     <React.Fragment key={uuidv4()}>
-                      <tr className="table-header">
+                      <tr className="table-header border-r">
                         <th className="uppercase" align="left">
                           Teams
                         </th>
@@ -61,7 +61,11 @@ export default function LeagueStandings({
                       <tr className="table-header">
                         {conference.standings.entries[0].stats.map(
                           (statType: any) => (
-                            <th key={uuidv4()} align="center">
+                            <th
+                              key={uuidv4()}
+                              className="whitespace-nowrap"
+                              align="center"
+                            >
                               {statType.shortDisplayName}
                             </th>
                           ),
