@@ -69,7 +69,7 @@ export default function ScoreCard({
           <div className="flex flex-row items-center gap-2">
             <Image
               src={
-                data.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]
+                data.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]
                   ?.athlete?.headshot?.href
               }
               width={100}
@@ -80,21 +80,21 @@ export default function ScoreCard({
             />
             <div className="flex flex-col">
               <p className="text-xs">
-                {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.displayName} `}
-                <span className="opacity-60">{`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game?.competitors[1]?.team?.abbreviation}`}</span>
+                {`${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.athlete?.displayName} `}
+                <span className="opacity-60">{`${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.athlete?.position?.abbreviation} - ${game?.competitors[1]?.team?.abbreviation}`}</span>
               </p>
               <div className="flex flex-row gap-2">
                 <p className="text-xs">
-                  {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[0]?.displayValue}`}
-                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[0]?.shortDisplayName}`}</span>
+                  {`${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics?.[0]?.displayValue}`}
+                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics?.[0]?.shortDisplayName}`}</span>
                 </p>
                 <p className="text-xs">
-                  {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[1]?.displayValue}`}
-                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[1]?.shortDisplayName}`}</span>
+                  {`${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics[1]?.displayValue}`}
+                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics[1]?.shortDisplayName}`}</span>
                 </p>
                 <p className="text-xs">
-                  {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[2]?.displayValue}`}
-                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[2]?.shortDisplayName}`}</span>
+                  {`${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics[2]?.displayValue}`}
+                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics[2]?.shortDisplayName}`}</span>
                 </p>
               </div>
             </div>
