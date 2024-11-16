@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
 import Image from "next/image";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const setTeamImageSrc = (teamName: string) => {
   try {
@@ -53,7 +53,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
           <div
             onClick={() => setSelectedQuarter(3)}
             className={`${
-              selectedQuarter === 2 && "selection-active"
+              selectedQuarter === 3 && "selection-active"
             } nav-selection sub-selection flex-grow font-bold`}
           >
             3rd
@@ -64,7 +64,7 @@ export default function NBAPlaybyPlay({ data }: { data: any }) {
           <div
             onClick={() => setSelectedQuarter(4)}
             className={`${
-              selectedQuarter === 2 && "selection-active"
+              selectedQuarter === 4 && "selection-active"
             } nav-selection sub-selection flex-grow font-bold`}
           >
             4th

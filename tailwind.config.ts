@@ -20,6 +20,7 @@ const config: Config = {
         CAROLINA_BLUE: "#0085CA",
       },
       screens: {
+        xxs: "320px",
         xs: "400px",
         sm: "550px",
         md: "800px",

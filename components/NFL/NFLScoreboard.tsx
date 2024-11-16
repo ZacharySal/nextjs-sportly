@@ -1,15 +1,17 @@
 "use client";
 
 // import Paper from "@mui/material/Paper";
+import { allNFLDates } from "@/lib/constants";
 import { useEffect, useState } from "react";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import { allNFLDates } from "@/lib/constants";
 // import CalendarMonthOutlined from "@mui/icons-material/CalendarMonthOutlined";
 import Image from "next/image";
-import ScoreCard from "../ScoreCard";
+import Link from "next/link";
 import Loading from "../Loading";
+import ScoreCard from "../ScoreCard";
+import NFLCalendar from "./NFLCalendar";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -42,34 +44,48 @@ function getDates(selectedYear: string) {
   return allWeeks;
 }
 
-function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
+function NFLScoreboard({
+  initialScoreData,
+  date,
+}: {
+  initialScoreData: any;
+  date?: string;
+}) {
   let groupedGames: any;
 
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const [showDateSelector, setShowDateSelector] = useState(false);
 
   const currentWeekInfo = {
-    year: initialScoreData.content.sbData.season.year,
-    type: initialScoreData.content.sbData.season.type,
-    week: initialScoreData.content.sbData.week.number,
+    year: initialScoreData?.content.sbData.season.year,
+    type: initialScoreData?.content.sbData.season.type,
+    week: initialScoreData?.content.sbData.week.number,
   };
 
-  const [selectedWeekInfo, setSelectedWeekInfo] = useState(currentWeekInfo);
+  const [selectedWeekInfo, setSelectedWeekInfo] = useState(
+    date
+      ? {
+          year: date.substring(0, 4),
+          type: date.substring(5, 6),
+          week: date.substring(7),
+        }
+      : currentWeekInfo,
+  );
 
   const [currentYearIndex, setCurrentYearIndex] = useState(
     allNFLDates.map((year) => year.year).indexOf(String(currentWeekInfo.year)),
   );
 
-  const calendarSelectedYear = allNFLDates[currentYearIndex].year;
+  const calendarSelectedYear = allNFLDates[currentYearIndex]?.year;
 
   const allDates = getDates(calendarSelectedYear);
 
   const [currentWeekIndex, setCurrentWeekIndex] = useState(
     allDates.findIndex(
       (week: any) =>
-        week.value == selectedWeekInfo.week &&
-        week.seasonType == selectedWeekInfo.type,
+        week?.value == selectedWeekInfo.week &&
+        week?.seasonType == selectedWeekInfo.type,
     ),
   );
 
@@ -77,8 +93,8 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
     setCurrentWeekIndex(
       allDates.findIndex(
         (week: any) =>
-          week.value == selectedWeekInfo.week &&
-          week.seasonType == selectedWeekInfo.type,
+          week?.value == selectedWeekInfo.week &&
+          week?.seasonType == selectedWeekInfo.type,
       ),
     );
   }, [selectedWeekInfo]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -119,12 +135,12 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
 
   function nflWeekSelector() {
     return (
-      <div className="relative z-10 mb-3 w-full rounded-xl bg-white p-2 md:p-4">
-        <p className="mb-1 text-xl font-semibold opacity-80 md:text-2xl">
+      <div className="z-1 relative mb-3 w-full rounded-xl bg-white p-3">
+        <p className="mb-1 text-xl font-bold opacity-80 md:text-2xl">
           NFL Scoreboard
         </p>
-        <div className="flex w-full items-center gap-3 pl-2">
-          <div className="flex w-full flex-row items-center justify-between overflow-x-auto">
+        <div className="flex w-full items-center gap-3">
+          <div className="flex w-full flex-row items-center justify-between ">
             <Image
               alt="left icon"
               src="/icons/chevron-left.svg"
@@ -133,41 +149,70 @@ function NFLScoreboard({ initialScoreData }: { initialScoreData: any }) {
               onClick={() =>
                 setCurrentWeekIndex(mod(currentWeekIndex - 3, allDates.length))
               }
+              className="cursor-pointer"
             />
             {dateElements.map((week: any) => {
               return (
-                <div
+                <Link
                   key={uuidv4()}
-                  onClick={() => {
-                    setSelectedWeekInfo({
-                      ...selectedWeekInfo,
-                      type: week.seasonType,
-                      week: week.value,
-                    });
-                  }}
+                  href={`/nfl/${selectedWeekInfo.year}-${week?.seasonType}-${week?.value}`}
                   style={{
                     opacity:
-                      week.value == selectedWeekInfo.week &&
-                      week.seasonType == selectedWeekInfo.type
+                      week?.value == selectedWeekInfo.week &&
+                      week?.seasonType == selectedWeekInfo.type
                         ? "1"
                         : "0.3",
                   }}
                   className="jusitfy-center flex flex-shrink-0 cursor-pointer flex-col items-center p-2 font-semibold"
                 >
-                  <p className="text-[13px] font-semibold">{week.label}</p>
-                  <p className="text-[11px]">{week.dateRange}</p>
-                </div>
+                  <p className="text-[13px] font-semibold">{week?.label}</p>
+                  <p className="text-[11px]">{week?.dateRange}</p>
+                </Link>
               );
             })}
-            <Image
-              onClick={() =>
-                setCurrentWeekIndex(mod(currentWeekIndex + 3, allDates.length))
-              }
-              width="25"
-              height="25"
-              alt="right icon"
-              src="/icons/chevron-right.svg"
-            />
+            <div className="flex gap-4">
+              <Image
+                onClick={() =>
+                  setCurrentWeekIndex(
+                    mod(currentWeekIndex + 3, allDates.length),
+                  )
+                }
+                width="25"
+                height="25"
+                alt="right icon"
+                src="/icons/chevron-right.svg"
+                className="cursor-pointer"
+              />
+              <div
+                style={{ boxShadow: "-5px 0px 10px 1px rgba(0,0,0,0.15)" }}
+                className="z-60 flex grow-0 items-center justify-center rounded-sm bg-white p-3"
+              >
+                <div className="w-[24px]">
+                  <svg
+                    id="calendar"
+                    fill={showDateSelector ? "#3e82d6" : "black"}
+                    style={{ cursor: "pointer" }}
+                    xmlns="http://www.w3.org/2000/svg"
+                    onClick={() =>
+                      setShowDateSelector(
+                        (showDateSelector) => !showDateSelector,
+                      )
+                    }
+                    viewBox="0 0 122.88 122.89"
+                  >
+                    <title>date</title>
+                    <path d="M81.61,4.73C81.61,2.12,84.19,0,87.38,0s5.77,2.12,5.77,4.73V25.45c0,2.61-2.58,4.73-5.77,4.73s-5.77-2.12-5.77-4.73V4.73ZM66.11,105.66c-.8,0-.8-10.1,0-10.1H81.9c.8,0,.8,10.1,0,10.1ZM15.85,68.94c-.8,0-.8-10.1,0-10.1H31.64c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H56.77c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H81.9c.8,0,.8,10.1,0,10.1Zm25.14-10.1H107c.8,0,.8,10.1,0,10.1H91.25c-.8,0-.8-10.1,0-10.1ZM15.85,87.3c-.8,0-.8-10.1,0-10.1H31.64c.8,0,.8,10.1,0,10.1ZM41,87.3c-.8,0-.8-10.1,0-10.1H56.77c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H81.9c.8,0,.8,10.1,0,10.1Zm25.14,0c-.8,0-.8-10.1,0-10.1H107c.8,0,.8,10.1,0,10.1Zm-75.4,18.36c-.8,0-.8-10.1,0-10.1H31.64c.8,0,.8,10.1,0,10.1Zm25.13,0c-.8,0-.8-10.1,0-10.1H56.77c.8,0,.8,10.1,0,10.1ZM29.61,4.73C29.61,2.12,32.19,0,35.38,0s5.77,2.12,5.77,4.73V25.45c0,2.61-2.58,4.73-5.77,4.73s-5.77-2.12-5.77-4.73V4.73ZM6.4,43.47H116.47v-22a3,3,0,0,0-.86-2.07,2.92,2.92,0,0,0-2.07-.86H103a3.2,3.2,0,0,1,0-6.4h10.55a9.36,9.36,0,0,1,9.33,9.33v92.09a9.36,9.36,0,0,1-9.33,9.33H9.33A9.36,9.36,0,0,1,0,113.55V21.47a9.36,9.36,0,0,1,9.33-9.33H20.6a3.2,3.2,0,1,1,0,6.4H9.33a3,3,0,0,0-2.07.86,2.92,2.92,0,0,0-.86,2.07v22Zm110.08,6.41H6.4v63.67a3,3,0,0,0,.86,2.07,2.92,2.92,0,0,0,2.07.86H113.55a3,3,0,0,0,2.07-.86,2.92,2.92,0,0,0,.86-2.07V49.88ZM50.43,18.54a3.2,3.2,0,0,1,0-6.4H71.92a3.2,3.2,0,1,1,0,6.4Z" />
+                  </svg>
+                </div>
+                {showDateSelector && (
+                  <NFLCalendar
+                    currentYearIndex={currentYearIndex}
+                    selectedWeekInfo={selectedWeekInfo}
+                    setShowDateSelector={setShowDateSelector}
+                  />
+                )}
+              </div>
+            </div>
           </div>
           {/* <Paper elevation={1} className="relative bg-white p-3">
             <CalendarMonthOutlined

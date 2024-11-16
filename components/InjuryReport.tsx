@@ -1,9 +1,8 @@
-import Image from "next/image";
-import { v4 as uuidv4 } from "uuid";
-import Link from "next/link";
-import { nameExceptions } from "../lib/constants";
-import React from "react";
 import { GameData } from "@/types";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("en-US", {
@@ -59,17 +58,17 @@ export default function InjuryReport({ data }: { data: GameData }) {
                     <tr key={uuidv4()} className="text-[12px]">
                       <td className="injury-name pl-1" align="left" colSpan={2}>
                         <span className="font-[300] text-[#06c]">
-                          {player.athlete.displayName}{" "}
+                          {player?.athlete?.fullName || "Unspecified Athlete"}{" "}
                         </span>
                         <span className="text-[#6c6d6f]">
-                          {player.athlete.position.abbreviation}
+                          {player?.athlete?.position?.abbreviation}
                         </span>
                       </td>
                       <td
                         align="right"
                         className="pr-1 uppercase text-[#6c6d6f]"
                       >
-                        {player.status}
+                        {player?.status}
                       </td>
                       <td
                         className="injury-date pr-1 text-[#6c6d6f]"

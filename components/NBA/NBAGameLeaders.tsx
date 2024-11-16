@@ -107,12 +107,14 @@ export default function NBAGameLeaders({ data }: { data: any }) {
             </div>
           );
         })}
-        <Link
-          href={data.isGameStarted ? "boxscore" : ""}
-          className="anchor-link h-full w-full cursor-pointer py-1 text-center text-xs font-semibold text-[#06c]"
-        >
-          Full Box Score
-        </Link>
+        {data.isGameStarted && (
+          <Link
+            href="boxscore"
+            className="anchor-link h-full w-full cursor-pointer py-1 text-center text-xs font-semibold text-[#06c]"
+          >
+            Full Box Score
+          </Link>
+        )}
       </div>
     </div>
   );

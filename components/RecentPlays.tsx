@@ -23,9 +23,6 @@ export default function RecentPlays({
     (play) => play.team.id === data.awayTeam.team.id,
   );
 
-  console.log(plays);
-  console.log(awayTeamShootingPlays);
-
   const { homeTeamColor, awayTeamColor } = usePreferredColor(data);
 
   function getAthleteById(id: string) {

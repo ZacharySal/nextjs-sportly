@@ -38,7 +38,10 @@ export default function LeagueStandings({
                       {conference.groups.map((division: any) => (
                         <React.Fragment key={uuidv4()}>
                           <tr className="table-header">
-                            <th className="uppercase" align="left">
+                            <th
+                              className="min-w-[80px] border-r uppercase"
+                              align="left"
+                            >
                               {league === "nfl"
                                 ? division.name
                                 : getMLBDivisionName(division.name)}

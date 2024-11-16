@@ -1,16 +1,16 @@
 "use client";
 
+import LeagueContainerBox from "@/components/LeagueContainerBox";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import useSWR from "swr";
 import Articles from "../../Articles";
 import LeagueUserSelection from "../../LeagueUserSelection";
 import Loading from "../../Loading";
 import NFLScoreboard from "../NFLScoreboard";
-import useSWR from "swr";
-import LeagueContainerBox from "@/components/LeagueContainerBox";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default function Home() {
+export default function Home({ date }: { date?: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const { data, isLoading } = useSWR(
@@ -29,10 +29,10 @@ export default function Home() {
           <>
             <LeagueUserSelection userSelection={"scoreboard"} league="nfl" />
             <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
-              <NFLScoreboard initialScoreData={data} />
+              <NFLScoreboard initialScoreData={data} date={date} />
               <Articles
                 title={`NFL News`}
-                news={data.news.articles}
+                news={data?.news?.articles}
                 limit={10}
               />
             </LeagueContainerBox>
@@ -41,7 +41,7 @@ export default function Home() {
           <>
             <LeagueUserSelection userSelection={"scoreboard"} league="nfl" />
             <LeagueContainerBox isDesktopScreen={isDesktopScreen}>
-              <NFLScoreboard initialScoreData={data} />
+              <NFLScoreboard initialScoreData={data} date={date} />
             </LeagueContainerBox>
           </>
         )}

@@ -1,9 +1,9 @@
 "use client";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
-import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
+import useSWR from "swr";
 import { v4 } from "uuid";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -17,10 +17,6 @@ export default function ScoreCard({
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
 
   const game = gameInfo.competitions[0];
-
-  if (game.status.type.state !== "pre") {
-    console.log(game);
-  }
 
   const homeTeamName: string = game.competitors[0].team.shortDisplayName;
   const awayTeamName: string = game.competitors[1].team.shortDisplayName;
@@ -73,7 +69,7 @@ export default function ScoreCard({
           <div className="flex flex-row items-center gap-2">
             <Image
               src={
-                data.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]
+                data.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]
                   ?.athlete?.headshot?.href
               }
               width={100}
@@ -84,21 +80,21 @@ export default function ScoreCard({
             />
             <div className="flex flex-col">
               <p className="text-xs">
-                {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.displayName} `}
-                <span className="opacity-60">{`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.athlete?.position?.abbreviation} - ${game?.competitors[1]?.team?.abbreviation}`}</span>
+                {`${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.athlete?.displayName} `}
+                <span className="opacity-60">{`${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.athlete?.position?.abbreviation} - ${game?.competitors[1]?.team?.abbreviation}`}</span>
               </p>
               <div className="flex flex-row gap-2">
                 <p className="text-xs">
-                  {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[0]?.displayValue}`}
-                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[0]?.shortDisplayName}`}</span>
+                  {`${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics?.[0]?.displayValue}`}
+                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics?.[0]?.shortDisplayName}`}</span>
                 </p>
                 <p className="text-xs">
-                  {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[1]?.displayValue}`}
-                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[1]?.shortDisplayName}`}</span>
+                  {`${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics[1]?.displayValue}`}
+                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics[1]?.shortDisplayName}`}</span>
                 </p>
                 <p className="text-xs">
-                  {`${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[2]?.displayValue}`}
-                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders[0]?.leaders[0]?.statistics[2]?.shortDisplayName}`}</span>
+                  {`${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics[2]?.displayValue}`}
+                  <span className="text-[10px] opacity-60">{` ${data?.gamepackageJSON?.leaders[1]?.leaders?.[0]?.leaders?.[0]?.statistics[2]?.shortDisplayName}`}</span>
                 </p>
               </div>
             </div>
@@ -141,7 +137,7 @@ export default function ScoreCard({
       );
     } else if (league === "NFL") {
       return (
-        <div className="flex flex-col justify-start gap-3">
+        <div className="flex flex-col justify-start gap-1">
           <div className="flex flex-row items-center gap-2">
             <Image
               src={
@@ -474,6 +470,12 @@ export default function ScoreCard({
             </div>
           </div>
         )}
+
+        {isGameNoteAvailable && (
+          <p className="mt-[-0.25rem] text-xs opacity-60">
+            {game.notes[0]?.headline}
+          </p>
+        )}
       </div>
     </Link>
   );
@@ -581,6 +583,9 @@ export default function ScoreCard({
                 )}
             </div>
           </Link>
+          {isGameNoteAvailable && (
+            <p className="mt-2 text-xs opacity-60">{game.notes[0]?.headline}</p>
+          )}
         </div>
       </div>
 
@@ -658,11 +663,11 @@ export default function ScoreCard({
                 </Link>
                 <div className="arrow sm-arrow"></div>
                 <p className="text-over-video">
-                  {data["gamepackageJSON"]["videos"][0].description.substring(
+                  {data["gamepackageJSON"]["videos"][0]?.description?.substring(
                     0,
                     60,
                   )}
-                  {data["gamepackageJSON"]["videos"][0].description.length >
+                  {data["gamepackageJSON"]["videos"][0]?.description?.length >
                     60 && "..."}
                 </p>
               </div>
@@ -686,9 +691,9 @@ export default function ScoreCard({
             {data["gamepackageJSON"]["videos"].length === 0 &&
               typeof data.gamepackageJSON.article === "undefined" && (
                 <div className="">
-                  <p className="text-[11px] font-[600] opacity-70">{`${game.venue.fullName}`}</p>
-                  <p className="opacity-60] text-[11px]">{`${game.venue.address.city}, ${
-                    game.venue.address?.state || ""
+                  <p className="text-[11px] font-[600] opacity-70">{`${game?.venue?.fullName ?? "Unknown location"}`}</p>
+                  <p className="opacity-60] text-[11px]">{`${game?.venue?.address?.city ?? "Unknown location"}, ${
+                    game?.venue?.address?.state ?? ""
                   }`}</p>
                 </div>
               )}
@@ -703,7 +708,9 @@ export default function ScoreCard({
             {typeof game.competitors[1].leaders !== "undefined" &&
               typeof game.competitors[0].leaders !== "undefined" && (
                 <div className="flex h-full flex-col justify-start gap-1">
-                  <p className="text-[12px] opacity-60">PLAYERS TO WATCH</p>
+                  <p className="text-[12px] font-[400] opacity-60">
+                    PLAYERS TO WATCH
+                  </p>
                   {/* away team point leader */}
                   <div className="flex flex-row items-center gap-2">
                     <Image
@@ -746,7 +753,7 @@ export default function ScoreCard({
                     <Image
                       src={
                         data?.gamepackageJSON?.leaders?.[0].leaders?.[0]
-                          .leaders?.[0]?.athlete?.headshot.href
+                          ?.leaders?.[0]?.athlete?.headshot.href
                       }
                       width={100}
                       height={100}
@@ -756,23 +763,23 @@ export default function ScoreCard({
                     />
                     <div className="flex flex-col">
                       <p className="text-xs">
-                        {`${data?.gamepackageJSON?.leaders?.[0].leaders?.[0]?.leaders?.[0]?.athlete?.fullName} `}
-                        <span className="opacity-60">{`${data?.gamepackageJSON?.leaders?.[0]?.leaders?.[0].leaders?.[0]?.athlete?.position?.abbreviation} - ${game?.competitors[0]?.team?.abbreviation}`}</span>
+                        {`${data?.gamepackageJSON?.leaders?.[0]?.leaders?.[0]?.leaders?.[0]?.athlete?.fullName} `}
+                        <span className="opacity-60">{`${data?.gamepackageJSON?.leaders?.[0]?.leaders?.[0]?.leaders?.[0]?.athlete?.position?.abbreviation} - ${game?.competitors[0]?.team?.abbreviation}`}</span>
                       </p>
 
                       <div className="flex gap-2">
-                        {data?.gamepackageJSON?.leaders?.[0].leaders?.[0].leaders?.[0].statistics?.map(
+                        {data?.gamepackageJSON?.leaders?.[0]?.leaders?.[0]?.leaders?.[0]?.statistics?.map(
                           (stat: any) => (
                             <p key={v4()} className="text-xs">
-                              {stat.displayValue}
-                              <span className="text-[10px] opacity-60">{` ${stat.abbreviation}`}</span>
+                              {stat?.displayValue}
+                              <span className="text-[10px] opacity-60">{` ${stat?.abbreviation}`}</span>
                             </p>
                           ),
                         ) ?? (
                           <p className="text-[11px] opacity-70">
                             {
-                              data?.gamepackageJSON?.leaders?.[0].leaders?.[0]
-                                .leaders?.[0].displayValue
+                              data?.gamepackageJSON?.leaders?.[0]?.leaders?.[0]
+                                ?.leaders?.[0].displayValue
                             }
                           </p>
                         )}
@@ -813,7 +820,9 @@ export default function ScoreCard({
             game.status.type.state === "in") && (
             <div className="flex flex-row items-center justify-between gap-2">
               <div className="flex h-full flex-col justify-start gap-2">
-                <p className="text-[12px] opacity-60">TOP PERFORMERS</p>
+                <p className="text-[12px] font-[400] opacity-60">
+                  TOP PERFORMERS
+                </p>
                 {getTopPerformersByLeague()}
               </div>
 
@@ -867,7 +876,7 @@ export default function ScoreCard({
                 <div className="h-[10px] w-[40px] animate-pulse bg-gray-200"></div>
                 {/* away team*/}
                 <div className="mb-2 flex flex-row items-center gap-2">
-                  <div className="h-9 w-9 animate-pulse rounded-full bg-gray-200"></div>
+                  <div className="h-10 w-10 animate-pulse rounded-full bg-gray-200"></div>
                   <div className="flex w-full flex-row">
                     <div className="flex w-full flex-col gap-2">
                       <div className="h-[10px] w-[60px] animate-pulse bg-gray-200"></div>

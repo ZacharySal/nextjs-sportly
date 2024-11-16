@@ -159,7 +159,7 @@ export default function NFLGameLeaders({ data }: { data: NFLGameData }) {
         </div>
 
         {/* HOME TEAM RECIEVING LEADER */}
-        <div className="grid-cols-[1fr, 3fr] grid grid-rows-2 items-end justify-between gap-x-2 gap-y-0">
+        <div className="grid-cols-[1fr, 3fr] relative my-2 grid grid-rows-2 place-items-end justify-between gap-x-2 gap-y-0 pb-2">
           <div className="col-start-2 row-span-2 flex flex-col items-center justify-center gap-1">
             <Image
               src={

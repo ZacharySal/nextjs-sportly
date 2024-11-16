@@ -1,31 +1,38 @@
 "use client";
 
+import LeagueContainerBox from "@/components/LeagueContainerBox";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import useSWR from "swr";
 import Articles from "../../Articles";
 import LeagueUserSelection from "../../LeagueUserSelection";
 import Loading from "../../Loading";
 import MLBScoreboard from "../MLBScoreboard";
-import useHasHydrated from "../../hooks/useHasHyrdated";
-import LeagueContainerBox from "@/components/LeagueContainerBox";
 
-export default function Home({ data }: { data: any }) {
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default function Home({ date }: { date?: string }) {
   const isDesktopScreen = useMediaQuery("(min-width:800px)");
-  const pageHydrated = useHasHydrated();
+
+  const { data, isLoading } = useSWR(
+    "https://nextjs-sportly.vercel.app/api/leagueData/mlb",
+    fetcher,
+    {
+      refreshInterval: 5000,
+    },
+  );
 
   const desktopView = () => (
     <>
-      <MLBScoreboard initialScoreData={data.scoreData} />
-      <Articles
-        title={`MLB News`}
-        news={data.scoreData.news.articles}
-        limit={10}
-      />
+      <MLBScoreboard initialScoreData={data} date={date} />
+      <Articles title={`MLB News`} news={data.news.articles} limit={10} />
     </>
   );
 
-  const mobileView = () => <MLBScoreboard initialScoreData={data.scoreData} />;
+  const mobileView = () => (
+    <MLBScoreboard initialScoreData={data} date={date} />
+  );
 
-  if (!pageHydrated) return <Loading />;
+  if (isLoading) return <Loading />;
   else
     return (
       <>

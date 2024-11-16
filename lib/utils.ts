@@ -1,6 +1,6 @@
 type League = "nba" | "nfl" | "mlb";
 import type { ScoreData } from "@/types";
-import { type ClassValue, clsx } from "clsx";
+import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export async function getNBAGameData(gameId: string) {
@@ -483,4 +483,57 @@ export function getFilteredTeamShots(
     (play: any) => play.coordinate.x > 0 && play.coordinate.y > 0,
   );
   return filteredPlays;
+}
+
+export function getDaysArray(start: any, end: any) {
+  for (
+    var arr = [], dt = new Date(start);
+    dt <= new Date(end);
+    dt.setDate(dt.getDate() + 1)
+  ) {
+    const date = new Date(dt);
+    var mm = ("0" + (date.getMonth() + 1)).slice(-2);
+    var dd = ("0" + date.getDate()).slice(-2);
+    var yy = date.getFullYear();
+    var dateString = yy + "-" + mm + "-" + dd;
+    arr.push(dateString);
+  }
+  return arr;
+}
+
+export function mod(n: number, m: number) {
+  return ((n % m) + m) % m;
+}
+
+export function formatDate(date: string) {
+  const year = date.substring(0, 4);
+  const month = date.substring(4, 6);
+  const day = date.substring(6, 8);
+  return year + "-" + month + "-" + day;
+}
+
+export function getWeekDay(date: string) {
+  return new Date(date + "T00:00:00Z").toLocaleDateString(undefined, {
+    timeZone: "UTC",
+    weekday: "short",
+  });
+}
+
+export function getMonthAndDate(date: string) {
+  return new Date(date + "T00:00:00Z").toLocaleDateString(undefined, {
+    timeZone: "UTC",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+export function getFullDate(date: string) {
+  const newDate = new Date(date).toLocaleDateString(undefined, {
+    timeZone: "UTC",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+  return newDate;
 }

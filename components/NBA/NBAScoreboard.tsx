@@ -1,18 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import ScoreCard from "../ScoreCard";
+import {
+  formatDate,
+  getDaysArray,
+  getFullDate,
+  getMonthAndDate,
+  getWeekDay,
+  mod,
+} from "@/lib/utils";
+import { ScoreData } from "@/types";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import useSwr from "swr";
 import { v4 as uuidv4 } from "uuid";
-// import ButtonDatePicker from "../MLB/DatePicker";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import Image from "next/image";
+import Loading from "../Loading";
+import ScoreCard from "../ScoreCard";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import React from "react";
-import { useMemo } from "react";
-import Loading from "@/components/Loading";
-import { ScoreData } from "@/types";
 
 function NBAScoreboard({
   initialScoreData,
@@ -23,10 +27,9 @@ function NBAScoreboard({
 }) {
   const { width } = useWindowDimensions();
 
-  console.log("scoreboard rendering");
-
-  const [selectedYear, setSelectedYear] = useState(
-    initialScoreData?.content?.dateParams?.date.substring(0, 4),
+  const selectedYear = initialScoreData?.content?.dateParams?.date.substring(
+    0,
+    4,
   );
 
   const pastYear = Number(selectedYear) - 1;
@@ -36,11 +39,8 @@ function NBAScoreboard({
     new Date(`${selectedYear}-12-31`),
   );
 
-  const [selectedDate, setSelectedDate] = useState(
-    formatDate(initialScoreData?.content?.dateParams?.date),
-  );
-
-  const [calendarValue, setCalendarValue] = useState("");
+  const selectedDate =
+    date ?? formatDate(initialScoreData?.content?.dateParams?.date);
 
   const [currentIndex, setCurrentIndex] = useState(
     daysInYear.indexOf(formatDate(initialScoreData?.content?.dateParams?.date)),
@@ -78,33 +78,23 @@ function NBAScoreboard({
     return dateElements;
   }
 
-  function setNewCalendarDate(unformattedDate: string) {
-    const formattedDate = new Date(unformattedDate);
-    const year = formattedDate.getFullYear().toString();
-    let month = (formattedDate.getMonth() + 1).toString();
-    month = month.length === 1 ? "0" + month[0] : month;
-    let date = formattedDate.getDate().toString();
-    date = date.length === 1 ? "0" + date[0] : date;
-    setSelectedYear(year);
-    setSelectedDate(year + "-" + month + "-" + date);
-  }
-
   function dateSelector() {
     return (
-      <div className="mb-3 w-full rounded-xl bg-white p-2 md:p-4">
-        <p className="mb-1 text-xl font-semibold opacity-80 md:text-2xl">
+      <div className="mb-3 w-full rounded-xl bg-white p-3">
+        <p className="mb-1 text-xl font-bold opacity-80 md:text-2xl">
           NBA Scoreboard
         </p>
         <div className="flex w-full items-center gap-3">
           <div
             id="style-1"
-            className="flex w-full flex-row items-center justify-between overflow-x-auto pl-2"
+            className="flex w-full flex-row items-center justify-between overflow-x-auto px-2"
           >
             <Image
               src="/icons/chevron-left.svg"
               width="25"
               height="25"
               alt="left arrow"
+              className="cursor-pointer"
               onClick={() =>
                 setCurrentIndex(
                   (currentIndex: number) => (currentIndex - 4) % 730,
@@ -112,9 +102,9 @@ function NBAScoreboard({
               }
             />
             {getDateElements().map((date: string) => (
-              <div
+              <Link
+                href={`/nba/${date}`}
                 key={uuidv4()}
-                onClick={() => setSelectedDate(date)}
                 style={{ opacity: date === selectedDate ? 1 : 0.5 }}
                 className="jusitfy-center flex flex-shrink-0 cursor-pointer flex-col items-center p-2 font-semibold"
               >
@@ -124,10 +114,11 @@ function NBAScoreboard({
                 <div className="flex flex-row items-center justify-center gap-1">
                   <p className="text-[11px]">{getMonthAndDate(date)}</p>
                 </div>
-              </div>
+              </Link>
             ))}
             <Image
               src="/icons/chevron-right.svg"
+              className="cursor-pointer"
               onClick={() =>
                 setCurrentIndex(
                   (currentIndex: number) => (currentIndex + 4) % 730,
@@ -157,7 +148,6 @@ function NBAScoreboard({
       // </LocalizationProvider>
     );
   return (
-    // <LocalizationProvider dateAdapter={AdapterDayjs}>
     <div className="mt-[-0.5rem] flex w-full flex-col items-center justify-center py-2 md:justify-start">
       {dateSelector()}
 
@@ -189,56 +179,3 @@ const baseFetchUrl =
   "https://cdn.espn.com/core/nba/scoreboard?xhr=1&limit=50&date=";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-const getDaysArray = function (start: any, end: any) {
-  for (
-    var arr = [], dt = new Date(start);
-    dt <= new Date(end);
-    dt.setDate(dt.getDate() + 1)
-  ) {
-    const date = new Date(dt);
-    var mm = ("0" + (date.getMonth() + 1)).slice(-2);
-    var dd = ("0" + date.getDate()).slice(-2);
-    var yy = date.getFullYear();
-    var dateString = yy + "-" + mm + "-" + dd;
-    arr.push(dateString);
-  }
-  return arr;
-};
-
-function mod(n: number, m: number) {
-  return ((n % m) + m) % m;
-}
-
-function formatDate(date: string) {
-  const year = date.substring(0, 4);
-  const month = date.substring(4, 6);
-  const day = date.substring(6, 8);
-  return year + "-" + month + "-" + day;
-}
-
-function getWeekDay(date: string) {
-  return new Date(date + "T00:00:00Z").toLocaleDateString(undefined, {
-    timeZone: "UTC",
-    weekday: "short",
-  });
-}
-
-function getMonthAndDate(date: string) {
-  return new Date(date + "T00:00:00Z").toLocaleDateString(undefined, {
-    timeZone: "UTC",
-    month: "short",
-    day: "numeric",
-  });
-}
-
-function getFullDate(date: string) {
-  const newDate = new Date(date).toLocaleDateString(undefined, {
-    timeZone: "UTC",
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-  return newDate;
-}

@@ -13,7 +13,6 @@ export default function NFLTeamStats({ data }: { data: NFLGameData }) {
     const statName =
       data.gameData?.boxscore?.teams?.[teamOption].statistics?.[statOption]
         ?.name;
-    console.log(data);
     return (
       <div
         style={{

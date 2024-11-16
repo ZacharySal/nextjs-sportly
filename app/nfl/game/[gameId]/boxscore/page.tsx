@@ -1,4 +1,3 @@
-import { getLeagueScoreData, getNFLGameData } from "@/lib/utils";
 import View from "../../../../../components/NFL/views/game/Boxscore";
 
 export async function generateMetadata({
