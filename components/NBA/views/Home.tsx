@@ -13,6 +13,8 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function Home() {
   const isDesktopScreen = useMediaQuery("(min-width:1000px");
 
+  console.log("rendering");
+
   const { data, isLoading } = useSWR(
     "https://nextjs-sportly.vercel.app/api/leagueData/nba",
     fetcher,

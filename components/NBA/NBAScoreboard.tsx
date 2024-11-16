@@ -9,11 +9,21 @@ import { v4 as uuidv4 } from "uuid";
 // import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Image from "next/image";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import Loading from "../Loading";
+import React from "react";
+import { useMemo } from "react";
+import Loading from "@/components/Loading";
 import { ScoreData } from "@/types";
 
-function NBAScoreboard({ initialScoreData }: { initialScoreData: ScoreData }) {
-  const { height, width } = useWindowDimensions();
+function NBAScoreboard({
+  initialScoreData,
+  date,
+}: {
+  initialScoreData: ScoreData;
+  date?: string;
+}) {
+  const { width } = useWindowDimensions();
+
+  console.log("scoreboard rendering");
 
   const [selectedYear, setSelectedYear] = useState(
     initialScoreData?.content?.dateParams?.date.substring(0, 4),
@@ -45,15 +55,19 @@ function NBAScoreboard({ initialScoreData }: { initialScoreData: ScoreData }) {
 
   const data = newScoreData ?? initialScoreData;
 
-  const sortedGames = data.content.sbData.events.sort((a: any, b: any) => {
-    if (a.status.type.state == "in") {
-      return -1;
-    }
-  });
+  const sortedGames = useMemo<any>(
+    () =>
+      data.content.sbData.events.sort((a: any, b: any) => {
+        if (a.status.type.state == "in") {
+          return -1;
+        }
+      }),
+    [data],
+  );
 
   useEffect(() => {
     setCurrentIndex(daysInYear.indexOf(selectedDate));
-  }, [selectedDate]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedDate]);
 
   function getDateElements() {
     const dateElements = [];
