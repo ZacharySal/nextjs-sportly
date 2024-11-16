@@ -15,6 +15,15 @@ module.exports = withBundleAnalyzer({
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/nba",
+        permanent: true,
+      },
+    ];
+  },
 });
 
 // module.exports = {
