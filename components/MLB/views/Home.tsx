@@ -21,10 +21,6 @@ export default function Home({ date }: { date?: string }) {
     },
   );
 
-  if (!isLoading) {
-    console.log(data);
-  }
-
   const desktopView = () => (
     <>
       <MLBScoreboard initialScoreData={data} date={date} />

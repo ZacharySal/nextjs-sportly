@@ -1,14 +1,13 @@
 "use client";
 
-import ContainerBox from "@/components/ContainerBox";
+import Loading from "@/app/loading";
 import Articles from "@/components/Articles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import React from "react";
+import ContainerBox from "@/components/ContainerBox";
 import DivisionStandings from "@/components/DivisionStandings";
 import GameUserSelection from "@/components/GameUserSelection";
 import MatchupPredictor from "@/components/MatchupPredictor";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import useSWR from "swr";
-import Loading from "@/app/loading";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

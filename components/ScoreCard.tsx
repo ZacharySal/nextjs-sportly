@@ -876,7 +876,7 @@ export default function ScoreCard({
                 <div className="h-[10px] w-[40px] animate-pulse bg-gray-200"></div>
                 {/* away team*/}
                 <div className="mb-2 flex flex-row items-center gap-2">
-                  <div className="h-9 w-9 animate-pulse rounded-full bg-gray-200"></div>
+                  <div className="h-10 w-10 animate-pulse rounded-full bg-gray-200"></div>
                   <div className="flex w-full flex-row">
                     <div className="flex w-full flex-col gap-2">
                       <div className="h-[10px] w-[60px] animate-pulse bg-gray-200"></div>

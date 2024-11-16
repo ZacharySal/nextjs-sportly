@@ -7,6 +7,7 @@ export async function GET(
   request: Request,
   { params }: { params: { league: string } },
 ) {
+  console.log("HERE!");
   const scoreboardData = await fetch(
     `https://cdn.espn.com/core/${params.league}/scoreboard?xhr=1`,
     {

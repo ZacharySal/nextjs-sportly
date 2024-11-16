@@ -32,7 +32,7 @@ export default function Home({ date }: { date?: string }) {
               <NFLScoreboard initialScoreData={data} date={date} />
               <Articles
                 title={`NFL News`}
-                news={data.news.articles}
+                news={data?.news?.articles}
                 limit={10}
               />
             </LeagueContainerBox>

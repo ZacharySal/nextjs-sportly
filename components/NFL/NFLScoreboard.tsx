@@ -58,9 +58,9 @@ function NFLScoreboard({
   const [showDateSelector, setShowDateSelector] = useState(false);
 
   const currentWeekInfo = {
-    year: initialScoreData.content.sbData.season.year,
-    type: initialScoreData.content.sbData.season.type,
-    week: initialScoreData.content.sbData.week.number,
+    year: initialScoreData?.content.sbData.season.year,
+    type: initialScoreData?.content.sbData.season.type,
+    week: initialScoreData?.content.sbData.week.number,
   };
 
   const [selectedWeekInfo, setSelectedWeekInfo] = useState(
@@ -77,15 +77,15 @@ function NFLScoreboard({
     allNFLDates.map((year) => year.year).indexOf(String(currentWeekInfo.year)),
   );
 
-  const calendarSelectedYear = allNFLDates[currentYearIndex].year;
+  const calendarSelectedYear = allNFLDates[currentYearIndex]?.year;
 
   const allDates = getDates(calendarSelectedYear);
 
   const [currentWeekIndex, setCurrentWeekIndex] = useState(
     allDates.findIndex(
       (week: any) =>
-        week.value == selectedWeekInfo.week &&
-        week.seasonType == selectedWeekInfo.type,
+        week?.value == selectedWeekInfo.week &&
+        week?.seasonType == selectedWeekInfo.type,
     ),
   );
 
@@ -93,8 +93,8 @@ function NFLScoreboard({
     setCurrentWeekIndex(
       allDates.findIndex(
         (week: any) =>
-          week.value == selectedWeekInfo.week &&
-          week.seasonType == selectedWeekInfo.type,
+          week?.value == selectedWeekInfo.week &&
+          week?.seasonType == selectedWeekInfo.type,
       ),
     );
   }, [selectedWeekInfo]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -155,18 +155,18 @@ function NFLScoreboard({
               return (
                 <Link
                   key={uuidv4()}
-                  href={`/nfl/${selectedWeekInfo.year}-${week.seasonType}-${week.value}`}
+                  href={`/nfl/${selectedWeekInfo.year}-${week?.seasonType}-${week?.value}`}
                   style={{
                     opacity:
-                      week.value == selectedWeekInfo.week &&
-                      week.seasonType == selectedWeekInfo.type
+                      week?.value == selectedWeekInfo.week &&
+                      week?.seasonType == selectedWeekInfo.type
                         ? "1"
                         : "0.3",
                   }}
                   className="jusitfy-center flex flex-shrink-0 cursor-pointer flex-col items-center p-2 font-semibold"
                 >
-                  <p className="text-[13px] font-semibold">{week.label}</p>
-                  <p className="text-[11px]">{week.dateRange}</p>
+                  <p className="text-[13px] font-semibold">{week?.label}</p>
+                  <p className="text-[11px]">{week?.dateRange}</p>
                 </Link>
               );
             })}

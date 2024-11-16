@@ -16,7 +16,7 @@ export default function NFLCalendar({
 }) {
   const [currentCalendarYearIndex, setCurrentCalendarYearIndex] =
     useState(currentYearIndex);
-  const calendarSelectedYear = allNFLDates[currentCalendarYearIndex].year;
+  const calendarSelectedYear = allNFLDates[currentCalendarYearIndex]?.year;
 
   const nflDates = allNFLDates.find(
     (year) => year.year === calendarSelectedYear,
@@ -61,11 +61,11 @@ export default function NFLCalendar({
           <React.Fragment key={uuidv4()}>
             {seasonType.weeks.map((week: any) => (
               <Link
-                href={`/nfl/${nflDates.year}-${seasonType.seasonType}-${week.value}`}
+                href={`/nfl/${nflDates.year}-${seasonType.seasonType}-${week?.value}`}
                 key={uuidv4()}
                 style={{
                   opacity:
-                    week.value == selectedWeekInfo.week &&
+                    week?.value == selectedWeekInfo.week &&
                     nflDates.year == selectedWeekInfo.year &&
                     seasonType.seasonType == selectedWeekInfo.type
                       ? "1"
@@ -73,8 +73,8 @@ export default function NFLCalendar({
                 }}
                 className="flex min-w-full cursor-pointer justify-between"
               >
-                <p className="text-sm">{week.label}</p>
-                <p className="text-sm">{week.dateRange}</p>
+                <p className="text-sm">{week?.label}</p>
+                <p className="text-sm">{week?.dateRange}</p>
               </Link>
             ))}
           </React.Fragment>

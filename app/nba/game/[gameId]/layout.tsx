@@ -1,8 +1,7 @@
 "use client";
 
-import GameHeader from "@/components/GameHeader";
-import useSWR from "swr";
 import NBAGameHeader from "@/components/NBA/NBAGameHeader";
+import useSWR from "swr";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

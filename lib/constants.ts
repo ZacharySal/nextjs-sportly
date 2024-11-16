@@ -2446,6 +2446,314 @@ export const allNFLDates = [
     ],
   },
   {
+    year: "2024",
+    weeksInYear: [
+      {
+        label: "Preseason",
+        seasonType: 1,
+        weeks: [
+          {
+            dateRange: "Aug 1 - 7",
+            label: "HOF",
+            value: "1",
+          },
+          {
+            dateRange: "Aug 8 - 14",
+            label: "Pre Week 1",
+            value: "2",
+          },
+          {
+            dateRange: "Aug 15 - 21",
+            label: "Pre Week 2",
+            value: "3",
+          },
+          {
+            dateRange: "Aug 22 - Sep 4",
+            label: "Pre Week 3",
+            value: "4",
+          },
+        ],
+      },
+      {
+        label: "Regular Season",
+        seasonType: 2,
+        weeks: [
+          {
+            dateRange: "Sep 5 - 10",
+            label: "Week 1",
+            value: "1",
+          },
+          {
+            dateRange: "Sep 11 - 17",
+            label: "Week 2",
+            value: "2",
+          },
+          {
+            dateRange: "Sep 18 - 24",
+            label: "Week 3",
+            value: "3",
+          },
+          {
+            dateRange: "Sep 25 - Oct 1",
+            label: "Week 4",
+            value: "4",
+          },
+          {
+            dateRange: "Oct 2 - 8",
+            label: "Week 5",
+            value: "5",
+          },
+          {
+            dateRange: "Oct 9 - 15",
+            label: "Week 6",
+            value: "6",
+          },
+          {
+            dateRange: "Oct 16 - 22",
+            label: "Week 7",
+            value: "7",
+          },
+          {
+            dateRange: "Oct 23 - 29",
+            label: "Week 8",
+            value: "8",
+          },
+          {
+            dateRange: "Oct 30 - Nov 5",
+            label: "Week 9",
+            value: "9",
+          },
+          {
+            dateRange: "Nov 6 - 12",
+            label: "Week 10",
+            value: "10",
+          },
+          {
+            dateRange: "Nov 13 - 19",
+            label: "Week 11",
+            value: "11",
+          },
+          {
+            dateRange: "Nov 20 - 26",
+            label: "Week 12",
+            value: "12",
+          },
+          {
+            dateRange: "Nov 27 - Dec 5",
+            label: "Week 13",
+            value: "13",
+          },
+          {
+            dateRange: "Dec 4 - 10",
+            label: "Week 14",
+            value: "14",
+          },
+          {
+            dateRange: "Dec 11 - 17",
+            label: "Week 15",
+            value: "15",
+          },
+          {
+            dateRange: "Dec 18 - 24",
+            label: "Week 16",
+            value: "16",
+          },
+          {
+            dateRange: "Dec 25 - Dec 31",
+            label: "Week 17",
+            value: "17",
+          },
+          {
+            dateRange: "Jan 1 - 7",
+            label: "Week 18",
+            value: "18",
+          },
+        ],
+      },
+      {
+        label: "Post Season",
+        seasonType: 3,
+        weeks: [
+          {
+            dateRange: "Jan 8 - 16",
+            label: "Wild Card",
+            value: "1",
+          },
+          {
+            dateRange: "Jan 17 - 23",
+            label: "Div Rnd",
+            value: "2",
+          },
+          {
+            dateRange: "Jan 24 - 30",
+            label: "Conf Champ",
+            value: "3",
+          },
+
+          {
+            dateRange: "Feb 7 - 14",
+            label: "Super Bowl",
+            value: "5",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    year: "2023",
+    weeksInYear: [
+      {
+        label: "Preseason",
+        seasonType: 1,
+        weeks: [
+          {
+            dateRange: "Aug 1 - 8",
+            label: "HOF",
+            value: "1",
+          },
+          {
+            dateRange: "Aug 9 - 15",
+            label: "Pre Week 1",
+            value: "2",
+          },
+          {
+            dateRange: "Aug 16 - 22",
+            label: "Pre Week 2",
+            value: "3",
+          },
+          {
+            dateRange: "Aug 23 - Sep 6",
+            label: "Pre Week 3",
+            value: "4",
+          },
+        ],
+      },
+      {
+        label: "Regular Season",
+        seasonType: 2,
+        weeks: [
+          {
+            dateRange: "Sep 7 - 12",
+            label: "Week 1",
+            value: "1",
+          },
+          {
+            dateRange: "Sep 13 - 19",
+            label: "Week 2",
+            value: "2",
+          },
+          {
+            dateRange: "Sep 20 - 26",
+            label: "Week 3",
+            value: "3",
+          },
+          {
+            dateRange: "Sep 27 - Oct 3",
+            label: "Week 4",
+            value: "4",
+          },
+          {
+            dateRange: "Oct 4 - 10",
+            label: "Week 5",
+            value: "5",
+          },
+          {
+            dateRange: "Oct 11 - 17",
+            label: "Week 6",
+            value: "6",
+          },
+          {
+            dateRange: "Oct 18 - 24",
+            label: "Week 7",
+            value: "7",
+          },
+          {
+            dateRange: "Oct 25 - 31",
+            label: "Week 8",
+            value: "8",
+          },
+          {
+            dateRange: "Nov 1 - 7",
+            label: "Week 9",
+            value: "9",
+          },
+          {
+            dateRange: "Nov 8 - 14",
+            label: "Week 10",
+            value: "10",
+          },
+          {
+            dateRange: "Nov 15 - 21",
+            label: "Week 11",
+            value: "11",
+          },
+          {
+            dateRange: "Nov 22 - 28",
+            label: "Week 12",
+            value: "12",
+          },
+          {
+            dateRange: "Nov 29 - Dec 5",
+            label: "Week 13",
+            value: "13",
+          },
+          {
+            dateRange: "Dec 6 - 12",
+            label: "Week 14",
+            value: "14",
+          },
+          {
+            dateRange: "Dec 13 - 19",
+            label: "Week 15",
+            value: "15",
+          },
+          {
+            dateRange: "Dec 20 - 26",
+            label: "Week 16",
+            value: "16",
+          },
+          {
+            dateRange: "Dec 27 - Jan 2",
+            label: "Week 17",
+            value: "17",
+          },
+          {
+            dateRange: "Jan 3 - 12",
+            label: "Week 18",
+            value: "18",
+          },
+        ],
+      },
+      {
+        label: "Post Season",
+        seasonType: 3,
+        weeks: [
+          {
+            dateRange: "Jan 13 - 16",
+            label: "Wild Card",
+            value: "1",
+          },
+          {
+            dateRange: "Jan 17 - 23",
+            label: "Div Rnd",
+            value: "2",
+          },
+          {
+            dateRange: "Jan 24 - 30",
+            label: "Conf Champ",
+            value: "3",
+          },
+
+          {
+            dateRange: "Feb 7 - 14",
+            label: "Super Bowl",
+            value: "5",
+          },
+        ],
+      },
+    ],
+  },
+  {
     year: "2023",
     weeksInYear: [
       {

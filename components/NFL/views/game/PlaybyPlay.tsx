@@ -1,16 +1,15 @@
 "use client";
 
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Image from "next/image";
-import ContainerBox from "@/components/ContainerBox";
 import DivisionStandings from "@/components/DivisionStandings";
 import GameUserSelection from "@/components/GameUserSelection";
-import NFLPlayByPlay from "@/components/NFL/NFLPlayByPlay";
+import LeagueContainerBox from "@/components/LeagueContainerBox";
+import Loading from "@/components/Loading";
 import MatchupPredictor from "@/components/MatchupPredictor";
+import NFLPlayByPlay from "@/components/NFL/NFLPlayByPlay";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Image from "next/image";
 import Link from "next/link";
 import useSWR from "swr";
-import Loading from "@/components/Loading";
-import LeagueContainerBox from "@/components/LeagueContainerBox";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

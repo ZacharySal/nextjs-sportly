@@ -1,8 +1,8 @@
 "use client";
 
-import { nameExceptions } from "../lib/constants";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { nameExceptions } from "../lib/constants";
 
 export default function TeamSideCard({
   name,
@@ -42,26 +42,28 @@ export default function TeamSideCard({
             {name[0]}
           </p>
         </Link>
-        <div className="flex flex-row justify-start gap-1">
-          <Link href={`/${league}/team/${name[1]}/stats`}>
-            <p className="anchor-link border-r border-[rgba(0,0,0,0.1)] pr-1 text-[11px]">
-              Statistics
-            </p>
-          </Link>
-          <Link href={`/${league}/team/${name[1]}/schedule`}>
-            <p className="anchor-link border-r border-[rgba(0,0,0,0.1)] pr-1 text-[11px]">
-              Schedule
-            </p>
-          </Link>
-          <Link href={`/${league}/team/${name[1]}/roster`}>
-            <p className="anchor-link border-r border-[rgba(0,0,0,0.1)] pr-1 text-[11px]">
-              Roster
-            </p>
-          </Link>
-          <Link href={`/${league}/team/${name[1]}/roster`}>
-            <p className="anchor-link text-[11px]">Depth Chart</p>
-          </Link>
-        </div>
+        {league !== "mlb" && (
+          <div className="flex flex-row justify-start gap-1">
+            <Link href={`/${league}/team/${name[1]}/stats`}>
+              <p className="anchor-link border-r border-[rgba(0,0,0,0.1)] pr-1 text-[11px]">
+                Statistics
+              </p>
+            </Link>
+            <Link href={`/${league}/team/${name[1]}/schedule`}>
+              <p className="anchor-link border-r border-[rgba(0,0,0,0.1)] pr-1 text-[11px]">
+                Schedule
+              </p>
+            </Link>
+            <Link href={`/${league}/team/${name[1]}/roster`}>
+              <p className="anchor-link border-r border-[rgba(0,0,0,0.1)] pr-1 text-[11px]">
+                Roster
+              </p>
+            </Link>
+            <Link href={`/${league}/team/${name[1]}/roster`}>
+              <p className="anchor-link text-[11px]">Depth Chart</p>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,14 +1,12 @@
 "use client";
 
-import ContainerBox from "@/components/ContainerBox";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import DivisionStandings from "@/components/DivisionStandings";
 import GameUserSelection from "@/components/GameUserSelection";
 import NBAGameStats from "@/components/NBA/NBAGameStats";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import useSWR from "swr";
 
-import Loading from "@/components/Loading";
 import LeagueContainerBox from "@/components/LeagueContainerBox";
+import Loading from "@/components/Loading";
 import NBAGameLeaders from "../../NBAGameLeaders";
 import NBATeamStats from "../../NBATeamStats";
 

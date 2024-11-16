@@ -1,27 +1,24 @@
 "use client";
 
-import ContainerBox from "@/components/ContainerBox";
+import Loading from "@/app/loading";
 import Articles from "@/components/Articles";
-import StadiumInfo from "@/components/StadiumInfo";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import NBABoxscore from "@/components/NBA/NBABoxscore";
+import ContainerBox from "@/components/ContainerBox";
 import DivisionStandings from "@/components/DivisionStandings";
-import GameUserSelection from "@/components/GameUserSelection";
-import MatchupPredictor from "@/components/MatchupPredictor";
+import GameFlow from "@/components/GameFlow";
 import GameRecapArticle from "@/components/GameRecapArticle";
-import NBAGameLeaders from "@/components/NBA/NBAGameLeaders";
+import GameUserSelection from "@/components/GameUserSelection";
 import InjuryReport from "@/components/InjuryReport";
 import LastFive from "@/components/LastFive";
+import Linescores from "@/components/Linescores";
+import MatchupPredictor from "@/components/MatchupPredictor";
+import NBAGameLeaders from "@/components/NBA/NBAGameLeaders";
 import RecentPlays from "@/components/RecentPlays";
 import SeasonSeries from "@/components/SeasonSeries";
-import NBATeamStats from "../../NBATeamStats";
+import StadiumInfo from "@/components/StadiumInfo";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import useSWR from "swr";
-import Image from "next/image";
-import Loading from "@/app/loading";
-import Linescores from "@/components/Linescores";
-import GameFlow from "@/components/GameFlow";
+import NBATeamStats from "../../NBATeamStats";
 import ShotChart from "../../ShotChart";
-import WinProbability from "@/components/WinProbability";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

@@ -1,23 +1,21 @@
 "use client";
 
-import useMediaQuery from "@mui/material/useMediaQuery";
-import ContainerBox from "@/components/ContainerBox";
 import Articles from "@/components/Articles";
-import StadiumInfo from "@/components/StadiumInfo";
-import NFLTeamStats from "../../NFLTeamStats";
+import ContainerBox from "@/components/ContainerBox";
 import DivisionStandings from "@/components/DivisionStandings";
-import NFLScoringPlays from "@/components/NFL/NFLScoringPlays";
-import GameUserSelection from "@/components/GameUserSelection";
-import MatchupPredictor from "@/components/MatchupPredictor";
 import GameRecapArticle from "@/components/GameRecapArticle";
-import NFLGameLeaders from "@/components/NFL/NFLGameLeaders";
+import GameUserSelection from "@/components/GameUserSelection";
 import InjuryReport from "@/components/InjuryReport";
 import LastFive from "@/components/LastFive";
-import RecentPlays from "@/components/RecentPlays";
-import useSWR from "swr";
-import Loading from "@/components/Loading";
 import Linescores from "@/components/Linescores";
-import { NFLGameData } from "@/types";
+import Loading from "@/components/Loading";
+import MatchupPredictor from "@/components/MatchupPredictor";
+import NFLGameLeaders from "@/components/NFL/NFLGameLeaders";
+import NFLScoringPlays from "@/components/NFL/NFLScoringPlays";
+import StadiumInfo from "@/components/StadiumInfo";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useSWR from "swr";
+import NFLTeamStats from "../../NFLTeamStats";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

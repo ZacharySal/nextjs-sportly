@@ -31,7 +31,7 @@ export default function GameRecapArticle({ data }: { data: GameData }) {
             />
             <Link
               target="_blank"
-              href={data.gameData.article.video[0].links["web"].href}
+              href={data.gameData.article.video?.[0]?.links["web"].href || "#"}
             >
               <div className="gray-circle"></div>
             </Link>
