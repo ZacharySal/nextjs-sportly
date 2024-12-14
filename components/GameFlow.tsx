@@ -27,12 +27,12 @@ export default function GameFlow({
     )
     .map((play: any) => {
       return {
-        quarter: play.period.displayValue.split(" ")[0],
-        homeScore: play.homeScore,
-        awayScore: play.awayScore,
-        gameClock: play.clock.displayValue,
-        playText: play.text,
-        homeTeamWinChance: data.gameData.winprobability.find(
+        quarter: play?.period?.displayValue?.split(" ")[0],
+        homeScore: play?.homeScore,
+        awayScore: play?.awayScore,
+        gameClock: play?.clock?.displayValue,
+        playText: play?.text,
+        homeTeamWinChance: data?.gameData?.winprobability?.find(
           (obj: any) => obj.playId === play.id,
         )?.homeWinPercentage,
       };
